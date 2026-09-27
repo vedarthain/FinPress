@@ -1,0 +1,22 @@
+# Secrets and environment
+.env
+*.env
+.env.*
+
+# Authentication and browser state
+bs_browser_profile/
+bs_storage_state.json
+*.png
+*.log
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Local media / downloads
+downloads/
+scratch/
+.DS_Store
