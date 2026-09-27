@@ -1,497 +1,8 @@
 {
   "edition_date": "2026-09-27",
-  "total_pages_analyzed": 218,
-  "edition_summary": "FinBrief Unified Financial Intelligence Edition (2026-09-27) combines complete, unabridged daily reporting across Financial Express and Business Standard. Covering 218 distinct corporate, policy, market, and macroeconomic developments, today's edition provides an exhaustive overview of the Indian and global business landscape.",
+  "total_pages_analyzed": 217,
+  "edition_summary": "FinBrief Unified Financial Intelligence Edition (2026-09-27) combines complete, unabridged daily reporting across Financial Express and Business Standard. Covering 217 distinct corporate, policy, market, and macroeconomic developments, today's edition provides an exhaustive overview of the Indian and global business landscape.",
   "major_stories": [
-    {
-      "headline": "FE Sunday Special Edition and General Overview",
-      "category": "Others",
-      "page_numbers": "Page 1",
-      "brief_details": "The Financial Express Sunday edition presents a comprehensive summary of weekly developments covering various sectors including automotive, government policies, and national achievements. The front page features prominent imagery highlighting economic growth, government announcements, and cultural events.",
-      "bullet_points": [
-        "Features FE Sunday branding and weekly special coverage",
-        "Includes visual highlights of policy addresses and leadership announcements",
-        "Showcases economic data points alongside automotive updates"
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Lifestyle and Cultural Photography Showcase",
-      "category": "Others",
-      "page_numbers": "Page 1",
-      "brief_details": "This section features various photographs highlighting urban nightscapes, architectural designs, and lifestyle accessories. The images reflect modern city living and cultural highlights.",
-      "bullet_points": [
-        "Displays night skyline views of modern urban landscapes.",
-        "Features lifestyle and fashion accessories including branded retail items.",
-        "Highlights architectural developments in city hubs."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Wellness and Fitness Trends Visual Report",
-      "category": "Others",
-      "page_numbers": "Page 2",
-      "brief_details": "A visual feature focusing on modern fitness regimes such as Pilates and group workouts. It highlights health trends adopted by urban practitioners.",
-      "bullet_points": [
-        "Features instructor-led Pilates sessions.",
-        "Focuses on group fitness classes and active lifestyles.",
-        "Emphasizes physical well-being and modern exercise routines."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Artistic Masterpieces and Cultural Exhibitions",
-      "category": "Others",
-      "page_numbers": "Page 2",
-      "brief_details": "This cultural segment showcases traditional and contemporary artworks, including classic paintings and historical installations. It explores the influence of art in modern societies.",
-      "bullet_points": [
-        "Showcases classic and contemporary painting exhibitions.",
-        "Features historical artwork references and interpretations.",
-        "Highlights gallery displays and artistic presentations."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Traditional Festivals and Folk Performances",
-      "category": "Others",
-      "page_numbers": "Page 3",
-      "brief_details": "An overview of traditional cultural festivals featuring indigenous performances, ceremonial attire, and community gatherings. The section celebrates diverse regional traditions.",
-      "bullet_points": [
-        "Depicts participants in traditional ceremonial costumes.",
-        "Highlights regional folk music and dance performances.",
-        "Captures community engagement during cultural festivals."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Pet Lifestyle and Creative Portraits",
-      "category": "Others",
-      "page_numbers": "Page 4",
-      "brief_details": "A lighthearted segment showcasing styled portraits of pets in creative settings. It highlights the growing trend of pet lifestyle accessories and photography.",
-      "bullet_points": [
-        "Features stylized portraits of dogs and cats.",
-        "Highlights pet fashion accessories and modern grooming.",
-        "Focuses on popular animal photography trends."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Bank of Baroda Possession Notice",
-      "category": "Others",
-      "page_numbers": "Page 4",
-      "brief_details": "Bank of Baroda has issued a statutory possession notice under the Securitisation and Reconstruction of Financial Assets and Enforcement of Security Interest Act. The notice details properties secured against defaulted loans.",
-      "bullet_points": [
-        "Issued by the Authorized Officer of Bank of Baroda.",
-        "Targets borrowers who have failed to repay their dues within the stipulated time.",
-        "Details physical/symbolic possession of the secured immovable properties.",
-        "Invokes provisions of the SARFAESI Act, 2002."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Down and out in paradise",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "This book review examines poverty persistence in the United States. It argues that maintaining a segment of the population in poverty serves the economic interests of many.",
-      "bullet_points": [
-        "Focuses on poverty in the wealthy US.",
-        "Explores socioeconomic dynamics."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Betrayal and survival",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "A critical review of Ian Buruma's book 'The Collaborators'. The review notes that readers may find the author's moral permissiveness toward his subjects' actions challenging.",
-      "bullet_points": [
-        "Reviews Ian Buruma's 'The Collaborators'.",
-        "Discusses moral barometers and historical conduct."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "The electrome syndrome",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "Sally Adee's book provides an absorbing and fast-paced account of emerging bioelectronic medicine research. The field could potentially herald a paradigm-shifting medical era.",
-      "bullet_points": [
-        "Authored by Sally Adee.",
-        "Covers research in bioelectric medicine."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Unlikely rebels with a cause",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "An essay reflecting on the scarcity of women in high-level scientific roles during the early 1960s. Women scientists in leadership positions were exceptionally rare during this period.",
-      "bullet_points": [
-        "Set in the early 1960s.",
-        "Highlights women in science."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Palo Alto, Marxian nightmare",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "A book review analyzing capitalist developments and historical interventions such as FDR's New Deal. The text explores the socio-political complexities of Silicon Valley's history.",
-      "bullet_points": [
-        "Reviews capitalist developments.",
-        "Discusses historical shifts like FDR's New Deal."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "A media mogul's toxic legacy",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "An analytical piece detailing the misogyny and toxic legacy of media mogul Redstone. It explores how immense wealth and power distorted personal relationships and corporate ethics.",
-      "bullet_points": [
-        "Examines media mogul Redstone's legacy.",
-        "Discusses issues of power and misogyny."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "What does it mean to be liberal?",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "A review of a biographical book filled with anecdotes from a long-time editor of the leftist magazine Dissent. It highlights a life dedicated to political activism and public intellectualism.",
-      "bullet_points": [
-        "Reflects on liberal philosophy and activism.",
-        "Features anecdotes from a Dissent magazine editor."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Muzaffar Ali: A creative journey through many lives expressed in art",
-      "category": "Others",
-      "page_numbers": "Companies & Corporate",
-      "brief_details": "A profile on filmmaker, designer, and poet Muzaffar Ali. His exhibition in Delhi showcases a diverse collection of artworks created over a span of 50 years.",
-      "bullet_points": [
-        "Showcases Muzaffar Ali's 50-year art career.",
-        "Exhibition held in Delhi."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "A culinary tour of the Chinese diaspora",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "An exploration of the lives and adapted menus of Chinese immigrant restaurateurs across the globe. It highlights their resourcefulness, economic pragmatism, and perseverance.",
-      "bullet_points": [
-        "Covers Chinese immigrant restaurateurs from the Arctic to the Amazon.",
-        "Examines how culinary traditions are adapted globally.",
-        "Highlights perseverance and economic pragmatism."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "The art of 'achieving' humility",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "A review of the book 'In Praise of Failure', describing it as a maddening and seductive read. It explores deep philosophical concepts regarding success and humility.",
-      "bullet_points": [
-        "Review of the book 'In Praise of Failure'.",
-        "Explores philosophical themes of humility and failure."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "From pest to ecosystem engineer",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "Leila Philip's book contributes to the genre of pro-beaver literature, reframing the animal from a pest to an ecosystem engineer. The review highlights the growing body of ecological writing.",
-      "bullet_points": [
-        "Authored by Leila Philip focusing on beavers.",
-        "Reframes beavers as crucial ecosystem engineers.",
-        "Part of a growing genre of environmental literature."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "India in the nitty-gritty",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "A review of former Cabinet Secretary K M Chandrasekhar's memoir detailing major events during his tenure. The book offers a remarkable account including the Mumbai terrorist attacks.",
-      "bullet_points": [
-        "Memoir written by former Cabinet Secretary K M Chandrasekhar.",
-        "Covers major historical events including the Mumbai terrorist attacks.",
-        "Provides insider accounts of Indian bureaucratic governance."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "A book of cheeky obituaries",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "A lighthearted look into a collection of obituaries featuring entertaining characters like Mountgarret. The book showcases witty and unconventional life summaries.",
-      "bullet_points": [
-        "Features entertaining and cheeky obituaries.",
-        "Highlights notable eccentric characters such as Mountgarret."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "History of Hollywood",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "A compilation of behind-the-scenes stories, technical facts, and humorous anecdotes about Hollywood. It highlights the complaints of studio executives and interactions with critics.",
-      "bullet_points": [
-        "Details on-set stories and technical aspects of filmmaking.",
-        "Includes humorous anecdotes about actors and studio executives."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "On a wing and a prayer",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "A review of John Lancaster's book 'The Great Air Race', capturing the early days of aviation. It vividly describes the vastly different environment of the aviation industry a century ago.",
-      "bullet_points": [
-        "Review of John Lancaster's 'The Great Air Race'.",
-        "Conveys the historical context of early aviation a century ago."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Hoover: Bravery and black bag jobs",
-      "category": "Others",
-      "page_numbers": "BS Companies & Corporate",
-      "brief_details": "A review of Yale historian Beverly Gage's biography 'GMan', detailing the complex life and operations of J. Edgar Hoover. The book explores his controversial career and bureau activities.",
-      "bullet_points": [
-        "Authored by Yale historian Beverly Gage.",
-        "Biographical account titled 'G-Man' focusing on J. Edgar Hoover.",
-        "Covers sensitive operations and historical controversies."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Financial foundation: Why insurance and emergency funds must precede stocks",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "Establishing income security and emergency reserves is crucial before entering equity markets. Financial planners emphasize that safeguarding essentials protects individuals from market volatility.",
-      "bullet_points": [
-        "Insurance and emergency funds are mandatory prerequisites before investing in stocks.",
-        "Protects personal financial stability against sudden market volatility."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Live on rent or purchase a home? How to make a decision in your 30s",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "A guide for young professionals in their 30s evaluating whether to rent or buy a home. It highlights the importance of balancing financial discipline with psychological stability.",
-      "bullet_points": [
-        "Targeted at young professionals in their 30s.",
-        "Weighs long-term financial discipline against emotional comfort."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Rent versus buying a home: How should a young professional decide?",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "An analysis of hidden homeownership expenses and opportunity costs. It helps young professionals calculate whether buying property aligns with long-term financial goals.",
-      "bullet_points": [
-        "Evaluates hidden ownership costs versus renting.",
-        "Focuses on long-term wealth alignment for young earners."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Money mistakes young professionals make in their first 5 years of earning",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "Outlines common financial traps during the initial career years, including lifestyle inflation and delayed compounding. Early habits are shown to deeply impact long-term wealth creation.",
-      "bullet_points": [
-        "Focuses on the first five earning years.",
-        "Warns against lifestyle inflation and missing out on compounding."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Mutual fund tax rules: How SIPs, switches and losses affect capital gains",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "An explanatory guide detailing how mutual fund SIP installments, fund switches, and IDCW impact capital gains tax calculations. Outlines methods to track purchase dates and offset capital losses.",
-      "bullet_points": [
-        "Each SIP installment is treated separately for tax calculations.",
-        "Details rules for tracking purchase dates and mutual fund switches.",
-        "Explains handling of capital losses and dividend distributions."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "46% lack adequate emergency funds, 60% have low health cover: Report",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "A financial report indicates that 57% of Indians carry EMIs, 46% lack three-month emergency reserves, and 60% possess inadequate health insurance cover. The findings highlight significant gaps in household financial preparedness.",
-      "bullet_points": [
-        "57 per cent of Indians currently carry active EMIs.",
-        "46 per cent lack a 3-month emergency reserve fund.",
-        "60 per cent maintain low or inadequate health insurance cover."
-      ],
-      "importance": "Medium"
-    },
-    {
-      "headline": "Retirement corpus: Will your savings last a lifetime? 8 factors to check",
-      "category": "Others",
-      "page_numbers": "Finance",
-      "brief_details": "An advisory guide outlining eight crucial factors needed to evaluate a lifelong retirement corpus. It emphasizes lifestyle inflation, healthcare costs, life expectancy, and systematic withdrawal strategies.",
-      "bullet_points": [
-        "Identifies 8 critical factors for sustainable retirement savings.",
-        "Focuses on inflation, healthcare costs, and longevity risk.",
-        "Evaluates various systematic withdrawal strategies."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Don't hang the ECI just yet, make it work efficiently",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "This opinion piece explores institutional trust, electoral roll revisions, and governance frameworks. It argues for improving the operational efficiency of the Election Commission of India rather than dismissing its role outright.",
-      "bullet_points": [
-        "Focuses on institutional trust in the Election Commission of India.",
-        "Examines electoral-roll revisions and Telangana political dynamics.",
-        "Emphasizes administrative efficiency over cynical institutional dismissal."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Constraints can help sharpen strategy",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "An analytical commentary on how operational and systemic constraints force organizations to prioritize. It highlights that limits expose weak assumptions and reward systems capable of adapting within bounds.",
-      "bullet_points": [
-        "Argues that constraints force vital corporate and strategic priorities.",
-        "Exposes weak underlying assumptions in planning models.",
-        "Rewards systems that learn to operate within realistic limits."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Power is not the same as control",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "This opinion piece examines the nuances of leverage, noting that market power is rarely absolute. It discusses how institutional pushback and economic adjustments often produce resistance instead of compliance.",
-      "bullet_points": [
-        "Explores the distinction between raw power and effective control.",
-        "Notes that economic and market leverage is rarely absolute.",
-        "Discusses how external pressure frequently results in institutional resistance."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Maturity lies in managing risks that progress creates",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "This editorial discusses system resilience, emphasizing that true maturity involves anticipating and managing the secondary risks generated by rapid technological and economic progress.",
-      "bullet_points": [
-        "Focuses on systemic risk management during growth phases.",
-        "Identifies future-proofing as the ultimate test of policy maturity.",
-        "Analyzes the consequences of scaling complex infrastructural systems."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: A test of how power becomes credible",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "An exploration of institutional credibility and state capacity, arguing that true power is sustained only when underlying foundational institutions command genuine public trust.",
-      "bullet_points": [
-        "Examines the core determinants of institutional credibility.",
-        "Argues that sustainable power requires robust and trusted frameworks.",
-        "Reflects on the relationship between authority and governance."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Why AI should worry us more than nuclear weapons",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "A thought-provoking opinion piece assessing artificial intelligence as an existential global security and employment risk. It also touches upon regional governance and family-business valuation challenges.",
-      "bullet_points": [
-        "Compares artificial intelligence risks to nuclear proliferation threats.",
-        "Highlights potential large-scale disruptions to global employment markets.",
-        "Touches upon Brics vulnerabilities and family-business succession issues."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Rules that read well vs those that work",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "A critical look at regulatory frameworks, arguing that meticulously drafted rules are useless unless they deliver practical, efficient results in governance and business operations.",
-      "bullet_points": [
-        "Contrasts theoretical regulatory perfection with practical execution.",
-        "Focuses on accountability in public services and corporate governance.",
-        "Highlights the necessity of pragmatic policy design."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Symptoms demand attention, solutions require diagnosis",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "This editorial warns against superficial policy fixes, noting that strategic mistakes often occur when immediate tactical symptoms are addressed without proper systemic diagnosis.",
-      "bullet_points": [
-        "Critiques the tendency to rely on short-term tactical fixes.",
-        "Argues that genuine solutions require deep structural diagnosis.",
-        "Examines the pitfalls of uncalculated strategic interventions."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Durable progress depends on systems that work",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "The piece argues that while headline economic numbers and brand value grab attention, the true durability of national progress relies entirely on functioning operational systems.",
-      "bullet_points": [
-        "Distinguishes between superficial growth metrics and foundational systems.",
-        "Emphasizes long-term institutional durability over short-term expansion.",
-        "Reviews infrastructural requirements for sustainable development."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Buffers cannot carry a system forever",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "An opinion column warning that economic stability cannot rely perpetually on legacy financial buffers, stockpiles, or inherited defense structures without active adaptation.",
-      "bullet_points": [
-        "Argues against over-reliance on historical financial and policy buffers.",
-        "Highlights the necessity of continuous structural adaptation.",
-        "Warns against complacency during periods of relative economic calm."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Best of BS Opinion: Power without guardrails becomes a risk",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "A philosophical and economic column asserting that unchecked market power, capital narratives, and technological deployment require strict human oversight and ecological guardrails.",
-      "bullet_points": [
-        "Argues that institutional and market power requires rigid guardrails.",
-        "Calls for ecological restraint in developmental planning.",
-        "Emphasizes the necessity of human oversight in advanced technologies."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Tintin or Asterix? Two ways of seeing the world through comic-book genius",
-      "category": "Others",
-      "page_numbers": "BS Opinion",
-      "brief_details": "A lighthearted cultural essay comparing the iconic comic book series Tintin and Asterix, contrasting their worldviews on discovery, irreverence, and authority.",
-      "bullet_points": [
-        "Compares the cultural philosophies of Tintin and Asterix.",
-        "Reflects on literary themes of global exploration and anti-authoritarianism.",
-        "Offers a reflective commentary on societal perceptions of power."
-      ],
-      "importance": "Low"
-    },
     {
       "headline": "Government Policy and Administrative Meetings",
       "category": "Policy",
@@ -791,6 +302,30 @@
         "Outlines timelines and contact details for the resolution professional"
       ],
       "importance": "Medium"
+    },
+    {
+      "headline": "Punjab National Bank Financial and Regulatory Disclosures",
+      "category": "Corporate Events",
+      "page_numbers": "Page 3",
+      "brief_details": "Punjab National Bank issues mandatory financial and regulatory disclosures reflecting its quarterly performance and asset quality. The publication ensures transparency for institutional and retail investors.",
+      "bullet_points": [
+        "Discloses key financial metrics and performance indicators",
+        "Complies with regulatory reporting standards for public sector banks",
+        "Provides transparency on asset quality and financial health"
+      ],
+      "importance": "High"
+    },
+    {
+      "headline": "The Kalupur Commercial Co-op Bank Ltd. Financial Notice",
+      "category": "Corporate Events",
+      "page_numbers": "Page 3",
+      "brief_details": "The Kalupur Commercial Co-op Bank Ltd publishes its statutory financial statement and cooperative updates. The announcement highlights cooperative banking sector performance and local economic participation.",
+      "bullet_points": [
+        "Covers multi-state scheduled cooperative bank performance",
+        "Publishes mandatory financial statements for stakeholders",
+        "Highlights cooperative sector stability and growth"
+      ],
+      "importance": "Low"
     },
     {
       "headline": "Shah Foods Limited Annual General Meeting Notice",
@@ -1682,215 +1217,6 @@
       "importance": "Low"
     },
     {
-      "headline": "Punjab National Bank Financial and Regulatory Disclosures",
-      "category": "Market",
-      "page_numbers": "Page 3",
-      "brief_details": "Punjab National Bank issues mandatory financial and regulatory disclosures reflecting its quarterly performance and asset quality. The publication ensures transparency for institutional and retail investors.",
-      "bullet_points": [
-        "Discloses key financial metrics and performance indicators",
-        "Complies with regulatory reporting standards for public sector banks",
-        "Provides transparency on asset quality and financial health"
-      ],
-      "importance": "High"
-    },
-    {
-      "headline": "The Kalupur Commercial Co-op Bank Ltd. Financial Notice",
-      "category": "Market",
-      "page_numbers": "Page 3",
-      "brief_details": "The Kalupur Commercial Co-op Bank Ltd publishes its statutory financial statement and cooperative updates. The announcement highlights cooperative banking sector performance and local economic participation.",
-      "bullet_points": [
-        "Covers multi-state scheduled cooperative bank performance",
-        "Publishes mandatory financial statements for stakeholders",
-        "Highlights cooperative sector stability and growth"
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Bullion may stay volatile as US data, W Asia tensions take focus: Analysts",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "Gold and silver prices are expected to remain volatile due to incoming US macroeconomic data and West Asia geopolitical tensions. Key indicators like US GDP, PCE inflation, and non-farm payrolls will direct near-term trends.",
-      "bullet_points": [
-        "Bullion sentiment expected to remain choppy and volatile.",
-        "Focus shifting to US GDP, consumer confidence, and PCE inflation data.",
-        "Geopolitical risks involve the US-Iran standoff and Strait of Hormuz developments."
-      ],
-      "importance": "Medium"
-    },
-    {
-      "headline": "Geopolitical developments, crude oil likely to steer stock market this week",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "Analysts suggest that stock market movements during the holiday-shortened week will be dictated by crude oil fluctuations and West Asia geopolitics. Investors will also monitor industrial production figures and macroeconomic releases.",
-      "bullet_points": [
-        "Stock trends driven by geopolitics, crude prices, and bond yields.",
-        "Markets closed on Friday for Mahatma Gandhi Jayanti.",
-        "Key domestic triggers include August IIP and HSBC PMI prints."
-      ],
-      "importance": "Medium"
-    },
-    {
-      "headline": "Augmont Enterprises empanelled by NSE to promote Electronic Gold Receipts",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "Augmont Enterprises has been empanelled by the National Stock Exchange to promote Electronic Gold Receipts (EGR). The partnership aims to support EGR creation, extinguishment, and trading.",
-      "bullet_points": [
-        "Empanelled by the National Stock Exchange (NSE).",
-        "Aims to promote Electronic Gold Receipts (EGR).",
-        "Supports creation, extinguishment, and trading activities."
-      ],
-      "importance": "Medium"
-    },
-    {
-      "headline": "Wheels India allots 11.97 lakh equity shares under QIP issue",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "Wheels India has allotted 11.97 lakh equity shares under its Qualified Institutional Placement (QIP) issue. Post allotment, the paid-up equity share capital increased to Rs 26.86 crore.",
-      "bullet_points": [
-        "Allotted 11.97 lakh equity shares via QIP.",
-        "Paid-up equity share capital increased to Rs 26,86,23,610.",
-        "Face value of shares is Rs 10 each."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Utkarsh Small Finance Bank allots NCDs aggregating to Rs 300 cr",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "Utkarsh Small Finance Bank has successfully allotted Non-Convertible Debentures (NCDs) aggregating to Rs 300 crore. The issuance was executed on a private placement basis.",
-      "bullet_points": [
-        "Total NCDs allotted worth Rs 300 crore.",
-        "Issued on a private placement basis."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Nifty logs longest weekly losing streak since Covid-19 crash in 2020",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "The Nifty index registered its longest weekly losing streak since the Covid-19 crash in March 2020. Market sentiment was dampened by an 11% plunge in Brent crude, hardening bond yields, and insurance stock sell-offs.",
-      "bullet_points": [
-        "Longest weekly losing streak since 2020 crash.",
-        "Brent crude plummeted 11% over the week.",
-        "PB Fintech shares cratered 33% on IRDAI reform fears."
-      ],
-      "importance": "High"
-    },
-    {
-      "headline": "Self-listing 'in the realm of feasibility': NSE chairman Srinivas Injeti",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "NSE Chairman Srinivas Injeti stated that the self-listing of the exchange remains feasible, though potential conflicts of interest must be managed carefully. He described the exchange as essential 'family silver' for investors.",
-      "bullet_points": [
-        "Chairman Srinivas Injeti calls self-listing feasible.",
-        "Stresses careful handling of potential regulatory conflicts.",
-        "Describes NSE as long-term wealth for investors."
-      ],
-      "importance": "Medium"
-    },
-    {
-      "headline": "Sidbi pulls out ₐ6,000 crore 3-year bond issuance as yields harden",
-      "category": "Market",
-      "page_numbers": "BS Markets & IPO",
-      "brief_details": "Small Industries Development Bank of India (Sidbi) has withdrawn its planned Rs 6,000 crore three-year bond issuance. The withdrawal came as investors demanded higher yields amid rising crude prices and US Treasury pressures.",
-      "bullet_points": [
-        "Withdrew Rs 6,000 crore bond issuance.",
-        "Tenor was 3 years.",
-        "Yields hardened due to rising crude and US Treasury yields."
-      ],
-      "importance": "High"
-    },
-    {
-      "headline": "Large, mid, or smallcaps: Pick the right stock strategy for your portfolio",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "An overview of market capitalisation strategies to help investors balance risk and return profiles. It details how to select between large, mid, and smallcap categories.",
-      "bullet_points": [
-        "Explains risk and return dynamics across market caps.",
-        "Helps align asset allocation with individual risk profiles."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Moving from SIPs to direct stock trading? Key skills you need first",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "Discusses the essential skills required for individuals transitioning from mutual fund SIPs to direct equity trading. Emphasizes disciplined research and enhanced risk tolerance.",
-      "bullet_points": [
-        "Transitioning from mutual fund SIPs to direct stocks.",
-        "Requires dedicated research skills and high risk tolerance."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Averaging in stocks vs mutual funds: What you need to know before investing",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "Explores the strategy of averaging down entry costs in stocks versus mutual funds. Warns that blindly buying into falling individual stocks can erode capital.",
-      "bullet_points": [
-        "Compares averaging down strategies in stocks and mutual funds.",
-        "Warns against capital destruction from buying falling stocks."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Systematic investing in individual stocks: Things to know before starting",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "Examines the practice of automated systematic investing in individual stocks. Notes that while it eliminates emotion, it requires ongoing research to avoid complacency.",
-      "bullet_points": [
-        "Automates stock investments similar to mutual fund SIPs.",
-        "Removes emotion but demands continuous fundamental research."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Mastering the market: Key rules for long-term wealth creation and trading",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "Highlights core trading principles centred around patience, discipline, and risk management. Essential rules for building sustainable wealth in the stock market are outlined.",
-      "bullet_points": [
-        "Focuses on discipline, patience, and risk management.",
-        "Aims at sustainable long-term market wealth creation."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Stock Beta explained: What risk and return mean for individual shares",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "A breakdown of stock beta as a measure of market volatility. Explains how investors can use it to gauge potential risk versus expected returns.",
-      "bullet_points": [
-        "Defines stock beta and market volatility measurement.",
-        "Aids investors in weighing return expectations against risk."
-      ],
-      "importance": "Low"
-    },
-    {
-      "headline": "Why investors need to be cautious after run-up in small-cap funds",
-      "category": "Market",
-      "page_numbers": "Finance",
-      "brief_details": "With valuations in the small-cap segment turning expensive, financial experts advise investors to exercise caution. Overweight investors should rebalance portfolios and prefer a staggered investment approach.",
-      "bullet_points": [
-        "Small-cap fund segments have turned expensive following a sharp run-up.",
-        "Investors are advised to rebalance if overweight.",
-        "Recommends systematic and staggered investment approaches."
-      ],
-      "importance": "Medium"
-    },
-    {
-      "headline": "Best of BS Opinion: Rising bond yields can lead to unwanted risks",
-      "category": "Market",
-      "page_numbers": "BS Opinion",
-      "brief_details": "An analysis of climbing global bond yields and the systemic risks they pose to capital markets and corporate borrowing costs. It also touches upon institutional governance and startup investments.",
-      "bullet_points": [
-        "Analyzes the impact of rising global borrowing costs and bond yields.",
-        "Warns of hidden financial vulnerabilities in corporate balance sheets.",
-        "Reviews regulatory oversight in financial institutions and strategic startups."
-      ],
-      "importance": "Medium"
-    },
-    {
       "headline": "Unified Payments Interface (UPI) Growth and Digital Economy Insights",
       "category": "Economy",
       "page_numbers": "Page 4",
@@ -2191,6 +1517,483 @@
         "Demanded enhanced savings and tax exemptions."
       ],
       "importance": "Medium"
+    },
+    {
+      "headline": "Lifestyle and Cultural Photography Showcase",
+      "category": "Others",
+      "page_numbers": "Page 1",
+      "brief_details": "This section features various photographs highlighting urban nightscapes, architectural designs, and lifestyle accessories. The images reflect modern city living and cultural highlights.",
+      "bullet_points": [
+        "Displays night skyline views of modern urban landscapes.",
+        "Features lifestyle and fashion accessories including branded retail items.",
+        "Highlights architectural developments in city hubs."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Wellness and Fitness Trends Visual Report",
+      "category": "Others",
+      "page_numbers": "Page 2",
+      "brief_details": "A visual feature focusing on modern fitness regimes such as Pilates and group workouts. It highlights health trends adopted by urban practitioners.",
+      "bullet_points": [
+        "Features instructor-led Pilates sessions.",
+        "Focuses on group fitness classes and active lifestyles.",
+        "Emphasizes physical well-being and modern exercise routines."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Artistic Masterpieces and Cultural Exhibitions",
+      "category": "Others",
+      "page_numbers": "Page 2",
+      "brief_details": "This cultural segment showcases traditional and contemporary artworks, including classic paintings and historical installations. It explores the influence of art in modern societies.",
+      "bullet_points": [
+        "Showcases classic and contemporary painting exhibitions.",
+        "Features historical artwork references and interpretations.",
+        "Highlights gallery displays and artistic presentations."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Traditional Festivals and Folk Performances",
+      "category": "Others",
+      "page_numbers": "Page 3",
+      "brief_details": "An overview of traditional cultural festivals featuring indigenous performances, ceremonial attire, and community gatherings. The section celebrates diverse regional traditions.",
+      "bullet_points": [
+        "Depicts participants in traditional ceremonial costumes.",
+        "Highlights regional folk music and dance performances.",
+        "Captures community engagement during cultural festivals."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Pet Lifestyle and Creative Portraits",
+      "category": "Others",
+      "page_numbers": "Page 4",
+      "brief_details": "A lighthearted segment showcasing styled portraits of pets in creative settings. It highlights the growing trend of pet lifestyle accessories and photography.",
+      "bullet_points": [
+        "Features stylized portraits of dogs and cats.",
+        "Highlights pet fashion accessories and modern grooming.",
+        "Focuses on popular animal photography trends."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Bank of Baroda Possession Notice",
+      "category": "Others",
+      "page_numbers": "Page 4",
+      "brief_details": "Bank of Baroda has issued a statutory possession notice under the Securitisation and Reconstruction of Financial Assets and Enforcement of Security Interest Act. The notice details properties secured against defaulted loans.",
+      "bullet_points": [
+        "Issued by the Authorized Officer of Bank of Baroda.",
+        "Targets borrowers who have failed to repay their dues within the stipulated time.",
+        "Details physical/symbolic possession of the secured immovable properties.",
+        "Invokes provisions of the SARFAESI Act, 2002."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Down and out in paradise",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "This book review examines poverty persistence in the United States. It argues that maintaining a segment of the population in poverty serves the economic interests of many.",
+      "bullet_points": [
+        "Focuses on poverty in the wealthy US.",
+        "Explores socioeconomic dynamics."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Betrayal and survival",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "A critical review of Ian Buruma's book 'The Collaborators'. The review notes that readers may find the author's moral permissiveness toward his subjects' actions challenging.",
+      "bullet_points": [
+        "Reviews Ian Buruma's 'The Collaborators'.",
+        "Discusses moral barometers and historical conduct."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "The electrome syndrome",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "Sally Adee's book provides an absorbing and fast-paced account of emerging bioelectronic medicine research. The field could potentially herald a paradigm-shifting medical era.",
+      "bullet_points": [
+        "Authored by Sally Adee.",
+        "Covers research in bioelectric medicine."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Unlikely rebels with a cause",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "An essay reflecting on the scarcity of women in high-level scientific roles during the early 1960s. Women scientists in leadership positions were exceptionally rare during this period.",
+      "bullet_points": [
+        "Set in the early 1960s.",
+        "Highlights women in science."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Palo Alto, Marxian nightmare",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "A book review analyzing capitalist developments and historical interventions such as FDR's New Deal. The text explores the socio-political complexities of Silicon Valley's history.",
+      "bullet_points": [
+        "Reviews capitalist developments.",
+        "Discusses historical shifts like FDR's New Deal."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "A media mogul's toxic legacy",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "An analytical piece detailing the misogyny and toxic legacy of media mogul Redstone. It explores how immense wealth and power distorted personal relationships and corporate ethics.",
+      "bullet_points": [
+        "Examines media mogul Redstone's legacy.",
+        "Discusses issues of power and misogyny."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "What does it mean to be liberal?",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "A review of a biographical book filled with anecdotes from a long-time editor of the leftist magazine Dissent. It highlights a life dedicated to political activism and public intellectualism.",
+      "bullet_points": [
+        "Reflects on liberal philosophy and activism.",
+        "Features anecdotes from a Dissent magazine editor."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Muzaffar Ali: A creative journey through many lives expressed in art",
+      "category": "Others",
+      "page_numbers": "Companies & Corporate",
+      "brief_details": "A profile on filmmaker, designer, and poet Muzaffar Ali. His exhibition in Delhi showcases a diverse collection of artworks created over a span of 50 years.",
+      "bullet_points": [
+        "Showcases Muzaffar Ali's 50-year art career.",
+        "Exhibition held in Delhi."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "A culinary tour of the Chinese diaspora",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "An exploration of the lives and adapted menus of Chinese immigrant restaurateurs across the globe. It highlights their resourcefulness, economic pragmatism, and perseverance.",
+      "bullet_points": [
+        "Covers Chinese immigrant restaurateurs from the Arctic to the Amazon.",
+        "Examines how culinary traditions are adapted globally.",
+        "Highlights perseverance and economic pragmatism."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "The art of 'achieving' humility",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "A review of the book 'In Praise of Failure', describing it as a maddening and seductive read. It explores deep philosophical concepts regarding success and humility.",
+      "bullet_points": [
+        "Review of the book 'In Praise of Failure'.",
+        "Explores philosophical themes of humility and failure."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "From pest to ecosystem engineer",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "Leila Philip's book contributes to the genre of pro-beaver literature, reframing the animal from a pest to an ecosystem engineer. The review highlights the growing body of ecological writing.",
+      "bullet_points": [
+        "Authored by Leila Philip focusing on beavers.",
+        "Reframes beavers as crucial ecosystem engineers.",
+        "Part of a growing genre of environmental literature."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "India in the nitty-gritty",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "A review of former Cabinet Secretary K M Chandrasekhar's memoir detailing major events during his tenure. The book offers a remarkable account including the Mumbai terrorist attacks.",
+      "bullet_points": [
+        "Memoir written by former Cabinet Secretary K M Chandrasekhar.",
+        "Covers major historical events including the Mumbai terrorist attacks.",
+        "Provides insider accounts of Indian bureaucratic governance."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "A book of cheeky obituaries",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "A lighthearted look into a collection of obituaries featuring entertaining characters like Mountgarret. The book showcases witty and unconventional life summaries.",
+      "bullet_points": [
+        "Features entertaining and cheeky obituaries.",
+        "Highlights notable eccentric characters such as Mountgarret."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "History of Hollywood",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "A compilation of behind-the-scenes stories, technical facts, and humorous anecdotes about Hollywood. It highlights the complaints of studio executives and interactions with critics.",
+      "bullet_points": [
+        "Details on-set stories and technical aspects of filmmaking.",
+        "Includes humorous anecdotes about actors and studio executives."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "On a wing and a prayer",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "A review of John Lancaster's book 'The Great Air Race', capturing the early days of aviation. It vividly describes the vastly different environment of the aviation industry a century ago.",
+      "bullet_points": [
+        "Review of John Lancaster's 'The Great Air Race'.",
+        "Conveys the historical context of early aviation a century ago."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Hoover: Bravery and black bag jobs",
+      "category": "Others",
+      "page_numbers": "BS Companies & Corporate",
+      "brief_details": "A review of Yale historian Beverly Gage's biography 'GMan', detailing the complex life and operations of J. Edgar Hoover. The book explores his controversial career and bureau activities.",
+      "bullet_points": [
+        "Authored by Yale historian Beverly Gage.",
+        "Biographical account titled 'G-Man' focusing on J. Edgar Hoover.",
+        "Covers sensitive operations and historical controversies."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Financial foundation: Why insurance and emergency funds must precede stocks",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "Establishing income security and emergency reserves is crucial before entering equity markets. Financial planners emphasize that safeguarding essentials protects individuals from market volatility.",
+      "bullet_points": [
+        "Insurance and emergency funds are mandatory prerequisites before investing in stocks.",
+        "Protects personal financial stability against sudden market volatility."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Live on rent or purchase a home? How to make a decision in your 30s",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "A guide for young professionals in their 30s evaluating whether to rent or buy a home. It highlights the importance of balancing financial discipline with psychological stability.",
+      "bullet_points": [
+        "Targeted at young professionals in their 30s.",
+        "Weighs long-term financial discipline against emotional comfort."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Rent versus buying a home: How should a young professional decide?",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "An analysis of hidden homeownership expenses and opportunity costs. It helps young professionals calculate whether buying property aligns with long-term financial goals.",
+      "bullet_points": [
+        "Evaluates hidden ownership costs versus renting.",
+        "Focuses on long-term wealth alignment for young earners."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Money mistakes young professionals make in their first 5 years of earning",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "Outlines common financial traps during the initial career years, including lifestyle inflation and delayed compounding. Early habits are shown to deeply impact long-term wealth creation.",
+      "bullet_points": [
+        "Focuses on the first five earning years.",
+        "Warns against lifestyle inflation and missing out on compounding."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Mutual fund tax rules: How SIPs, switches and losses affect capital gains",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "An explanatory guide detailing how mutual fund SIP installments, fund switches, and IDCW impact capital gains tax calculations. Outlines methods to track purchase dates and offset capital losses.",
+      "bullet_points": [
+        "Each SIP installment is treated separately for tax calculations.",
+        "Details rules for tracking purchase dates and mutual fund switches.",
+        "Explains handling of capital losses and dividend distributions."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "46% lack adequate emergency funds, 60% have low health cover: Report",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "A financial report indicates that 57% of Indians carry EMIs, 46% lack three-month emergency reserves, and 60% possess inadequate health insurance cover. The findings highlight significant gaps in household financial preparedness.",
+      "bullet_points": [
+        "57 per cent of Indians currently carry active EMIs.",
+        "46 per cent lack a 3-month emergency reserve fund.",
+        "60 per cent maintain low or inadequate health insurance cover."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Retirement corpus: Will your savings last a lifetime? 8 factors to check",
+      "category": "Others",
+      "page_numbers": "Finance",
+      "brief_details": "An advisory guide outlining eight crucial factors needed to evaluate a lifelong retirement corpus. It emphasizes lifestyle inflation, healthcare costs, life expectancy, and systematic withdrawal strategies.",
+      "bullet_points": [
+        "Identifies 8 critical factors for sustainable retirement savings.",
+        "Focuses on inflation, healthcare costs, and longevity risk.",
+        "Evaluates various systematic withdrawal strategies."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Don't hang the ECI just yet, make it work efficiently",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "This opinion piece explores institutional trust, electoral roll revisions, and governance frameworks. It argues for improving the operational efficiency of the Election Commission of India rather than dismissing its role outright.",
+      "bullet_points": [
+        "Focuses on institutional trust in the Election Commission of India.",
+        "Examines electoral-roll revisions and Telangana political dynamics.",
+        "Emphasizes administrative efficiency over cynical institutional dismissal."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Constraints can help sharpen strategy",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "An analytical commentary on how operational and systemic constraints force organizations to prioritize. It highlights that limits expose weak assumptions and reward systems capable of adapting within bounds.",
+      "bullet_points": [
+        "Argues that constraints force vital corporate and strategic priorities.",
+        "Exposes weak underlying assumptions in planning models.",
+        "Rewards systems that learn to operate within realistic limits."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Power is not the same as control",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "This opinion piece examines the nuances of leverage, noting that market power is rarely absolute. It discusses how institutional pushback and economic adjustments often produce resistance instead of compliance.",
+      "bullet_points": [
+        "Explores the distinction between raw power and effective control.",
+        "Notes that economic and market leverage is rarely absolute.",
+        "Discusses how external pressure frequently results in institutional resistance."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Maturity lies in managing risks that progress creates",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "This editorial discusses system resilience, emphasizing that true maturity involves anticipating and managing the secondary risks generated by rapid technological and economic progress.",
+      "bullet_points": [
+        "Focuses on systemic risk management during growth phases.",
+        "Identifies future-proofing as the ultimate test of policy maturity.",
+        "Analyzes the consequences of scaling complex infrastructural systems."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: A test of how power becomes credible",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "An exploration of institutional credibility and state capacity, arguing that true power is sustained only when underlying foundational institutions command genuine public trust.",
+      "bullet_points": [
+        "Examines the core determinants of institutional credibility.",
+        "Argues that sustainable power requires robust and trusted frameworks.",
+        "Reflects on the relationship between authority and governance."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Why AI should worry us more than nuclear weapons",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "A thought-provoking opinion piece assessing artificial intelligence as an existential global security and employment risk. It also touches upon regional governance and family-business valuation challenges.",
+      "bullet_points": [
+        "Compares artificial intelligence risks to nuclear proliferation threats.",
+        "Highlights potential large-scale disruptions to global employment markets.",
+        "Touches upon Brics vulnerabilities and family-business succession issues."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Rules that read well vs those that work",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "A critical look at regulatory frameworks, arguing that meticulously drafted rules are useless unless they deliver practical, efficient results in governance and business operations.",
+      "bullet_points": [
+        "Contrasts theoretical regulatory perfection with practical execution.",
+        "Focuses on accountability in public services and corporate governance.",
+        "Highlights the necessity of pragmatic policy design."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Symptoms demand attention, solutions require diagnosis",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "This editorial warns against superficial policy fixes, noting that strategic mistakes often occur when immediate tactical symptoms are addressed without proper systemic diagnosis.",
+      "bullet_points": [
+        "Critiques the tendency to rely on short-term tactical fixes.",
+        "Argues that genuine solutions require deep structural diagnosis.",
+        "Examines the pitfalls of uncalculated strategic interventions."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Durable progress depends on systems that work",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "The piece argues that while headline economic numbers and brand value grab attention, the true durability of national progress relies entirely on functioning operational systems.",
+      "bullet_points": [
+        "Distinguishes between superficial growth metrics and foundational systems.",
+        "Emphasizes long-term institutional durability over short-term expansion.",
+        "Reviews infrastructural requirements for sustainable development."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Buffers cannot carry a system forever",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "An opinion column warning that economic stability cannot rely perpetually on legacy financial buffers, stockpiles, or inherited defense structures without active adaptation.",
+      "bullet_points": [
+        "Argues against over-reliance on historical financial and policy buffers.",
+        "Highlights the necessity of continuous structural adaptation.",
+        "Warns against complacency during periods of relative economic calm."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Best of BS Opinion: Power without guardrails becomes a risk",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "A philosophical and economic column asserting that unchecked market power, capital narratives, and technological deployment require strict human oversight and ecological guardrails.",
+      "bullet_points": [
+        "Argues that institutional and market power requires rigid guardrails.",
+        "Calls for ecological restraint in developmental planning.",
+        "Emphasizes the necessity of human oversight in advanced technologies."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Tintin or Asterix? Two ways of seeing the world through comic-book genius",
+      "category": "Others",
+      "page_numbers": "BS Opinion",
+      "brief_details": "A lighthearted cultural essay comparing the iconic comic book series Tintin and Asterix, contrasting their worldviews on discovery, irreverence, and authority.",
+      "bullet_points": [
+        "Compares the cultural philosophies of Tintin and Asterix.",
+        "Reflects on literary themes of global exploration and anti-authoritarianism.",
+        "Offers a reflective commentary on societal perceptions of power."
+      ],
+      "importance": "Low"
     },
     {
       "headline": "Global Tourism and Digital Navigation Update",
@@ -2601,6 +2404,191 @@
         "Debunks simplistic narratives surrounding the manufacturing 'China shock'.",
         "Points out that US factory job declines predated China's WTO accession.",
         "Emphasizes the role of automation and domestic economic shifts."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Bullion may stay volatile as US data, W Asia tensions take focus: Analysts",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "Gold and silver prices are expected to remain volatile due to incoming US macroeconomic data and West Asia geopolitical tensions. Key indicators like US GDP, PCE inflation, and non-farm payrolls will direct near-term trends.",
+      "bullet_points": [
+        "Bullion sentiment expected to remain choppy and volatile.",
+        "Focus shifting to US GDP, consumer confidence, and PCE inflation data.",
+        "Geopolitical risks involve the US-Iran standoff and Strait of Hormuz developments."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Geopolitical developments, crude oil likely to steer stock market this week",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "Analysts suggest that stock market movements during the holiday-shortened week will be dictated by crude oil fluctuations and West Asia geopolitics. Investors will also monitor industrial production figures and macroeconomic releases.",
+      "bullet_points": [
+        "Stock trends driven by geopolitics, crude prices, and bond yields.",
+        "Markets closed on Friday for Mahatma Gandhi Jayanti.",
+        "Key domestic triggers include August IIP and HSBC PMI prints."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Augmont Enterprises empanelled by NSE to promote Electronic Gold Receipts",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "Augmont Enterprises has been empanelled by the National Stock Exchange to promote Electronic Gold Receipts (EGR). The partnership aims to support EGR creation, extinguishment, and trading.",
+      "bullet_points": [
+        "Empanelled by the National Stock Exchange (NSE).",
+        "Aims to promote Electronic Gold Receipts (EGR).",
+        "Supports creation, extinguishment, and trading activities."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Wheels India allots 11.97 lakh equity shares under QIP issue",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "Wheels India has allotted 11.97 lakh equity shares under its Qualified Institutional Placement (QIP) issue. Post allotment, the paid-up equity share capital increased to Rs 26.86 crore.",
+      "bullet_points": [
+        "Allotted 11.97 lakh equity shares via QIP.",
+        "Paid-up equity share capital increased to Rs 26,86,23,610.",
+        "Face value of shares is Rs 10 each."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Utkarsh Small Finance Bank allots NCDs aggregating to Rs 300 cr",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "Utkarsh Small Finance Bank has successfully allotted Non-Convertible Debentures (NCDs) aggregating to Rs 300 crore. The issuance was executed on a private placement basis.",
+      "bullet_points": [
+        "Total NCDs allotted worth Rs 300 crore.",
+        "Issued on a private placement basis."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Nifty logs longest weekly losing streak since Covid-19 crash in 2020",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "The Nifty index registered its longest weekly losing streak since the Covid-19 crash in March 2020. Market sentiment was dampened by an 11% plunge in Brent crude, hardening bond yields, and insurance stock sell-offs.",
+      "bullet_points": [
+        "Longest weekly losing streak since 2020 crash.",
+        "Brent crude plummeted 11% over the week.",
+        "PB Fintech shares cratered 33% on IRDAI reform fears."
+      ],
+      "importance": "High"
+    },
+    {
+      "headline": "Self-listing 'in the realm of feasibility': NSE chairman Srinivas Injeti",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "NSE Chairman Srinivas Injeti stated that the self-listing of the exchange remains feasible, though potential conflicts of interest must be managed carefully. He described the exchange as essential 'family silver' for investors.",
+      "bullet_points": [
+        "Chairman Srinivas Injeti calls self-listing feasible.",
+        "Stresses careful handling of potential regulatory conflicts.",
+        "Describes NSE as long-term wealth for investors."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Sidbi pulls out ₐ6,000 crore 3-year bond issuance as yields harden",
+      "category": "Market",
+      "page_numbers": "BS Markets & IPO",
+      "brief_details": "Small Industries Development Bank of India (Sidbi) has withdrawn its planned Rs 6,000 crore three-year bond issuance. The withdrawal came as investors demanded higher yields amid rising crude prices and US Treasury pressures.",
+      "bullet_points": [
+        "Withdrew Rs 6,000 crore bond issuance.",
+        "Tenor was 3 years.",
+        "Yields hardened due to rising crude and US Treasury yields."
+      ],
+      "importance": "High"
+    },
+    {
+      "headline": "Large, mid, or smallcaps: Pick the right stock strategy for your portfolio",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "An overview of market capitalisation strategies to help investors balance risk and return profiles. It details how to select between large, mid, and smallcap categories.",
+      "bullet_points": [
+        "Explains risk and return dynamics across market caps.",
+        "Helps align asset allocation with individual risk profiles."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Moving from SIPs to direct stock trading? Key skills you need first",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "Discusses the essential skills required for individuals transitioning from mutual fund SIPs to direct equity trading. Emphasizes disciplined research and enhanced risk tolerance.",
+      "bullet_points": [
+        "Transitioning from mutual fund SIPs to direct stocks.",
+        "Requires dedicated research skills and high risk tolerance."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Averaging in stocks vs mutual funds: What you need to know before investing",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "Explores the strategy of averaging down entry costs in stocks versus mutual funds. Warns that blindly buying into falling individual stocks can erode capital.",
+      "bullet_points": [
+        "Compares averaging down strategies in stocks and mutual funds.",
+        "Warns against capital destruction from buying falling stocks."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Systematic investing in individual stocks: Things to know before starting",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "Examines the practice of automated systematic investing in individual stocks. Notes that while it eliminates emotion, it requires ongoing research to avoid complacency.",
+      "bullet_points": [
+        "Automates stock investments similar to mutual fund SIPs.",
+        "Removes emotion but demands continuous fundamental research."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Mastering the market: Key rules for long-term wealth creation and trading",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "Highlights core trading principles centred around patience, discipline, and risk management. Essential rules for building sustainable wealth in the stock market are outlined.",
+      "bullet_points": [
+        "Focuses on discipline, patience, and risk management.",
+        "Aims at sustainable long-term market wealth creation."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Stock Beta explained: What risk and return mean for individual shares",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "A breakdown of stock beta as a measure of market volatility. Explains how investors can use it to gauge potential risk versus expected returns.",
+      "bullet_points": [
+        "Defines stock beta and market volatility measurement.",
+        "Aids investors in weighing return expectations against risk."
+      ],
+      "importance": "Low"
+    },
+    {
+      "headline": "Why investors need to be cautious after run-up in small-cap funds",
+      "category": "Market",
+      "page_numbers": "Finance",
+      "brief_details": "With valuations in the small-cap segment turning expensive, financial experts advise investors to exercise caution. Overweight investors should rebalance portfolios and prefer a staggered investment approach.",
+      "bullet_points": [
+        "Small-cap fund segments have turned expensive following a sharp run-up.",
+        "Investors are advised to rebalance if overweight.",
+        "Recommends systematic and staggered investment approaches."
+      ],
+      "importance": "Medium"
+    },
+    {
+      "headline": "Best of BS Opinion: Rising bond yields can lead to unwanted risks",
+      "category": "Market",
+      "page_numbers": "BS Opinion",
+      "brief_details": "An analysis of climbing global bond yields and the systemic risks they pose to capital markets and corporate borrowing costs. It also touches upon institutional governance and startup investments.",
+      "bullet_points": [
+        "Analyzes the impact of rising global borrowing costs and bond yields.",
+        "Warns of hidden financial vulnerabilities in corporate balance sheets.",
+        "Reviews regulatory oversight in financial institutions and strategic startups."
       ],
       "importance": "Medium"
     }

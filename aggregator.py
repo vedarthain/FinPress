@@ -143,6 +143,22 @@ class UnifiedNewsAggregator:
         category_map = defaultdict(list)
         total_raw_count = 0
 
+        def is_filler_headline(hl: str) -> bool:
+            h = hl.lower()
+            return any(k in h for k in [
+                "special edition and general overview", "general overview", "newspaper overview",
+                "sunday special edition", "fe sunday special", "edition overview", "e-paper index",
+                "page index", "table of contents"
+            ])
+
+        def sanitize_category(cat: str, hl: str, brief: str) -> str:
+            text = (hl + " " + brief).lower()
+            if cat == "Market":
+                notice_terms = ["disclosure", "public notice", "statutory notice", "possession notice", "postal ballot", "e-voting", "annual general meeting", "agm notice", "egm notice", "co-op bank", "co-operative bank", "auction notice"]
+                if any(t in text for t in notice_terms):
+                    return "Corporate Events"
+            return cat
+
         for item in reports_with_sources:
             if isinstance(item, tuple):
                 r, source_name = item
@@ -150,10 +166,15 @@ class UnifiedNewsAggregator:
                 r, source_name = item, "Newspaper"
 
             for s in r.major_stories:
+                if is_filler_headline(s.headline):
+                    logger.info(f"Skipping editorial filler/overview story: {s.headline}")
+                    continue
+
+                clean_cat = sanitize_category(s.category, s.headline, s.brief_details)
                 total_raw_count += 1
-                category_map[s.category].append({
+                category_map[clean_cat].append({
                     "source": source_name,
-                    "category": s.category,
+                    "category": clean_cat,
                     "headline": s.headline,
                     "brief_details": s.brief_details,
                     "bullet_points": s.bullet_points,
@@ -162,10 +183,6 @@ class UnifiedNewsAggregator:
                 })
 
         logger.info(f"Aggregating {total_raw_count} total raw stories across {len(category_map)} sections...")
-
-        from google import genai
-        client = genai.Client(api_key=config.gemini_api_key)
-        model_name = "gemini-flash-lite-latest"
 
         master_stories: List[NewsStory] = []
 

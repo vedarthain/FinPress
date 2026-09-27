@@ -81,15 +81,15 @@ const HTML = `<!DOCTYPE html>
           <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[12.5px] font-bold px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
             <option value="ALL">✨ All Sections (218)</option>
             <option value="Sector">Sector (43)</option>
-            <option value="Corporate Events">Corporate Events (33)</option>
+            <option value="Corporate Events">Corporate Events (35)</option>
             <option value="Economy">Economy (25)</option>
             <option value="Policy">Policy (23)</option>
-            <option value="Market">Market (18)</option>
+            <option value="Market">Market (16)</option>
             <option value="IPO">IPO (17)</option>
             <option value="International News">International (8)</option>
             <option value="Corporate Appointments">Appointments (5)</option>
             <option value="Trade">Trade (4)</option>
-            <option value="Others">Others (42)</option>
+            <option value="Others">Others (40)</option>
           </select>
 
           <div class="flex items-center bg-slate-100 dark:bg-[#141A2E] p-0.5 rounded-md border border-slate-200 dark:border-slate-800 text-[12px] font-bold">
@@ -135,7 +135,7 @@ const HTML = `<!DOCTYPE html>
 
     </header>
 
-    <!-- Slim Market Pulse Bar -->
+    <!-- Slim Market Pulse Bar with Calendar & Date Navigation -->
     <div class="bg-slate-900 text-slate-300 text-[11px] font-mono px-3.5 py-1 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-4 border-b border-slate-800">
       <div class="flex items-center gap-3.5">
         <span class="text-amber-400 font-bold">PULSE:</span>
@@ -145,14 +145,28 @@ const HTML = `<!DOCTYPE html>
         <span>BRENT <b class="text-amber-300 font-bold">\$74.2/bbl</b></span>
         <span>USD/INR <b class="text-slate-200 font-bold">₹83.65</b></span>
       </div>
-      <div class="flex items-center gap-3 text-slate-400">
-        <div class="flex items-center gap-1.5 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
-          <span class="text-slate-400 text-[10.5px]">📅 Edition:</span>
-          <select id="edition-date-select" onchange="onDateChange(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11px] focus:outline-none cursor-pointer">
-            <option value="latest">Latest Edition</option>
-          </select>
+
+      <!-- Historical Calendar & Edition Navigation -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1 bg-slate-800/90 p-0.5 rounded-md border border-slate-700">
+          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Previous Date in History (Arrow Left)">
+            ◀ Prev Day
+          </button>
+          
+          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-slate-900/80 rounded border border-slate-700/60">
+            <span class="text-slate-400 text-xs">📅</span>
+            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[110px]"/>
+            <select id="edition-date-select" onchange="onDateChange(this.value)" class="bg-transparent text-slate-200 font-bold font-mono text-[11px] focus:outline-none cursor-pointer pl-1 border-l border-slate-700">
+              <option value="latest">Latest</option>
+            </select>
+          </div>
+
+          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Next Date (Arrow Right)">
+            Next Day ▶
+          </button>
         </div>
-        <span id="scan-count-badge" class="text-emerald-400 font-bold">● 218 Stories Scanned (FE + BS)</span>
+
+        <span id="scan-count-badge" class="text-emerald-400 font-bold shrink-0">● 217 Stories Scanned</span>
       </div>
     </div>
 
@@ -165,8 +179,11 @@ const HTML = `<!DOCTYPE html>
         <!-- COLUMN 1: COMPACT NEWS FEED LIST -->
         <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
           <div class="px-3.5 py-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 flex items-center justify-between text-[12px] font-mono">
-            <span id="feed-list-count" class="font-bold text-slate-800 dark:text-slate-200">218 Stories</span>
-            <span class="text-slate-400">Keys: <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">J</kbd> / <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">K</kbd></span>
+            <span id="feed-list-count" class="font-bold text-slate-800 dark:text-slate-200">217 Stories</span>
+            <div class="flex items-center gap-1.5">
+              <button onclick="navigateStory(-1)" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10px] font-bold text-slate-600 dark:text-slate-300" title="Previous Story (K or Up Arrow)">▲ Prev</button>
+              <button onclick="navigateStory(1)" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10px] font-bold text-slate-600 dark:text-slate-300" title="Next Story (J or Down Arrow)">▼ Next</button>
+            </div>
           </div>
 
           <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[calc(100vh-6.5rem)] overflow-y-auto">
@@ -281,6 +298,8 @@ const HTML = `<!DOCTYPE html>
     let selectedStoryIndex = 0;
     let currentIpoFilter = "ALL";
     let currentSearchQuery = "";
+    let availableDates = [];
+    let currentDateIndex = 0;
 
     const allowedSections = [
       "ALL", "Economy", "Policy", "Sector", "IPO", "Market", "Trade",
@@ -383,18 +402,73 @@ const HTML = `<!DOCTYPE html>
       renderFeedList();
     }
 
-    function parseStory(story, idx) {
-      const text = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toLowerCase();
-      const bullishWords = ["surge", "growth", "profit up", "revenue up", "expansion", "order win", "contract", "approval", "bonus", "dividend", "outperform", "bullish", "record high", "upgrade", "stake buy", "acquisition", "rate cut", "duty cut", "exemption", "inflow", "raises guidance"];
-      const bearishWords = ["drop", "slump", "falls", "loss", "losses", "profit down", "revenue falls", "probe", "penalty", "fine", "fraud", "curb", "default", "downgrade", "weak", "warning", "tax hike", "tariff", "outflow", "selloff", "strike", "dispute", "cancellation"];
+    function isFillerHeadline(hl) {
+      const h = hl.toLowerCase();
+      return (
+        h.includes("special edition and general overview") ||
+        h.includes("general overview") ||
+        h.includes("newspaper overview") ||
+        h.includes("sunday special edition") ||
+        h.includes("fe sunday special") ||
+        h.includes("edition overview") ||
+        h.includes("e-paper index") ||
+        h.includes("table of contents")
+      );
+    }
 
-      let b = 0, r = 0;
-      bullishWords.forEach(w => { if (text.includes(w)) b++; });
-      bearishWords.forEach(w => { if (text.includes(w)) r++; });
+    function parseStory(story, idx) {
+      if (isFillerHeadline(story.headline)) return null;
+
+      const fullText = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toLowerCase();
+      
+      // Strict Market Section Rule: Bank disclosures/Statutory notices belong in Corporate Events
+      let category = story.category;
+      if (category === "Market") {
+        const noticeTerms = ["disclosure", "public notice", "statutory notice", "possession notice", "postal ballot", "e-voting", "annual general meeting", "agm notice", "egm notice", "co-op bank", "co-operative bank", "financial and regulatory disclosure"];
+        if (noticeTerms.some(t => fullText.includes(t))) {
+          category = "Corporate Events";
+        }
+      }
+
+      const bullishTriggers = [
+        { k: "order win", r: "Contract / Order Inflow expands near-term revenue visibility." },
+        { k: "mou", r: "Strategic MoU / Partnership accelerates joint development and market reach." },
+        { k: "expansion", r: "Capacity Expansion / New facility enhances long-term operational throughput." },
+        { k: "profit up", r: "Strong bottom-line growth signals healthy operational leverage." },
+        { k: "revenue up", r: "Topline growth indicates robust market demand and pricing power." },
+        { k: "approval", r: "Key regulatory/government clearance removes project bottleneck." },
+        { k: "dividend", r: "Shareholder payout / capital return signals healthy balance-sheet liquidity." },
+        { k: "exemption", r: "Policy duty waiver / tax exemption improves gross margins." },
+        { k: "surge", r: "Sharp positive volume/demand breakout across core business segments." }
+      ];
+
+      const bearishRisks = [
+        { k: "penalty", r: "Regulatory penalty / Show-cause notice creates near-term compliance headwind." },
+        { k: "fine", r: "Monetary penalty imposes financial liability and compliance friction." },
+        { k: "probe", r: "Regulatory/tax scrutiny introduces headline risk and governance scrutiny." },
+        { k: "loss", r: "Widening losses or margin compression weigh on fundamental valuation." },
+        { k: "slump", r: "Demand deceleration or volume contraction creates earnings drag." },
+        { k: "falls", r: "Topline or net margin contraction signals weakening operating leverage." },
+        { k: "tax hike", r: "Increased duty/tax burdens directly compress profit spreads." },
+        { k: "curb", r: "Export/import curbs or policy restrictions limit addressable business." }
+      ];
+
+      let matchedBullish = [];
+      bullishTriggers.forEach(t => { if (fullText.includes(t.k)) matchedBullish.push(t.r); });
+
+      let matchedBearish = [];
+      bearishRisks.forEach(t => { if (fullText.includes(t.k)) matchedBearish.push(t.r); });
 
       let sentiment = "NEUTRAL";
-      if (b > r) sentiment = "BULLISH";
-      else if (r > b) sentiment = "BEARISH";
+      let sentimentReasoning = "Baseline monitoring trigger: Ongoing operational development, sector-wide baseline trend, or corporate filing to track for subsequent quarterly performance.";
+
+      if (matchedBullish.length > matchedBearish.length) {
+        sentiment = "BULLISH";
+        sentimentReasoning = matchedBullish.slice(0, 2).join(" Additionally, ");
+      } else if (matchedBearish.length > matchedBullish.length) {
+        sentiment = "BEARISH";
+        sentimentReasoning = matchedBearish.slice(0, 2).join(" Additionally, ");
+      }
 
       const detectedTickers = [];
       const upperText = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toUpperCase();
@@ -407,10 +481,11 @@ const HTML = `<!DOCTYPE html>
       return {
         ...story,
         id: idx + 1,
+        category: allowedSections.includes(category) ? category : "Others",
         sentiment,
+        sentimentReasoning,
         tickers: [...new Set(detectedTickers)].slice(0, 3),
-        catalyst,
-        category: allowedSections.includes(story.category) ? story.category : "Others"
+        catalyst
       };
     }
 
@@ -476,23 +551,42 @@ const HTML = `<!DOCTYPE html>
       try {
         const res = await fetch('/api/dates');
         if (res.ok) {
-          const dates = await res.json();
+          availableDates = await res.json();
           const select = document.getElementById("edition-date-select");
-          if (dates && dates.length > 0) {
+          if (availableDates && availableDates.length > 0) {
             select.innerHTML = "";
-            dates.forEach((d, idx) => {
+            availableDates.forEach((d, idx) => {
               const opt = document.createElement("option");
               opt.value = d;
               opt.textContent = idx === 0 ? \`\${d} (Latest)\` : d;
               opt.className = "bg-slate-900 text-white font-mono";
               select.appendChild(opt);
             });
+            document.getElementById("calendar-picker").value = availableDates[0];
           }
         }
       } catch (e) {}
     }
 
+    function navigateDate(dir) {
+      if (!availableDates || availableDates.length === 0) return;
+      currentDateIndex += dir;
+      if (currentDateIndex < 0) currentDateIndex = 0;
+      if (currentDateIndex >= availableDates.length) currentDateIndex = availableDates.length - 1;
+      const target = availableDates[currentDateIndex];
+      document.getElementById("edition-date-select").value = target;
+      document.getElementById("calendar-picker").value = target;
+      loadData(target);
+    }
+
+    function onCalendarSelect(val) {
+      if (!val) return;
+      document.getElementById("edition-date-select").value = val;
+      loadData(val);
+    }
+
     async function onDateChange(selectedDate) {
+      document.getElementById("calendar-picker").value = selectedDate;
       await loadData(selectedDate);
     }
 
@@ -513,17 +607,14 @@ const HTML = `<!DOCTYPE html>
       }
 
       if (rawReport && rawReport.major_stories) {
-        const dateSelect = document.getElementById("edition-date-select");
-        if (dateSelect && rawReport.edition_date && !targetDate) {
-          // If option exists, select it
-          for (let opt of dateSelect.options) {
-            if (opt.value === rawReport.edition_date) {
-              opt.selected = true;
-              break;
-            }
-          }
-        }
-        stories = rawReport.major_stories.map((s, idx) => parseStory(s, idx));
+        const d = rawReport.edition_date || "Today";
+        const dateInput = document.getElementById("calendar-picker");
+        if (dateInput && rawReport.edition_date) dateInput.value = rawReport.edition_date;
+        
+        stories = rawReport.major_stories
+          .map((s, idx) => parseStory(s, idx))
+          .filter(Boolean); // Filter out any junk / filler overview stories
+
         const rawIpos = stories.filter(s => s.category === "IPO");
         ipoList = rawIpos.map((s, idx) => parseIpoItem(s, idx));
         initMetrics();
@@ -533,6 +624,7 @@ const HTML = `<!DOCTYPE html>
     function initMetrics() {
       document.getElementById("tab-feed-count").textContent = stories.length;
       document.getElementById("tab-ipo-count").textContent = ipoList.length;
+      document.getElementById("scan-count-badge").textContent = \`● \${stories.length} Stories Scanned\`;
 
       let bCount = 0, rCount = 0;
       stories.forEach(s => {
@@ -546,6 +638,16 @@ const HTML = `<!DOCTYPE html>
       renderStocksFocusSidebar();
       renderFeedList();
       renderIpoTable();
+    }
+
+    function navigateStory(dir) {
+      const container = document.getElementById("feed-list-container");
+      const total = stories.length;
+      if (total === 0) return;
+      selectedStoryIndex += dir;
+      if (selectedStoryIndex < 0) selectedStoryIndex = 0;
+      if (selectedStoryIndex >= total) selectedStoryIndex = total - 1;
+      renderFeedList();
     }
 
     // ================= SEARCH HANDLING =================
@@ -658,7 +760,6 @@ const HTML = `<!DOCTYPE html>
       const queryTokens = rawQuery ? rawQuery.split(/\\s+/).filter(Boolean) : [];
       
       const displayed = stories.filter(s => {
-        // Build full searchable text blob for comprehensive search
         const searchableText = (
           s.headline + " " + 
           s.brief_details + " " + 
@@ -668,10 +769,7 @@ const HTML = `<!DOCTYPE html>
           s.tickers.join(" ")
         ).toLowerCase();
 
-        // Tokenized multi-word search: all query tokens must be found
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
-        
-        // If a specific search query is actively typed, prioritize matching across all categories
         const matchSec = (queryTokens.length > 0 && selectedFeedCategory === "ALL") || selectedFeedCategory === "ALL" || s.category === selectedFeedCategory;
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
         const matchTicker = !activeTickerFilter || s.tickers.includes(activeTickerFilter);
@@ -737,11 +835,24 @@ const HTML = `<!DOCTYPE html>
 
       const isBullish = story.sentiment === "BULLISH";
       const isBearish = story.sentiment === "BEARISH";
+      
       const sentBadge = isBullish 
         ? \`<span class="px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300">🟢 BULLISH CATALYST</span>\`
         : isBearish 
         ? \`<span class="px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/50 dark:text-rose-300">🔴 BEARISH DOWNSIDE</span>\`
         : \`<span class="px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-300">⚪ NEUTRAL WATCHLIST</span>\`;
+
+      const reasonBoxBorder = isBullish 
+        ? "border-emerald-200 bg-emerald-50/60 dark:bg-emerald-950/20 dark:border-emerald-800/60" 
+        : isBearish 
+        ? "border-rose-200 bg-rose-50/60 dark:bg-rose-950/20 dark:border-rose-800/60" 
+        : "border-slate-200 bg-slate-50/80 dark:bg-slate-900/40 dark:border-slate-800";
+
+      const reasonTitleColor = isBullish 
+        ? "text-emerald-800 dark:text-emerald-300" 
+        : isBearish 
+        ? "text-rose-800 dark:text-rose-300" 
+        : "text-slate-700 dark:text-slate-300";
 
       const tickerBadges = story.tickers.map(t => \`<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-brand-50 text-brand-700 border border-brand-200 dark:bg-brand-400/15 dark:text-brand-300">\${t}</span>\`).join('');
 
@@ -776,7 +887,7 @@ const HTML = `<!DOCTYPE html>
           <p class="text-[14.5px] text-slate-800 dark:text-slate-200 leading-relaxed font-normal">\${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}</p>
         </div>
 
-        <!-- Catalyst Bullets -->
+        <!-- Key Analyst Bullets -->
         <div class="mt-3">
           <p class="text-[11.5px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-2">Key Analyst Bullets</p>
           <ul class="space-y-2">
@@ -787,6 +898,19 @@ const HTML = `<!DOCTYPE html>
               </li>
             \`).join('')}
           </ul>
+        </div>
+
+        <!-- Dedicated Trader Catalyst & Impact Rationale Card -->
+        <div class="mt-3.5 p-3.5 rounded-xl border \${reasonBoxBorder} shadow-2xs">
+          <div class="flex items-center justify-between gap-2 mb-1.5">
+            <span class="text-[12px] font-mono font-bold uppercase tracking-wider \${reasonTitleColor} flex items-center gap-1.5">
+              <span>💡</span> <span>Catalyst Rationale & Trader Impact</span>
+            </span>
+            <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded \${isBullish ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200' : isBearish ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200' : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'}">\${story.sentiment} THESIS</span>
+          </div>
+          <p class="text-[13.5px] text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+            \${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
+          </p>
         </div>
       \`;
     }
@@ -912,12 +1036,16 @@ const HTML = `<!DOCTYPE html>
       if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
       if (e.key === "j" || e.key === "ArrowDown") {
         e.preventDefault();
-        selectedStoryIndex++;
-        renderFeedList();
+        navigateStory(1);
       } else if (e.key === "k" || e.key === "ArrowUp") {
         e.preventDefault();
-        if (selectedStoryIndex > 0) selectedStoryIndex--;
-        renderFeedList();
+        navigateStory(-1);
+      } else if (e.key === "ArrowLeft" || e.key === "[") {
+        e.preventDefault();
+        navigateDate(1);
+      } else if (e.key === "ArrowRight" || e.key === "]") {
+        e.preventDefault();
+        navigateDate(-1);
       } else if (e.key === "1") switchView('feed');
       else if (e.key === "2") switchView('ipo');
       else if (e.key === "/") { e.preventDefault(); document.getElementById("global-search").focus(); }
