@@ -1,4 +1,4 @@
-name: Daily Newspaper Automation (Gemini 3.8 Flash & Cloudflare R2 & Neon DB)
+name: FinPress Daily Automation
 
 on:
   schedule:
