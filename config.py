@@ -83,6 +83,9 @@ class AppConfig(BaseModel):
     gemini_model: str = Field(
         default_factory=lambda: os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
     )
+    pdf_chunk_size: int = Field(
+        default_factory=lambda: int(os.getenv("PDF_CHUNK_SIZE", "2"))
+    )
 
     # Daily Schedule Settings
     schedule_time: str = Field(

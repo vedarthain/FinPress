@@ -169,11 +169,11 @@ Assign every story to EXACTLY ONE of:
         try:
             with pikepdf.open(str(pdf_path)) as pdf:
                 total_pages = len(pdf.pages)
-                chunk_size = 4
+                chunk_size = config.pdf_chunk_size or 2
                 chunk_dir = pdf_path.parent / "temp_chunks"
                 chunk_dir.mkdir(parents=True, exist_ok=True)
 
-                logger.info(f"Splitting {total_pages}-page PDF into {chunk_size}-page chunks for 100% complete coverage...")
+                logger.info(f"Splitting {total_pages}-page PDF into high-resolution {chunk_size}-page chunks for 100% complete lossless coverage...")
 
                 for start_idx in range(0, total_pages, chunk_size):
                     end_idx = min(start_idx + chunk_size, total_pages)
