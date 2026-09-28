@@ -4,7 +4,7 @@ const HTML = `<!DOCTYPE html>
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>FinBrief Institutional Workspace — Trader Terminal</title>
+  <title>FinPress Institutional Workspace — Trader Terminal</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,104 +41,13 @@ const HTML = `<!DOCTYPE html>
 <body class="min-h-full bg-[#F3F5F8] text-slate-900 dark:bg-[#090D16] dark:text-slate-100 transition-colors duration-150">
   <div class="min-h-screen flex flex-col">
 
-    <!-- ================= SINGLE COMPACT TOP BAR ================= -->
-    <header class="sticky top-0 z-40 bg-white dark:bg-[#0E1322] border-b border-slate-200 dark:border-slate-800 shadow-xs px-3.5 py-1.5 flex items-center justify-between gap-3 flex-wrap">
-      
-      <!-- Left: Logo & Primary Navigation Tabs -->
-      <div class="flex items-center gap-3.5 shrink-0">
-        <div class="flex items-center gap-2 shrink-0 cursor-pointer" onclick="switchView('feed')">
-          <div class="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center shadow-xs">
-            <span class="text-white text-xs font-black tracking-tighter">FB</span>
-          </div>
-          <span class="text-[16px] font-black tracking-tight text-slate-900 dark:text-white mr-1">
-            Fin<span class="text-brand-600 dark:text-brand-500">Brief</span>
-          </span>
-        </div>
-
-        <nav class="flex items-center bg-slate-100 dark:bg-[#141A2E] p-0.5 rounded-lg border border-slate-200/80 dark:border-slate-800 text-[12.5px]">
-          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-3 py-1 font-bold rounded-md transition-all bg-white dark:bg-brand-600 text-slate-900 dark:text-white shadow-xs flex items-center gap-1.5">
-            <span>⚡ News Stream</span>
-            <span id="tab-feed-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-slate-100 dark:bg-black/30 font-bold">218</span>
-          </button>
-          <button id="tab-btn-ipo" onclick="switchView('ipo')" class="px-3 py-1 font-semibold rounded-md transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5">
-            <span>🚀 IPO Central</span>
-            <span id="tab-ipo-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 font-bold">17</span>
-          </button>
-          <button id="tab-btn-corporate" onclick="switchView('corporate')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-            🏢 Corporate
-          </button>
-          <button id="tab-btn-macro" onclick="switchView('macro')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-            🌐 Macro
-          </button>
-        </nav>
-      </div>
-
-      <!-- Center Controls (Category Dropdown + Sentiment Filters / IPO Subfilters) -->
-      <div class="flex items-center gap-2.5 flex-wrap flex-1 max-w-2xl">
-        
-        <!-- Feed Controls -->
-        <div id="feed-controls" class="flex items-center gap-2 flex-wrap">
-          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[12.5px] font-bold px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
-            <option value="ALL">✨ All Sections (218)</option>
-            <option value="Sector">Sector (43)</option>
-            <option value="Corporate Events">Corporate Events (35)</option>
-            <option value="Economy">Economy (25)</option>
-            <option value="Policy">Policy (23)</option>
-            <option value="Market">Market (16)</option>
-            <option value="IPO">IPO (17)</option>
-            <option value="International News">International (8)</option>
-            <option value="Corporate Appointments">Appointments (5)</option>
-            <option value="Trade">Trade (4)</option>
-            <option value="Others">Others (40)</option>
-          </select>
-
-          <div class="flex items-center bg-slate-100 dark:bg-[#141A2E] p-0.5 rounded-md border border-slate-200 dark:border-slate-800 text-[12px] font-bold">
-            <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2.5 py-0.5 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs">
-              All (<span id="feed-count-all">218</span>)
-            </button>
-            <button id="sent-bullish" onclick="setFeedSentiment('BULLISH')" class="px-2.5 py-0.5 rounded text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 flex items-center gap-1">
-              <span>🟢</span> Bullish (<span id="feed-count-bullish">0</span>)
-            </button>
-            <button id="sent-bearish" onclick="setFeedSentiment('BEARISH')" class="px-2.5 py-0.5 rounded text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 flex items-center gap-1">
-              <span>🔴</span> Bearish (<span id="feed-count-bearish">0</span>)
-            </button>
-          </div>
-        </div>
-
-        <!-- IPO Controls -->
-        <div id="ipo-controls" class="hidden items-center gap-2 flex-wrap">
-          <div class="flex items-center bg-slate-100 dark:bg-[#141A2E] p-0.5 rounded-md border border-slate-200 dark:border-slate-800 text-[12px] font-bold">
-            <button id="ipo-stage-all" onclick="filterIpoTable('ALL')" class="px-2.5 py-0.5 rounded bg-brand-600 text-white shadow-xs">All (17)</button>
-            <button id="ipo-stage-drhp" onclick="filterIpoTable('DRHP')" class="px-2.5 py-0.5 rounded text-slate-600 dark:text-slate-400">📋 DRHP (9)</button>
-            <button id="ipo-stage-bidding" onclick="filterIpoTable('BIDDING')" class="px-2.5 py-0.5 rounded text-slate-600 dark:text-slate-400">📈 Subscriptions (5)</button>
-            <button id="ipo-stage-notices" onclick="filterIpoTable('NOTICES')" class="px-2.5 py-0.5 rounded text-slate-600 dark:text-slate-400">🏛️ Allotments (3)</button>
-          </div>
-          <button onclick="exportIpoCsv()" class="px-2.5 py-0.5 text-[11.5px] font-mono font-bold rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#141A2E] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-1 shadow-xs">
-            📥 CSV Export
-          </button>
-        </div>
-
-      </div>
-
-      <!-- Right: Search + Pulse + Theme Switcher -->
-      <div class="flex items-center gap-2.5 shrink-0">
-        <div class="relative w-52 sm:w-64">
-          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock (e.g. Coal India, SAIL)..." class="w-full text-[12.5px] pl-7 pr-7 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:bg-white dark:focus:bg-[#0E1322] font-medium"/>
-          <span class="absolute left-2 top-1.5 text-slate-400 text-[11px]">🔍</span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2 top-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-0.5">✕</button>
-        </div>
-
-        <button onclick="toggleTheme()" class="w-7 h-7 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-700 dark:text-slate-300 flex items-center justify-center text-xs shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800" title="Toggle Light/Dark Theme">
-          <span id="theme-icon">🌙</span>
-        </button>
-      </div>
-
-    </header>
-
-    <!-- Slim Market Pulse Bar with Calendar & Date Navigation -->
-    <div class="bg-slate-900 text-slate-300 text-[11px] font-mono px-3.5 py-1 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-4 border-b border-slate-800">
+    <!-- ================= 1. TOPMOST MARKET PULSE & CALENDAR RIBBON ================= -->
+    <div class="sticky top-0 z-50 bg-[#070A12] text-slate-300 text-[11px] font-mono px-3.5 py-1.5 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-4 border-b border-slate-800 shadow-sm">
       <div class="flex items-center gap-3.5">
-        <span class="text-amber-400 font-bold">PULSE:</span>
+        <span class="text-amber-400 font-extrabold flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>MARKET PULSE:</span>
+        </span>
         <span>NIFTY <b class="text-emerald-400 font-bold">24,835 (+0.64%)</b></span>
         <span>BANK NIFTY <b class="text-emerald-400 font-bold">54,120 (+0.82%)</b></span>
         <span>INDIA VIX <b class="text-rose-400 font-bold">12.85 (-3.2%)</b></span>
@@ -147,59 +56,165 @@ const HTML = `<!DOCTYPE html>
       </div>
 
       <!-- Historical Calendar & Edition Navigation -->
-      <div class="flex items-center gap-2">
-        <div class="flex items-center gap-1 bg-slate-800/90 p-0.5 rounded-md border border-slate-700">
-          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Previous Date in History (Arrow Left)">
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-md border border-slate-700">
+          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Previous Date in History (Arrow Left)">
             ◀ Prev Day
           </button>
           
-          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-slate-900/80 rounded border border-slate-700/60">
+          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/50 rounded border border-slate-700/60">
             <span class="text-slate-400 text-xs">📅</span>
             <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[110px]"/>
             <select id="edition-date-select" onchange="onDateChange(this.value)" class="bg-transparent text-slate-200 font-bold font-mono text-[11px] focus:outline-none cursor-pointer pl-1 border-l border-slate-700">
-              <option value="latest">Latest</option>
+              <option value="latest">Latest Edition</option>
             </select>
           </div>
 
-          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Next Date (Arrow Right)">
+          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Next Date (Arrow Right)">
             Next Day ▶
           </button>
         </div>
 
-        <span id="scan-count-badge" class="text-emerald-400 font-bold shrink-0">● 217 Stories Scanned</span>
+        <span id="total-news-counter-badge" class="px-2.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold font-mono">
+          🔥 Total News: <b id="top-total-count">0</b>
+        </span>
       </div>
     </div>
+
+    <!-- ================= 2. MAIN NAVIGATION TOOLBAR (HIGH-CONTRAST INSTITUTIONAL THEME) ================= -->
+    <header class="sticky top-[34px] z-40 bg-[#0E1322] border-b border-slate-800 text-white shadow-md px-3.5 py-2 flex items-center justify-between gap-3 flex-wrap">
+      
+      <!-- Left: Logo & Primary Navigation Tabs -->
+      <div class="flex items-center gap-3.5 shrink-0 flex-wrap">
+        <div class="flex items-center gap-2 shrink-0 cursor-pointer" onclick="switchView('feed')">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-brand-600 flex items-center justify-center shadow-xs">
+            <span class="text-white text-xs font-black tracking-tighter">FP</span>
+          </div>
+          <span class="text-[17px] font-black tracking-tight text-white mr-1">
+            Fin<span class="text-brand-500">Press</span>
+          </span>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex items-center bg-[#151B2E] p-0.5 rounded-lg border border-slate-700/80 text-[12px] font-medium flex-wrap">
+          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5">
+            <span>⚡ All News</span>
+            <span id="tab-feed-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-black/30 font-bold">0</span>
+          </button>
+          
+          <button id="tab-btn-anchor" onclick="switchView('anchor')" class="px-3 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1.5">
+            <span>📰 Front Page Anchors</span>
+            <span id="tab-anchor-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-amber-500/20 text-amber-300 font-bold">0</span>
+          </button>
+
+          <button id="tab-btn-ipo" onclick="switchView('ipo')" class="px-3 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1.5">
+            <span>🚀 IPO Central</span>
+            <span id="tab-ipo-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-indigo-500/20 text-indigo-300 font-bold">0</span>
+          </button>
+
+          <button id="tab-btn-corporate" onclick="switchView('corporate')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1">
+            <span>🏢 Corporate</span>
+            <span id="tab-corp-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-slate-700 text-slate-200">0</span>
+          </button>
+
+          <button id="tab-btn-opinions" onclick="switchView('opinions')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1">
+            <span>✍️ Opinions & Editorial</span>
+            <span id="tab-opinions-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-slate-700 text-slate-200">0</span>
+          </button>
+
+          <button id="tab-btn-macro" onclick="switchView('macro')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white">
+            🌐 Macro & Policy
+          </button>
+        </nav>
+      </div>
+
+      <!-- Center Controls (Clean Category Dropdown + Sentiment Filters) -->
+      <div class="flex items-center gap-2.5 flex-wrap flex-1 max-w-2xl">
+        
+        <!-- Feed Controls -->
+        <div id="feed-controls" class="flex items-center gap-2 flex-wrap">
+          <!-- Clean Category Selector (No IPO, Corporate Events, Appointments) -->
+          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[12px] font-bold px-2.5 py-1 rounded-md border border-slate-700 bg-[#151B2E] text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
+            <option value="ALL">✨ All Core Sections</option>
+            <option value="Sector">Sector</option>
+            <option value="Economy">Economy</option>
+            <option value="Policy">Policy</option>
+            <option value="Market">Market (Indices & Benchmarks)</option>
+            <option value="Trade">Trade & FX</option>
+            <option value="International News">International</option>
+            <option value="Others">Others</option>
+          </select>
+
+          <div class="flex items-center bg-[#151B2E] p-0.5 rounded-md border border-slate-700 text-[11.5px] font-bold">
+            <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2.5 py-0.5 rounded bg-slate-800 text-white shadow-xs">
+              All (<span id="feed-count-all">0</span>)
+            </button>
+            <button id="sent-bullish" onclick="setFeedSentiment('BULLISH')" class="px-2.5 py-0.5 rounded text-emerald-400 hover:bg-emerald-950/40 flex items-center gap-1">
+              <span>🟢</span> Bullish (<span id="feed-count-bullish">0</span>)
+            </button>
+            <button id="sent-bearish" onclick="setFeedSentiment('BEARISH')" class="px-2.5 py-0.5 rounded text-rose-400 hover:bg-rose-950/40 flex items-center gap-1">
+              <span>🔴</span> Bearish (<span id="feed-count-bearish">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <!-- IPO Sub-stage Filter Buttons -->
+        <div id="ipo-controls" class="hidden items-center gap-2 flex-wrap">
+          <div class="flex items-center bg-[#151B2E] p-0.5 rounded-md border border-slate-700 text-[11.5px] font-bold">
+            <button id="ipo-stage-all" onclick="filterIpoTable('ALL')" class="px-2.5 py-0.5 rounded bg-brand-600 text-white shadow-xs">All IPOs</button>
+            <button id="ipo-stage-drhp" onclick="filterIpoTable('DRHP')" class="px-2.5 py-0.5 rounded text-slate-300">📋 DRHP Filed</button>
+            <button id="ipo-stage-bidding" onclick="filterIpoTable('BIDDING')" class="px-2.5 py-0.5 rounded text-slate-300">📈 Active Bidding</button>
+            <button id="ipo-stage-notices" onclick="filterIpoTable('NOTICES')" class="px-2.5 py-0.5 rounded text-slate-300">🏛️ Allotments & Notices</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Search + Theme Switcher -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <div class="relative w-52 sm:w-60">
+          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or catalyst..." class="w-full text-[12px] pl-7 pr-7 py-1 rounded-md border border-slate-700 bg-[#151B2E] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-500 font-medium"/>
+          <span class="absolute left-2 top-1.5 text-slate-400 text-[11px]">🔍</span>
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2 top-1 text-slate-400 hover:text-white text-xs font-bold p-0.5">✕</button>
+        </div>
+
+        <button onclick="toggleTheme()" class="w-7 h-7 rounded-md border border-slate-700 bg-[#151B2E] text-slate-300 hover:text-white flex items-center justify-center text-xs shadow-xs" title="Toggle Light/Dark Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+
+    </header>
 
     <!-- ================= MAIN THREE-COLUMN WORKSPACE ================= -->
     <main class="mx-auto max-w-[1920px] w-full px-3 py-2 flex-1 flex flex-col gap-2">
       
-      <!-- ================= VIEW 1: NEWS STREAM (NO GRID · SPLIT WITH STOCKS IN FOCUS ON RIGHT) ================= -->
+      <!-- ================= VIEW 1: NEWS STREAM (SPLIT READER + STOCKS IN FOCUS ON RIGHT) ================= -->
       <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[400px_minmax(0,1fr)_300px] xl:grid-cols-[440px_minmax(0,1fr)_330px] gap-2.5 items-start">
         
         <!-- COLUMN 1: COMPACT NEWS FEED LIST -->
         <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
           <div class="px-3.5 py-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 flex items-center justify-between text-[12px] font-mono">
-            <span id="feed-list-count" class="font-bold text-slate-800 dark:text-slate-200">217 Stories</span>
+            <span id="feed-list-count" class="font-bold text-slate-800 dark:text-slate-200">0 Stories</span>
             <div class="flex items-center gap-1.5">
-              <button onclick="navigateStory(-1)" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10px] font-bold text-slate-600 dark:text-slate-300" title="Previous Story (K or Up Arrow)">▲ Prev</button>
-              <button onclick="navigateStory(1)" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10px] font-bold text-slate-600 dark:text-slate-300" title="Next Story (J or Down Arrow)">▼ Next</button>
+              <button onclick="navigateStory(-1)" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10.5px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700" title="Previous Story (K or Up Arrow)">▲ Prev</button>
+              <button onclick="navigateStory(1)" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10.5px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700" title="Next Story (J or Down Arrow)">▼ Next</button>
             </div>
           </div>
 
-          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[calc(100vh-6.5rem)] overflow-y-auto">
+          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
             <!-- Dynamically populated story items -->
           </div>
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE -->
-        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-5 shadow-xs sticky top-14 flex flex-col gap-3.5 min-h-[calc(100vh-6.5rem)] max-h-[calc(100vh-6.5rem)] overflow-y-auto">
+        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-5 shadow-xs sticky top-24 flex flex-col gap-3.5 min-h-[calc(100vh-7.5rem)] max-h-[calc(100vh-7.5rem)] overflow-y-auto">
           <div id="feed-detail-container">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (STOCKS IN FOCUS & TRADING CATALYSTS) -->
-        <aside class="flex flex-col gap-2.5 sticky top-14 max-h-[calc(100vh-6.5rem)] overflow-y-auto">
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (STOCKS IN FOCUS & TRADING CATALYSTS - NO IPOS) -->
+        <aside class="flex flex-col gap-2.5 sticky top-24 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
           
           <!-- Stocks in Focus Card -->
           <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3.5 shadow-xs flex flex-col gap-2.5">
@@ -215,16 +230,16 @@ const HTML = `<!DOCTYPE html>
             <p class="text-[11.5px] text-slate-500 dark:text-slate-400 leading-snug">Click any stock to filter stories immediately:</p>
 
             <!-- Stock Ticker Pill Matrix -->
-            <div id="stocks-focus-list" class="flex flex-wrap gap-1.5 max-h-[240px] overflow-y-auto pt-0.5">
+            <div id="stocks-focus-list" class="flex flex-wrap gap-1.5 max-h-[220px] overflow-y-auto pt-0.5">
               <!-- Dynamically populated ticker chips -->
             </div>
           </div>
 
-          <!-- Top Bullish Triggers Card -->
+          <!-- Top Bullish Triggers Card (Excludes IPOs) -->
           <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-emerald-200/80 dark:border-slate-800 p-3.5 shadow-xs flex flex-col gap-2">
             <div class="flex items-center justify-between border-b border-emerald-100 dark:border-slate-800 pb-1.5">
               <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                <span>🟢</span> <span>Top Bullish Triggers</span>
+                <span>🟢</span> <span>Top Bullish Triggers (Corporate & Sector)</span>
               </span>
             </div>
             <div id="top-bullish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[12.5px] space-y-1.5">
@@ -232,11 +247,11 @@ const HTML = `<!DOCTYPE html>
             </div>
           </div>
 
-          <!-- Top Bearish Risks Card -->
+          <!-- Top Bearish Risks Card (Excludes IPOs) -->
           <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-rose-200/80 dark:border-slate-800 p-3.5 shadow-xs flex flex-col gap-2">
             <div class="flex items-center justify-between border-b border-rose-100 dark:border-slate-800 pb-1.5">
               <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
-                <span>🔴</span> <span>Key Risks & Downside</span>
+                <span>🔴</span> <span>Key Downside Risks</span>
               </span>
             </div>
             <div id="top-bearish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[12.5px] space-y-1.5">
@@ -252,25 +267,25 @@ const HTML = `<!DOCTYPE html>
       <section id="view-ipo" class="hidden flex-col gap-2">
         <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex flex-col">
           
-          <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-[#11172A]/70 text-[12.5px] font-mono">
+          <div class="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-[#11172A]/70 text-[12.5px] font-mono">
             <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <span>🚀</span> <span>PRIMARY MARKET TRACKER (17 IPOs · ₹5,600+ Cr Capital Tracked)</span>
+              <span>🚀</span> <span>PRIMARY MARKET TRACKER (Mainboard & SME IPO Filings)</span>
             </span>
-            <span class="text-slate-400">Showing: <b id="ipo-table-visible-count" class="text-brand-600 font-bold">17</b> Records</span>
+            <span class="text-slate-400">Total Tracked: <b id="ipo-table-visible-count" class="text-brand-600 font-bold">0</b> Records</span>
           </div>
 
-          <div class="overflow-x-auto max-h-[calc(100vh-6.5rem)] overflow-y-auto">
+          <div class="overflow-x-auto max-h-[calc(100vh-7.5rem)] overflow-y-auto">
             <table class="w-full text-left border-collapse text-[13.5px]">
               <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-xs">
                 <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11.5px] font-mono uppercase tracking-wider font-bold">
                   <th class="py-2.5 px-3.5">#</th>
-                  <th class="py-2.5 px-3.5 min-w-[220px]">Company / Issuer</th>
-                  <th class="py-2.5 px-3.5 min-w-[110px]">Issue Size</th>
-                  <th class="py-2.5 px-3.5 min-w-[130px]">Stage / Status</th>
+                  <th class="py-2.5 px-3.5 min-w-[240px]">Company / Issuer & Exchange</th>
+                  <th class="py-2.5 px-3.5 min-w-[120px]">Issue Size</th>
+                  <th class="py-2.5 px-3.5 min-w-[140px]">Stage / Status</th>
                   <th class="py-2.5 px-3.5 min-w-[130px]">Subscription Demand</th>
-                  <th class="py-2.5 px-3.5 min-w-[340px]">Key Analyst Insight & Details</th>
+                  <th class="py-2.5 px-3.5 min-w-[360px]">Key Analyst Insight & Breakdown</th>
                   <th class="py-2.5 px-3.5 min-w-[130px]">Source</th>
-                  <th class="py-2.5 px-3.5 text-center">Action</th>
+                  <th class="py-2.5 px-3.5 text-center">Full Info</th>
                 </tr>
               </thead>
               <tbody id="ipo-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/70">
@@ -284,6 +299,48 @@ const HTML = `<!DOCTYPE html>
 
     </main>
 
+  </div>
+
+  <!-- ================= IPO FULL DETAILS MODAL ================= -->
+  <div id="ipo-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl flex flex-col gap-4">
+      <div class="flex items-start justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="modal-ipo-exchange" class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300">NSE / BSE</span>
+            <span id="modal-ipo-stage" class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-200">DRHP Filed</span>
+          </div>
+          <h2 id="modal-ipo-company" class="text-xl font-extrabold text-slate-900 dark:text-white mt-1">Company Name</h2>
+        </div>
+        <button onclick="closeIpoModal()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white font-bold flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-[#151B2E] p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 font-mono text-xs">
+        <div>
+          <span class="text-slate-400">Issue Size:</span>
+          <p id="modal-ipo-size" class="text-slate-900 dark:text-white font-bold text-sm">₹0 Cr</p>
+        </div>
+        <div>
+          <span class="text-slate-400">Demand / Subscription:</span>
+          <p id="modal-ipo-demand" class="text-emerald-600 dark:text-emerald-400 font-bold text-sm">Filing Stage</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-400 mb-1">Headline & Filing Announcement</p>
+        <p id="modal-ipo-headline" class="text-sm font-bold text-slate-800 dark:text-slate-200"></p>
+      </div>
+
+      <div>
+        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-brand-600 dark:text-brand-400 mb-1">Detailed Analyst Insight & Comprehensive Notes</p>
+        <p id="modal-ipo-details" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-[#11172A] p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800"></p>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-400">
+        <span id="modal-ipo-source">Source: FE / BS</span>
+        <button onclick="closeIpoModal()" class="px-4 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-colors">Close</button>
+      </div>
+    </div>
   </div>
 
   <!-- ================= CLIENT JAVASCRIPT ================= -->
@@ -302,8 +359,7 @@ const HTML = `<!DOCTYPE html>
     let currentDateIndex = 0;
 
     const allowedSections = [
-      "ALL", "Economy", "Policy", "Sector", "IPO", "Market", "Trade",
-      "Corporate Events", "Corporate Appointments", "International News", "Others"
+      "ALL", "Sector", "Economy", "Policy", "Market", "Trade", "International News", "Others"
     ];
 
     const tickerDictionary = [
@@ -341,31 +397,41 @@ const HTML = `<!DOCTYPE html>
     function switchView(viewName) {
       currentView = viewName;
       const tabFeed = document.getElementById("tab-btn-feed");
+      const tabAnchor = document.getElementById("tab-btn-anchor");
       const tabIpo = document.getElementById("tab-btn-ipo");
       const tabCorp = document.getElementById("tab-btn-corporate");
+      const tabOpinions = document.getElementById("tab-btn-opinions");
       const tabMacro = document.getElementById("tab-btn-macro");
       const viewFeed = document.getElementById("view-feed");
       const viewIpo = document.getElementById("view-ipo");
       const feedControls = document.getElementById("feed-controls");
       const ipoControls = document.getElementById("ipo-controls");
 
-      [tabFeed, tabIpo, tabCorp, tabMacro].forEach(b => {
-        b.className = "px-3 py-1 font-semibold rounded-md transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5";
+      [tabFeed, tabAnchor, tabIpo, tabCorp, tabOpinions, tabMacro].forEach(b => {
+        b.className = "px-3 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1.5";
       });
 
       if (viewName === "feed") {
-        tabFeed.className = "px-3 py-1 font-bold rounded-md transition-all bg-white dark:bg-brand-600 text-slate-900 dark:text-white shadow-xs flex items-center gap-1.5";
+        tabFeed.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
         feedControls.classList.remove("hidden");
         ipoControls.classList.add("hidden");
-        ipoControls.classList.remove("flex");
         selectedFeedCategory = "ALL";
         document.getElementById("category-select").value = "ALL";
         renderFeedList();
+      } else if (viewName === "anchor") {
+        tabAnchor.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        viewFeed.classList.remove("hidden");
+        viewFeed.classList.add("grid");
+        viewIpo.classList.add("hidden");
+        feedControls.classList.remove("hidden");
+        ipoControls.classList.add("hidden");
+        selectedFeedCategory = "ANCHOR";
+        renderFeedList();
       } else if (viewName === "ipo") {
-        tabIpo.className = "px-3 py-1 font-bold rounded-md transition-all bg-white dark:bg-brand-600 text-slate-900 dark:text-white shadow-xs flex items-center gap-1.5";
+        tabIpo.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
         viewFeed.classList.add("hidden");
         viewFeed.classList.remove("grid");
         viewIpo.classList.remove("hidden");
@@ -375,24 +441,31 @@ const HTML = `<!DOCTYPE html>
         ipoControls.classList.add("flex");
         renderIpoTable();
       } else if (viewName === "corporate") {
-        tabCorp.className = "px-3 py-1 font-bold rounded-md transition-all bg-white dark:bg-brand-600 text-slate-900 dark:text-white shadow-xs flex items-center gap-1.5";
+        tabCorp.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
         feedControls.classList.remove("hidden");
         ipoControls.classList.add("hidden");
-        selectedFeedCategory = "Corporate Events";
-        document.getElementById("category-select").value = "Corporate Events";
+        selectedFeedCategory = "CORPORATE_ALL";
+        renderFeedList();
+      } else if (viewName === "opinions") {
+        tabOpinions.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        viewFeed.classList.remove("hidden");
+        viewFeed.classList.add("grid");
+        viewIpo.classList.add("hidden");
+        feedControls.classList.remove("hidden");
+        ipoControls.classList.add("hidden");
+        selectedFeedCategory = "OPINIONS";
         renderFeedList();
       } else if (viewName === "macro") {
-        tabMacro.className = "px-3 py-1 font-bold rounded-md transition-all bg-white dark:bg-brand-600 text-slate-900 dark:text-white shadow-xs flex items-center gap-1.5";
+        tabMacro.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
         feedControls.classList.remove("hidden");
         ipoControls.classList.add("hidden");
-        selectedFeedCategory = "Economy";
-        document.getElementById("category-select").value = "Economy";
+        selectedFeedCategory = "MACRO_ALL";
         renderFeedList();
       }
     }
@@ -420,7 +493,14 @@ const HTML = `<!DOCTYPE html>
       if (isFillerHeadline(story.headline)) return null;
 
       const fullText = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toLowerCase();
-      
+      const pageStr = (story.page_numbers || "").toLowerCase();
+
+      // Detect Front Page Anchors (Page 1 from FE / BS)
+      const isFrontPage = pageStr.includes("page 1") || pageStr.includes("page 01") || pageStr.includes("p.1") || pageStr.includes("front") || pageStr.includes("lead") || idx < 3;
+
+      // Detect Opinions / Editorial
+      const isOpinion = pageStr.includes("opinion") || pageStr.includes("edit") || pageStr.includes("column") || pageStr.includes("commentary") || fullText.includes("op-ed") || fullText.includes("editorial view");
+
       // Strict Market Section Rule: Bank disclosures/Statutory notices belong in Corporate Events
       let category = story.category;
       if (category === "Market") {
@@ -481,11 +561,13 @@ const HTML = `<!DOCTYPE html>
       return {
         ...story,
         id: idx + 1,
-        category: allowedSections.includes(category) ? category : "Others",
+        category: category || "Others",
         sentiment,
         sentimentReasoning,
         tickers: [...new Set(detectedTickers)].slice(0, 3),
-        catalyst
+        catalyst,
+        isFrontPage,
+        isOpinion
       };
     }
 
@@ -503,6 +585,14 @@ const HTML = `<!DOCTYPE html>
       if (sizeMatch) size = \`₹\${sizeMatch[1]} Cr\`;
       else if (combined.includes("fresh issue")) size = "Fresh Issue";
       else if (combined.includes("sme")) size = "SME Issue";
+
+      // Detect Target Listing Exchange
+      let exchange = "NSE / BSE Mainboard";
+      if (combined.includes("sme") || combined.includes("emerge")) {
+        exchange = "NSE Emerge / BSE SME";
+      } else if (combined.includes("bse only") || combined.includes("bse startup")) {
+        exchange = "BSE Only";
+      }
 
       let stage = "📋 DRHP Filed";
       let stageBadge = "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300";
@@ -538,6 +628,7 @@ const HTML = `<!DOCTYPE html>
         headline: h,
         company: company || h.slice(0, 25),
         size,
+        exchange,
         stage,
         stageBadge,
         filterTag,
@@ -633,7 +724,7 @@ const HTML = `<!DOCTYPE html>
 
         stories = rawReport.major_stories
           .map((s, idx) => parseStory(s, idx))
-          .filter(Boolean); // Filter out any junk / filler overview stories
+          .filter(Boolean);
 
         const rawIpos = stories.filter(s => s.category === "IPO");
         ipoList = rawIpos.map((s, idx) => parseIpoItem(s, idx));
@@ -642,9 +733,17 @@ const HTML = `<!DOCTYPE html>
     }
 
     function initMetrics() {
+      document.getElementById("top-total-count").textContent = stories.length;
       document.getElementById("tab-feed-count").textContent = stories.length;
       document.getElementById("tab-ipo-count").textContent = ipoList.length;
-      document.getElementById("scan-count-badge").textContent = \`● \${stories.length} Stories Scanned\`;
+
+      const anchorCount = stories.filter(s => s.isFrontPage).length;
+      const corpCount = stories.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length;
+      const opinionsCount = stories.filter(s => s.isOpinion).length;
+
+      document.getElementById("tab-anchor-count").textContent = anchorCount;
+      document.getElementById("tab-corp-count").textContent = corpCount;
+      document.getElementById("tab-opinions-count").textContent = opinionsCount;
 
       let bCount = 0, rCount = 0;
       stories.forEach(s => {
@@ -661,7 +760,6 @@ const HTML = `<!DOCTYPE html>
     }
 
     function navigateStory(dir) {
-      const container = document.getElementById("feed-list-container");
       const total = stories.length;
       if (total === 0) return;
       selectedStoryIndex += dir;
@@ -691,7 +789,7 @@ const HTML = `<!DOCTYPE html>
       else renderFeedList();
     }
 
-    // ================= RIGHT HAND SIDEBAR: STOCKS IN FOCUS =================
+    // ================= RIGHT HAND SIDEBAR: STOCKS IN FOCUS (EXCLUDES IPOS) =================
     function renderStocksFocusSidebar() {
       const list = document.getElementById("stocks-focus-list");
       list.innerHTML = "";
@@ -717,38 +815,52 @@ const HTML = `<!DOCTYPE html>
         list.appendChild(btn);
       });
 
-      // Render Top Bullish & Bearish Widgets
+      // Render Top Bullish & Bearish Widgets (Strictly Exclude IPOs)
       const bullishList = document.getElementById("top-bullish-list");
       bullishList.innerHTML = "";
-      stories.filter(s => s.sentiment === "BULLISH").slice(0, 3).forEach(s => {
-        const d = document.createElement("div");
-        d.className = "py-1.5 cursor-pointer hover:text-brand-600 transition-colors";
-        d.onclick = () => {
-          const idx = stories.findIndex(item => item.headline === s.headline);
-          if (idx !== -1) { selectedStoryIndex = idx; renderFeedList(); }
-        };
-        d.innerHTML = \`
-          <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
-          <p class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
-        \`;
-        bullishList.appendChild(d);
-      });
+      stories
+        .filter(s => s.sentiment === "BULLISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
+        .slice(0, 3)
+        .forEach(s => {
+          const d = document.createElement("div");
+          d.className = "py-1.5 cursor-pointer hover:text-brand-600 transition-colors";
+          d.onclick = () => {
+            const idx = stories.findIndex(item => item.headline === s.headline);
+            if (idx !== -1) { selectedStoryIndex = idx; renderFeedList(); }
+          };
+          d.innerHTML = \`
+            <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
+            <p class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
+          \`;
+          bullishList.appendChild(d);
+        });
+
+      if (bullishList.children.length === 0) {
+        bullishList.innerHTML = \`<p class="text-[11.5px] text-slate-400 py-1">No major bullish sector breaks today.</p>\`;
+      }
 
       const bearishList = document.getElementById("top-bearish-list");
       bearishList.innerHTML = "";
-      stories.filter(s => s.sentiment === "BEARISH").slice(0, 3).forEach(s => {
-        const d = document.createElement("div");
-        d.className = "py-1.5 cursor-pointer hover:text-rose-600 transition-colors";
-        d.onclick = () => {
-          const idx = stories.findIndex(item => item.headline === s.headline);
-          if (idx !== -1) { selectedStoryIndex = idx; renderFeedList(); }
-        };
-        d.innerHTML = \`
-          <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
-          <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
-        \`;
-        bearishList.appendChild(d);
-      });
+      stories
+        .filter(s => s.sentiment === "BEARISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
+        .slice(0, 3)
+        .forEach(s => {
+          const d = document.createElement("div");
+          d.className = "py-1.5 cursor-pointer hover:text-rose-600 transition-colors";
+          d.onclick = () => {
+            const idx = stories.findIndex(item => item.headline === s.headline);
+            if (idx !== -1) { selectedStoryIndex = idx; renderFeedList(); }
+          };
+          d.innerHTML = \`
+            <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
+            <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
+          \`;
+          bearishList.appendChild(d);
+        });
+
+      if (bearishList.children.length === 0) {
+        bearishList.innerHTML = \`<p class="text-[11.5px] text-slate-400 py-1">No significant downside warnings today.</p>\`;
+      }
     }
 
     function clearTickerFilter() {
@@ -761,7 +873,7 @@ const HTML = `<!DOCTYPE html>
     function setFeedSentiment(sent) {
       selectedFeedSentiment = sent;
       document.querySelectorAll("[id^='sent-']").forEach(b => {
-        b.className = "px-2.5 py-0.5 rounded text-slate-600 dark:text-slate-400 hover:bg-white/60 dark:hover:bg-slate-800/60";
+        b.className = "px-2.5 py-0.5 rounded text-slate-400 hover:bg-slate-800";
       });
       const el = document.getElementById(\`sent-\${sent.toLowerCase()}\`);
       if (el) {
@@ -769,7 +881,7 @@ const HTML = `<!DOCTYPE html>
           ? "px-2.5 py-0.5 rounded bg-emerald-600 text-white shadow-xs" 
           : sent === "BEARISH" 
           ? "px-2.5 py-0.5 rounded bg-rose-600 text-white shadow-xs" 
-          : "px-2.5 py-0.5 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs";
+          : "px-2.5 py-0.5 rounded bg-slate-800 text-white shadow-xs";
       }
       renderFeedList();
     }
@@ -790,7 +902,15 @@ const HTML = `<!DOCTYPE html>
         ).toLowerCase();
 
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
-        const matchSec = (queryTokens.length > 0 && selectedFeedCategory === "ALL") || selectedFeedCategory === "ALL" || s.category === selectedFeedCategory;
+        
+        let matchSec = true;
+        if (selectedFeedCategory === "ALL") matchSec = true;
+        else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
+        else if (selectedFeedCategory === "OPINIONS") matchSec = s.isOpinion;
+        else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
+        else if (selectedFeedCategory === "MACRO_ALL") matchSec = s.category === "Economy" || s.category === "Policy";
+        else matchSec = s.category === selectedFeedCategory;
+
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
         const matchTicker = !activeTickerFilter || s.tickers.includes(activeTickerFilter);
 
@@ -806,7 +926,7 @@ const HTML = `<!DOCTYPE html>
         listContainer.innerHTML = \`
           <div class="p-8 text-center text-slate-400">
             <p class="text-base font-bold text-slate-600 dark:text-slate-300">No news stories found</p>
-            <p class="text-[12.5px] mt-1">Try broadening your search term or clearing active filters.</p>
+            <p class="text-[12.5px] mt-1">Try broadening your search term or selecting another section.</p>
             \${rawQuery ? \`<button onclick="clearSearch()" class="mt-3 px-3 py-1 bg-brand-600 text-white rounded-md text-xs font-bold">Clear Search</button>\` : ''}
           </div>
         \`;
@@ -821,6 +941,7 @@ const HTML = `<!DOCTYPE html>
         const numStr = (idx + 1).toString().padStart(2, '0');
         const dot = s.sentiment === "BULLISH" ? "bg-emerald-500" : s.sentiment === "BEARISH" ? "bg-rose-500" : "bg-slate-400";
         const tickerBadges = s.tickers.map(t => \`<span class="px-1.5 py-0.2 text-[10px] font-mono font-bold rounded bg-brand-50 text-brand-700 border border-brand-200 dark:bg-brand-400/10 dark:text-brand-300">\${t}</span>\`).join('');
+        const anchorTag = s.isFrontPage ? \`<span class="px-1.5 py-0.2 rounded text-[9.5px] font-mono font-bold bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300">📰 PAGE 1 ANCHOR</span>\` : '';
 
         const btn = document.createElement("button");
         btn.className = \`w-full text-left px-3.5 py-2.5 transition-colors flex items-start gap-2.5 border-b border-slate-100 dark:border-slate-800/80 last:border-b-0 \${isSelected ? 'bg-brand-50/90 dark:bg-brand-500/15 border-l-4 border-l-brand-600' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}\`;
@@ -832,10 +953,11 @@ const HTML = `<!DOCTYPE html>
         btn.innerHTML = \`
           <span class="shrink-0 text-[11.5px] font-mono font-semibold text-slate-400 tabular-nums mt-0.5">\${numStr}</span>
           <div class="flex-1 min-w-0">
-            <div class="flex items-center justify-between gap-1 mb-1">
+            <div class="flex items-center justify-between gap-1 mb-1 flex-wrap">
               <div class="flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full \${dot}"></span>
                 <span class="text-[10.5px] font-mono text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wide">\${s.category}</span>
+                \${anchorTag}
               </div>
               <span class="text-[10.5px] font-mono text-slate-400">\${s.page_numbers}</span>
             </div>
@@ -880,6 +1002,7 @@ const HTML = `<!DOCTYPE html>
         <div class="flex items-center justify-between gap-2 flex-wrap pb-2.5 border-b border-slate-100 dark:border-slate-800">
           <div class="flex items-center gap-2">
             <span class="text-[11.5px] font-mono font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200">\${story.category}</span>
+            \${story.isFrontPage ? \`<span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300">📰 PAGE 1 LEAD ANCHOR</span>\` : ''}
             <span class="text-[12px] text-slate-400 font-mono font-medium">\${story.page_numbers}</span>
           </div>
           <div class="flex items-center gap-2.5">
@@ -939,7 +1062,7 @@ const HTML = `<!DOCTYPE html>
     function filterIpoTable(tag) {
       currentIpoFilter = tag;
       document.querySelectorAll("[id^='ipo-stage-']").forEach(btn => {
-        btn.className = "px-2.5 py-0.5 rounded text-slate-600 dark:text-slate-400";
+        btn.className = "px-2.5 py-0.5 rounded text-slate-300";
       });
       const activeBtn = document.getElementById(\`ipo-stage-\${tag.toLowerCase()}\`);
       if (activeBtn) activeBtn.className = "px-2.5 py-0.5 rounded bg-brand-600 text-white shadow-xs";
@@ -955,7 +1078,7 @@ const HTML = `<!DOCTYPE html>
       const filtered = ipoList.filter(item => {
         const matchTag = currentIpoFilter === "ALL" || item.filterTag === currentIpoFilter;
         
-        const searchable = (item.company + " " + item.headline + " " + item.details + " " + item.size + " " + item.source).toLowerCase();
+        const searchable = (item.company + " " + item.headline + " " + item.details + " " + item.size + " " + item.source + " " + item.exchange).toLowerCase();
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchable.includes(tok));
         
         return matchTag && matchQuery;
@@ -977,12 +1100,15 @@ const HTML = `<!DOCTYPE html>
         tr.innerHTML = \`
           <td class="py-3 px-3.5 font-mono text-[12px] text-slate-400 font-semibold">\${numStr}</td>
           <td class="py-3 px-3.5 font-bold text-slate-900 dark:text-white">
-            <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-md bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 font-bold text-[10.5px] font-mono flex items-center justify-center shrink-0 border border-brand-200/50">
+            <div class="flex items-start gap-2">
+              <span class="w-6 h-6 rounded-md bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 font-bold text-[10.5px] font-mono flex items-center justify-center shrink-0 border border-brand-200/50 mt-0.5">
                 \${ipo.company.slice(0, 2).toUpperCase()}
               </span>
               <div>
-                <p class="text-[14px] leading-tight font-bold text-slate-900 dark:text-white">\${highlightSearchTokens(ipo.company, queryTokens)}</p>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <p class="text-[14px] leading-tight font-bold text-slate-900 dark:text-white">\${highlightSearchTokens(ipo.company, queryTokens)}</p>
+                  <span class="px-1.5 py-0.2 rounded text-[9.5px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300">\${ipo.exchange}</span>
+                </div>
                 <p class="text-[11.5px] font-mono text-slate-400 font-normal truncate max-w-[240px] mt-0.5">\${highlightSearchTokens(ipo.headline, queryTokens)}</p>
               </div>
             </div>
@@ -995,14 +1121,16 @@ const HTML = `<!DOCTYPE html>
           </td>
           <td class="py-3 px-3.5 font-mono text-[12px] whitespace-nowrap"><span class="\${demandColor}">\${ipo.demand}</span></td>
           <td class="py-3 px-3.5 max-w-md">
-            <p class="text-[13px] text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed font-normal">
-              \${highlightSearchTokens(highlightNumbers(ipo.details), queryTokens)}
-            </p>
+            <div class="flex items-start gap-2">
+              <p class="text-[13px] text-slate-700 dark:text-slate-300 leading-relaxed font-normal flex-1">
+                \${highlightSearchTokens(highlightNumbers(ipo.details), queryTokens)}
+              </p>
+            </div>
           </td>
           <td class="py-3 px-3.5 font-mono text-[11.5px] text-slate-400 whitespace-nowrap">\${ipo.source}</td>
           <td class="py-3 px-3.5 text-center whitespace-nowrap">
-            <button onclick="copyToClipboard('\${escapeQuotes(ipo.headline + '\\\\n\\\\n' + ipo.details)}')" class="px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#182035] hover:bg-brand-50 hover:text-brand-600 text-[11px] font-mono font-semibold transition-colors">
-              📋 Copy
+            <button onclick="openIpoModal(\${idx})" class="px-2.5 py-1 rounded-md border border-brand-200 dark:border-slate-700 bg-brand-50/80 dark:bg-[#182035] hover:bg-brand-600 hover:text-white text-brand-700 dark:text-brand-300 text-[11px] font-mono font-bold transition-all shadow-2xs flex items-center gap-1 mx-auto" title="Click to view full IPO breakdown">
+              <span>ℹ️ Details</span>
             </button>
           </td>
         \`;
@@ -1010,17 +1138,27 @@ const HTML = `<!DOCTYPE html>
       });
     }
 
-    function exportIpoCsv() {
-      let csv = "ID,Company,Issue Size,Stage,Subscription Demand,Details,Source\\n";
-      ipoList.forEach(item => {
-        csv += \`"\${item.id}","\${item.company.replace(/"/g, '""')}","\${item.size}","\${item.stage}","\${item.demand}","\${item.details.replace(/"/g, '""')}","\${item.source}"\\n\`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.setAttribute('href', url);
-      a.setAttribute('download', \`FinBrief_IPO_Tracker_\${new Date().toISOString().slice(0,10)}.csv\`);
-      a.click();
+    function openIpoModal(idx) {
+      const ipo = ipoList[idx];
+      if (!ipo) return;
+      document.getElementById("modal-ipo-company").textContent = ipo.company;
+      document.getElementById("modal-ipo-exchange").textContent = ipo.exchange;
+      document.getElementById("modal-ipo-stage").textContent = ipo.stage;
+      document.getElementById("modal-ipo-size").textContent = ipo.size;
+      document.getElementById("modal-ipo-demand").textContent = ipo.demand;
+      document.getElementById("modal-ipo-headline").textContent = ipo.headline;
+      document.getElementById("modal-ipo-details").textContent = ipo.details;
+      document.getElementById("modal-ipo-source").textContent = \`Source Reference: \${ipo.source}\`;
+      
+      const modal = document.getElementById("ipo-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeIpoModal() {
+      const modal = document.getElementById("ipo-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
     }
 
     function highlightNumbers(text) {
@@ -1054,7 +1192,8 @@ const HTML = `<!DOCTYPE html>
 
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
-      if (e.key === "j" || e.key === "ArrowDown") {
+      if (e.key === "Escape") closeIpoModal();
+      else if (e.key === "j" || e.key === "ArrowDown") {
         e.preventDefault();
         navigateStory(1);
       } else if (e.key === "k" || e.key === "ArrowUp") {
@@ -1067,7 +1206,8 @@ const HTML = `<!DOCTYPE html>
         e.preventDefault();
         navigateDate(-1);
       } else if (e.key === "1") switchView('feed');
-      else if (e.key === "2") switchView('ipo');
+      else if (e.key === "2") switchView('anchor');
+      else if (e.key === "3") switchView('ipo');
       else if (e.key === "/") { e.preventDefault(); document.getElementById("global-search").focus(); }
     });
 
@@ -1109,7 +1249,8 @@ export default {
     }
 
     if (url.pathname === '/api/dates') {
-      return new Response(JSON.stringify(['2026-09-28', '2026-09-27']), {
+      const dates = ['2026-09-28', '2026-09-27'];
+      return new Response(JSON.stringify(dates), {
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
           'Access-Control-Allow-Origin': '*',
