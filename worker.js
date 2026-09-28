@@ -42,100 +42,100 @@ const HTML = `<!DOCTYPE html>
   <div class="min-h-screen flex flex-col">
 
     <!-- ================= 1. TOPMOST MARKET PULSE & CALENDAR RIBBON ================= -->
-    <div class="sticky top-0 z-50 bg-[#070A12] text-slate-300 text-[11px] font-mono px-3.5 py-1.5 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-4 border-b border-slate-800 shadow-sm">
-      <div class="flex items-center gap-3.5">
+    <div class="sticky top-0 z-50 bg-[#070A12] text-slate-300 text-[10.5px] font-mono px-3 py-1 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-3 border-b border-slate-800/80 shadow-xs">
+      <div class="flex items-center gap-3">
         <span class="text-amber-400 font-extrabold flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>MARKET PULSE:</span>
         </span>
         <span>NIFTY <b class="text-emerald-400 font-bold">24,835 (+0.64%)</b></span>
         <span>BANK NIFTY <b class="text-emerald-400 font-bold">54,120 (+0.82%)</b></span>
         <span>INDIA VIX <b class="text-rose-400 font-bold">12.85 (-3.2%)</b></span>
-        <span>BRENT <b class="text-amber-300 font-bold">\$74.2/bbl</b></span>
+        <span>BRENT <b class="text-amber-300 font-bold">$74.2/bbl</b></span>
         <span>USD/INR <b class="text-slate-200 font-bold">₹83.65</b></span>
       </div>
 
       <!-- Historical Calendar & Edition Navigation -->
-      <div class="flex items-center gap-3 shrink-0">
-        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-md border border-slate-700">
-          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Previous Date in History (Arrow Left)">
-            ◀ Prev Day
+      <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center gap-0.5 bg-slate-900 p-0.5 rounded border border-slate-700/80">
+          <button onclick="navigateDate(1)" class="px-1.5 py-0.2 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[10.5px] font-bold transition-colors" title="Previous Date in History (Arrow Left)">
+            ◀ Prev
           </button>
           
-          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/50 rounded border border-slate-700/60">
-            <span class="text-slate-400 text-xs">📅</span>
-            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[110px]"/>
-            <select id="edition-date-select" onchange="onDateChange(this.value)" class="bg-transparent text-slate-200 font-bold font-mono text-[11px] focus:outline-none cursor-pointer pl-1 border-l border-slate-700">
+          <div class="flex items-center gap-1 px-1 py-0.2 bg-black/50 rounded border border-slate-700/60">
+            <span class="text-slate-400 text-[10px]">📅</span>
+            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[10.5px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[102px]"/>
+            <select id="edition-date-select" onchange="onDateChange(this.value)" class="bg-transparent text-slate-200 font-bold font-mono text-[10.5px] focus:outline-none cursor-pointer pl-1 border-l border-slate-700 max-w-[100px]">
               <option value="latest">Latest Edition</option>
             </select>
           </div>
 
-          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold transition-colors" title="Next Date (Arrow Right)">
-            Next Day ▶
+          <button onclick="navigateDate(-1)" class="px-1.5 py-0.2 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[10.5px] font-bold transition-colors" title="Next Date (Arrow Right)">
+            Next ▶
           </button>
         </div>
 
-        <span id="total-news-counter-badge" class="px-2.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold font-mono">
-          🔥 Total News: <b id="top-total-count">0</b>
+        <span id="total-news-counter-badge" class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold font-mono text-[10.5px]">
+          🔥 Total: <b id="top-total-count">0</b>
         </span>
       </div>
     </div>
 
-    <!-- ================= 2. MAIN NAVIGATION TOOLBAR (HIGH-CONTRAST INSTITUTIONAL THEME) ================= -->
-    <header class="sticky top-[34px] z-40 bg-[#0E1322] border-b border-slate-800 text-white shadow-md px-3.5 py-2 flex items-center justify-between gap-3 flex-wrap">
+    <!-- ================= 2. MAIN NAVIGATION TOOLBAR (COMPACT SINGLE-ROW INSTITUTIONAL HEADER) ================= -->
+    <header class="sticky top-[29px] z-40 bg-[#0E1322] border-b border-slate-800 text-white shadow-xs px-3 py-1 flex items-center justify-between gap-2 overflow-x-auto flex-nowrap whitespace-nowrap">
       
       <!-- Left: Logo & Primary Navigation Tabs -->
-      <div class="flex items-center gap-3.5 shrink-0 flex-wrap">
-        <div class="flex items-center gap-2 shrink-0 cursor-pointer" onclick="switchView('feed')">
-          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-brand-600 flex items-center justify-center shadow-xs">
-            <span class="text-white text-xs font-black tracking-tighter">FP</span>
+      <div class="flex items-center gap-2.5 shrink-0">
+        <div class="flex items-center gap-1.5 shrink-0 cursor-pointer" onclick="switchView('feed')">
+          <div class="w-6 h-6 rounded-md bg-gradient-to-br from-indigo-500 to-brand-600 flex items-center justify-center shadow-xs">
+            <span class="text-white text-[10px] font-black tracking-tighter">FP</span>
           </div>
-          <span class="text-[17px] font-black tracking-tight text-white mr-1">
+          <span class="text-[15px] font-black tracking-tight text-white mr-0.5">
             Fin<span class="text-brand-500">Press</span>
           </span>
         </div>
 
         <!-- Navigation Tabs -->
-        <nav class="flex items-center bg-[#151B2E] p-0.5 rounded-lg border border-slate-700/80 text-[12px] font-medium flex-wrap">
-          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5">
+        <nav class="flex items-center bg-[#151B2E] p-0.5 rounded-md border border-slate-700/80 text-[11px] font-medium shrink-0">
+          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-2 py-0.5 font-bold rounded transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1">
             <span>⚡ All News</span>
-            <span id="tab-feed-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-black/30 font-bold">0</span>
+            <span id="tab-feed-count" class="px-1 rounded text-[9.5px] font-mono bg-black/30 font-bold">0</span>
           </button>
           
-          <button id="tab-btn-anchor" onclick="switchView('anchor')" class="px-3 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1.5">
-            <span>📰 Front Page Anchors</span>
-            <span id="tab-anchor-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-amber-500/20 text-amber-300 font-bold">0</span>
+          <button id="tab-btn-anchor" onclick="switchView('anchor')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
+            <span>📰 Front Page</span>
+            <span id="tab-anchor-count" class="px-1 rounded text-[9.5px] font-mono bg-amber-500/20 text-amber-300 font-bold">0</span>
           </button>
 
-          <button id="tab-btn-ipo" onclick="switchView('ipo')" class="px-3 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1.5">
+          <button id="tab-btn-ipo" onclick="switchView('ipo')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
             <span>🚀 IPO Central</span>
-            <span id="tab-ipo-count" class="px-1.5 py-0.2 rounded text-[10.5px] font-mono bg-indigo-500/20 text-indigo-300 font-bold">0</span>
+            <span id="tab-ipo-count" class="px-1 rounded text-[9.5px] font-mono bg-indigo-500/20 text-indigo-300 font-bold">0</span>
           </button>
 
-          <button id="tab-btn-corporate" onclick="switchView('corporate')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1">
+          <button id="tab-btn-corporate" onclick="switchView('corporate')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
             <span>🏢 Corporate</span>
-            <span id="tab-corp-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-slate-700 text-slate-200">0</span>
+            <span id="tab-corp-count" class="px-1 rounded text-[9.5px] font-mono bg-slate-700 text-slate-200">0</span>
           </button>
 
-          <button id="tab-btn-opinions" onclick="switchView('opinions')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1">
-            <span>✍️ Opinions & Editorial</span>
-            <span id="tab-opinions-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-slate-700 text-slate-200">0</span>
+          <button id="tab-btn-opinions" onclick="switchView('opinions')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
+            <span>✍️ Opinions</span>
+            <span id="tab-opinions-count" class="px-1 rounded text-[9.5px] font-mono bg-slate-700 text-slate-200">0</span>
           </button>
 
-          <button id="tab-btn-macro" onclick="switchView('macro')" class="px-2.5 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white">
-            🌐 Macro & Policy
+          <button id="tab-btn-macro" onclick="switchView('macro')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white">
+            🌐 Macro
           </button>
         </nav>
       </div>
 
-      <!-- Center Controls (Clean Category Dropdown + Sentiment Filters) -->
-      <div class="flex items-center gap-2.5 flex-wrap flex-1 max-w-2xl">
+      <!-- Center Controls (Compact Category Dropdown + Sentiment Filters) -->
+      <div class="flex items-center gap-2 shrink-0">
         
         <!-- Feed Controls -->
-        <div id="feed-controls" class="flex items-center gap-2 flex-wrap">
+        <div id="feed-controls" class="flex items-center gap-1.5">
           <!-- Clean Category Selector (No IPO, Corporate Events, Appointments) -->
-          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[12px] font-bold px-2.5 py-1 rounded-md border border-slate-700 bg-[#151B2E] text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
-            <option value="ALL">✨ All Core Sections</option>
+          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 bg-[#151B2E] text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
+            <option value="ALL">✨ All Sections</option>
             <option value="Sector">Sector</option>
             <option value="Economy">Economy</option>
             <option value="Policy">Policy</option>
@@ -145,116 +145,116 @@ const HTML = `<!DOCTYPE html>
             <option value="Others">Others</option>
           </select>
 
-          <div class="flex items-center bg-[#151B2E] p-0.5 rounded-md border border-slate-700 text-[11.5px] font-bold">
-            <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2.5 py-0.5 rounded bg-slate-800 text-white shadow-xs">
+          <div class="flex items-center bg-[#151B2E] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
+            <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2 py-0.5 rounded bg-slate-800 text-white shadow-xs">
               All (<span id="feed-count-all">0</span>)
             </button>
-            <button id="sent-bullish" onclick="setFeedSentiment('BULLISH')" class="px-2.5 py-0.5 rounded text-emerald-400 hover:bg-emerald-950/40 flex items-center gap-1">
-              <span>🟢</span> Bullish (<span id="feed-count-bullish">0</span>)
+            <button id="sent-bullish" onclick="setFeedSentiment('BULLISH')" class="px-2 py-0.5 rounded text-emerald-400 hover:bg-emerald-950/40 flex items-center gap-0.5">
+              <span>🟢</span> (<span id="feed-count-bullish">0</span>)
             </button>
-            <button id="sent-bearish" onclick="setFeedSentiment('BEARISH')" class="px-2.5 py-0.5 rounded text-rose-400 hover:bg-rose-950/40 flex items-center gap-1">
-              <span>🔴</span> Bearish (<span id="feed-count-bearish">0</span>)
+            <button id="sent-bearish" onclick="setFeedSentiment('BEARISH')" class="px-2 py-0.5 rounded text-rose-400 hover:bg-rose-950/40 flex items-center gap-0.5">
+              <span>🔴</span> (<span id="feed-count-bearish">0</span>)
             </button>
           </div>
         </div>
 
         <!-- IPO Sub-stage Filter Buttons -->
-        <div id="ipo-controls" class="hidden items-center gap-2 flex-wrap">
-          <div class="flex items-center bg-[#151B2E] p-0.5 rounded-md border border-slate-700 text-[11.5px] font-bold">
-            <button id="ipo-stage-all" onclick="filterIpoTable('ALL')" class="px-2.5 py-0.5 rounded bg-brand-600 text-white shadow-xs">All IPOs</button>
-            <button id="ipo-stage-drhp" onclick="filterIpoTable('DRHP')" class="px-2.5 py-0.5 rounded text-slate-300">📋 DRHP Filed</button>
-            <button id="ipo-stage-bidding" onclick="filterIpoTable('BIDDING')" class="px-2.5 py-0.5 rounded text-slate-300">📈 Active Bidding</button>
-            <button id="ipo-stage-notices" onclick="filterIpoTable('NOTICES')" class="px-2.5 py-0.5 rounded text-slate-300">🏛️ Allotments & Notices</button>
+        <div id="ipo-controls" class="hidden items-center gap-1.5">
+          <div class="flex items-center bg-[#151B2E] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
+            <button id="ipo-stage-all" onclick="filterIpoTable('ALL')" class="px-2 py-0.5 rounded bg-brand-600 text-white shadow-xs">All IPOs</button>
+            <button id="ipo-stage-drhp" onclick="filterIpoTable('DRHP')" class="px-2 py-0.5 rounded text-slate-300">📋 DRHP</button>
+            <button id="ipo-stage-bidding" onclick="filterIpoTable('BIDDING')" class="px-2 py-0.5 rounded text-slate-300">📈 Bidding</button>
+            <button id="ipo-stage-notices" onclick="filterIpoTable('NOTICES')" class="px-2 py-0.5 rounded text-slate-300">🏛️ Allotments</button>
           </div>
         </div>
 
       </div>
 
       <!-- Right: Search + Theme Switcher -->
-      <div class="flex items-center gap-2.5 shrink-0">
-        <div class="relative w-52 sm:w-60">
-          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or catalyst..." class="w-full text-[12px] pl-7 pr-7 py-1 rounded-md border border-slate-700 bg-[#151B2E] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-500 font-medium"/>
-          <span class="absolute left-2 top-1.5 text-slate-400 text-[11px]">🔍</span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2 top-1 text-slate-400 hover:text-white text-xs font-bold p-0.5">✕</button>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <div class="relative w-36 sm:w-44">
+          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11px] pl-6 pr-5 py-0.5 rounded border border-slate-700 bg-[#151B2E] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-500 font-medium"/>
+          <span class="absolute left-1.5 top-1 text-slate-400 text-[10px]">🔍</span>
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-0.5 text-slate-400 hover:text-white text-[10px] font-bold p-0.5">✕</button>
         </div>
 
-        <button onclick="toggleTheme()" class="w-7 h-7 rounded-md border border-slate-700 bg-[#151B2E] text-slate-300 hover:text-white flex items-center justify-center text-xs shadow-xs" title="Toggle Light/Dark Theme">
+        <button onclick="toggleTheme()" class="w-6 h-6 rounded border border-slate-700 bg-[#151B2E] text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
 
     </header>
 
-    <!-- ================= MAIN THREE-COLUMN WORKSPACE ================= -->
-    <main class="mx-auto max-w-[1920px] w-full px-3 py-2 flex-1 flex flex-col gap-2">
+    <!-- ================= MAIN THREE-COLUMN WORKSPACE (COMPRESSED DENSITY) ================= -->
+    <main class="mx-auto max-w-[1920px] w-full px-2.5 py-1.5 flex-1 flex flex-col gap-1.5">
       
       <!-- ================= VIEW 1: NEWS STREAM (SPLIT READER + STOCKS IN FOCUS ON RIGHT) ================= -->
-      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[400px_minmax(0,1fr)_300px] xl:grid-cols-[440px_minmax(0,1fr)_330px] gap-2.5 items-start">
+      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[380px_minmax(0,1fr)_280px] xl:grid-cols-[410px_minmax(0,1fr)_310px] gap-2 items-start">
         
         <!-- COLUMN 1: COMPACT NEWS FEED LIST -->
-        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
-          <div class="px-3.5 py-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 flex items-center justify-between text-[12px] font-mono">
+        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
+          <div class="px-2.5 py-1.5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 flex items-center justify-between text-[11px] font-mono">
             <span id="feed-list-count" class="font-bold text-slate-800 dark:text-slate-200">0 Stories</span>
-            <div class="flex items-center gap-1.5">
-              <button onclick="navigateStory(-1)" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10.5px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700" title="Previous Story (K or Up Arrow)">▲ Prev</button>
-              <button onclick="navigateStory(1)" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10.5px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700" title="Next Story (J or Down Arrow)">▼ Next</button>
+            <div class="flex items-center gap-1">
+              <button onclick="navigateStory(-1)" class="px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700" title="Previous Story (K or Up Arrow)">▲ Prev</button>
+              <button onclick="navigateStory(1)" class="px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 hover:bg-brand-50 text-[10px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700" title="Next Story (J or Down Arrow)">▼ Next</button>
             </div>
           </div>
 
-          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[calc(100vh-5.5rem)] overflow-y-auto">
             <!-- Dynamically populated story items -->
           </div>
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE -->
-        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-5 shadow-xs sticky top-24 flex flex-col gap-3.5 min-h-[calc(100vh-7.5rem)] max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3.5 shadow-xs sticky top-[70px] flex flex-col gap-2.5 min-h-[calc(100vh-5.5rem)] max-h-[calc(100vh-5.5rem)] overflow-y-auto">
           <div id="feed-detail-container">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
         <!-- COLUMN 3: RIGHT HAND SIDE PANEL (STOCKS IN FOCUS & TRADING CATALYSTS - NO IPOS) -->
-        <aside class="flex flex-col gap-2.5 sticky top-24 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+        <aside class="flex flex-col gap-2 sticky top-[70px] max-h-[calc(100vh-5.5rem)] overflow-y-auto">
           
           <!-- Stocks in Focus Card -->
-          <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3.5 shadow-xs flex flex-col gap-2.5">
-            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
-              <span class="text-[12.5px] font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-1.5 font-mono">
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
+              <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-1 font-mono">
                 <span>🏷️</span> <span>Stocks in Focus</span>
               </span>
-              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[11px] font-mono text-brand-600 dark:text-brand-400 font-bold hover:underline">
+              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[10.5px] font-mono text-brand-600 dark:text-brand-400 font-bold hover:underline">
                 Clear (✕)
               </button>
             </div>
 
-            <p class="text-[11.5px] text-slate-500 dark:text-slate-400 leading-snug">Click any stock to filter stories immediately:</p>
+            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight">Click stock to filter:</p>
 
             <!-- Stock Ticker Pill Matrix -->
-            <div id="stocks-focus-list" class="flex flex-wrap gap-1.5 max-h-[220px] overflow-y-auto pt-0.5">
+            <div id="stocks-focus-list" class="flex flex-wrap gap-1 max-h-[180px] overflow-y-auto pt-0.5">
               <!-- Dynamically populated ticker chips -->
             </div>
           </div>
 
           <!-- Top Bullish Triggers Card (Excludes IPOs) -->
-          <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-emerald-200/80 dark:border-slate-800 p-3.5 shadow-xs flex flex-col gap-2">
-            <div class="flex items-center justify-between border-b border-emerald-100 dark:border-slate-800 pb-1.5">
-              <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                <span>🟢</span> <span>Top Bullish Triggers (Corporate & Sector)</span>
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-emerald-200/80 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
+            <div class="flex items-center justify-between border-b border-emerald-100 dark:border-slate-800 pb-1">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                <span>🟢</span> <span>Top Bullish Triggers</span>
               </span>
             </div>
-            <div id="top-bullish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[12.5px] space-y-1.5">
+            <div id="top-bullish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[11.5px] space-y-1">
               <!-- Dynamically populated top bullish triggers -->
             </div>
           </div>
 
           <!-- Top Bearish Risks Card (Excludes IPOs) -->
-          <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-rose-200/80 dark:border-slate-800 p-3.5 shadow-xs flex flex-col gap-2">
-            <div class="flex items-center justify-between border-b border-rose-100 dark:border-slate-800 pb-1.5">
-              <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-rose-200/80 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
+            <div class="flex items-center justify-between border-b border-rose-100 dark:border-slate-800 pb-1">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1">
                 <span>🔴</span> <span>Key Downside Risks</span>
               </span>
             </div>
-            <div id="top-bearish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[12.5px] space-y-1.5">
+            <div id="top-bearish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[11.5px] space-y-1">
               <!-- Dynamically populated top bearish risks -->
             </div>
           </div>
@@ -979,10 +979,10 @@ const HTML = `<!DOCTYPE html>
       const isBearish = story.sentiment === "BEARISH";
       
       const sentBadge = isBullish 
-        ? \`<span class="px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300">🟢 BULLISH CATALYST</span>\`
+        ? \`<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300">🟢 BULLISH</span>\`
         : isBearish 
-        ? \`<span class="px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/50 dark:text-rose-300">🔴 BEARISH DOWNSIDE</span>\`
-        : \`<span class="px-2.5 py-1 rounded text-[11px] font-mono font-bold bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-300">⚪ NEUTRAL WATCHLIST</span>\`;
+        ? \`<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/50 dark:text-rose-300">🔴 BEARISH</span>\`
+        : \`<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-300">⚪ NEUTRAL</span>\`;
 
       const reasonBoxBorder = isBullish 
         ? "border-emerald-200 bg-emerald-50/60 dark:bg-emerald-950/20 dark:border-emerald-800/60" 
@@ -996,47 +996,47 @@ const HTML = `<!DOCTYPE html>
         ? "text-rose-800 dark:text-rose-300" 
         : "text-slate-700 dark:text-slate-300";
 
-      const tickerBadges = story.tickers.map(t => \`<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-brand-50 text-brand-700 border border-brand-200 dark:bg-brand-400/15 dark:text-brand-300">\${t}</span>\`).join('');
+      const tickerBadges = story.tickers.map(t => \`<span class="px-1.5 py-0.2 text-[10.5px] font-mono font-bold rounded bg-brand-50 text-brand-700 border border-brand-200 dark:bg-brand-400/15 dark:text-brand-300">\${t}</span>\`).join('');
 
       container.innerHTML = \`
-        <div class="flex items-center justify-between gap-2 flex-wrap pb-2.5 border-b border-slate-100 dark:border-slate-800">
-          <div class="flex items-center gap-2">
-            <span class="text-[11.5px] font-mono font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200">\${story.category}</span>
-            \${story.isFrontPage ? \`<span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300">📰 PAGE 1 LEAD ANCHOR</span>\` : ''}
-            <span class="text-[12px] text-slate-400 font-mono font-medium">\${story.page_numbers}</span>
+        <div class="flex items-center justify-between gap-1.5 flex-wrap pb-1.5 border-b border-slate-100 dark:border-slate-800">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10.5px] font-mono font-bold px-2 py-0.2 rounded bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200">\${story.category}</span>
+            \${story.isFrontPage ? \`<span class="text-[9.5px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300">📰 PAGE 1 ANCHOR</span>\` : ''}
+            <span class="text-[11px] text-slate-400 font-mono font-medium">\${story.page_numbers}</span>
           </div>
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-1.5">
             \${sentBadge}
-            <button onclick="copyToClipboard('\${escapeQuotes(story.headline + '\\\\n\\\\n' + story.brief_details)}')" class="text-[11.5px] text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E]" title="Copy to clipboard">
+            <button onclick="copyToClipboard('\${escapeQuotes(story.headline + '\\\\n\\\\n' + story.brief_details)}')" class="text-[10.5px] text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-1.5 py-0.2 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E]" title="Copy to clipboard">
               📋 Copy
             </button>
           </div>
         </div>
 
-        <h1 class="text-[20px] font-extrabold text-slate-900 dark:text-white leading-snug mt-1">\${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
+        <h1 class="text-[17px] font-extrabold text-slate-900 dark:text-white leading-tight mt-0.5">\${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
 
         \${story.tickers.length > 0 ? \`
-          <div class="flex items-center gap-2 flex-wrap mt-0.5">
-            <span class="text-[11px] font-mono text-slate-400 font-bold">STOCKS:</span>
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] font-mono text-slate-400 font-bold">STOCKS:</span>
             \${tickerBadges}
           </div>
         \` : ''}
 
         <!-- Executive Overview -->
-        <div class="mt-2.5 p-4 rounded-xl bg-brand-50/70 dark:bg-brand-950/25 border border-brand-200/90 dark:border-brand-500/30 shadow-2xs">
-          <p class="text-[11.5px] font-mono font-bold uppercase tracking-wider text-brand-800 dark:text-brand-400 mb-1.5 flex items-center gap-1.5">
+        <div class="mt-1.5 p-2.5 rounded-lg bg-brand-50/70 dark:bg-brand-950/25 border border-brand-200/90 dark:border-brand-500/30 shadow-2xs">
+          <p class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-brand-800 dark:text-brand-400 mb-0.5 flex items-center gap-1">
             <span>⚡</span> <span>Executive Intelligence</span>
           </p>
-          <p class="text-[14.5px] text-slate-800 dark:text-slate-200 leading-relaxed font-normal">\${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}</p>
+          <p class="text-[13px] text-slate-800 dark:text-slate-200 leading-snug font-normal">\${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}</p>
         </div>
 
         <!-- Key Analyst Bullets -->
-        <div class="mt-3">
-          <p class="text-[11.5px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-2">Key Analyst Bullets</p>
-          <ul class="space-y-2">
+        <div class="mt-2">
+          <p class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-1">Key Analyst Bullets</p>
+          <ul class="space-y-1">
             \${(story.bullet_points || []).map(bp => \`
-              <li class="flex items-start gap-2.5 text-[14px] text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-[#11172A] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
-                <span class="text-brand-600 dark:text-brand-400 font-bold text-base leading-none select-none mt-0.5">›</span>
+              <li class="flex items-start gap-1.5 text-[12.5px] text-slate-700 dark:text-slate-300 leading-snug bg-slate-50 dark:bg-[#11172A] p-1.5 px-2 rounded-md border border-slate-200/80 dark:border-slate-800">
+                <span class="text-brand-600 dark:text-brand-400 font-bold text-sm leading-none select-none mt-0.5">›</span>
                 <span>\${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
               </li>
             \`).join('')}
@@ -1044,14 +1044,14 @@ const HTML = `<!DOCTYPE html>
         </div>
 
         <!-- Dedicated Trader Catalyst & Impact Rationale Card -->
-        <div class="mt-3.5 p-3.5 rounded-xl border \${reasonBoxBorder} shadow-2xs">
-          <div class="flex items-center justify-between gap-2 mb-1.5">
-            <span class="text-[12px] font-mono font-bold uppercase tracking-wider \${reasonTitleColor} flex items-center gap-1.5">
+        <div class="mt-2 p-2.5 rounded-lg border \${reasonBoxBorder} shadow-2xs">
+          <div class="flex items-center justify-between gap-1 mb-1">
+            <span class="text-[11px] font-mono font-bold uppercase tracking-wider \${reasonTitleColor} flex items-center gap-1">
               <span>💡</span> <span>Catalyst Rationale & Trader Impact</span>
             </span>
-            <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded \${isBullish ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200' : isBearish ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200' : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'}">\${story.sentiment} THESIS</span>
+            <span class="text-[9.5px] font-mono font-bold uppercase px-1.5 py-0.2 rounded \${isBullish ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200' : isBearish ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200' : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'}">\${story.sentiment} THESIS</span>
           </div>
-          <p class="text-[13.5px] text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+          <p class="text-[12.5px] text-slate-800 dark:text-slate-200 leading-snug font-medium">
             \${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
           </p>
         </div>
@@ -1163,7 +1163,7 @@ const HTML = `<!DOCTYPE html>
 
     function highlightNumbers(text) {
       if (!text) return "";
-      return text.replace(/(\\b\\d+(?:\\.\\d+)?%|\\b₹\\s?[\\d,]+(?:\\.\\d+)?(?:\\s?(?:cr|crore|lakh|bn|billion|tn|trillion))?|\\b\\\$[\\d,]+(?:\\.\\d+)?(?:\\s?(?:bn|billion|million|mn|tn))?|\\b[\\d,]+(?:\\.\\d+)?\\s?(?:crore|lakh|billion|million)\\b)/gi, '<span class="text-brand-600 dark:text-amber-400 font-bold font-mono">\$1</span>');
+      return text.replace(/(\\b\\d+(?:\\.\\d+)?%|\\b₹\\s?[\\d,]+(?:\\.\\d+)?(?:\\s?(?:cr|crore|lakh|bn|billion|tn|trillion))?|\\b\\$[\\d,]+(?:\\.\\d+)?(?:\\s?(?:bn|billion|million|mn|tn))?|\\b[\\d,]+(?:\\.\\d+)?\\s?(?:crore|lakh|billion|million)\\b)/gi, '<span class="text-brand-600 dark:text-amber-400 font-bold font-mono">$1</span>');
     }
 
     function highlightSearchTokens(text, tokens) {
@@ -1172,13 +1172,13 @@ const HTML = `<!DOCTYPE html>
       tokens.forEach(tok => {
         if (!tok || tok.length < 2) return;
         const regex = new RegExp(\`(\${escapeRegExp(tok)})\`, 'gi');
-        result = result.replace(regex, '<mark>\$1</mark>');
+        result = result.replace(regex, '<mark>$1</mark>');
       });
       return result;
     }
 
     function escapeRegExp(string) {
-      return string.replace(/[.*+?^\${}()|[\\]\\\\]/g, '\\\\\$&');
+      return string.replace(/[.*+?^\${}()|[\\]\\\\]/g, '\\\\$&');
     }
 
     function escapeQuotes(str) {
