@@ -259,7 +259,9 @@ def run_unified_aggregation(date_str: Optional[str] = None) -> NewspaperEditionR
     target_date = date_str or datetime.now().strftime("%Y-%m-%d")
     reports_dir = Path(config.output_dir)
 
-    fe_path = reports_dir / f"news_report_{target_date}.json"
+    fe_path = reports_dir / f"news_report_fe_{target_date}.json"
+    if not fe_path.exists():
+        fe_path = reports_dir / f"news_report_{target_date}.json"
     bs_path = reports_dir / f"news_report_bs_{target_date}.json"
 
     reports = []

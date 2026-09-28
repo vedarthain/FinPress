@@ -212,18 +212,28 @@ For each story provide:
             major_stories=all_stories,
         )
 
+        is_bs = "business_standard" in pdf_path.name.lower() or "bs_" in pdf_path.name.lower()
+        source_name = "business_standard" if is_bs else "financial_express"
+        prefix = "news_report_bs_" if is_bs else "news_report_"
+
         # Save structured output files
-        json_path = output_dir / f"news_report_{date_str}.json"
-        md_path = output_dir / f"news_report_{date_str}.md"
+        json_path = output_dir / f"{prefix}{date_str}.json"
+        md_path = output_dir / f"{prefix}{date_str}.md"
 
         with open(json_path, "w", encoding="utf-8") as f:
             f.write(report.model_dump_json(indent=2))
+
+        # Also save news_report_fe_<date>.json if FE
+        if not is_bs:
+            fe_json = output_dir / f"news_report_fe_{date_str}.json"
+            with open(fe_json, "w", encoding="utf-8") as f:
+                f.write(report.model_dump_json(indent=2))
 
         markdown_content = self.render_markdown_report(report)
         with open(md_path, "w", encoding="utf-8") as f:
             f.write(markdown_content)
 
-        logger.info(f"✅ Full Unabridged Extraction Complete: Saved {len(report.major_stories)} stories to: {json_path}")
+        logger.info(f"✅ Full Unabridged Extraction Complete [{source_name}]: Saved {len(report.major_stories)} stories to: {json_path}")
 
         # Upload to Cloudflare R2
         from cloud_storage import upload_to_r2
@@ -232,7 +242,7 @@ For each story provide:
 
         # Save into Neon DB
         from db import save_to_neon
-        save_to_neon(report, source="financial_express")
+        save_to_neon(report, source=source_name)
 
         return report
 
