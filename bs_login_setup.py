@@ -54,21 +54,39 @@ async def setup_login():
         with open("bs_storage_state_base64.txt", "w", encoding="utf-8") as f:
             f.write(b64_str)
 
-        # Copy to clipboard on macOS
+        # 1. Try updating GitHub Secret directly from CLI via gh
+        gh_success = False
+        try:
+            res = subprocess.run(
+                ["gh", "secret", "set", "BS_STORAGE_STATE_BASE64", "--repo", "vedarthain/FinPress"],
+                input=b64_str.encode("utf-8"),
+                capture_output=True,
+                check=False
+            )
+            if res.returncode == 0:
+                gh_success = True
+        except Exception:
+            pass
+
+        # 2. Copy to clipboard on macOS as backup
         try:
             subprocess.run(["pbcopy"], input=b64_str.encode("utf-8"), check=True)
-            copied_msg = "📋 Fresh Base64 secret COPIED TO CLIPBOARD automatically!"
+            copied_msg = "📋 Token copied to macOS clipboard."
         except Exception:
-            copied_msg = "Base64 token written to 'bs_storage_state_base64.txt'"
+            copied_msg = "Token written to 'bs_storage_state_base64.txt'."
 
         print("\n" + "=" * 68)
         print("✅ BUSINESS STANDARD SESSION CAPTURED SUCCESSFULLY!")
         print("=" * 68)
-        print(f"{copied_msg}")
-        print("\n👉 ACTION: Update your GitHub Action Secret:")
-        print("   1. Go to: GitHub Repo -> Settings -> Secrets and variables -> Actions")
-        print("   2. Update 'BS_STORAGE_STATE_BASE64' with the copied token (Cmd+V).")
-        print("   3. Click 'Update secret'.")
+        
+        if gh_success:
+            print("🚀 GITHUB SECRET 'BS_STORAGE_STATE_BASE64' UPDATED AUTOMATICALLY VIA CLI!")
+            print("   You do not need to do anything manually. The cloud is in sync!")
+        else:
+            print(f"{copied_msg}")
+            print("\n👉 To update GitHub Secret in 1-click from CLI:")
+            print("   1. Run once:  gh auth login")
+            print("   2. Then run:  gh secret set BS_STORAGE_STATE_BASE64 < bs_storage_state_base64.txt --repo vedarthain/FinPress")
         print("=" * 68 + "\n")
 
         await context.close()
