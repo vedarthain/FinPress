@@ -7,14 +7,14 @@
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
@@ -29,7 +29,7 @@
       touch-action: manipulation;
       -webkit-text-size-adjust: 100%;
     }
-    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 13.5px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+    body { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 13.5px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -68,20 +68,17 @@
       <!-- Historical Calendar & Edition Navigation -->
       <div class="flex items-center gap-2.5 shrink-0 text-[12px]">
         <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded border border-slate-700/80">
-          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[11.5px] font-bold transition-colors" title="Previous Date in History (Arrow Left)">
-            ◀ Prev
+          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Previous Date in History (Arrow Left)">
+            ◀
           </button>
           
           <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/60 rounded border border-slate-700/60">
             <span class="text-slate-400 text-[11px]">📅</span>
-            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11.5px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[108px]"/>
-            <select id="edition-date-select" onchange="onDateChange(this.value)" class="bg-transparent text-slate-200 font-bold font-mono text-[11.5px] focus:outline-none cursor-pointer pl-1 border-l border-slate-700 max-w-[110px]">
-              <option value="latest">Latest Edition</option>
-            </select>
+            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[12px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[115px]"/>
           </div>
 
-          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[11.5px] font-bold transition-colors" title="Next Date (Arrow Right)">
-            Next ▶
+          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Next Date (Arrow Right)">
+            ▶
           </button>
         </div>
 
@@ -109,16 +106,11 @@
           </span>
         </div>
 
-        <!-- Front Page Tab (Right next to FinPress) & All News Tab -->
+        <!-- Front Page Tab (Right next to FinPress) -->
         <nav class="flex items-center bg-[#F3DECC] dark:bg-[#0D121D] p-0.5 rounded-lg border border-[#DFC0A5] dark:border-slate-700 text-[12.5px] shrink-0 font-medium">
           <button id="tab-btn-anchor" onclick="switchView('anchor')" class="px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium">
             <span>📰 Front Page</span>
             <span id="tab-anchor-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-amber-200/90 text-amber-950 dark:bg-amber-500/20 dark:text-amber-300 font-semibold">0</span>
-          </button>
-
-          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-2.5 py-1 rounded-md transition-all bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs flex items-center gap-1.5 font-semibold">
-            <span>⚡ All News</span>
-            <span id="tab-feed-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-white/20 text-white font-semibold">0</span>
           </button>
         </nav>
       </div>
@@ -128,9 +120,9 @@
         
         <!-- Feed & Desks Controls -->
         <div id="feed-controls" class="flex items-center gap-2">
-          <!-- 1. All Core Sections Dropdown (with dynamic numbers) -->
+          <!-- 1. All News Dropdown (with dynamic numbers) -->
           <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[12px] font-medium px-2.5 py-1 rounded-md border border-[#D5B599] dark:border-slate-700 bg-white/85 dark:bg-[#1A202E] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-600 cursor-pointer shadow-2xs">
-            <option value="ALL">✨ All Core Sections (0)</option>
+            <option value="ALL">⚡ All News (0)</option>
             <option value="Sector">Sector (0)</option>
             <option value="Economy">Economy (0)</option>
             <option value="Policy">Policy (0)</option>
@@ -198,6 +190,36 @@
         <button onclick="document.getElementById('source-alert-banner').classList.add('hidden')" class="text-slate-400 hover:text-white text-xs font-bold px-1.5 py-0.5" title="Dismiss">✕</button>
       </div>
 
+      <!-- IPO Central Sub-tabs Header Banner (Appears when IPO Central Desk is active) -->
+      <div id="ipo-subtabs-banner" class="hidden rounded-xl bg-white dark:bg-[#0E1322] border border-amber-300/80 dark:border-amber-900/60 p-2 shadow-2xs items-center justify-between gap-2 flex-wrap">
+        <div class="flex items-center gap-2">
+          <span class="text-[12.5px] font-bold font-mono text-amber-950 dark:text-amber-300 flex items-center gap-1.5 px-2">
+            <span>🚀</span> <span>Primary Market & IPO Intelligence Desk</span>
+          </span>
+          <div class="flex items-center bg-slate-100 dark:bg-[#141C33] p-1 rounded-lg border border-slate-200 dark:border-slate-800 text-[12px] font-bold">
+            <button id="ipo-tab-all" onclick="selectIpoSub('ALL')" class="px-3 py-1 rounded-md bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 font-semibold">
+              <span>✨ All IPOs</span>
+              <span id="ipo-sub-all-count" class="px-1.5 py-0.2 rounded text-[10px] bg-white/20 dark:bg-black/30 font-mono">0</span>
+            </button>
+            <button id="ipo-tab-drhp" onclick="selectIpoSub('DRHP')" class="px-3 py-1 rounded-md text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
+              <span>📋 DRHP</span>
+              <span id="ipo-sub-drhp-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-700 font-mono">0</span>
+            </button>
+            <button id="ipo-tab-bidding" onclick="selectIpoSub('BIDDING')" class="px-3 py-1 rounded-md text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
+              <span>📈 Bidding</span>
+              <span id="ipo-sub-bidding-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-700 font-mono">0</span>
+            </button>
+            <button id="ipo-tab-notices" onclick="selectIpoSub('NOTICES')" class="px-3 py-1 rounded-md text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
+              <span>🏛️ Allotments</span>
+              <span id="ipo-sub-notices-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-700 font-mono">0</span>
+            </button>
+          </div>
+        </div>
+        <span class="text-[11.5px] font-mono text-slate-500 dark:text-slate-400 font-bold px-2">
+          DRHP filings, live subscription demand & basis of allotment
+        </span>
+      </div>
+
       <!-- Corporate Sub-tabs Header Banner (Appears when Corporate Desk is active) -->
       <div id="corporate-subtabs-banner" class="hidden rounded-xl bg-white dark:bg-[#0E1322] border border-indigo-200/90 dark:border-indigo-900/60 p-2 shadow-2xs items-center justify-between gap-2 flex-wrap">
         <div class="flex items-center gap-2">
@@ -205,15 +227,15 @@
             <span>🏢</span> <span>Corporate Intelligence Desk</span>
           </span>
           <div class="flex items-center bg-slate-100 dark:bg-[#141C33] p-1 rounded-lg border border-slate-200 dark:border-slate-800 text-[12px] font-bold">
-            <button id="corp-tab-all" onclick="selectCorporateSub('ALL')" class="px-3 py-1 rounded-md bg-indigo-600 text-white shadow-xs transition-all flex items-center gap-1.5">
+            <button id="corp-tab-all" onclick="selectCorporateSub('ALL')" class="px-3 py-1 rounded-md bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 font-semibold">
               <span>🏢 All Corporate</span>
-              <span id="corp-sub-all-count" class="px-1.5 py-0.2 rounded text-[10px] bg-black/30 font-mono">0</span>
+              <span id="corp-sub-all-count" class="px-1.5 py-0.2 rounded text-[10px] bg-white/20 dark:bg-black/30 font-mono">0</span>
             </button>
-            <button id="corp-tab-events" onclick="selectCorporateSub('EVENTS')" class="px-3 py-1 rounded-md text-slate-700 dark:text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-1.5">
+            <button id="corp-tab-events" onclick="selectCorporateSub('EVENTS')" class="px-3 py-1 rounded-md text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
               <span>📢 Events</span>
               <span id="corp-sub-events-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-700 font-mono">0</span>
             </button>
-            <button id="corp-tab-appts" onclick="selectCorporateSub('APPOINTMENTS')" class="px-3 py-1 rounded-md text-slate-700 dark:text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-1.5">
+            <button id="corp-tab-appts" onclick="selectCorporateSub('APPOINTMENTS')" class="px-3 py-1 rounded-md text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
               <span>👔 Appointments</span>
               <span id="corp-sub-appts-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-700 font-mono">0</span>
             </button>
@@ -578,84 +600,59 @@
 
     function switchView(viewName) {
       currentView = viewName;
-      const tabFeed = document.getElementById("tab-btn-feed");
       const tabAnchor = document.getElementById("tab-btn-anchor");
       const viewFeed = document.getElementById("view-feed");
-      const viewIpo = document.getElementById("view-ipo");
-      const viewMatrix = document.getElementById("view-matrix");
-      const feedControls = document.getElementById("feed-controls");
       const corpBanner = document.getElementById("corporate-subtabs-banner");
+      const ipoBanner = document.getElementById("ipo-subtabs-banner");
       const deskSelect = document.getElementById("desk-select");
       const categorySelect = document.getElementById("category-select");
 
       selectedStoryIndex = 0;
       currentFeedPage = 1;
 
-      if (tabFeed) tabFeed.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
       if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
-
-      if (viewName === "ipo") {
-        if (deskSelect) deskSelect.value = "ipo";
-        if (corpBanner) corpBanner.classList.add("hidden");
-        viewFeed.classList.add("hidden");
-        viewFeed.classList.remove("grid");
-        viewIpo.classList.remove("hidden");
-        viewIpo.classList.add("flex");
-        if (feedControls) feedControls.classList.add("hidden");
-        filterIpoTable("ALL");
-        return;
-      }
-
-      viewIpo.classList.add("hidden");
-      viewIpo.classList.remove("flex");
-      if (feedControls) feedControls.classList.remove("hidden");
 
       viewFeed.classList.remove("hidden");
       viewFeed.classList.add("grid");
 
       if (viewName === "feed") {
-        if (tabFeed) tabFeed.className = "px-2.5 py-1 rounded-md transition-all bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs flex items-center gap-1.5 font-semibold";
         selectedFeedCategory = "ALL";
         if (categorySelect) categorySelect.value = "ALL";
         if (deskSelect) deskSelect.value = "";
         if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) ipoBanner.classList.add("hidden");
       } else if (viewName === "anchor") {
         if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs flex items-center gap-1.5 font-semibold";
         selectedFeedCategory = "ANCHOR";
         if (deskSelect) deskSelect.value = "";
         if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) ipoBanner.classList.add("hidden");
+      } else if (viewName === "ipo") {
+        if (deskSelect) deskSelect.value = "ipo";
+        if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) {
+          ipoBanner.classList.remove("hidden");
+          ipoBanner.classList.add("flex");
+          selectIpoSub("ALL");
+          return;
+        }
       } else if (viewName === "corporate") {
         if (deskSelect) deskSelect.value = "corporate";
-        selectedFeedCategory = "CORPORATE_ALL";
+        if (ipoBanner) ipoBanner.classList.add("hidden");
         if (corpBanner) {
           corpBanner.classList.remove("hidden");
           corpBanner.classList.add("flex");
           selectCorporateSub("ALL");
-        }
-      } else if (viewName === "events") {
-        if (deskSelect) deskSelect.value = "corporate";
-        selectedFeedCategory = "EVENTS";
-        if (corpBanner) {
-          corpBanner.classList.remove("hidden");
-          corpBanner.classList.add("flex");
-          selectCorporateSub("EVENTS");
-        }
-      } else if (viewName === "appointments") {
-        if (deskSelect) deskSelect.value = "corporate";
-        selectedFeedCategory = "APPOINTMENTS";
-        if (corpBanner) {
-          corpBanner.classList.remove("hidden");
-          corpBanner.classList.add("flex");
-          selectCorporateSub("APPOINTMENTS");
+          return;
         }
       } else if (viewName === "opinions") {
         if (deskSelect) deskSelect.value = "opinions";
         selectedFeedCategory = "OPINIONS";
         if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) ipoBanner.classList.add("hidden");
       }
 
-      if (currentLayoutMode === "split") renderFeedList();
-      else renderMatrixTable();
+      renderFeedList();
     }
 
     function onDeskSelect(val) {
@@ -667,6 +664,33 @@
       } else if (val === "opinions") {
         switchView("opinions");
       }
+    }
+
+    function selectIpoSub(sub) {
+      if (sub === 'ALL') {
+        selectedFeedCategory = "IPO_ALL";
+      } else if (sub === 'DRHP') {
+        selectedFeedCategory = "IPO_DRHP";
+      } else if (sub === 'BIDDING') {
+        selectedFeedCategory = "IPO_BIDDING";
+      } else if (sub === 'NOTICES') {
+        selectedFeedCategory = "IPO_NOTICES";
+      }
+      
+      const subLower = sub.toLowerCase();
+      ["all", "drhp", "bidding", "notices"].forEach(t => {
+        const btn = document.getElementById(`ipo-tab-${t}`);
+        if (btn) {
+          if (t === subLower) {
+            btn.className = "px-3 py-1 rounded-md bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 font-semibold";
+          } else {
+            btn.className = "px-3 py-1 rounded-md text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium";
+          }
+        }
+      });
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+      renderFeedList();
     }
 
     function selectCorporateSub(sub) {
@@ -698,22 +722,19 @@
       selectedStoryIndex = 0;
       currentFeedPage = 1;
       selectedFeedCategory = val;
-      if (currentView === "ipo") {
-        switchView("feed");
-      } else {
-        const deskSelect = document.getElementById("desk-select");
-        if (deskSelect) deskSelect.value = "";
-        
-        const corpBanner = document.getElementById("corporate-subtabs-banner");
-        if (corpBanner) corpBanner.classList.add("hidden");
-        
-        const tabFeed = document.getElementById("tab-btn-feed");
-        const tabAnchor = document.getElementById("tab-btn-anchor");
-        if (tabFeed) tabFeed.className = "px-2.5 py-1 rounded-md transition-all bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs flex items-center gap-1.5 font-semibold";
-        if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
-        
-        renderFeedList();
-      }
+      
+      const deskSelect = document.getElementById("desk-select");
+      if (deskSelect) deskSelect.value = "";
+      
+      const corpBanner = document.getElementById("corporate-subtabs-banner");
+      if (corpBanner) corpBanner.classList.add("hidden");
+      const ipoBanner = document.getElementById("ipo-subtabs-banner");
+      if (ipoBanner) ipoBanner.classList.add("hidden");
+      
+      const tabAnchor = document.getElementById("tab-btn-anchor");
+      if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
+      
+      renderFeedList();
     }
 
     function isFillerHeadline(hl) {
@@ -752,6 +773,11 @@
       const isPage1Location = pageStr.includes("page 1") || pageStr.includes("page 01") || pageStr.includes("p.1") || pageStr.includes("front") || pageStr.includes("lead");
       const isAnnouncementOrIpo = category === "IPO" || category === "Corporate Events" || category === "Corporate Appointments" || isOpinion || fullText.includes("drhp") || fullText.includes("statutory notice") || fullText.includes("public notice") || fullText.includes("disclosure");
       const isFrontPage = (isPage1Location || idx < 4) && !isAnnouncementOrIpo;
+
+      let ipoData = null;
+      if (category === "IPO") {
+        ipoData = parseIpoItem(story, idx);
+      }
 
       const bullishTriggers = [
         { k: "order win", r: "Contract / Order Inflow expands near-term revenue visibility." },
@@ -810,7 +836,9 @@
         tickers: [...new Set(detectedTickers)].slice(0, 3),
         catalyst,
         isFrontPage,
-        isOpinion
+        isOpinion,
+        ipoTag: ipoData ? ipoData.filterTag : null,
+        ipoData: ipoData
       };
     }
 
@@ -886,21 +914,12 @@
         const res = await fetch(`/api/dates?t=${Date.now()}`);
         if (res.ok) {
           availableDates = await res.json();
-          const select = document.getElementById("edition-date-select");
           if (availableDates && availableDates.length > 0) {
-            select.innerHTML = "";
-            availableDates.forEach((d, idx) => {
-              const opt = document.createElement("option");
-              opt.value = d;
-              opt.textContent = idx === 0 ? `${d} (Latest)` : d;
-              opt.className = "bg-slate-900 text-white font-mono";
-              select.appendChild(opt);
-            });
+            const picker = document.getElementById("calendar-picker");
             if (rawReport && rawReport.edition_date) {
-              select.value = rawReport.edition_date;
-              document.getElementById("calendar-picker").value = rawReport.edition_date;
-            } else {
-              document.getElementById("calendar-picker").value = availableDates[0];
+              if (picker) picker.value = rawReport.edition_date;
+            } else if (picker) {
+              picker.value = availableDates[0];
             }
           }
         }
@@ -913,19 +932,22 @@
       if (currentDateIndex < 0) currentDateIndex = 0;
       if (currentDateIndex >= availableDates.length) currentDateIndex = availableDates.length - 1;
       const target = availableDates[currentDateIndex];
-      document.getElementById("edition-date-select").value = target;
-      document.getElementById("calendar-picker").value = target;
+      const picker = document.getElementById("calendar-picker");
+      if (picker) picker.value = target;
       loadData(target);
     }
 
     function onCalendarSelect(val) {
       if (!val) return;
-      document.getElementById("edition-date-select").value = val;
+      if (availableDates.includes(val)) {
+        currentDateIndex = availableDates.indexOf(val);
+      }
       loadData(val);
     }
 
     async function onDateChange(selectedDate) {
-      document.getElementById("calendar-picker").value = selectedDate;
+      const picker = document.getElementById("calendar-picker");
+      if (picker) picker.value = selectedDate;
       await loadData(selectedDate);
     }
 
@@ -949,20 +971,8 @@
         const edDate = rawReport.edition_date;
         const dateInput = document.getElementById("calendar-picker");
         if (dateInput && edDate) dateInput.value = edDate;
-        
-        const dateSelect = document.getElementById("edition-date-select");
-        if (dateSelect && edDate) {
-          let found = false;
-          for (let opt of dateSelect.options) {
-            if (opt.value === edDate) { opt.selected = true; found = true; break; }
-          }
-          if (!found) {
-            const opt = document.createElement("option");
-            opt.value = edDate;
-            opt.textContent = `${edDate} (Latest)`;
-            opt.selected = true;
-            dateSelect.prepend(opt);
-          }
+        if (availableDates.includes(edDate)) {
+          currentDateIndex = availableDates.indexOf(edDate);
         }
 
         stories = rawReport.major_stories
@@ -970,7 +980,7 @@
           .filter(Boolean);
 
         const rawIpos = stories.filter(s => s.category === "IPO");
-        ipoList = rawIpos.map((s, idx) => parseIpoItem(s, idx));
+        ipoList = rawIpos.map((s, idx) => s.ipoData || parseIpoItem(s, idx));
         initMetrics();
       }
     }
@@ -988,7 +998,7 @@
           Others: stories.filter(s => s.category === "Others" && !s.isOpinion).length
         };
         catSelect.innerHTML = `
-          <option value="ALL">✨ All Core Sections (${coreCount})</option>
+          <option value="ALL">⚡ All News (${coreCount})</option>
           <option value="Sector">Sector (${counts.Sector})</option>
           <option value="Economy">Economy (${counts.Economy})</option>
           <option value="Policy">Policy (${counts.Policy})</option>
@@ -997,7 +1007,7 @@
           <option value="International News">International (${counts["International News"]})</option>
           <option value="Others">General Features (${counts.Others})</option>
         `;
-        if (selectedFeedCategory !== "ANCHOR" && !selectedFeedCategory.startsWith("CORPORATE") && selectedFeedCategory !== "OPINIONS") {
+        if (selectedFeedCategory !== "ANCHOR" && !selectedFeedCategory.startsWith("CORPORATE") && !selectedFeedCategory.startsWith("IPO") && selectedFeedCategory !== "OPINIONS") {
           catSelect.value = selectedFeedCategory;
         } else {
           catSelect.value = "ALL";
@@ -1007,8 +1017,8 @@
       const deskSelect = document.getElementById("desk-select");
       if (deskSelect) {
         deskSelect.innerHTML = `
-          <option value="" disabled ${currentView === 'feed' && selectedFeedCategory !== 'OPINIONS' && !selectedFeedCategory.startsWith('CORPORATE') ? 'selected' : ''}>🏛️ Specialized Desks ▾</option>
-          <option value="ipo" ${currentView === 'ipo' ? 'selected' : ''}>🚀 IPO Central (${ipoCount})</option>
+          <option value="" disabled ${currentView === 'feed' && selectedFeedCategory !== 'OPINIONS' && !selectedFeedCategory.startsWith('CORPORATE') && !selectedFeedCategory.startsWith('IPO') ? 'selected' : ''}>🏛️ Specialized Desks ▾</option>
+          <option value="ipo" ${currentView === 'ipo' || selectedFeedCategory.startsWith('IPO') ? 'selected' : ''}>🚀 IPO Central (${ipoCount})</option>
           <option value="corporate" ${currentView === 'corporate' || selectedFeedCategory.startsWith('CORPORATE') ? 'selected' : ''}>🏢 Corporate (${corpCount})</option>
           <option value="opinions" ${selectedFeedCategory === 'OPINIONS' ? 'selected' : ''}>✍️ Opinions (${opCount})</option>
         `;
@@ -1031,8 +1041,6 @@
 
       const topTotal = document.getElementById("top-total-count");
       if (topTotal) topTotal.textContent = stories.length;
-      const tabFeed = document.getElementById("tab-feed-count");
-      if (tabFeed) tabFeed.textContent = coreStories.length;
       const tabAnchor = document.getElementById("tab-anchor-count");
       if (tabAnchor) tabAnchor.textContent = anchorCount;
 
@@ -1120,7 +1128,6 @@
 
       renderStocksFocusSidebar();
       renderFeedList();
-      renderIpoTable();
     }
 
     // ================= FILTER LOGIC =================
@@ -1145,6 +1152,14 @@
           matchSec = s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
         } else if (selectedFeedCategory === "ANCHOR") {
           matchSec = s.isFrontPage && s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
+        } else if (selectedFeedCategory === "IPO_ALL") {
+          matchSec = s.category === "IPO";
+        } else if (selectedFeedCategory === "IPO_DRHP") {
+          matchSec = s.category === "IPO" && (s.ipoTag === "DRHP" || !s.ipoTag);
+        } else if (selectedFeedCategory === "IPO_BIDDING") {
+          matchSec = s.category === "IPO" && s.ipoTag === "BIDDING";
+        } else if (selectedFeedCategory === "IPO_NOTICES") {
+          matchSec = s.category === "IPO" && s.ipoTag === "NOTICES";
         } else if (selectedFeedCategory === "CORPORATE_ALL") {
           matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
         } else if (selectedFeedCategory === "EVENTS") {
@@ -1346,8 +1361,11 @@
         const numStr = (globalIdx + 1).toString().padStart(2, '0');
         const dot = s.sentiment === "BULLISH" ? "bg-emerald-500" : s.sentiment === "BEARISH" ? "bg-rose-500" : "bg-slate-400";
 
+        const activeStyle = "bg-[#FAF5FF] dark:bg-[#1E1B4B]/70 border-2 border-[#8B5CF6] dark:border-[#A78BFA] shadow-xs text-[#6B21A8] dark:text-[#E9D5FF]";
+        const inactiveStyle = "bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-900/60 hover:bg-[#FAF5FF]/50 dark:hover:bg-slate-800/50 text-slate-900 dark:text-slate-100";
+
         const btn = document.createElement("button");
-        btn.className = `w-full text-left px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-2 border shadow-2xs mb-1.5 last:mb-0 ${isSelected ? 'bg-[#FDF2E9] dark:bg-[#1E293B] border-amber-600 dark:border-amber-500 shadow-xs text-[#1C1917] dark:text-white' : 'bg-white dark:bg-[#0D1322] border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-slate-700 hover:bg-[#FFFBF7] dark:hover:bg-slate-800/50 text-slate-900 dark:text-slate-100'}`;
+        btn.className = `w-full text-left px-3.5 py-2.5 rounded-lg transition-all flex items-center gap-2.5 mb-2 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
         btn.onclick = () => {
           selectedStoryIndex = globalIdx;
           renderFeedList();
@@ -1361,9 +1379,9 @@
         };
 
         btn.innerHTML = `
-          <span class="shrink-0 text-[10.5px] font-mono font-medium text-slate-500 dark:text-slate-400 tabular-nums w-4">${numStr}</span>
-          <span class="w-1.5 h-1.5 rounded-full shrink-0 ${dot}"></span>
-          <h4 class="text-[12.5px] ${isSelected ? 'font-semibold text-[#1C1917] dark:text-white' : 'font-medium text-slate-900 dark:text-slate-100'} tracking-tight truncate flex-1 min-w-0" title="${escapeQuotes(s.headline)}">
+          <span class="shrink-0 text-[11px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums w-4">${numStr}</span>
+          <span class="w-2 h-2 rounded-full shrink-0 ${dot}"></span>
+          <h4 class="text-[13px] ${isSelected ? 'font-bold text-[#581C87] dark:text-white' : 'font-semibold text-slate-900 dark:text-slate-100'} tracking-tight truncate flex-1 min-w-0" title="${escapeQuotes(s.headline)}">
             ${highlightSearchTokens(s.headline, queryTokens)}
           </h4>
         `;
@@ -1414,7 +1432,7 @@
       return `
         <div class="my-2 rounded-xl bg-gradient-to-br from-indigo-950/15 via-slate-900/10 to-blue-950/15 dark:from-[#0F1629] dark:to-[#0B1020] p-2.5 border border-indigo-200/80 dark:border-indigo-900/60 shadow-2xs">
           <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-indigo-100 dark:border-slate-800/80">
-            <span class="text-[10.5px] font-mono font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+            <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
               <span>📊</span> <span>SCALE OF IMPACT & INFOGRAPHIC KPIS</span>
             </span>
             <span class="text-[9.5px] font-mono font-bold text-slate-500 dark:text-slate-400">Quick Metrics</span>
@@ -1431,7 +1449,7 @@
               return `
                 <div class="p-2 rounded-lg bg-gradient-to-br ${colorClass} border flex flex-col justify-between shadow-2xs">
                   <span class="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 truncate">${escapeQuotes(k.label || 'METRIC')}</span>
-                  <span class="text-[15.5px] sm:text-[16.5px] font-mono font-black tracking-tight mt-0.5">${escapeQuotes(k.value)}</span>
+                  <span class="text-[15.5px] sm:text-[16.5px] font-mono font-bold tracking-tight mt-0.5">${escapeQuotes(k.value)}</span>
                   ${k.context ? `<span class="text-[9px] font-mono text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeQuotes(k.context)}</span>` : ''}
                 </div>
               `;
@@ -1495,22 +1513,10 @@
       const isBearish = story.sentiment === "BEARISH";
       
       const sentBadge = isBullish 
-        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
+        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
         : isBearish 
-        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
-        : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
-
-      const reasonBoxBorder = isBullish 
-        ? "border-emerald-300/90 bg-emerald-50/80 dark:bg-[#092318] dark:border-emerald-800/90" 
-        : isBearish 
-        ? "border-rose-300/90 bg-rose-50/80 dark:bg-[#250C12] dark:border-rose-800/90" 
-        : "border-slate-300 bg-slate-50/90 dark:bg-slate-900/70 dark:border-slate-800";
-
-      const reasonTitleColor = isBullish 
-        ? "text-emerald-950 dark:text-emerald-300 font-extrabold" 
-        : isBearish 
-        ? "text-rose-950 dark:text-rose-300 font-extrabold" 
-        : "text-slate-950 dark:text-slate-300 font-extrabold";
+        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
+        : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
       const tickerBadges = story.tickers.map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
       const kpisHtml = buildKpiCardsHtml(story);
@@ -1551,21 +1557,21 @@
           </div>
         ` : ''}
 
-        <!-- 📊 1. INFOGRAPHIC KPI SCORECARD / METRICS GRID (TEAL / CYAN BOX) -->
+        <!-- 📊 1. INFOGRAPHIC KPI SCORECARD / METRICS GRID -->
         ${kpisHtml}
 
-        <!-- ⚡ 2. EXECUTIVE GIST (INDIGO / BLUE BOX) -->
-        <div class="mt-1.5 rounded-lg border border-indigo-300/80 dark:border-indigo-800/80 bg-indigo-50/70 dark:bg-[#10182E] p-2.5 shadow-2xs flex flex-col gap-1.5">
-          <div class="flex items-center justify-between border-b border-indigo-200/80 dark:border-slate-800/80 pb-1">
-            <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-indigo-950 dark:text-indigo-300 flex items-center gap-1">
+        <!-- ⚡ 2. EXECUTIVE GIST (INDIGO / BLUE BOX - HIGH CONTRAST) -->
+        <div class="mt-2 rounded-xl border-2 border-[#6366F1] dark:border-[#818CF8] bg-[#EEF2FF] dark:bg-[#1E1B4B]/60 p-3 shadow-xs flex flex-col gap-2">
+          <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-800/80 pb-1.5">
+            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1E1B4B] dark:text-[#E0E7FF] flex items-center gap-1.5">
               <span>⚡</span> <span>Executive Gist (Core Takeaway)</span>
             </span>
-            <span class="text-[9.5px] font-mono text-indigo-700 dark:text-indigo-400 font-semibold">Quick Read</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Quick Read</span>
           </div>
           <div class="grid grid-cols-1 gap-1.5">
             ${briefSentences.map(sent => `
-              <div class="flex items-start gap-2 bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200/80 dark:border-slate-800/80 text-[13px] text-slate-900 dark:text-slate-100 leading-snug font-normal">
-                <span class="text-indigo-600 dark:text-indigo-400 font-bold text-sm select-none">▸</span>
+              <div class="flex items-start gap-2 bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border border-indigo-200/60 dark:border-slate-800 text-[13px] text-slate-900 dark:text-slate-100 leading-snug font-medium shadow-2xs">
+                <span class="text-[#4F46E5] dark:text-[#818CF8] font-black text-sm select-none">▸</span>
                 <span>${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
               </div>
             `).join('')}
@@ -1575,271 +1581,37 @@
         <!-- 📋 3. STRUCTURED KEY QUANTITATIVE DATA TABLE -->
         ${metricsTableHtml}
 
-        <!-- 📌 4. KEY ANALYST DATA POINTS (WARM AMBER / ORANGE BOX) -->
-        <div class="mt-2 rounded-lg border border-amber-300/80 dark:border-amber-800/80 bg-amber-50/70 dark:bg-[#201507] p-2.5 shadow-2xs">
-          <div class="flex items-center justify-between border-b border-amber-200/80 dark:border-amber-900/60 pb-1 mb-1.5">
-            <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-amber-950 dark:text-amber-300 flex items-center gap-1">
+        <!-- 📌 4. KEY ANALYST DATA POINTS (WARM AMBER / GOLD BOX - HIGH CONTRAST) -->
+        <div class="mt-2 rounded-xl border-2 border-[#F59E0B] dark:border-[#FBBF24] bg-[#FEF3C7] dark:bg-[#451A03]/50 p-3 shadow-xs flex flex-col gap-2">
+          <div class="flex items-center justify-between border-b border-amber-300/80 dark:border-amber-900/60 pb-1.5">
+            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#78350F] dark:text-[#FEF3C7] flex items-center gap-1.5">
               <span>📌</span> <span>Key Analyst Data Points</span>
             </span>
-            <span class="text-[9.5px] font-mono text-amber-700 dark:text-amber-400 font-semibold">Metrics & Facts</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-200/90 text-amber-950 dark:bg-amber-900/80 dark:text-amber-200">Metrics & Facts</span>
           </div>
           <ul class="space-y-1.5">
             ${(story.bullet_points || []).map(bp => `
-              <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200 dark:border-slate-800 shadow-2xs">
-                <span class="text-amber-600 dark:text-amber-400 font-bold text-sm leading-none select-none mt-0.5">›</span>
-                <span class="font-normal">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+              <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border border-amber-200/60 dark:border-slate-800 shadow-2xs font-medium">
+                <span class="text-[#D97706] dark:text-[#FBBF24] font-bold text-sm leading-none select-none mt-0.5">›</span>
+                <span>${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
               </li>
             `).join('')}
           </ul>
         </div>
 
-        <!-- 💡 5. TRADER CATALYST & IMPACT RATIONALE (EMERALD / ROSE / SLATE BOX) -->
-        <div class="mt-2 p-2.5 rounded-lg border ${reasonBoxBorder} shadow-2xs">
-          <div class="flex items-center justify-between gap-1 mb-1">
-            <span class="text-[11px] font-mono uppercase tracking-wider ${reasonTitleColor} flex items-center gap-1">
+        <!-- 💡 5. TRADER CATALYST & IMPACT RATIONALE (EMERALD / ROSE / SLATE BOX - HIGH CONTRAST) -->
+        <div class="mt-2 p-3 rounded-xl border-2 ${isBullish ? 'border-[#10B981] bg-[#ECFDF5] dark:bg-[#064E3B]/40 dark:border-[#34D399]' : isBearish ? 'border-[#F43F5E] bg-[#FFF1F2] dark:bg-[#881337]/40 dark:border-[#FB7185]' : 'border-[#64748B] bg-[#F8FAFC] dark:bg-[#1E293B]/60 dark:border-[#94A3B8]'} shadow-xs flex flex-col gap-2">
+          <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-700'} pb-1.5">
+            <span class="text-[11px] font-mono font-bold uppercase tracking-wider ${isBullish ? 'text-[#064E3B] dark:text-[#A7F3D0]' : isBearish ? 'text-[#881337] dark:text-[#FECDD3]' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
               <span>💡</span> <span>Catalyst Rationale & Trader Impact</span>
             </span>
-            <span class="text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
+            <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900/80 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900/80 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
           </div>
-          <div class="bg-white dark:bg-[#11172A] p-2 rounded border border-slate-200/70 dark:border-slate-800 text-[13px] text-slate-900 dark:text-slate-100 leading-snug font-normal">
+          <div class="bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border ${isBullish ? 'border-emerald-200/60' : isBearish ? 'border-rose-200/60' : 'border-slate-200'} dark:border-slate-800 text-[13px] text-slate-900 dark:text-slate-100 leading-snug font-medium shadow-2xs">
             ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
           </div>
         </div>
       `;
-    }
-
-    // ================= MASTER NEWS MATRIX TABLE RENDERING =================
-    function renderMatrixTable() {
-      const tbody = document.getElementById("matrix-table-body");
-      if (!tbody) return;
-      tbody.innerHTML = "";
-
-      const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
-      const queryTokens = rawQuery ? rawQuery.split(/\s+/).filter(Boolean) : [];
-      const displayed = getFilteredStories();
-
-      const countEl = document.getElementById("matrix-table-visible-count");
-      if (countEl) countEl.textContent = displayed.length;
-
-      if (displayed.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-slate-400 font-medium text-[13.5px]">No stories found matching filters.</td></tr>`;
-        return;
-      }
-
-      displayed.forEach((story, idx) => {
-        const tr = document.createElement("tr");
-        tr.className = "table-row-hover transition-colors border-b border-slate-100 dark:border-slate-800/80 cursor-pointer";
-        const numStr = (idx + 1).toString().padStart(2, '0');
-        
-        const isBullish = story.sentiment === "BULLISH";
-        const isBearish = story.sentiment === "BEARISH";
-        const sentBadge = isBullish 
-          ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200 whitespace-nowrap">🟢 BULLISH</span>`
-          : isBearish 
-          ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200 whitespace-nowrap">🔴 BEARISH</span>`
-          : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200 whitespace-nowrap">⚪ NEUTRAL</span>`;
-
-        const tickerBadges = (story.tickers || []).map(t => `<span class="px-1.5 py-0.2 text-[10px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join(' ') || '<span class="text-slate-400 font-mono text-[11px]">—</span>';
-
-        tr.onclick = (e) => {
-          if (e.target.tagName !== 'BUTTON') {
-            openStoryModal(idx);
-          }
-        };
-
-        tr.innerHTML = `
-          <td class="py-3 px-3 font-mono text-[12px] text-slate-400 font-semibold">${numStr}</td>
-          <td class="py-3 px-3.5 font-bold text-slate-900 dark:text-white max-w-sm">
-            <div class="flex items-start gap-1.5">
-              ${story.isFrontPage ? `<span class="shrink-0 text-[9px] font-mono font-extrabold px-1.5 py-0.2 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200 mt-0.5">PAGE 1</span>` : ''}
-              <div>
-                <p class="text-[13.5px] leading-tight font-bold text-slate-900 dark:text-white">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</p>
-                <p class="text-[11px] font-mono text-slate-400 truncate max-w-[280px] mt-0.5 font-normal">${story.catalyst}</p>
-              </div>
-            </div>
-          </td>
-          <td class="py-3 px-3 whitespace-nowrap">
-            <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
-              ${story.category}
-            </span>
-          </td>
-          <td class="py-3 px-3 whitespace-nowrap">${sentBadge}</td>
-          <td class="py-3 px-3 font-mono text-[11.5px] text-slate-500 dark:text-slate-400 whitespace-nowrap">${story.page_numbers}</td>
-          <td class="py-3 px-3 whitespace-nowrap">${tickerBadges}</td>
-          <td class="py-3 px-3.5 max-w-md">
-            <p class="text-[12.5px] text-slate-700 dark:text-slate-300 leading-snug line-clamp-2 font-normal">
-              ${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}
-            </p>
-          </td>
-          <td class="py-3 px-3 text-center whitespace-nowrap">
-            <button onclick="openStoryModal(${idx})" class="px-2.5 py-1 rounded-md border border-brand-200 dark:border-slate-700 bg-brand-50/80 dark:bg-[#182035] hover:bg-brand-600 hover:text-white text-brand-700 dark:text-brand-300 text-[11px] font-mono font-bold transition-all shadow-2xs">
-              ℹ️ Details
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function openStoryModal(idx) {
-      const displayed = getFilteredStories();
-      const story = displayed[idx];
-      if (!story) return;
-
-      document.getElementById("story-modal-headline").textContent = story.headline;
-      document.getElementById("story-modal-category").textContent = story.category;
-      document.getElementById("story-modal-pages").textContent = story.page_numbers;
-      
-      const sentEl = document.getElementById("story-modal-sentiment");
-      sentEl.textContent = story.sentiment === "BULLISH" ? "🟢 BULLISH" : story.sentiment === "BEARISH" ? "🔴 BEARISH" : "⚪ NEUTRAL";
-      sentEl.className = `px-2 py-0.5 rounded text-[10.5px] font-mono font-bold border ${story.sentiment === "BULLISH" ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300' : story.sentiment === "BEARISH" ? 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300' : 'bg-slate-100 text-slate-800 border-slate-200 dark:bg-slate-800 dark:text-slate-200'}`;
-
-      // Render KPIs in modal
-      const kpisContainer = document.getElementById("story-modal-kpis-container");
-      if (kpisContainer) {
-        kpisContainer.innerHTML = buildKpiCardsHtml(story);
-      }
-
-      // Render brief details as crisp short chunks
-      const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
-      const briefContainer = document.getElementById("story-modal-brief");
-      briefContainer.innerHTML = briefSentences.map(sent => `
-        <div class="flex items-start gap-2 bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200/80 dark:border-slate-800/80 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
-          <span class="text-indigo-600 dark:text-indigo-400 font-black text-sm select-none">▸</span>
-          <span>${highlightNumbers(sent)}</span>
-        </div>
-      `).join('') || `<p class="text-xs text-slate-400">No brief available.</p>`;
-
-      const bulletsContainer = document.getElementById("story-modal-bullets");
-      bulletsContainer.innerHTML = (story.bullet_points || []).map(bp => `
-        <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white dark:bg-[#11172A] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
-          <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none">›</span>
-          <span>${highlightNumbers(bp)}</span>
-        </li>
-      `).join('') || `<li class="text-slate-400 text-xs">No additional sub-bullets.</li>`;
-
-      document.getElementById("story-modal-catalyst").innerHTML = highlightNumbers(story.sentimentReasoning || story.catalyst);
-
-      const tickersEl = document.getElementById("story-modal-tickers-container");
-      tickersEl.innerHTML = (story.tickers || []).map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
-
-      document.getElementById("story-modal").classList.remove("hidden");
-      document.getElementById("story-modal").classList.add("flex");
-    }
-
-    function closeStoryModal() {
-      const modal = document.getElementById("story-modal");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
-    // ================= IPO TABLE RENDERING =================
-    function filterIpoTable(tag) {
-      currentIpoFilter = tag;
-      const tagLower = tag.toLowerCase();
-      ["all", "drhp", "bidding", "notices"].forEach(t => {
-        const btn = document.getElementById(`ipo-tab-${t}`);
-        if (btn) {
-          if (t === tagLower) {
-            btn.className = "px-2.5 py-1 rounded-md bg-indigo-600 text-white shadow-xs transition-all flex items-center gap-1.5 font-bold";
-          } else {
-            btn.className = "px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium";
-          }
-        }
-      });
-      renderIpoTable();
-    }
-
-    function renderIpoTable() {
-      const tbody = document.getElementById("ipo-table-body");
-      tbody.innerHTML = "";
-      const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
-      const queryTokens = rawQuery ? rawQuery.split(/\s+/).filter(Boolean) : [];
-
-      const filtered = ipoList.filter(item => {
-        const matchTag = currentIpoFilter === "ALL" || item.filterTag === currentIpoFilter;
-        
-        const searchable = (item.company + " " + item.headline + " " + item.details + " " + item.size + " " + item.source + " " + item.exchange).toLowerCase();
-        const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchable.includes(tok));
-        
-        return matchTag && matchQuery;
-      });
-
-      document.getElementById("ipo-table-visible-count").textContent = filtered.length;
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-slate-400 font-medium text-[13.5px]">No IPO records found matching criteria.</td></tr>`;
-        return;
-      }
-
-      filtered.forEach((ipo, idx) => {
-        const tr = document.createElement("tr");
-        tr.className = "table-row-hover transition-colors border-b border-slate-100 dark:border-slate-800/80";
-        const numStr = (idx + 1).toString().padStart(2, '0');
-        const demandColor = ipo.demand.includes("x") ? "text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800" : "text-slate-600 dark:text-slate-400";
-
-        tr.innerHTML = `
-          <td class="py-3 px-3.5 font-mono text-[12px] text-slate-400 font-semibold">${numStr}</td>
-          <td class="py-3 px-3.5 font-bold text-slate-900 dark:text-white">
-            <div class="flex items-start gap-2">
-              <span class="w-6 h-6 rounded-md bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 font-bold text-[10.5px] font-mono flex items-center justify-center shrink-0 border border-brand-200/50 mt-0.5">
-                ${ipo.company.slice(0, 2).toUpperCase()}
-              </span>
-              <div>
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  <p class="text-[14px] leading-tight font-bold text-slate-900 dark:text-white">${highlightSearchTokens(ipo.company, queryTokens)}</p>
-                  <span class="px-1.5 py-0.2 rounded text-[9.5px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300">${ipo.exchange}</span>
-                </div>
-                <p class="text-[11.5px] font-mono text-slate-400 font-normal truncate max-w-[240px] mt-0.5">${highlightSearchTokens(ipo.headline, queryTokens)}</p>
-              </div>
-            </div>
-          </td>
-          <td class="py-3 px-3.5 font-mono font-bold text-slate-900 dark:text-slate-100 text-[13.5px] whitespace-nowrap">${ipo.size}</td>
-          <td class="py-3 px-3.5 whitespace-nowrap">
-            <span class="px-2 py-0.5 rounded text-[11.5px] font-mono font-bold border ${ipo.stageBadge}">
-              ${ipo.stage}
-            </span>
-          </td>
-          <td class="py-3 px-3.5 font-mono text-[12px] whitespace-nowrap"><span class="${demandColor}">${ipo.demand}</span></td>
-          <td class="py-3 px-3.5 max-w-md">
-            <div class="flex items-start gap-2">
-              <p class="text-[13px] text-slate-700 dark:text-slate-300 leading-relaxed font-normal flex-1">
-                ${highlightSearchTokens(highlightNumbers(ipo.details), queryTokens)}
-              </p>
-            </div>
-          </td>
-          <td class="py-3 px-3.5 font-mono text-[11.5px] text-slate-400 whitespace-nowrap">${ipo.source}</td>
-          <td class="py-3 px-3.5 text-center whitespace-nowrap">
-            <button onclick="openIpoModal(${idx})" class="px-2.5 py-1 rounded-md border border-brand-200 dark:border-slate-700 bg-brand-50/80 dark:bg-[#182035] hover:bg-brand-600 hover:text-white text-brand-700 dark:text-brand-300 text-[11px] font-mono font-bold transition-all shadow-2xs flex items-center gap-1 mx-auto" title="Click to view full IPO breakdown">
-              <span>ℹ️ Details</span>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function openIpoModal(idx) {
-      const ipo = ipoList[idx];
-      if (!ipo) return;
-      document.getElementById("modal-ipo-company").textContent = ipo.company;
-      document.getElementById("modal-ipo-exchange").textContent = ipo.exchange;
-      document.getElementById("modal-ipo-stage").textContent = ipo.stage;
-      document.getElementById("modal-ipo-size").textContent = ipo.size;
-      document.getElementById("modal-ipo-demand").textContent = ipo.demand;
-      document.getElementById("modal-ipo-headline").textContent = ipo.headline;
-      document.getElementById("modal-ipo-details").textContent = ipo.details;
-      document.getElementById("modal-ipo-source").textContent = `Source Reference: ${ipo.source}`;
-      
-      const modal = document.getElementById("ipo-modal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
-
-    function closeIpoModal() {
-      const modal = document.getElementById("ipo-modal");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
     }
 
     function highlightNumbers(text) {
@@ -1872,12 +1644,11 @@
     }
 
     document.addEventListener("keydown", (e) => {
-      if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
-      if (e.key === "Escape") closeIpoModal();
-      else if (e.key === "j" || e.key === "ArrowDown") {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || e.target.tagName === "TEXTAREA") return;
+      if (e.key === "ArrowDown" || e.key === "j") {
         e.preventDefault();
         navigateStory(1);
-      } else if (e.key === "k" || e.key === "ArrowUp") {
+      } else if (e.key === "ArrowUp" || e.key === "k") {
         e.preventDefault();
         navigateStory(-1);
       } else if (e.key === "ArrowLeft" || e.key === "[") {
