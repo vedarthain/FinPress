@@ -183,29 +183,88 @@ class BusinessStandardEpaperDownloader:
                 except Exception:
                     pass
 
-                with page.expect_download(timeout=120000) as download_info:
-                    if confirm_btn:
-                        confirm_btn.click()
-                    else:
-                        page.evaluate('() => { const b = document.querySelector(".readoffeditdownload, #readofffulleditiondownload button.btn-primary, a.readoffeditdownload"); if (b) b.click(); }')
-                    logger.info("Clicked confirmation button. Receiving full edition download stream...")
+                download_path = None
+                try:
+                    with page.expect_download(timeout=45000) as download_info:
+                        if confirm_btn:
+                            confirm_btn.click()
+                        else:
+                            page.evaluate('() => { const b = document.querySelector(".readoffeditdownload, #readofffulleditiondownload button.btn-primary, a.readoffeditdownload"); if (b) b.click(); }')
+                        logger.info("Clicked confirmation button. Receiving full edition download stream...")
 
-                download = download_info.value
-                download_path = self.download_dir / download.suggested_filename
-                download.save_as(str(download_path))
-                logger.info(f"Downloaded edition archive successfully: {download_path} ({download_path.stat().st_size / (1024*1024):.2f} MB)")
+                    download = download_info.value
+                    download_path = self.download_dir / download.suggested_filename
+                    download.save_as(str(download_path))
+                    logger.info(f"Downloaded full edition archive: {download_path} ({download_path.stat().st_size / (1024*1024):.2f} MB)")
+                except Exception as zip_err:
+                    logger.warning(f"Full edition zip download attempt: {zip_err}. Attempting Page-by-Page download fallback...")
 
-                browser.close()
+                if download_path:
+                    browser.close()
+                    if str(download_path).lower().endswith(".zip"):
+                        return self.download_from_zip(str(download_path))
+                    elif str(download_path).lower().endswith(".pdf"):
+                        download_path.rename(target_pdf)
+                        upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
+                        upload_to_r2(target_pdf, target_pdf.name)
+                        return target_pdf
 
-                if str(download_path).lower().endswith(".zip"):
-                    return self.download_from_zip(str(download_path))
-                elif str(download_path).lower().endswith(".pdf"):
-                    download_path.rename(target_pdf)
-                    upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
-                    upload_to_r2(target_pdf, target_pdf.name)
-                    return target_pdf
+                # 4. Fallback: Page-by-Page Single Page Download & Compilation
+                logger.info("Executing Page-by-Page single PDF download strategy (Pages 1 to 36)...")
+                page_links = page.evaluate('''() => {
+                    return Array.from(document.querySelectorAll('a.off-downld, [href*=\"singlepage\"], .tmb-lst a')).map(a => a.href).filter(h => h && h.includes('singlepage'));
+                }''')
 
-                return target_pdf
+                if not page_links:
+                    # Collect all single pages from readoffline container
+                    page_links = page.evaluate('''() => {
+                        const links = [];
+                        document.querySelectorAll('[data-pageno]').forEach(el => {
+                            const pagename = el.getAttribute('data-pagename');
+                            const pageno = el.getAttribute('data-pageno');
+                            if (pagename) links.push({ pagename, pageno });
+                        });
+                        return links;
+                    }''')
+
+                single_page_pdfs = []
+                logger.info(f"Identified {len(page_links)} single-page download references.")
+
+                # Try saving pages
+                if page_links:
+                    try:
+                        from pypdf import PdfWriter
+                    except ImportError:
+                        from PyPDF2 import PdfWriter
+
+                    writer = PdfWriter()
+                    for idx, link_info in enumerate(page_links, start=1):
+                        try:
+                            logger.info(f"Fetching Business Standard Page {idx}...")
+                            with page.expect_download(timeout=20000) as p_down_info:
+                                page.evaluate(f'''(idx) => {{
+                                    const els = document.querySelectorAll('a.off-downld, .tmb-lst a, [data-pageno]');
+                                    if (els[idx-1]) els[idx-1].click();
+                                }}''', idx)
+                            p_down = p_down_info.value
+                            p_path = self.download_dir / f"bs_page_{idx}_{self.date_str}.pdf"
+                            p_down.save_as(str(p_path))
+                            writer.append(str(p_path))
+                            single_page_pdfs.append(p_path)
+                        except Exception as p_err:
+                            logger.warning(f"Could not download single page {idx}: {p_err}")
+
+                    if single_page_pdfs:
+                        with open(target_pdf, "wb") as f:
+                            writer.write(f)
+                        writer.close()
+                        logger.info(f"Successfully compiled {len(single_page_pdfs)} single pages into: {target_pdf} ({target_pdf.stat().st_size / (1024*1024):.2f} MB)")
+                        upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
+                        upload_to_r2(target_pdf, target_pdf.name)
+                        browser.close()
+                        return target_pdf
+
+                raise BusinessStandardSessionError("❌ Could not download Business Standard ePaper via full zip or page-by-page. Session may require re-authentication.")
 
             except BusinessStandardSessionError:
                 raise
