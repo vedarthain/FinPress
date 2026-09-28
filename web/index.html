@@ -417,10 +417,6 @@
         <!-- Tickers -->
       </div>
 
-      <div id="story-modal-kpis-container">
-        <!-- KPI Badges -->
-      </div>
-
       <!-- ⚡ EXECUTIVE GIST (INDIGO CARD) -->
       <div class="p-3.5 rounded-xl bg-indigo-50/80 dark:bg-[#10182E] border border-indigo-200/90 dark:border-indigo-800 shadow-2xs">
         <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1 flex items-center gap-1">
@@ -1391,74 +1387,6 @@
       renderActiveStoryDetail(displayed[selectedStoryIndex], queryTokens);
     }
 
-    // Helper: Build High-Contrast Infographic KPI Badges Grid
-    function buildKpiCardsHtml(story) {
-      if (!story) return "";
-      let kpis = story.kpis || [];
-
-      if (kpis.length === 0) {
-        const full = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" "));
-        const found = [];
-
-        // 1. Currency patterns: ₹19,090 cr, ₹11.62 lakh cr, $29.36 billion, etc.
-        const curMatches = full.match(/(?:₹|rs\.?|\$)\s?[\d,]+(?:\.\d+)?\s?(?:lakh\s+crore|crore|cr|lakh|billion|bn|million|mn)/gi) || [];
-        curMatches.forEach(m => {
-          if (!found.some(f => f.value.toLowerCase() === m.toLowerCase()) && found.length < 4) {
-            found.push({ label: "FINANCIAL SCALE", value: m.trim(), context: "Key Financial Value" });
-          }
-        });
-
-        // 2. Percentage patterns: 48%, 51%, 1.5%, 5% + 3%, etc.
-        const pctMatches = full.match(/\b\d+(?:\.\d+)?%\b/g) || [];
-        pctMatches.forEach(m => {
-          if (!found.some(f => f.value === m) && found.length < 4) {
-            found.push({ label: "GROWTH / SHARE", value: m.trim(), context: "Impact Percentage" });
-          }
-        });
-
-        // 3. Jobs / Counts / Volume: 167,000 jobs, etc.
-        const jobMatch = full.match(/([\d,]+)\s*(?:jobs|direct and indirect jobs|workers|units|tonnes|ton|mw|gw)/i);
-        if (jobMatch && found.length < 4) {
-          found.push({ label: "VOLUME / IMPACT", value: jobMatch[0].trim(), context: "Scale / Volume Output" });
-        }
-
-        if (found.length >= 2) {
-          kpis = found.slice(0, 4);
-        }
-      }
-
-      if (!kpis || kpis.length < 2) return "";
-
-      return `
-        <div class="my-2 rounded-xl bg-gradient-to-br from-indigo-950/15 via-slate-900/10 to-blue-950/15 dark:from-[#0F1629] dark:to-[#0B1020] p-3 border border-indigo-200/80 dark:border-indigo-900/60 shadow-2xs">
-          <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-indigo-100 dark:border-slate-800/80">
-            <span class="text-[11.5px] font-mono font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
-              <span>📊</span> <span>SCALE OF IMPACT & INFOGRAPHIC KPIS</span>
-            </span>
-            <span class="text-[10.5px] font-mono font-bold text-slate-500 dark:text-slate-400">Quick Metrics</span>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            ${kpis.map((k, i) => {
-              const colors = [
-                'from-blue-500/10 to-indigo-500/10 border-blue-300 dark:border-blue-800 text-blue-700 dark:text-blue-300',
-                'from-emerald-500/10 to-teal-500/10 border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300',
-                'from-amber-500/10 to-orange-500/10 border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300',
-                'from-purple-500/10 to-pink-500/10 border-purple-300 dark:border-purple-800 text-purple-700 dark:text-purple-300'
-              ];
-              const colorClass = colors[i % colors.length];
-              return `
-                <div class="p-2.5 rounded-lg bg-gradient-to-br ${colorClass} border flex flex-col justify-between shadow-2xs">
-                  <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 truncate">${escapeQuotes(k.label || 'METRIC')}</span>
-                  <span class="text-[17px] sm:text-[18px] font-mono font-bold tracking-tight mt-0.5">${escapeQuotes(k.value)}</span>
-                  ${k.context ? `<span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeQuotes(k.context)}</span>` : ''}
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
-    }
-
     // Helper: Build Structured Key Quantitative Data Table from Bullet Points
     function buildMetricsTableHtml(bullets) {
       if (!bullets || bullets.length === 0) return "";
@@ -1528,7 +1456,6 @@
         : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
       const tickerBadges = story.tickers.map(t => `<span class="px-2.5 py-0.5 text-[11.5px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
-      const kpisHtml = buildKpiCardsHtml(story);
       const metricsTableHtml = buildMetricsTableHtml(story.bullet_points);
 
       // Break brief details into short punchy sentences (NO paragraph walls)
@@ -1565,9 +1492,6 @@
             ${tickerBadges}
           </div>
         ` : ''}
-
-        <!-- 📊 1. INFOGRAPHIC KPI SCORECARD / METRICS GRID -->
-        ${kpisHtml}
 
         <!-- ⚡ 2. EXECUTIVE GIST (INDIGO / BLUE BOX - HIGH CONTRAST) -->
         <div class="mt-2.5 rounded-xl border-2 border-[#6366F1] dark:border-[#818CF8] bg-[#EEF2FF] dark:bg-[#1E1B4B]/60 p-3.5 shadow-xs flex flex-col gap-2.5">
