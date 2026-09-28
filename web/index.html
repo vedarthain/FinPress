@@ -178,8 +178,8 @@
 
     </header>
 
-    <!-- ================= MAIN THREE-COLUMN WORKSPACE (COMPRESSED DENSITY) ================= -->
-    <main class="mx-auto max-w-[1920px] w-full px-2.5 py-1.5 flex-1 flex flex-col gap-1.5">
+    <!-- ================= MAIN THREE-COLUMN WORKSPACE (FULL-WIDTH 3-COLUMN LAYOUT) ================= -->
+    <main class="w-full px-2 sm:px-3 py-1.5 flex-1 flex flex-col gap-1.5">
       
       <!-- Diagnostic Source Health Alert Banner (Appears when any paper fails) -->
       <div id="source-alert-banner" class="hidden px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-900 dark:text-amber-200 text-[11px] font-mono flex items-center justify-between gap-2 shadow-2xs">
@@ -246,8 +246,8 @@
         </span>
       </div>
 
-      <!-- ================= VIEW 1: NEWS STREAM (SPLIT READER + STOCKS IN FOCUS ON RIGHT) ================= -->
-      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[305px_minmax(0,1fr)_260px] xl:grid-cols-[325px_minmax(0,1fr)_275px] gap-2 items-start">
+      <!-- ================= VIEW 1: NEWS STREAM (3-COLUMN SIDE-BY-SIDE EXPANDED LAYOUT) ================= -->
+      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[285px_minmax(0,1fr)_240px] xl:grid-cols-[305px_minmax(0,1fr)_255px] 2xl:grid-cols-[320px_minmax(0,1fr)_270px] gap-2.5 items-start">
         
         <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE (1-LINER STORIES, MAX 10 PER PAGE) -->
         <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
@@ -1430,12 +1430,12 @@
       if (!kpis || kpis.length < 2) return "";
 
       return `
-        <div class="my-2 rounded-xl bg-gradient-to-br from-indigo-950/15 via-slate-900/10 to-blue-950/15 dark:from-[#0F1629] dark:to-[#0B1020] p-2.5 border border-indigo-200/80 dark:border-indigo-900/60 shadow-2xs">
+        <div class="my-2 rounded-xl bg-gradient-to-br from-indigo-950/15 via-slate-900/10 to-blue-950/15 dark:from-[#0F1629] dark:to-[#0B1020] p-3 border border-indigo-200/80 dark:border-indigo-900/60 shadow-2xs">
           <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-indigo-100 dark:border-slate-800/80">
-            <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+            <span class="text-[11.5px] font-mono font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
               <span>📊</span> <span>SCALE OF IMPACT & INFOGRAPHIC KPIS</span>
             </span>
-            <span class="text-[9.5px] font-mono font-bold text-slate-500 dark:text-slate-400">Quick Metrics</span>
+            <span class="text-[10.5px] font-mono font-bold text-slate-500 dark:text-slate-400">Quick Metrics</span>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             ${kpis.map((k, i) => {
@@ -1447,10 +1447,10 @@
               ];
               const colorClass = colors[i % colors.length];
               return `
-                <div class="p-2 rounded-lg bg-gradient-to-br ${colorClass} border flex flex-col justify-between shadow-2xs">
-                  <span class="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 truncate">${escapeQuotes(k.label || 'METRIC')}</span>
-                  <span class="text-[15.5px] sm:text-[16.5px] font-mono font-bold tracking-tight mt-0.5">${escapeQuotes(k.value)}</span>
-                  ${k.context ? `<span class="text-[9px] font-mono text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeQuotes(k.context)}</span>` : ''}
+                <div class="p-2.5 rounded-lg bg-gradient-to-br ${colorClass} border flex flex-col justify-between shadow-2xs">
+                  <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 truncate">${escapeQuotes(k.label || 'METRIC')}</span>
+                  <span class="text-[17px] sm:text-[18px] font-mono font-bold tracking-tight mt-0.5">${escapeQuotes(k.value)}</span>
+                  ${k.context ? `<span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeQuotes(k.context)}</span>` : ''}
                 </div>
               `;
             }).join('')}
@@ -1483,18 +1483,18 @@
 
       if (rows.length >= 2) {
         return `
-          <div class="mt-2 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xs">
+          <div class="mt-2.5 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xs">
             <div class="bg-slate-100/90 dark:bg-[#141A2E] px-3 py-1.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <span>📋</span> <span>Key Quantitative Data & Regulatory Thresholds</span>
               </span>
             </div>
-            <table class="w-full text-left border-collapse text-[12.5px]">
+            <table class="w-full text-left border-collapse text-[13.5px]">
               <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 font-mono">
                 ${rows.slice(0, 5).map(r => `
                   <tr class="table-row-hover">
-                    <td class="py-1.5 px-3 font-bold text-slate-800 dark:text-slate-200 bg-slate-50/50 dark:bg-slate-900/30 w-1/3">${escapeQuotes(r.param)}</td>
-                    <td class="py-1.5 px-3 font-medium text-slate-950 dark:text-white">${highlightNumbers(escapeQuotes(r.val))}</td>
+                    <td class="py-2 px-3.5 font-bold text-slate-800 dark:text-slate-200 bg-slate-50/50 dark:bg-slate-900/30 w-1/3">${escapeQuotes(r.param)}</td>
+                    <td class="py-2 px-3.5 font-medium text-slate-950 dark:text-white">${highlightNumbers(escapeQuotes(r.val))}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -1522,12 +1522,12 @@
       const isBearish = story.sentiment === "BEARISH";
       
       const sentBadge = isBullish 
-        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
+        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
         : isBearish 
-        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
-        : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
+        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
+        : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
-      const tickerBadges = story.tickers.map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const tickerBadges = story.tickers.map(t => `<span class="px-2.5 py-0.5 text-[11.5px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
       const kpisHtml = buildKpiCardsHtml(story);
       const metricsTableHtml = buildMetricsTableHtml(story.bullet_points);
 
@@ -1536,32 +1536,32 @@
 
       container.innerHTML = `
         <!-- Mobile Fast Navigation Bar -->
-        <div class="lg:hidden flex items-center justify-between pb-1 mb-1 border-b border-slate-200 dark:border-slate-800">
-          <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-[11.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 py-1 px-1.5 rounded bg-indigo-50 dark:bg-indigo-950/50">
+        <div class="lg:hidden flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-200 dark:border-slate-800">
+          <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-[12px] font-mono font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 py-1 px-2 rounded bg-indigo-50 dark:bg-indigo-950/50">
             <span>▲ Back to Headlines</span>
           </button>
-          <span class="text-[10.5px] font-mono text-slate-400">Story #${story.id}</span>
+          <span class="text-[11px] font-mono text-slate-400">Story #${story.id}</span>
         </div>
 
-        <div class="flex items-center justify-between gap-1.5 flex-wrap pb-1.5 border-b border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-1.5">
-            <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
-            ${story.isFrontPage ? `<span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
-            <span class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
+        <div class="flex items-center justify-between gap-2 flex-wrap pb-2 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[11.5px] font-mono font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
+            ${story.isFrontPage ? `<span class="text-[10.5px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
+            <span class="text-[11.5px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
           </div>
           <div class="flex items-center gap-1.5">
             ${sentBadge}
-            <button onclick="copyToClipboard('${escapeQuotes(story.headline + '\\n\\n' + story.brief_details)}')" class="text-[11px] text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs" title="Copy story summary">
+            <button onclick="copyToClipboard('${escapeQuotes(story.headline + '\\n\\n' + story.brief_details)}')" class="text-[11.5px] text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs" title="Copy story summary">
               📋 Copy
             </button>
           </div>
         </div>
 
-        <h1 class="text-[18px] sm:text-[20px] font-semibold text-slate-950 dark:text-slate-50 leading-snug tracking-tight mt-0.5 mb-1">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
+        <h1 class="text-[20px] sm:text-[22px] font-bold text-slate-950 dark:text-slate-50 leading-snug tracking-tight mt-1 mb-1.5">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
 
         ${story.tickers.length > 0 ? `
-          <div class="flex items-center gap-1.5 flex-wrap my-0.5">
-            <span class="text-[10.5px] font-mono text-slate-600 dark:text-slate-400 font-semibold">STOCKS:</span>
+          <div class="flex items-center gap-1.5 flex-wrap my-1">
+            <span class="text-[11px] font-mono text-slate-600 dark:text-slate-400 font-semibold">STOCKS:</span>
             ${tickerBadges}
           </div>
         ` : ''}
@@ -1570,17 +1570,17 @@
         ${kpisHtml}
 
         <!-- ⚡ 2. EXECUTIVE GIST (INDIGO / BLUE BOX - HIGH CONTRAST) -->
-        <div class="mt-2 rounded-xl border-2 border-[#6366F1] dark:border-[#818CF8] bg-[#EEF2FF] dark:bg-[#1E1B4B]/60 p-3 shadow-xs flex flex-col gap-2">
+        <div class="mt-2.5 rounded-xl border-2 border-[#6366F1] dark:border-[#818CF8] bg-[#EEF2FF] dark:bg-[#1E1B4B]/60 p-3.5 shadow-xs flex flex-col gap-2.5">
           <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-800/80 pb-1.5">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#1E1B4B] dark:text-[#E0E7FF] flex items-center gap-1.5">
+            <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-[#1E1B4B] dark:text-[#E0E7FF] flex items-center gap-1.5">
               <span>⚡</span> <span>Executive Gist (Core Takeaway)</span>
             </span>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Quick Read</span>
+            <span class="text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Quick Read</span>
           </div>
-          <div class="grid grid-cols-1 gap-1.5">
+          <div class="grid grid-cols-1 gap-2">
             ${briefSentences.map(sent => `
-              <div class="flex items-start gap-2 bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border border-indigo-200/60 dark:border-slate-800 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-normal shadow-2xs">
-                <span class="text-[#4F46E5] dark:text-[#818CF8] font-bold text-sm select-none">▸</span>
+              <div class="flex items-start gap-2.5 bg-white/95 dark:bg-[#11172A] p-3 rounded-lg border border-indigo-200/60 dark:border-slate-800 text-[15px] sm:text-[15.5px] text-slate-950 dark:text-slate-100 leading-relaxed font-normal shadow-2xs">
+                <span class="text-[#4F46E5] dark:text-[#818CF8] font-bold text-base select-none mt-0.5">▸</span>
                 <span>${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
               </div>
             `).join('')}
@@ -1591,17 +1591,17 @@
         ${metricsTableHtml}
 
         <!-- 📌 4. KEY ANALYST DATA POINTS (NEWSPAPER BROADSHEET THEME) -->
-        <div class="mt-2 rounded-xl border-2 border-[#B8A38E] dark:border-[#524434] bg-[#F5EFEB] dark:bg-[#1E1914]/70 p-3 shadow-xs flex flex-col gap-2">
+        <div class="mt-2.5 rounded-xl border-2 border-[#B8A38E] dark:border-[#524434] bg-[#F5EFEB] dark:bg-[#1E1914]/70 p-3.5 shadow-xs flex flex-col gap-2.5">
           <div class="flex items-center justify-between border-b border-[#DFD3C4] dark:border-[#382E25] pb-1.5">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
+            <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
               <span>📌</span> <span>Key Analyst Data Points</span>
             </span>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#E6D9C8] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
+            <span class="text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded bg-[#E6D9C8] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
           </div>
-          <ul class="space-y-1.5">
+          <ul class="space-y-2">
             ${(story.bullet_points || []).map(bp => `
-              <li class="flex items-start gap-2 text-[13px] text-slate-950 dark:text-slate-100 leading-snug bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border border-[#DFCFC0] dark:border-slate-800 shadow-2xs font-normal">
-                <span class="text-[#7A4B29] dark:text-[#CBB09C] font-bold text-sm leading-none select-none mt-0.5">›</span>
+              <li class="flex items-start gap-2.5 text-[15px] sm:text-[15.5px] text-slate-950 dark:text-slate-100 leading-relaxed bg-white/95 dark:bg-[#11172A] p-3 rounded-lg border border-[#DFCFC0] dark:border-slate-800 shadow-2xs font-normal">
+                <span class="text-[#7A4B29] dark:text-[#CBB09C] font-bold text-base leading-none select-none mt-1">›</span>
                 <span>${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
               </li>
             `).join('')}
@@ -1609,14 +1609,14 @@
         </div>
 
         <!-- 💡 5. TRADER CATALYST & IMPACT RATIONALE (EMERALD / ROSE / SLATE BOX - HIGH CONTRAST) -->
-        <div class="mt-2 p-3 rounded-xl border-2 ${isBullish ? 'border-[#10B981] bg-[#ECFDF5] dark:bg-[#064E3B]/40 dark:border-[#34D399]' : isBearish ? 'border-[#F43F5E] bg-[#FFF1F2] dark:bg-[#881337]/40 dark:border-[#FB7185]' : 'border-[#64748B] bg-[#F8FAFC] dark:bg-[#1E293B]/60 dark:border-[#94A3B8]'} shadow-xs flex flex-col gap-2">
+        <div class="mt-2.5 p-3.5 rounded-xl border-2 ${isBullish ? 'border-[#10B981] bg-[#ECFDF5] dark:bg-[#064E3B]/40 dark:border-[#34D399]' : isBearish ? 'border-[#F43F5E] bg-[#FFF1F2] dark:bg-[#881337]/40 dark:border-[#FB7185]' : 'border-[#64748B] bg-[#F8FAFC] dark:bg-[#1E293B]/60 dark:border-[#94A3B8]'} shadow-xs flex flex-col gap-2.5">
           <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-700'} pb-1.5">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider ${isBullish ? 'text-[#064E3B] dark:text-[#A7F3D0]' : isBearish ? 'text-[#881337] dark:text-[#FECDD3]' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
+            <span class="text-[12px] font-mono font-bold uppercase tracking-wider ${isBullish ? 'text-[#064E3B] dark:text-[#A7F3D0]' : isBearish ? 'text-[#881337] dark:text-[#FECDD3]' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
               <span>💡</span> <span>Catalyst Rationale & Trader Impact</span>
             </span>
-            <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900/80 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900/80 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
+            <span class="text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900/80 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900/80 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
           </div>
-          <div class="bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border ${isBullish ? 'border-emerald-200/60' : isBearish ? 'border-rose-200/60' : 'border-slate-200'} dark:border-slate-800 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-normal shadow-2xs">
+          <div class="bg-white/95 dark:bg-[#11172A] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60' : isBearish ? 'border-rose-200/60' : 'border-slate-200'} dark:border-slate-800 text-[15px] sm:text-[15.5px] text-slate-950 dark:text-slate-100 leading-relaxed font-normal shadow-2xs">
             ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
           </div>
         </div>
