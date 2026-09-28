@@ -2,7 +2,7 @@
 <html lang="en" class="h-full antialiased" data-theme="light">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover"/>
   <title>FinPress Institutional Workspace — Trader Terminal</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +25,10 @@
     }
   </script>
   <style>
+    html, body {
+      touch-action: manipulation;
+      -webkit-text-size-adjust: 100%;
+    }
     body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 13.5px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -35,6 +39,13 @@
     .dark .table-row-hover:hover { background-color: rgba(99, 102, 241, 0.10); }
     mark { background-color: #FEF08A; color: #854D0E; padding: 0 2px; border-radius: 2px; font-weight: 700; }
     .dark mark { background-color: #854D0E; color: #FEF08A; }
+    @supports (padding: max(0px)) {
+      body {
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+    }
   </style>
 </head>
 <body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
@@ -228,55 +239,31 @@
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE (WIDE READING PANE) -->
-        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 shadow-xs sticky top-[70px] flex flex-col gap-2.5 min-h-[calc(100vh-5.5rem)] max-h-[calc(100vh-5.5rem)] overflow-y-auto">
+        <div id="feed-detail-wrapper" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs lg:sticky lg:top-[70px] flex flex-col gap-2.5 lg:min-h-[calc(100vh-5.5rem)] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
           <div id="feed-detail-container">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (STOCKS IN FOCUS & TRADING CATALYSTS - NO IPOS) -->
-        <aside class="flex flex-col gap-2 sticky top-[70px] max-h-[calc(100vh-5.5rem)] overflow-y-auto">
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (STOCKS IN FOCUS - PROMINENT & EXPANDED) -->
+        <aside class="flex flex-col gap-2 lg:sticky lg:top-[70px] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
           
           <!-- Stocks in Focus Card -->
-          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
-            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
-              <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1 font-mono">
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+              <span class="text-[12px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
                 <span>🏷️</span> <span>Stocks in Focus</span>
               </span>
-              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-                Clear (✕)
+              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                Clear Filter (✕)
               </button>
             </div>
 
-            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight">Click stock to filter:</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight font-medium">Click any stock to filter news:</p>
 
             <!-- Stock Ticker Pill Matrix -->
-            <div id="stocks-focus-list" class="flex flex-wrap gap-1 max-h-[180px] overflow-y-auto pt-0.5">
+            <div id="stocks-focus-list" class="flex flex-wrap gap-1.5 max-h-[220px] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pt-0.5">
               <!-- Dynamically populated ticker chips -->
-            </div>
-          </div>
-
-          <!-- Top Bullish Triggers Card (Excludes IPOs) -->
-          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-emerald-200/80 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
-            <div class="flex items-center justify-between border-b border-emerald-100 dark:border-slate-800 pb-1">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
-                <span>🟢</span> <span>Top Bullish Triggers</span>
-              </span>
-            </div>
-            <div id="top-bullish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[11.5px] space-y-1">
-              <!-- Dynamically populated top bullish triggers -->
-            </div>
-          </div>
-
-          <!-- Top Bearish Risks Card (Excludes IPOs) -->
-          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-rose-200/80 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
-            <div class="flex items-center justify-between border-b border-rose-100 dark:border-slate-800 pb-1">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400 flex items-center gap-1">
-                <span>🔴</span> <span>Key Downside Risks</span>
-              </span>
-            </div>
-            <div id="top-bearish-list" class="divide-y divide-slate-100 dark:divide-slate-800 text-[11.5px] space-y-1">
-              <!-- Dynamically populated top bearish risks -->
             </div>
           </div>
 
@@ -375,7 +362,7 @@
     let activeTickerFilter = null;
     let selectedStoryIndex = 0;
     let currentFeedPage = 1;
-    const FEED_PAGE_SIZE = 15;
+    const FEED_PAGE_SIZE = 12;
     let currentIpoFilter = "ALL";
     let currentSearchQuery = "";
     let availableDates = [];
@@ -950,63 +937,6 @@
         };
         list.appendChild(btn);
       });
-
-      // Render Top Bullish & Bearish Widgets (Strictly Exclude IPOs)
-      const bullishList = document.getElementById("top-bullish-list");
-      bullishList.innerHTML = "";
-      stories
-        .filter(s => s.sentiment === "BULLISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
-        .slice(0, 3)
-        .forEach(s => {
-          const d = document.createElement("div");
-          d.className = "py-1.5 cursor-pointer hover:text-brand-600 transition-colors";
-          d.onclick = () => {
-            const displayed = getFilteredStories();
-            const idx = displayed.findIndex(item => item.headline === s.headline);
-            if (idx !== -1) { 
-              selectedStoryIndex = idx;
-              currentFeedPage = Math.floor(idx / FEED_PAGE_SIZE) + 1;
-              renderFeedList(); 
-            }
-          };
-          d.innerHTML = `
-            <p class="font-bold text-[13px] leading-snug line-clamp-2">${s.headline}</p>
-            <p class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">${s.category} · ${s.page_numbers}</p>
-          `;
-          bullishList.appendChild(d);
-        });
-
-      if (bullishList.children.length === 0) {
-        bullishList.innerHTML = `<p class="text-[11.5px] text-slate-400 py-1">No major bullish sector breaks today.</p>`;
-      }
-
-      const bearishList = document.getElementById("top-bearish-list");
-      bearishList.innerHTML = "";
-      stories
-        .filter(s => s.sentiment === "BEARISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
-        .slice(0, 3)
-        .forEach(s => {
-          const d = document.createElement("div");
-          d.className = "py-1.5 cursor-pointer hover:text-rose-600 transition-colors";
-          d.onclick = () => {
-            const displayed = getFilteredStories();
-            const idx = displayed.findIndex(item => item.headline === s.headline);
-            if (idx !== -1) { 
-              selectedStoryIndex = idx;
-              currentFeedPage = Math.floor(idx / FEED_PAGE_SIZE) + 1;
-              renderFeedList(); 
-            }
-          };
-          d.innerHTML = `
-            <p class="font-bold text-[13px] leading-snug line-clamp-2">${s.headline}</p>
-            <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-0.5 font-medium">${s.category} · ${s.page_numbers}</p>
-          `;
-          bearishList.appendChild(d);
-        });
-
-      if (bearishList.children.length === 0) {
-        bearishList.innerHTML = `<p class="text-[11.5px] text-slate-400 py-1">No significant downside warnings today.</p>`;
-      }
     }
 
     function clearTickerFilter() {
@@ -1036,7 +966,7 @@
       renderFeedList();
     }
 
-    // ================= FEED LIST & ACTIVE STORY DETAIL (MAX 10 1-LINER STORIES PER PAGE) =================
+    // ================= FEED LIST & ACTIVE STORY DETAIL (MAX 12 1-LINER STORIES PER PAGE) =================
     function renderFeedList() {
       const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
       const queryTokens = rawQuery ? rawQuery.split(/\s+/).filter(Boolean) : [];
@@ -1108,6 +1038,13 @@
         btn.onclick = () => {
           selectedStoryIndex = globalIdx;
           renderFeedList();
+          // On mobile screens (iPhone / tablet), smoothly scroll reader panel into view
+          if (window.innerWidth < 1024) {
+            const detailWrapper = document.getElementById("feed-detail-wrapper");
+            if (detailWrapper) {
+              detailWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
         };
 
         btn.innerHTML = `
@@ -1151,6 +1088,14 @@
       const tickerBadges = story.tickers.map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
 
       container.innerHTML = `
+        <!-- Mobile Fast Navigation Bar -->
+        <div class="lg:hidden flex items-center justify-between pb-1 mb-1 border-b border-slate-200 dark:border-slate-800">
+          <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-[11.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 py-1 px-1.5 rounded bg-indigo-50 dark:bg-indigo-950/50">
+            <span>▲ Back to Headlines</span>
+          </button>
+          <span class="text-[10.5px] font-mono text-slate-400">Story #${story.id}</span>
+        </div>
+
         <div class="flex items-center justify-between gap-1.5 flex-wrap pb-1.5 border-b border-slate-200 dark:border-slate-800">
           <div class="flex items-center gap-1.5">
             <span class="text-[11px] font-mono font-extrabold px-2.5 py-0.5 rounded bg-slate-200 text-slate-950 dark:bg-slate-800 dark:text-white">${story.category}</span>
@@ -1165,7 +1110,7 @@
           </div>
         </div>
 
-        <h1 class="text-[19px] sm:text-[20px] font-black text-slate-950 dark:text-white leading-tight tracking-tight mt-0.5 mb-1">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
+        <h1 class="text-[18px] sm:text-[20px] font-black text-slate-950 dark:text-white leading-tight tracking-tight mt-0.5 mb-1">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
 
         ${story.tickers.length > 0 ? `
           <div class="flex items-center gap-1.5 flex-wrap my-0.5">
