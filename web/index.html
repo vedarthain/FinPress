@@ -752,24 +752,25 @@
     function initMetrics() {
       // Core All News strictly excludes IPO, Corporate Events, Corporate Appointments, and Opinions
       const coreStories = stories.filter(s => s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion);
+      const nonIpoStories = stories.filter(s => s.category !== "IPO");
       const totalIpos = ipoList.length;
-      const anchorCount = stories.filter(s => s.isFrontPage).length;
+      const anchorCount = stories.filter(s => s.isFrontPage && s.category !== "IPO").length;
       const corpCount = stories.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length;
       const opinionsCount = stories.filter(s => s.isOpinion).length;
 
       document.getElementById("top-total-count").textContent = stories.length;
-      document.getElementById("tab-feed-count").textContent = stories.length;
+      document.getElementById("tab-feed-count").textContent = nonIpoStories.length;
       document.getElementById("tab-ipo-count").textContent = totalIpos;
       document.getElementById("tab-anchor-count").textContent = anchorCount;
       document.getElementById("tab-corp-count").textContent = corpCount;
       document.getElementById("tab-opinions-count").textContent = opinionsCount;
 
       let bCount = 0, rCount = 0;
-      stories.forEach(s => {
+      nonIpoStories.forEach(s => {
         if (s.sentiment === "BULLISH") bCount++;
         else if (s.sentiment === "BEARISH") rCount++;
       });
-      document.getElementById("feed-count-all").textContent = stories.length;
+      document.getElementById("feed-count-all").textContent = nonIpoStories.length;
       document.getElementById("feed-count-bullish").textContent = bCount;
       document.getElementById("feed-count-bearish").textContent = rCount;
 
@@ -845,8 +846,8 @@
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
         
         let matchSec = true;
-        if (selectedFeedCategory === "ALL") matchSec = true;
-        else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
+        if (selectedFeedCategory === "ALL") matchSec = s.category !== "IPO";
+        else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage && s.category !== "IPO";
         else if (selectedFeedCategory === "OPINIONS") matchSec = s.isOpinion;
         else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
         else if (selectedFeedCategory === "MACRO_ALL") matchSec = s.category === "Economy" || s.category === "Policy" || s.category === "Market";
