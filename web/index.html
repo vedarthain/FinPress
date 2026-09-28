@@ -131,13 +131,19 @@
             <span id="tab-corp-count" class="px-1 rounded text-[9.5px] font-mono bg-slate-700 text-slate-200">0</span>
           </button>
 
+          <button id="tab-btn-events" onclick="switchView('events')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
+            <span>📢 Events</span>
+            <span id="tab-events-count" class="px-1 rounded text-[9.5px] font-mono bg-slate-700 text-slate-200">0</span>
+          </button>
+
+          <button id="tab-btn-appointments" onclick="switchView('appointments')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
+            <span>👔 Appointments</span>
+            <span id="tab-appointments-count" class="px-1 rounded text-[9.5px] font-mono bg-slate-700 text-slate-200">0</span>
+          </button>
+
           <button id="tab-btn-opinions" onclick="switchView('opinions')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1">
             <span>✍️ Opinions</span>
             <span id="tab-opinions-count" class="px-1 rounded text-[9.5px] font-mono bg-slate-700 text-slate-200">0</span>
-          </button>
-
-          <button id="tab-btn-macro" onclick="switchView('macro')" class="px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white">
-            🌐 Macro
           </button>
         </nav>
       </div>
@@ -147,7 +153,7 @@
         
         <!-- Feed Controls -->
         <div id="feed-controls" class="flex items-center gap-1.5">
-          <!-- Clean Category Selector (No IPO, Corporate Events, Appointments) -->
+          <!-- Clean Category Selector (No IPO, Corporate Events, Appointments, or Opinions) -->
           <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 bg-[#131F3B] text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500">
             <option value="ALL">✨ All Core Sections</option>
             <option value="Sector">Sector</option>
@@ -156,7 +162,7 @@
             <option value="Market">Market (Indices & Benchmarks)</option>
             <option value="Trade">Trade & FX</option>
             <option value="International News">International</option>
-            <option value="Others">Others</option>
+            <option value="Others">General Features</option>
           </select>
 
           <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
@@ -175,6 +181,15 @@
           <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
             <button id="mode-split-btn" onclick="setViewMode('split')" class="px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs" title="Split Screen Wire & Reading Pane">📑 Split</button>
             <button id="mode-matrix-btn" onclick="setViewMode('matrix')" class="px-2 py-0.5 rounded text-slate-300 hover:text-white" title="Dense Institutional Financial Table">📊 Table</button>
+          </div>
+        </div>
+
+        <!-- Corporate Sub-stage Filter Buttons -->
+        <div id="corp-controls" class="hidden items-center gap-1.5">
+          <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
+            <button id="corp-sub-all" onclick="switchView('corporate')" class="px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs">All Corporate</button>
+            <button id="corp-sub-events" onclick="switchView('events')" class="px-2 py-0.5 rounded text-slate-300 hover:text-white">📢 Events</button>
+            <button id="corp-sub-appointments" onclick="switchView('appointments')" class="px-2 py-0.5 rounded text-slate-300 hover:text-white">👔 Appointments</button>
           </div>
         </div>
 
@@ -526,19 +541,21 @@
       const tabAnchor = document.getElementById("tab-btn-anchor");
       const tabIpo = document.getElementById("tab-btn-ipo");
       const tabCorp = document.getElementById("tab-btn-corporate");
+      const tabEvents = document.getElementById("tab-btn-events");
+      const tabAppointments = document.getElementById("tab-btn-appointments");
       const tabOpinions = document.getElementById("tab-btn-opinions");
-      const tabMacro = document.getElementById("tab-btn-macro");
       const viewFeed = document.getElementById("view-feed");
       const viewIpo = document.getElementById("view-ipo");
       const viewMatrix = document.getElementById("view-matrix");
       const feedControls = document.getElementById("feed-controls");
       const ipoControls = document.getElementById("ipo-controls");
+      const corpControls = document.getElementById("corp-controls");
 
       selectedStoryIndex = 0;
       currentFeedPage = 1;
 
-      [tabFeed, tabAnchor, tabIpo, tabCorp, tabOpinions, tabMacro].forEach(b => {
-        b.className = "px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1";
+      [tabFeed, tabAnchor, tabIpo, tabCorp, tabEvents, tabAppointments, tabOpinions].forEach(b => {
+        if (b) b.className = "px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1";
       });
 
       if (viewName === "ipo") {
@@ -550,6 +567,7 @@
         viewIpo.classList.remove("hidden");
         viewIpo.classList.add("flex");
         feedControls.classList.add("hidden");
+        if (corpControls) corpControls.classList.add("hidden");
         ipoControls.classList.remove("hidden");
         ipoControls.classList.add("flex");
         renderIpoTable();
@@ -559,7 +577,6 @@
       viewIpo.classList.add("hidden");
       viewIpo.classList.remove("flex");
       ipoControls.classList.add("hidden");
-      feedControls.classList.remove("hidden");
 
       if (currentLayoutMode === "split") {
         viewFeed.classList.remove("hidden");
@@ -577,18 +594,51 @@
         tabFeed.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         selectedFeedCategory = "ALL";
         document.getElementById("category-select").value = "ALL";
+        feedControls.classList.remove("hidden");
+        if (corpControls) corpControls.classList.add("hidden");
       } else if (viewName === "anchor") {
         tabAnchor.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         selectedFeedCategory = "ANCHOR";
+        feedControls.classList.remove("hidden");
+        if (corpControls) corpControls.classList.add("hidden");
       } else if (viewName === "corporate") {
         tabCorp.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         selectedFeedCategory = "CORPORATE_ALL";
+        feedControls.classList.add("hidden");
+        if (corpControls) {
+          corpControls.classList.remove("hidden");
+          corpControls.classList.add("flex");
+          document.getElementById("corp-sub-all").className = "px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs";
+          document.getElementById("corp-sub-events").className = "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+          document.getElementById("corp-sub-appointments").className = "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+        }
+      } else if (viewName === "events") {
+        tabEvents.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
+        selectedFeedCategory = "EVENTS";
+        feedControls.classList.add("hidden");
+        if (corpControls) {
+          corpControls.classList.remove("hidden");
+          corpControls.classList.add("flex");
+          document.getElementById("corp-sub-all").className = "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+          document.getElementById("corp-sub-events").className = "px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs";
+          document.getElementById("corp-sub-appointments").className = "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+        }
+      } else if (viewName === "appointments") {
+        tabAppointments.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
+        selectedFeedCategory = "APPOINTMENTS";
+        feedControls.classList.add("hidden");
+        if (corpControls) {
+          corpControls.classList.remove("hidden");
+          corpControls.classList.add("flex");
+          document.getElementById("corp-sub-all").className = "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+          document.getElementById("corp-sub-events").className = "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+          document.getElementById("corp-sub-appointments").className = "px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs";
+        }
       } else if (viewName === "opinions") {
         tabOpinions.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         selectedFeedCategory = "OPINIONS";
-      } else if (viewName === "macro") {
-        tabMacro.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
-        selectedFeedCategory = "MACRO_ALL";
+        feedControls.classList.remove("hidden");
+        if (corpControls) corpControls.classList.add("hidden");
       }
 
       if (currentLayoutMode === "split") renderFeedList();
@@ -864,25 +914,30 @@
     function initMetrics() {
       // Core All News strictly excludes IPO, Corporate Events, Corporate Appointments, and Opinions
       const coreStories = stories.filter(s => s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion);
-      const nonIpoStories = stories.filter(s => s.category !== "IPO");
       const totalIpos = ipoList.length;
-      const anchorCount = stories.filter(s => s.isFrontPage && s.category !== "IPO").length;
-      const corpCount = stories.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length;
+      const anchorCount = coreStories.filter(s => s.isFrontPage).length;
+      const corpEventsCount = stories.filter(s => s.category === "Corporate Events").length;
+      const corpApptsCount = stories.filter(s => s.category === "Corporate Appointments").length;
+      const corpCount = corpEventsCount + corpApptsCount;
       const opinionsCount = stories.filter(s => s.isOpinion).length;
 
       document.getElementById("top-total-count").textContent = stories.length;
-      document.getElementById("tab-feed-count").textContent = nonIpoStories.length;
+      document.getElementById("tab-feed-count").textContent = coreStories.length;
       document.getElementById("tab-ipo-count").textContent = totalIpos;
       document.getElementById("tab-anchor-count").textContent = anchorCount;
       document.getElementById("tab-corp-count").textContent = corpCount;
+      const tabEvents = document.getElementById("tab-events-count");
+      if (tabEvents) tabEvents.textContent = corpEventsCount;
+      const tabAppts = document.getElementById("tab-appointments-count");
+      if (tabAppts) tabAppts.textContent = corpApptsCount;
       document.getElementById("tab-opinions-count").textContent = opinionsCount;
 
       let bCount = 0, rCount = 0;
-      nonIpoStories.forEach(s => {
+      coreStories.forEach(s => {
         if (s.sentiment === "BULLISH") bCount++;
         else if (s.sentiment === "BEARISH") rCount++;
       });
-      document.getElementById("feed-count-all").textContent = nonIpoStories.length;
+      document.getElementById("feed-count-all").textContent = coreStories.length;
       document.getElementById("feed-count-bullish").textContent = bCount;
       document.getElementById("feed-count-bearish").textContent = rCount;
 
@@ -958,12 +1013,23 @@
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
         
         let matchSec = true;
-        if (selectedFeedCategory === "ALL") matchSec = s.category !== "IPO";
-        else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage && s.category !== "IPO";
-        else if (selectedFeedCategory === "OPINIONS") matchSec = s.isOpinion;
-        else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
-        else if (selectedFeedCategory === "MACRO_ALL") matchSec = s.category === "Economy" || s.category === "Policy" || s.category === "Market";
-        else matchSec = s.category === selectedFeedCategory;
+        if (selectedFeedCategory === "ALL") {
+          matchSec = s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
+        } else if (selectedFeedCategory === "ANCHOR") {
+          matchSec = s.isFrontPage && s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
+        } else if (selectedFeedCategory === "CORPORATE_ALL") {
+          matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
+        } else if (selectedFeedCategory === "EVENTS") {
+          matchSec = s.category === "Corporate Events";
+        } else if (selectedFeedCategory === "APPOINTMENTS") {
+          matchSec = s.category === "Corporate Appointments";
+        } else if (selectedFeedCategory === "OPINIONS") {
+          matchSec = s.isOpinion;
+        } else if (selectedFeedCategory === "Others") {
+          matchSec = s.category === "Others" && !s.isOpinion;
+        } else {
+          matchSec = s.category === selectedFeedCategory && !s.isOpinion;
+        }
 
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
         const matchTicker = !activeTickerFilter || s.tickers.includes(activeTickerFilter);
