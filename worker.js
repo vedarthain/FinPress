@@ -549,7 +549,7 @@ const HTML = `<!DOCTYPE html>
 
     async function fetchDates() {
       try {
-        const res = await fetch('/api/dates');
+        const res = await fetch(\`/api/dates?t=\${Date.now()}\`);
         if (res.ok) {
           availableDates = await res.json();
           const select = document.getElementById("edition-date-select");
@@ -562,7 +562,12 @@ const HTML = `<!DOCTYPE html>
               opt.className = "bg-slate-900 text-white font-mono";
               select.appendChild(opt);
             });
-            document.getElementById("calendar-picker").value = availableDates[0];
+            if (rawReport && rawReport.edition_date) {
+              select.value = rawReport.edition_date;
+              document.getElementById("calendar-picker").value = rawReport.edition_date;
+            } else {
+              document.getElementById("calendar-picker").value = availableDates[0];
+            }
           }
         }
       } catch (e) {}
@@ -592,25 +597,40 @@ const HTML = `<!DOCTYPE html>
 
     async function loadData(targetDate = null) {
       try {
-        const endpoint = targetDate ? \`/api/report?date=\${targetDate}\` : '/api/report';
+        const endpoint = targetDate ? \`/api/report?date=\${targetDate}&t=\${Date.now()}\` : \`/api/report?t=\${Date.now()}\`;
         const res = await fetch(endpoint);
         if (!res.ok) throw new Error("Failed");
         rawReport = await res.json();
       } catch (e) {
         try {
           const fallbackUrl = targetDate 
-            ? \`https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/news_report_unified_\${targetDate}.json\`
-            : 'https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/news_report_unified_latest.json';
+            ? \`https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/news_report_unified_\${targetDate}.json?t=\${Date.now()}\`
+            : \`https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/news_report_unified_latest.json?t=\${Date.now()}\`;
           const res = await fetch(fallbackUrl);
           rawReport = await res.json();
         } catch (err) {}
       }
 
       if (rawReport && rawReport.major_stories) {
-        const d = rawReport.edition_date || "Today";
+        const edDate = rawReport.edition_date;
         const dateInput = document.getElementById("calendar-picker");
-        if (dateInput && rawReport.edition_date) dateInput.value = rawReport.edition_date;
+        if (dateInput && edDate) dateInput.value = edDate;
         
+        const dateSelect = document.getElementById("edition-date-select");
+        if (dateSelect && edDate) {
+          let found = false;
+          for (let opt of dateSelect.options) {
+            if (opt.value === edDate) { opt.selected = true; found = true; break; }
+          }
+          if (!found) {
+            const opt = document.createElement("option");
+            opt.value = edDate;
+            opt.textContent = \`\${edDate} (Latest)\`;
+            opt.selected = true;
+            dateSelect.prepend(opt);
+          }
+        }
+
         stories = rawReport.major_stories
           .map((s, idx) => parseStory(s, idx))
           .filter(Boolean); // Filter out any junk / filler overview stories
@@ -1067,17 +1087,20 @@ export default {
     if (url.pathname === '/api/report') {
       const dateParam = url.searchParams.get('date');
       const targetFile = dateParam ? `news_report_unified_${dateParam}.json` : 'news_report_unified_latest.json';
-      const r2Url = `https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/${targetFile}`;
+      const r2Url = `https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/${targetFile}?t=${Date.now()}`;
       try {
         const resp = await fetch(r2Url, {
-          headers: { 'User-Agent': 'FinPress-Cloudflare-Worker' }
+          headers: { 'User-Agent': 'FinPress-Cloudflare-Worker' },
+          cf: { cacheTtl: 0, cacheEverything: false }
         });
         return new Response(resp.body, {
           status: resp.status,
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
             'Access-Control-Allow-Origin': '*',
-            'Cache-Control': 'public, max-age=300'
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
           }
         });
       } catch (e) {
@@ -1086,10 +1109,11 @@ export default {
     }
 
     if (url.pathname === '/api/dates') {
-      return new Response(JSON.stringify(['2026-09-27']), {
+      return new Response(JSON.stringify(['2026-09-28', '2026-09-27']), {
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'Access-Control-Allow-Origin': '*'
+          'Access-Control-Allow-Origin': '*',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       });
     }
@@ -1098,7 +1122,7 @@ export default {
     return new Response(HTML, {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=60'
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
       }
     });
   }
