@@ -8,14 +8,14 @@ const HTML = `<!DOCTYPE html>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
@@ -26,7 +26,7 @@ const HTML = `<!DOCTYPE html>
     }
   </script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; font-size: 14px; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 13.5px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -38,11 +38,11 @@ const HTML = `<!DOCTYPE html>
     .dark mark { background-color: #854D0E; color: #FEF08A; }
   </style>
 </head>
-<body class="min-h-full bg-[#F3F5F8] text-slate-900 dark:bg-[#090D16] dark:text-slate-100 transition-colors duration-150">
+<body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
   <div class="min-h-screen flex flex-col">
 
     <!-- ================= 1. TOPMOST MARKET PULSE & CALENDAR RIBBON ================= -->
-    <div class="sticky top-0 z-50 bg-[#070A12] text-slate-300 text-[10.5px] font-mono px-3 py-1 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-3 border-b border-slate-800/80 shadow-xs">
+    <div class="sticky top-0 z-50 bg-[#060911] text-slate-300 text-[10.5px] font-mono px-3 py-1 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-3 border-b border-slate-800/90 shadow-xs">
       <div class="flex items-center gap-3">
         <span class="text-amber-400 font-extrabold flex items-center gap-1">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -85,23 +85,23 @@ const HTML = `<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- ================= 2. MAIN NAVIGATION TOOLBAR (COMPACT SINGLE-ROW INSTITUTIONAL HEADER) ================= -->
-    <header class="sticky top-[29px] z-40 bg-[#0E1322] border-b border-slate-800 text-white shadow-xs px-3 py-1 flex items-center justify-between gap-2 overflow-x-auto flex-nowrap whitespace-nowrap">
+    <!-- ================= 2. MAIN NAVIGATION TOOLBAR (HIGH-CONTRAST VIBRANT FINPRESS RIBBON) ================= -->
+    <header class="sticky top-[29px] z-40 bg-[#0C152B] border-b-2 border-indigo-600/70 text-white shadow-sm px-3 py-1 flex items-center justify-between gap-2 overflow-x-auto flex-nowrap whitespace-nowrap">
       
       <!-- Left: Logo & Primary Navigation Tabs -->
       <div class="flex items-center gap-2.5 shrink-0">
         <div class="flex items-center gap-1.5 shrink-0 cursor-pointer" onclick="switchView('feed')">
-          <div class="w-6 h-6 rounded-md bg-gradient-to-br from-indigo-500 to-brand-600 flex items-center justify-center shadow-xs">
+          <div class="w-6 h-6 rounded-md bg-gradient-to-tr from-indigo-500 via-blue-600 to-indigo-700 flex items-center justify-center shadow-xs border border-indigo-400/40">
             <span class="text-white text-[10px] font-black tracking-tighter">FP</span>
           </div>
           <span class="text-[15px] font-black tracking-tight text-white mr-0.5">
-            Fin<span class="text-brand-500">Press</span>
+            Fin<span class="text-amber-400">Press</span>
           </span>
         </div>
 
         <!-- Navigation Tabs -->
-        <nav class="flex items-center bg-[#151B2E] p-0.5 rounded-md border border-slate-700/80 text-[11px] font-medium shrink-0">
-          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-2 py-0.5 font-bold rounded transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1">
+        <nav class="flex items-center bg-[#131F3B] p-0.5 rounded-md border border-indigo-900/80 text-[11px] font-medium shrink-0">
+          <button id="tab-btn-feed" onclick="switchView('feed')" class="px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1">
             <span>⚡ All News</span>
             <span id="tab-feed-count" class="px-1 rounded text-[9.5px] font-mono bg-black/30 font-bold">0</span>
           </button>
@@ -138,8 +138,8 @@ const HTML = `<!DOCTYPE html>
         <!-- Feed Controls -->
         <div id="feed-controls" class="flex items-center gap-1.5">
           <!-- Clean Category Selector (No IPO, Corporate Events, Appointments) -->
-          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 bg-[#151B2E] text-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
-            <option value="ALL">✨ All Sections</option>
+          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 bg-[#131F3B] text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+            <option value="ALL">✨ All Core Sections</option>
             <option value="Sector">Sector</option>
             <option value="Economy">Economy</option>
             <option value="Policy">Policy</option>
@@ -149,7 +149,7 @@ const HTML = `<!DOCTYPE html>
             <option value="Others">Others</option>
           </select>
 
-          <div class="flex items-center bg-[#151B2E] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
+          <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
             <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2 py-0.5 rounded bg-slate-800 text-white shadow-xs">
               All (<span id="feed-count-all">0</span>)
             </button>
@@ -164,8 +164,8 @@ const HTML = `<!DOCTYPE html>
 
         <!-- IPO Sub-stage Filter Buttons -->
         <div id="ipo-controls" class="hidden items-center gap-1.5">
-          <div class="flex items-center bg-[#151B2E] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
-            <button id="ipo-stage-all" onclick="filterIpoTable('ALL')" class="px-2 py-0.5 rounded bg-brand-600 text-white shadow-xs">All IPOs</button>
+          <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
+            <button id="ipo-stage-all" onclick="filterIpoTable('ALL')" class="px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs">All IPOs</button>
             <button id="ipo-stage-drhp" onclick="filterIpoTable('DRHP')" class="px-2 py-0.5 rounded text-slate-300">📋 DRHP</button>
             <button id="ipo-stage-bidding" onclick="filterIpoTable('BIDDING')" class="px-2 py-0.5 rounded text-slate-300">📈 Bidding</button>
             <button id="ipo-stage-notices" onclick="filterIpoTable('NOTICES')" class="px-2 py-0.5 rounded text-slate-300">🏛️ Allotments</button>
@@ -177,12 +177,12 @@ const HTML = `<!DOCTYPE html>
       <!-- Right: Search + Theme Switcher -->
       <div class="flex items-center gap-1.5 shrink-0">
         <div class="relative w-36 sm:w-44">
-          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11px] pl-6 pr-5 py-0.5 rounded border border-slate-700 bg-[#151B2E] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-500 font-medium"/>
+          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11px] pl-6 pr-5 py-0.5 rounded border border-slate-700 bg-[#131F3B] text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 font-medium"/>
           <span class="absolute left-1.5 top-1 text-slate-400 text-[10px]">🔍</span>
           <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-0.5 text-slate-400 hover:text-white text-[10px] font-bold p-0.5">✕</button>
         </div>
 
-        <button onclick="toggleTheme()" class="w-6 h-6 rounded border border-slate-700 bg-[#151B2E] text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
+        <button onclick="toggleTheme()" class="w-6 h-6 rounded border border-slate-700 bg-[#131F3B] text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
@@ -421,11 +421,11 @@ const HTML = `<!DOCTYPE html>
       const ipoControls = document.getElementById("ipo-controls");
 
       [tabFeed, tabAnchor, tabIpo, tabCorp, tabOpinions, tabMacro].forEach(b => {
-        b.className = "px-3 py-1 font-semibold rounded-md transition-all text-slate-300 hover:text-white flex items-center gap-1.5";
+        b.className = "px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1";
       });
 
       if (viewName === "feed") {
-        tabFeed.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        tabFeed.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
@@ -435,7 +435,7 @@ const HTML = `<!DOCTYPE html>
         document.getElementById("category-select").value = "ALL";
         renderFeedList();
       } else if (viewName === "anchor") {
-        tabAnchor.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        tabAnchor.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
@@ -444,7 +444,7 @@ const HTML = `<!DOCTYPE html>
         selectedFeedCategory = "ANCHOR";
         renderFeedList();
       } else if (viewName === "ipo") {
-        tabIpo.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        tabIpo.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.add("hidden");
         viewFeed.classList.remove("grid");
         viewIpo.classList.remove("hidden");
@@ -454,7 +454,7 @@ const HTML = `<!DOCTYPE html>
         ipoControls.classList.add("flex");
         renderIpoTable();
       } else if (viewName === "corporate") {
-        tabCorp.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        tabCorp.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
@@ -463,7 +463,7 @@ const HTML = `<!DOCTYPE html>
         selectedFeedCategory = "CORPORATE_ALL";
         renderFeedList();
       } else if (viewName === "opinions") {
-        tabOpinions.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        tabOpinions.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
@@ -472,7 +472,7 @@ const HTML = `<!DOCTYPE html>
         selectedFeedCategory = "OPINIONS";
         renderFeedList();
       } else if (viewName === "macro") {
-        tabMacro.className = "px-3 py-1 font-bold rounded-md transition-all bg-brand-600 text-white shadow-xs flex items-center gap-1.5";
+        tabMacro.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.remove("hidden");
         viewFeed.classList.add("grid");
         viewIpo.classList.add("hidden");
@@ -746,24 +746,26 @@ const HTML = `<!DOCTYPE html>
     }
 
     function initMetrics() {
-      document.getElementById("top-total-count").textContent = stories.length;
-      document.getElementById("tab-feed-count").textContent = stories.length;
-      document.getElementById("tab-ipo-count").textContent = ipoList.length;
-
+      // Core All News strictly excludes IPO, Corporate Events, Corporate Appointments, and Opinions
+      const coreStories = stories.filter(s => s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion);
+      const totalIpos = ipoList.length;
       const anchorCount = stories.filter(s => s.isFrontPage).length;
       const corpCount = stories.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length;
       const opinionsCount = stories.filter(s => s.isOpinion).length;
 
+      document.getElementById("top-total-count").textContent = stories.length;
+      document.getElementById("tab-feed-count").textContent = coreStories.length;
+      document.getElementById("tab-ipo-count").textContent = totalIpos;
       document.getElementById("tab-anchor-count").textContent = anchorCount;
       document.getElementById("tab-corp-count").textContent = corpCount;
       document.getElementById("tab-opinions-count").textContent = opinionsCount;
 
       let bCount = 0, rCount = 0;
-      stories.forEach(s => {
+      coreStories.forEach(s => {
         if (s.sentiment === "BULLISH") bCount++;
         else if (s.sentiment === "BEARISH") rCount++;
       });
-      document.getElementById("feed-count-all").textContent = stories.length;
+      document.getElementById("feed-count-all").textContent = coreStories.length;
       document.getElementById("feed-count-bullish").textContent = bCount;
       document.getElementById("feed-count-bearish").textContent = rCount;
 
@@ -966,7 +968,11 @@ const HTML = `<!DOCTYPE html>
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
         
         let matchSec = true;
-        if (selectedFeedCategory === "ALL") matchSec = true;
+        if (selectedFeedCategory === "ALL") {
+          // Strictly exclude IPO, Corporate Events, Corporate Appointments, and Opinions
+          const isExcluded = s.category === "IPO" || s.category === "Corporate Events" || s.category === "Corporate Appointments" || s.isOpinion;
+          matchSec = !isExcluded;
+        }
         else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
         else if (selectedFeedCategory === "OPINIONS") matchSec = s.isOpinion;
         else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
@@ -1006,25 +1012,25 @@ const HTML = `<!DOCTYPE html>
         const anchorTag = s.isFrontPage ? \`<span class="px-1.5 py-0.2 rounded text-[9.5px] font-mono font-bold bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300">📰 PAGE 1 ANCHOR</span>\` : '';
 
         const btn = document.createElement("button");
-        btn.className = \`w-full text-left px-3.5 py-2.5 transition-colors flex items-start gap-2.5 border-b border-slate-100 dark:border-slate-800/80 last:border-b-0 \${isSelected ? 'bg-brand-50/90 dark:bg-brand-500/15 border-l-4 border-l-brand-600' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}\`;
+        btn.className = \`w-full text-left px-3 py-2 transition-colors flex items-start gap-2 border-b border-slate-100 dark:border-slate-800/80 last:border-b-0 \${isSelected ? 'bg-indigo-50/90 dark:bg-indigo-950/40 border-l-4 border-l-indigo-600' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}\`;
         btn.onclick = () => {
           selectedStoryIndex = idx;
           renderFeedList();
         };
 
         btn.innerHTML = \`
-          <span class="shrink-0 text-[11.5px] font-mono font-semibold text-slate-400 tabular-nums mt-0.5">\${numStr}</span>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center justify-between gap-1 mb-1 flex-wrap">
+          <span class="shrink-0 text-[11px] font-mono font-semibold text-slate-400 tabular-nums mt-0.5">\${numStr}</span>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex items-center justify-between gap-1 mb-0.5 flex-wrap">
               <div class="flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full \${dot}"></span>
-                <span class="text-[10.5px] font-mono text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wide">\${s.category}</span>
+                <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wide">\${s.category}</span>
                 \${anchorTag}
               </div>
-              <span class="text-[10.5px] font-mono text-slate-400">\${s.page_numbers}</span>
+              <span class="text-[10px] font-mono text-slate-400">\${s.page_numbers}</span>
             </div>
-            <h4 class="text-[14px] font-bold leading-snug \${isSelected ? 'text-brand-900 dark:text-brand-200' : 'text-slate-900 dark:text-slate-100'} line-clamp-2">\${highlightSearchTokens(s.headline, queryTokens)}</h4>
-            \${s.tickers.length > 0 ? \`<div class="flex items-center gap-1 mt-1.5">\${tickerBadges}</div>\` : ''}
+            <h4 class="text-[13.5px] font-bold leading-snug tracking-tight max-w-[340px] \${isSelected ? 'text-indigo-950 dark:text-indigo-200' : 'text-slate-900 dark:text-slate-100'} line-clamp-2">\${highlightSearchTokens(s.headline, queryTokens)}</h4>
+            \${s.tickers.length > 0 ? \`<div class="flex items-center gap-1 mt-1">\${tickerBadges}</div>\` : ''}
           </div>
         \`;
         listContainer.appendChild(btn);
@@ -1075,7 +1081,7 @@ const HTML = `<!DOCTYPE html>
           </div>
         </div>
 
-        <h1 class="text-[17px] font-extrabold text-slate-900 dark:text-white leading-tight mt-0.5">\${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
+        <h1 class="text-[18px] sm:text-[19px] font-extrabold text-slate-900 dark:text-white leading-snug tracking-tight max-w-2xl mt-0.5 mb-1">\${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
 
         \${story.tickers.length > 0 ? \`
           <div class="flex items-center gap-1.5 flex-wrap">
