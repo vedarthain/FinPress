@@ -50,27 +50,32 @@ class BusinessStandardEpaperDownloader:
         else:
             z = zipfile.ZipFile(zip_path_or_url)
 
-        try:
-            from pypdf import PdfMerger
-        except ImportError:
-            from PyPDF2 import PdfMerger
-
-        merger = PdfMerger()
         pdf_names = sorted([name for name in z.namelist() if name.lower().endswith(".pdf")])
         if not pdf_names:
             raise BusinessStandardSessionError("Zip archive contained no valid page PDF files.")
 
         logger.info(f"Found {len(pdf_names)} page PDFs inside Business Standard zip archive.")
 
-        for name in pdf_names:
-            pdf_data = z.read(name)
-            merger.append(io.BytesIO(pdf_data))
+        if len(pdf_names) == 1:
+            # Single consolidated PDF inside zip
+            with open(target_pdf, "wb") as f:
+                f.write(z.read(pdf_names[0]))
+        else:
+            # Multiple page PDFs inside zip - merge with PdfWriter
+            try:
+                from pypdf import PdfWriter
+            except ImportError:
+                from PyPDF2 import PdfWriter
 
-        with open(target_pdf, "wb") as f:
-            merger.write(f)
-        merger.close()
+            writer = PdfWriter()
+            for name in pdf_names:
+                writer.append(io.BytesIO(z.read(name)))
 
-        logger.info(f"Successfully compiled all {len(pdf_names)} pages into: {target_pdf} ({target_pdf.stat().st_size / (1024*1024):.2f} MB)")
+            with open(target_pdf, "wb") as f:
+                writer.write(f)
+            writer.close()
+
+        logger.info(f"Successfully compiled all pages into: {target_pdf} ({target_pdf.stat().st_size / (1024*1024):.2f} MB)")
         
         # Upload PDF to Cloudflare R2
         upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
@@ -115,7 +120,6 @@ class BusinessStandardEpaperDownloader:
             raise BusinessStandardSessionError(error_msg)
 
         target_pdf = self.download_dir / f"business_standard_{self.date_str}.pdf"
-
         logger.info(f"Launching subscriber session for Business Standard 36-page ePaper: {epaper_url}")
 
         with sync_playwright() as p:
@@ -130,13 +134,10 @@ class BusinessStandardEpaperDownloader:
             context = browser.new_context(
                 storage_state=str(state_path),
                 user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-                viewport={"width": 1920, "height": 1080}
+                viewport={"width": 1920, "height": 1080},
+                accept_downloads=True
             )
             page = context.new_page()
-
-            # Handle direct download interception if full PDF or zip is triggered
-            download_holder = []
-            page.on("download", lambda download: download_holder.append(download))
 
             try:
                 page.goto(epaper_url, timeout=60000, wait_until="domcontentloaded")
@@ -155,32 +156,56 @@ class BusinessStandardEpaperDownloader:
                     logger.error(error_msg)
                     raise BusinessStandardSessionError(error_msg)
 
-                # Check if download buttons exist on page
-                zip_buttons = page.query_selector_all("a[href*='download'], button[onclick*='download'], a[href*='zip'], a[title*='Download']")
-                if zip_buttons:
-                    logger.info(f"Found {len(zip_buttons)} download triggers. Attempting edition download...")
-                    zip_buttons[0].click()
-                    page.wait_for_timeout(10000)
+                # 1. Trigger Read Offline Modal
+                logger.info("Opening Business Standard Read Offline edition download modal...")
+                try:
+                    readoff_btn = page.wait_for_selector('.readoffline, button[title="Read offline"], img[src*="read-off"]', timeout=15000)
+                    if readoff_btn:
+                        readoff_btn.click()
+                except Exception:
+                    page.evaluate('() => { const b = document.querySelector(".readoffline, button[title=\'Read offline\'], img[src*=\'read-off\']"); if (b) b.click(); }')
+                page.wait_for_timeout(3000)
 
-                if download_holder:
-                    download = download_holder[0]
-                    download_path = self.download_dir / download.suggested_filename
-                    download.save_as(str(download_path))
-                    logger.info(f"Downloaded edition file: {download_path}")
-                    if str(download_path).lower().endswith(".zip"):
-                        browser.close()
-                        return self.download_from_zip(str(download_path))
-                    elif str(download_path).lower().endswith(".pdf"):
-                        download_path.rename(target_pdf)
-                        upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
-                        upload_to_r2(target_pdf, target_pdf.name)
-                        browser.close()
-                        return target_pdf
+                # 2. Select Full Edition Download
+                logger.info("Triggering full edition download action...")
+                try:
+                    full_down = page.wait_for_selector('a.editionall, .fulleditiondown a, .fulleditiondown, .sectiondownlink', timeout=10000)
+                    if full_down:
+                        full_down.click()
+                except Exception:
+                    page.evaluate('() => { const b = document.querySelector("a.editionall, .fulleditiondown a, .fulleditiondown, .sectiondownlink"); if (b) b.click(); }')
+                page.wait_for_timeout(2000)
 
-                # If no direct download trigger caught, check page rendering
-                raise BusinessStandardSessionError(
-                    "❌ Could not capture automatic zip/pdf download from ePaper viewer. Page requires active session interaction."
-                )
+                # 3. Confirm Download in Modal & Intercept Download
+                confirm_btn = None
+                try:
+                    confirm_btn = page.wait_for_selector('.readoffeditdownload, #readofffulleditiondownload button.btn-primary', timeout=10000)
+                except Exception:
+                    pass
+
+                with page.expect_download(timeout=120000) as download_info:
+                    if confirm_btn:
+                        confirm_btn.click()
+                    else:
+                        page.evaluate('() => { const b = document.querySelector(".readoffeditdownload, #readofffulleditiondownload button.btn-primary, a.readoffeditdownload"); if (b) b.click(); }')
+                    logger.info("Clicked confirmation button. Receiving full edition download stream...")
+
+                download = download_info.value
+                download_path = self.download_dir / download.suggested_filename
+                download.save_as(str(download_path))
+                logger.info(f"Downloaded edition archive successfully: {download_path} ({download_path.stat().st_size / (1024*1024):.2f} MB)")
+
+                browser.close()
+
+                if str(download_path).lower().endswith(".zip"):
+                    return self.download_from_zip(str(download_path))
+                elif str(download_path).lower().endswith(".pdf"):
+                    download_path.rename(target_pdf)
+                    upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
+                    upload_to_r2(target_pdf, target_pdf.name)
+                    return target_pdf
+
+                return target_pdf
 
             except BusinessStandardSessionError:
                 raise
@@ -189,7 +214,10 @@ class BusinessStandardEpaperDownloader:
                 logger.error(error_msg)
                 raise BusinessStandardSessionError(error_msg) from e
             finally:
-                browser.close()
+                try:
+                    browser.close()
+                except Exception:
+                    pass
 
 
 def run_bs_full_edition_pipeline(custom_pdf_or_zip: Optional[str] = None) -> NewspaperEditionReport:
