@@ -213,6 +213,13 @@
           <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-0.5 text-slate-400 hover:text-white text-[10px] font-bold p-0.5">✕</button>
         </div>
 
+        <!-- Font Size Controls (A- / A+) -->
+        <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-mono font-bold">
+          <button onclick="adjustFontSize(-1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
+          <span id="font-size-label" class="px-1 text-[9.5px] text-slate-400 select-none">100%</span>
+          <button onclick="adjustFontSize(1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
+        </div>
+
         <button onclick="toggleTheme()" class="w-6 h-6 rounded border border-slate-700 bg-[#131F3B] text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
@@ -387,21 +394,30 @@
         <!-- KPI Badges -->
       </div>
 
-      <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/90 dark:border-indigo-800">
-        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1">⚡ Core Zyst (Executive Takeaway)</p>
+      <!-- ⚡ EXECUTIVE GIST (INDIGO CARD) -->
+      <div class="p-3.5 rounded-xl bg-indigo-50/80 dark:bg-[#10182E] border border-indigo-200/90 dark:border-indigo-800 shadow-2xs">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1 flex items-center gap-1">
+          <span>⚡</span> <span>Executive Gist (Core Takeaway)</span>
+        </p>
         <div id="story-modal-brief" class="space-y-1.5"></div>
       </div>
 
-      <div>
-        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-400 mb-1.5">Key Analyst Bullets & Metrics</p>
+      <!-- 📌 KEY ANALYST DATA POINTS (AMBER CARD) -->
+      <div class="p-3 rounded-xl bg-amber-50/70 dark:bg-[#201608] border border-amber-300 dark:border-amber-800/80 shadow-2xs">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-amber-950 dark:text-amber-300 mb-1.5 flex items-center gap-1">
+          <span>📌</span> <span>Key Analyst Data Points</span>
+        </p>
         <ul id="story-modal-bullets" class="space-y-1.5">
           <!-- Bullets -->
         </ul>
       </div>
 
-      <div id="story-modal-catalyst-box" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#11172A]">
-        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-1">🎯 Trader Catalyst & Impact Analysis</p>
-        <p id="story-modal-catalyst" class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed"></p>
+      <!-- 💡 TRADER CATALYST (DYNAMIC EMERALD/ROSE/SLATE CARD) -->
+      <div id="story-modal-catalyst-box" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#11172A] shadow-2xs">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300 mb-1 flex items-center gap-1">
+          <span>💡</span> <span>Trader Catalyst & Impact Analysis</span>
+        </p>
+        <div id="story-modal-catalyst" class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-medium bg-white dark:bg-[#0B1020] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800"></div>
       </div>
 
       <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-400">
@@ -1215,7 +1231,7 @@
         const dot = s.sentiment === "BULLISH" ? "bg-emerald-500" : s.sentiment === "BEARISH" ? "bg-rose-500" : "bg-slate-400";
 
         const btn = document.createElement("button");
-        btn.className = `w-full text-left px-2.5 py-2 transition-all flex items-center gap-2 border-b border-slate-100 dark:border-slate-800/80 last:border-b-0 hover:bg-slate-50 dark:hover:bg-slate-800/40 ${isSelected ? 'bg-indigo-50/95 dark:bg-indigo-950/70 border-l-[3.5px] border-l-indigo-600 shadow-2xs font-semibold' : 'border-l-[3.5px] border-l-transparent'}`;
+        btn.className = `w-full text-left px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-2 border shadow-2xs mb-1.5 last:mb-0 ${isSelected ? 'bg-indigo-50/95 dark:bg-indigo-950/80 border-indigo-500 shadow-xs font-bold text-indigo-950 dark:text-white' : 'bg-white dark:bg-[#0D1322] border-slate-200/90 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-800 dark:text-slate-200'}`;
         btn.onclick = () => {
           selectedStoryIndex = globalIdx;
           renderFeedList();
@@ -1231,7 +1247,7 @@
         btn.innerHTML = `
           <span class="shrink-0 text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 tabular-nums w-4">${numStr}</span>
           <span class="w-1.5 h-1.5 rounded-full shrink-0 ${dot}"></span>
-          <h4 class="text-[12.5px] font-bold tracking-tight truncate flex-1 min-w-0 ${isSelected ? 'text-indigo-950 dark:text-white font-extrabold' : 'text-slate-900 dark:text-slate-100'}" title="${escapeQuotes(s.headline)}">
+          <h4 class="text-[12px] font-bold tracking-tight truncate flex-1 min-w-0 ${isSelected ? 'text-indigo-950 dark:text-white font-extrabold' : 'text-slate-900 dark:text-slate-100'}" title="${escapeQuotes(s.headline)}">
             ${highlightSearchTokens(s.headline, queryTokens)}
           </h4>
         `;
@@ -1369,16 +1385,16 @@
         : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
       const reasonBoxBorder = isBullish 
-        ? "border-emerald-300 bg-emerald-50/90 dark:bg-emerald-950/30 dark:border-emerald-800" 
+        ? "border-emerald-300/90 bg-emerald-50/80 dark:bg-[#092318] dark:border-emerald-800/90" 
         : isBearish 
-        ? "border-rose-300 bg-rose-50/90 dark:bg-rose-950/30 dark:border-rose-800" 
-        : "border-slate-300 bg-slate-50 dark:bg-slate-900/60 dark:border-slate-800";
+        ? "border-rose-300/90 bg-rose-50/80 dark:bg-[#250C12] dark:border-rose-800/90" 
+        : "border-slate-300 bg-slate-50/90 dark:bg-slate-900/70 dark:border-slate-800";
 
       const reasonTitleColor = isBullish 
-        ? "text-emerald-950 dark:text-emerald-200 font-extrabold" 
+        ? "text-emerald-950 dark:text-emerald-300 font-extrabold" 
         : isBearish 
-        ? "text-rose-950 dark:text-rose-200 font-extrabold" 
-        : "text-slate-950 dark:text-slate-200 font-extrabold";
+        ? "text-rose-950 dark:text-rose-300 font-extrabold" 
+        : "text-slate-950 dark:text-slate-300 font-extrabold";
 
       const tickerBadges = story.tickers.map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
       const kpisHtml = buildKpiCardsHtml(story);
@@ -1419,16 +1435,16 @@
           </div>
         ` : ''}
 
-        <!-- 📊 INFOGRAPHIC KPI SCORECARD / METRICS GRID -->
+        <!-- 📊 1. INFOGRAPHIC KPI SCORECARD / METRICS GRID (TEAL / CYAN BOX) -->
         ${kpisHtml}
 
-        <!-- ⚡ EXECUTIVE FLASH POINTS (QUICK READ - SHORT CHUNKS ONLY) -->
-        <div class="mt-1.5 rounded-lg border border-indigo-200/90 dark:border-indigo-900/60 bg-indigo-50/50 dark:bg-indigo-950/20 p-2.5 shadow-2xs flex flex-col gap-1.5">
-          <div class="flex items-center justify-between border-b border-indigo-100 dark:border-slate-800/80 pb-1">
-            <span class="text-[10.5px] font-mono font-black uppercase tracking-wider text-indigo-900 dark:text-indigo-300 flex items-center gap-1">
-              <span>⚡</span> <span>Core Zyst (Executive Takeaway)</span>
+        <!-- ⚡ 2. EXECUTIVE GIST (INDIGO / BLUE BOX) -->
+        <div class="mt-1.5 rounded-lg border border-indigo-300/80 dark:border-indigo-800/80 bg-indigo-50/70 dark:bg-[#10182E] p-2.5 shadow-2xs flex flex-col gap-1.5">
+          <div class="flex items-center justify-between border-b border-indigo-200/80 dark:border-slate-800/80 pb-1">
+            <span class="text-[10.5px] font-mono font-black uppercase tracking-wider text-indigo-950 dark:text-indigo-300 flex items-center gap-1">
+              <span>⚡</span> <span>Executive Gist (Core Takeaway)</span>
             </span>
-            <span class="text-[9.5px] font-mono text-slate-400 font-bold">Quick Read</span>
+            <span class="text-[9.5px] font-mono text-indigo-700 dark:text-indigo-400 font-bold">Quick Read</span>
           </div>
           <div class="grid grid-cols-1 gap-1.5">
             ${briefSentences.map(sent => `
@@ -1440,25 +1456,28 @@
           </div>
         </div>
 
-        <!-- Structured Key Quantitative Data Table (if applicable) -->
+        <!-- 📋 3. STRUCTURED KEY QUANTITATIVE DATA TABLE -->
         ${metricsTableHtml}
 
-        <!-- 📌 KEY ANALYST DATA BULLETS -->
-        <div class="mt-2">
-          <p class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1">
-            <span>📌</span> <span>Key Analyst Data Points</span>
-          </p>
+        <!-- 📌 4. KEY ANALYST DATA POINTS (WARM AMBER / ORANGE BOX) -->
+        <div class="mt-2 rounded-lg border border-amber-300/80 dark:border-amber-800/80 bg-amber-50/70 dark:bg-[#201507] p-2.5 shadow-2xs">
+          <div class="flex items-center justify-between border-b border-amber-200/80 dark:border-amber-900/60 pb-1 mb-1.5">
+            <span class="text-[10.5px] font-mono font-black uppercase tracking-wider text-amber-950 dark:text-amber-300 flex items-center gap-1">
+              <span>📌</span> <span>Key Analyst Data Points</span>
+            </span>
+            <span class="text-[9.5px] font-mono text-amber-700 dark:text-amber-400 font-bold">Metrics & Facts</span>
+          </div>
           <ul class="space-y-1.5">
             ${(story.bullet_points || []).map(bp => `
               <li class="flex items-start gap-2 text-[13px] text-slate-950 dark:text-slate-100 leading-snug bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200 dark:border-slate-800 shadow-2xs">
-                <span class="text-indigo-600 dark:text-indigo-400 font-black text-sm leading-none select-none mt-0.5">›</span>
+                <span class="text-amber-600 dark:text-amber-400 font-black text-sm leading-none select-none mt-0.5">›</span>
                 <span class="font-normal">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
               </li>
             `).join('')}
           </ul>
         </div>
 
-        <!-- 💡 DEDICATED TRADER CATALYST & IMPACT RATIONALE CARD -->
+        <!-- 💡 5. TRADER CATALYST & IMPACT RATIONALE (EMERALD / ROSE / SLATE BOX) -->
         <div class="mt-2 p-2.5 rounded-lg border ${reasonBoxBorder} shadow-2xs">
           <div class="flex items-center justify-between gap-1 mb-1">
             <span class="text-[11px] font-mono uppercase tracking-wider ${reasonTitleColor} flex items-center gap-1">
