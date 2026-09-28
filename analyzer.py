@@ -43,13 +43,13 @@ class KPIMetric(BaseModel):
 
 
 class NewsStory(BaseModel):
-    headline: str = Field(description="The exact title or headline of the news article.")
+    headline: str = Field(description="Catchy, high-impact, professional financial headline.")
     category: SectionCategory = Field(
         description="MUST be bifurcated into strictly ONE of: 'Economy', 'Policy', 'Sector', 'IPO', 'Market', 'Trade', 'Corporate Events', 'Corporate Appointments', 'International News', 'Others'."
     )
     page_numbers: str = Field(description="Page number(s) where this story appears (e.g., 'Page 1', 'Page 4').")
-    brief_details: str = Field(description="A concise 1-2 sentence executive summary focused purely on key facts.")
-    bullet_points: List[str] = Field(description="3 to 5 crisp, punchy short data bullets with key numbers, metrics, regulatory details, or triggers. Avoid long paragraphs.")
+    brief_details: str = Field(description="Ultra-crisp 1-2 sentence core Gist / Zyst: What happened & Why it matters to markets/investors.")
+    bullet_points: List[str] = Field(description="3 to 5 punchy, short data bullets with bold numbers, financial metrics, or key regulatory moves. No paragraph text.")
     kpis: Optional[List[KPIMetric]] = Field(default_factory=list, description="Key numerical metrics, financial figures, outlays, or percentages mentioned in the story or charts/tables.")
     importance: str = Field(description="Importance level: High, Medium, or Low.")
 
@@ -80,7 +80,7 @@ class GeminiNewsAnalyzer:
         self.client = genai.Client(api_key=self.api_key)
 
     def _analyze_single_chunk(self, chunk_pdf_path: Path, page_range_str: str) -> List[NewsStory]:
-        """Analyzes a specific 4-page chunk and returns all extracted articles."""
+        """Analyzes a specific 2-page chunk and returns all extracted articles."""
         uploaded_file = self.client.files.upload(
             file=str(chunk_pdf_path),
             config=types.UploadFileConfig(display_name=chunk_pdf_path.name)
@@ -95,13 +95,13 @@ class GeminiNewsAnalyzer:
                 file_state = getattr(uploaded_file, "state", None)
 
             prompt = f"""
-You are a senior financial news intelligence analyst performing an exhaustive, page-by-page extraction of these newspaper pages ({page_range_str}).
+You are an elite financial news intelligence editor extracting news from newspaper pages ({page_range_str}).
 
-CRITICAL INSTRUCTIONS:
-1. LOSSLESS COVERAGE: Extract EVERY SINGLE distinct news article, report, column, IPO announcement, corporate filing, market briefing, graphics/infographics ('Scale of Impact', charts), or regulatory update present on these pages.
-2. DO NOT SKIP ANY NEWS: Do not omit minor stories, company results, executive appointments, or brief news items. Skip ONLY purely commercial display advertisements. Aim to extract all 8 to 20 distinct news items on these pages.
-3. QUICK READ / NO PARAGRAPH WALLS: Provide crisp, short chunks of data. Bullet points MUST be short, punchy data facts with bold numbers. Avoid long prose paragraphs.
-4. INFOGRAPHIC KPIS: Extract any prominent figures, outlays, percentage shares, investment amounts, or export numbers into the 'kpis' array with label, value, and context.
+CRITICAL INSTRUCTIONS FOR ULTRA-HIGH QUALITY OUTPUT:
+1. LOSSLESS NEWS EXTRACTION: Extract EVERY SINGLE distinct news article, report, column, IPO announcement, corporate filing, market briefing, graphic/infographic ('Scale of Impact', tables), or regulatory update present on these pages. Skip ONLY commercial ads.
+2. CRISP & CATCHY "ZYST": Every story MUST have an ultra-crisp, catchy 1-2 sentence core Gist ("Zyst") highlighting the fundamental event and its direct market/industry impact. Avoid vague filler or academic prose.
+3. QUICK READ / NO PARAGRAPH WALLS: Provide short, high-density data chunks. Bullet points MUST be snappy 1-line facts with explicit numbers, currency values (₹ Cr, $ Bn), percentages (%), and deadlines.
+4. INFOGRAPHIC KPIS: Extract prominent quantitative indicators into the 'kpis' array with label, value, and context (e.g. Outlays, Payouts, Exports, Capacity, Jobs).
 
 STRICT 10 SECTION CATEGORIES:
 Assign every story to EXACTLY ONE of:
