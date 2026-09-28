@@ -204,7 +204,7 @@ const HTML = `<!DOCTYPE html>
       <!-- ================= VIEW 1: NEWS STREAM (SPLIT READER + STOCKS IN FOCUS ON RIGHT) ================= -->
       <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[305px_minmax(0,1fr)_260px] xl:grid-cols-[325px_minmax(0,1fr)_275px] gap-2 items-start">
         
-        <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE -->
+        <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE (1-LINER STORIES, MAX 10 PER PAGE) -->
         <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
           <div class="px-2.5 py-1.5 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/80 flex items-center justify-between text-[11px] font-mono">
             <span id="feed-list-count" class="font-extrabold text-slate-900 dark:text-slate-100">0 Stories</span>
@@ -214,8 +214,17 @@ const HTML = `<!DOCTYPE html>
             </div>
           </div>
 
-          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[calc(100vh-5.5rem)] overflow-y-auto">
-            <!-- Dynamically populated story items -->
+          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 flex flex-col">
+            <!-- Dynamically populated 1-liner story items (Max 10) -->
+          </div>
+
+          <!-- COLUMN 1 PAGINATION BAR (10 STORIES PER PAGE) -->
+          <div id="feed-pagination" class="px-2.5 py-1.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/80 flex items-center justify-between text-[11px] font-mono">
+            <span id="feed-pagination-info" class="font-bold text-slate-700 dark:text-slate-300">Page 1 / 1</span>
+            <div class="flex items-center gap-1">
+              <button id="feed-prev-page" onclick="changeFeedPage(-1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10.5px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev</button>
+              <button id="feed-next-page" onclick="changeFeedPage(1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10.5px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">Next ▶</button>
+            </div>
           </div>
         </div>
 
@@ -366,6 +375,8 @@ const HTML = `<!DOCTYPE html>
     let selectedFeedSentiment = "ALL";
     let activeTickerFilter = null;
     let selectedStoryIndex = 0;
+    let currentFeedPage = 1;
+    const FEED_PAGE_SIZE = 10;
     let currentIpoFilter = "ALL";
     let currentSearchQuery = "";
     let availableDates = [];
@@ -419,6 +430,9 @@ const HTML = `<!DOCTYPE html>
       const viewIpo = document.getElementById("view-ipo");
       const feedControls = document.getElementById("feed-controls");
       const ipoControls = document.getElementById("ipo-controls");
+
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
 
       [tabFeed, tabAnchor, tabIpo, tabCorp, tabOpinions, tabMacro].forEach(b => {
         b.className = "px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1";
@@ -484,6 +498,8 @@ const HTML = `<!DOCTYPE html>
     }
 
     function onCategorySelect(val) {
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
       selectedFeedCategory = val;
       renderFeedList();
     }
@@ -825,139 +841,12 @@ const HTML = `<!DOCTYPE html>
       renderIpoTable();
     }
 
-    function navigateStory(dir) {
-      const total = stories.length;
-      if (total === 0) return;
-      selectedStoryIndex += dir;
-      if (selectedStoryIndex < 0) selectedStoryIndex = 0;
-      if (selectedStoryIndex >= total) selectedStoryIndex = total - 1;
-      renderFeedList();
-    }
-
-    // ================= SEARCH HANDLING =================
-    function onSearchInput() {
-      const val = document.getElementById("global-search").value.trim();
-      currentSearchQuery = val;
-      document.getElementById("clear-search-btn").classList.toggle("hidden", val.length === 0);
-      
-      if (currentView === "ipo") {
-        renderIpoTable();
-      } else {
-        renderFeedList();
-      }
-    }
-
-    function clearSearch() {
-      document.getElementById("global-search").value = "";
-      currentSearchQuery = "";
-      document.getElementById("clear-search-btn").classList.add("hidden");
-      if (currentView === "ipo") renderIpoTable();
-      else renderFeedList();
-    }
-
-    // ================= RIGHT HAND SIDEBAR: STOCKS IN FOCUS (EXCLUDES IPOS) =================
-    function renderStocksFocusSidebar() {
-      const list = document.getElementById("stocks-focus-list");
-      list.innerHTML = "";
-
-      const counts = {};
-      stories.forEach(s => {
-        s.tickers.forEach(t => counts[t] = (counts[t] || 0) + 1);
-      });
-
-      const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
-
-      sorted.forEach(t => {
-        const isSelected = activeTickerFilter === t;
-        const btn = document.createElement("button");
-        btn.className = \`px-2.5 py-1 rounded-md text-[11.5px] font-mono font-bold transition-all shadow-2xs \${isSelected ? 'bg-brand-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'}\`;
-        btn.textContent = \`\${t} (\${counts[t]})\`;
-        btn.onclick = () => {
-          activeTickerFilter = activeTickerFilter === t ? null : t;
-          document.getElementById("clear-ticker-filter").classList.toggle("hidden", !activeTickerFilter);
-          renderStocksFocusSidebar();
-          renderFeedList();
-        };
-        list.appendChild(btn);
-      });
-
-      // Render Top Bullish & Bearish Widgets (Strictly Exclude IPOs)
-      const bullishList = document.getElementById("top-bullish-list");
-      bullishList.innerHTML = "";
-      stories
-        .filter(s => s.sentiment === "BULLISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
-        .slice(0, 3)
-        .forEach(s => {
-          const d = document.createElement("div");
-          d.className = "py-1.5 cursor-pointer hover:text-brand-600 transition-colors";
-          d.onclick = () => {
-            const idx = stories.findIndex(item => item.headline === s.headline);
-            if (idx !== -1) { selectedStoryIndex = idx; renderFeedList(); }
-          };
-          d.innerHTML = \`
-            <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
-            <p class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
-          \`;
-          bullishList.appendChild(d);
-        });
-
-      if (bullishList.children.length === 0) {
-        bullishList.innerHTML = \`<p class="text-[11.5px] text-slate-400 py-1">No major bullish sector breaks today.</p>\`;
-      }
-
-      const bearishList = document.getElementById("top-bearish-list");
-      bearishList.innerHTML = "";
-      stories
-        .filter(s => s.sentiment === "BEARISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
-        .slice(0, 3)
-        .forEach(s => {
-          const d = document.createElement("div");
-          d.className = "py-1.5 cursor-pointer hover:text-rose-600 transition-colors";
-          d.onclick = () => {
-            const idx = stories.findIndex(item => item.headline === s.headline);
-            if (idx !== -1) { selectedStoryIndex = idx; renderFeedList(); }
-          };
-          d.innerHTML = \`
-            <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
-            <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
-          \`;
-          bearishList.appendChild(d);
-        });
-
-      if (bearishList.children.length === 0) {
-        bearishList.innerHTML = \`<p class="text-[11.5px] text-slate-400 py-1">No significant downside warnings today.</p>\`;
-      }
-    }
-
-    function clearTickerFilter() {
-      activeTickerFilter = null;
-      document.getElementById("clear-ticker-filter").classList.add("hidden");
-      renderStocksFocusSidebar();
-      renderFeedList();
-    }
-
-    function setFeedSentiment(sent) {
-      selectedFeedSentiment = sent;
-      document.querySelectorAll("[id^='sent-']").forEach(b => {
-        b.className = "px-2.5 py-0.5 rounded text-slate-400 hover:bg-slate-800";
-      });
-      const el = document.getElementById(\`sent-\${sent.toLowerCase()}\`);
-      if (el) {
-        el.className = sent === "BULLISH" 
-          ? "px-2.5 py-0.5 rounded bg-emerald-600 text-white shadow-xs" 
-          : sent === "BEARISH" 
-          ? "px-2.5 py-0.5 rounded bg-rose-600 text-white shadow-xs" 
-          : "px-2.5 py-0.5 rounded bg-slate-800 text-white shadow-xs";
-      }
-      renderFeedList();
-    }
-
-    // ================= FEED LIST & ACTIVE STORY DETAIL =================
-    function renderFeedList() {
+    // ================= FILTER LOGIC =================
+    function getFilteredStories() {
       const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
       const queryTokens = rawQuery ? rawQuery.split(/\\s+/).filter(Boolean) : [];
       
-      const displayed = stories.filter(s => {
+      return stories.filter(s => {
         const searchableText = (
           s.headline + " " + 
           s.brief_details + " " + 
@@ -986,13 +875,214 @@ const HTML = `<!DOCTYPE html>
 
         return matchSec && matchSent && matchTicker && matchQuery;
       });
+    }
 
-      document.getElementById("feed-list-count").textContent = \`\${displayed.length} Stories\`;
+    function navigateStory(dir) {
+      const displayed = getFilteredStories();
+      const total = displayed.length;
+      if (total === 0) return;
+      selectedStoryIndex += dir;
+      if (selectedStoryIndex < 0) selectedStoryIndex = 0;
+      if (selectedStoryIndex >= total) selectedStoryIndex = total - 1;
+      currentFeedPage = Math.floor(selectedStoryIndex / FEED_PAGE_SIZE) + 1;
+      renderFeedList();
+    }
+
+    function changeFeedPage(delta) {
+      const displayed = getFilteredStories();
+      const totalPages = Math.ceil(displayed.length / FEED_PAGE_SIZE) || 1;
+      const targetPage = currentFeedPage + delta;
+      if (targetPage >= 1 && targetPage <= totalPages) {
+        currentFeedPage = targetPage;
+        selectedStoryIndex = (currentFeedPage - 1) * FEED_PAGE_SIZE;
+        renderFeedList();
+      }
+    }
+
+    // ================= SEARCH HANDLING =================
+    function onSearchInput() {
+      const val = document.getElementById("global-search").value.trim();
+      currentSearchQuery = val;
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+      document.getElementById("clear-search-btn").classList.toggle("hidden", val.length === 0);
+      
+      if (currentView === "ipo") {
+        renderIpoTable();
+      } else {
+        renderFeedList();
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById("global-search").value = "";
+      currentSearchQuery = "";
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+      document.getElementById("clear-search-btn").classList.add("hidden");
+      if (currentView === "ipo") renderIpoTable();
+      else renderFeedList();
+    }
+
+    // ================= RIGHT HAND SIDEBAR: STOCKS IN FOCUS (EXCLUDES IPOS) =================
+    function renderStocksFocusSidebar() {
+      const list = document.getElementById("stocks-focus-list");
+      list.innerHTML = "";
+
+      const counts = {};
+      stories.forEach(s => {
+        s.tickers.forEach(t => counts[t] = (counts[t] || 0) + 1);
+      });
+
+      const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+
+      sorted.forEach(t => {
+        const isSelected = activeTickerFilter === t;
+        const btn = document.createElement("button");
+        btn.className = \`px-2.5 py-1 rounded-md text-[11.5px] font-mono font-bold transition-all shadow-2xs \${isSelected ? 'bg-brand-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'}\`;
+        btn.textContent = \`\${t} (\${counts[t]})\`;
+        btn.onclick = () => {
+          activeTickerFilter = activeTickerFilter === t ? null : t;
+          selectedStoryIndex = 0;
+          currentFeedPage = 1;
+          document.getElementById("clear-ticker-filter").classList.toggle("hidden", !activeTickerFilter);
+          renderStocksFocusSidebar();
+          renderFeedList();
+        };
+        list.appendChild(btn);
+      });
+
+      // Render Top Bullish & Bearish Widgets (Strictly Exclude IPOs)
+      const bullishList = document.getElementById("top-bullish-list");
+      bullishList.innerHTML = "";
+      stories
+        .filter(s => s.sentiment === "BULLISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
+        .slice(0, 3)
+        .forEach(s => {
+          const d = document.createElement("div");
+          d.className = "py-1.5 cursor-pointer hover:text-brand-600 transition-colors";
+          d.onclick = () => {
+            const displayed = getFilteredStories();
+            const idx = displayed.findIndex(item => item.headline === s.headline);
+            if (idx !== -1) { 
+              selectedStoryIndex = idx;
+              currentFeedPage = Math.floor(idx / FEED_PAGE_SIZE) + 1;
+              renderFeedList(); 
+            }
+          };
+          d.innerHTML = \`
+            <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
+            <p class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
+          \`;
+          bullishList.appendChild(d);
+        });
+
+      if (bullishList.children.length === 0) {
+        bullishList.innerHTML = \`<p class="text-[11.5px] text-slate-400 py-1">No major bullish sector breaks today.</p>\`;
+      }
+
+      const bearishList = document.getElementById("top-bearish-list");
+      bearishList.innerHTML = "";
+      stories
+        .filter(s => s.sentiment === "BEARISH" && s.category !== "IPO" && !s.headline.toLowerCase().includes("ipo"))
+        .slice(0, 3)
+        .forEach(s => {
+          const d = document.createElement("div");
+          d.className = "py-1.5 cursor-pointer hover:text-rose-600 transition-colors";
+          d.onclick = () => {
+            const displayed = getFilteredStories();
+            const idx = displayed.findIndex(item => item.headline === s.headline);
+            if (idx !== -1) { 
+              selectedStoryIndex = idx;
+              currentFeedPage = Math.floor(idx / FEED_PAGE_SIZE) + 1;
+              renderFeedList(); 
+            }
+          };
+          d.innerHTML = \`
+            <p class="font-bold text-[13px] leading-snug line-clamp-2">\${s.headline}</p>
+            <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-0.5 font-medium">\${s.category} · \${s.page_numbers}</p>
+          \`;
+          bearishList.appendChild(d);
+        });
+
+      if (bearishList.children.length === 0) {
+        bearishList.innerHTML = \`<p class="text-[11.5px] text-slate-400 py-1">No significant downside warnings today.</p>\`;
+      }
+    }
+
+    function clearTickerFilter() {
+      activeTickerFilter = null;
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+      document.getElementById("clear-ticker-filter").classList.add("hidden");
+      renderStocksFocusSidebar();
+      renderFeedList();
+    }
+
+    function setFeedSentiment(sent) {
+      selectedFeedSentiment = sent;
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+      document.querySelectorAll("[id^='sent-']").forEach(b => {
+        b.className = "px-2.5 py-0.5 rounded text-slate-400 hover:bg-slate-800";
+      });
+      const el = document.getElementById(\`sent-\${sent.toLowerCase()}\`);
+      if (el) {
+        el.className = sent === "BULLISH" 
+          ? "px-2.5 py-0.5 rounded bg-emerald-600 text-white shadow-xs" 
+          : sent === "BEARISH" 
+          ? "px-2.5 py-0.5 rounded bg-rose-600 text-white shadow-xs" 
+          : "px-2.5 py-0.5 rounded bg-slate-800 text-white shadow-xs";
+      }
+      renderFeedList();
+    }
+
+    // ================= FEED LIST & ACTIVE STORY DETAIL (MAX 10 1-LINER STORIES PER PAGE) =================
+    function renderFeedList() {
+      const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
+      const queryTokens = rawQuery ? rawQuery.split(/\\s+/).filter(Boolean) : [];
+      
+      const displayed = getFilteredStories();
+      const totalStories = displayed.length;
+      const totalPages = Math.ceil(totalStories / FEED_PAGE_SIZE) || 1;
+
+      if (currentFeedPage > totalPages) currentFeedPage = totalPages;
+      if (currentFeedPage < 1) currentFeedPage = 1;
+
+      const startIndex = (currentFeedPage - 1) * FEED_PAGE_SIZE;
+      const endIndex = Math.min(startIndex + FEED_PAGE_SIZE, totalStories);
+      const pageStories = displayed.slice(startIndex, endIndex);
+
+      // Header indicator
+      const countBadge = document.getElementById("feed-list-count");
+      if (countBadge) {
+        countBadge.textContent = totalStories > 0 ? \`\${startIndex + 1}-\${endIndex} of \${totalStories}\` : \`0 Stories\`;
+      }
+
+      // Pagination Controls
+      const pagInfo = document.getElementById("feed-pagination-info");
+      if (pagInfo) {
+        pagInfo.textContent = \`Page \${currentFeedPage} / \${totalPages} (\${totalStories})\`;
+      }
+      const prevBtn = document.getElementById("feed-prev-page");
+      const nextBtn = document.getElementById("feed-next-page");
+      if (prevBtn) {
+        prevBtn.disabled = currentFeedPage <= 1;
+        prevBtn.className = currentFeedPage <= 1 
+          ? "px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10.5px] font-bold text-slate-400 dark:text-slate-600 border border-slate-200 dark:border-slate-800 cursor-not-allowed opacity-50"
+          : "px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10.5px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs cursor-pointer";
+      }
+      if (nextBtn) {
+        nextBtn.disabled = currentFeedPage >= totalPages;
+        nextBtn.className = currentFeedPage >= totalPages 
+          ? "px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10.5px] font-bold text-slate-400 dark:text-slate-600 border border-slate-200 dark:border-slate-800 cursor-not-allowed opacity-50"
+          : "px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10.5px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs cursor-pointer";
+      }
 
       const listContainer = document.getElementById("feed-list-container");
       listContainer.innerHTML = "";
 
-      if (displayed.length === 0) {
+      if (totalStories === 0) {
         listContainer.innerHTML = \`
           <div class="p-8 text-center text-slate-400">
             <p class="text-base font-bold text-slate-600 dark:text-slate-300">No news stories found</p>
@@ -1004,36 +1094,35 @@ const HTML = `<!DOCTYPE html>
         return;
       }
 
-      if (selectedStoryIndex >= displayed.length) selectedStoryIndex = 0;
+      if (selectedStoryIndex < startIndex || selectedStoryIndex >= endIndex) {
+        selectedStoryIndex = startIndex;
+      }
 
-      displayed.forEach((s, idx) => {
-        const isSelected = idx === selectedStoryIndex;
-        const numStr = (idx + 1).toString().padStart(2, '0');
+      pageStories.forEach((s, localIdx) => {
+        const globalIdx = startIndex + localIdx;
+        const isSelected = globalIdx === selectedStoryIndex;
+        const numStr = (globalIdx + 1).toString().padStart(2, '0');
         const dot = s.sentiment === "BULLISH" ? "bg-emerald-500" : s.sentiment === "BEARISH" ? "bg-rose-500" : "bg-slate-400";
-        const tickerBadges = s.tickers.map(t => \`<span class="px-1 py-0.2 text-[9.5px] font-mono font-bold rounded bg-indigo-50 text-indigo-800 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300">\${t}</span>\`).join('');
-        const anchorTag = s.isFrontPage ? \`<span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-extrabold bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">PAGE 1</span>\` : '';
+        const tickerBadge = s.tickers.length > 0 ? \`<span class="shrink-0 px-1 py-0.2 text-[9px] font-mono font-bold rounded bg-indigo-50 text-indigo-800 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300">\${s.tickers[0]}</span>\` : '';
+        const anchorTag = s.isFrontPage ? \`<span class="shrink-0 px-1 py-0.2 rounded text-[8.5px] font-mono font-extrabold bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">P.1</span>\` : '';
 
         const btn = document.createElement("button");
-        btn.className = \`w-full text-left px-2.5 py-1.5 transition-all flex items-start gap-1.5 border-b border-slate-200/80 dark:border-slate-800/80 last:border-b-0 \${isSelected ? 'bg-indigo-50/90 dark:bg-indigo-950/60 border-l-[3.5px] border-l-indigo-600 shadow-2xs' : 'hover:bg-slate-50/90 dark:hover:bg-slate-800/40 border-l-[3.5px] border-l-transparent'}\`;
+        btn.className = \`w-full text-left px-2.5 py-2 transition-all flex items-center gap-1.5 border-b border-slate-200/70 dark:border-slate-800/80 last:border-b-0 \${isSelected ? 'bg-indigo-50/95 dark:bg-indigo-950/70 border-l-[3.5px] border-l-indigo-600 shadow-2xs font-semibold' : 'hover:bg-slate-50 dark:hover:bg-slate-800/40 border-l-[3.5px] border-l-transparent'}\`;
         btn.onclick = () => {
-          selectedStoryIndex = idx;
+          selectedStoryIndex = globalIdx;
           renderFeedList();
         };
 
         btn.innerHTML = \`
-          <span class="shrink-0 text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 tabular-nums mt-0.5 w-4">\${numStr}</span>
-          <div class="flex-1 min-w-0 pr-0.5">
-            <div class="flex items-center justify-between gap-1 mb-0.5 flex-wrap">
-              <div class="flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full \${dot}"></span>
-                <span class="text-[9.5px] font-mono text-slate-700 dark:text-slate-300 uppercase font-extrabold tracking-wide">\${s.category}</span>
-                \${anchorTag}
-              </div>
-              <span class="text-[9.5px] font-mono font-semibold text-slate-500 dark:text-slate-400">\${s.page_numbers}</span>
-            </div>
-            <h4 class="text-[13px] font-bold leading-[1.3] tracking-tight \${isSelected ? 'text-indigo-950 dark:text-white font-extrabold' : 'text-slate-950 dark:text-slate-100'} line-clamp-2">\${highlightSearchTokens(s.headline, queryTokens)}</h4>
-            \${s.tickers.length > 0 ? \`<div class="flex items-center gap-1 mt-0.5">\${tickerBadges}</div>\` : ''}
-          </div>
+          <span class="shrink-0 text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 tabular-nums w-4">\${numStr}</span>
+          <span class="w-1.5 h-1.5 rounded-full shrink-0 \${dot}"></span>
+          <span class="shrink-0 text-[9px] font-mono font-extrabold text-slate-700 dark:text-slate-300 uppercase">\${s.category.slice(0, 7)}</span>
+          \${anchorTag}
+          <h4 class="text-[12.5px] font-bold tracking-tight truncate flex-1 min-w-0 \${isSelected ? 'text-indigo-950 dark:text-white font-extrabold' : 'text-slate-950 dark:text-slate-100'}" title="\${escapeQuotes(s.headline)}">
+            \${highlightSearchTokens(s.headline, queryTokens)}
+          </h4>
+          \${tickerBadge}
+          <span class="shrink-0 text-[9px] font-mono font-semibold text-slate-500 dark:text-slate-400 hidden xl:inline">\${s.page_numbers}</span>
         \`;
         listContainer.appendChild(btn);
       });
