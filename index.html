@@ -68,7 +68,7 @@
       <!-- Historical Calendar & Edition Navigation -->
       <div class="flex items-center gap-2.5 shrink-0 text-[12px]">
         <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded border border-slate-700/80">
-          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Arrow Left (◀)">
+          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Previous Date (◀)">
             ◀
           </button>
           
@@ -77,7 +77,7 @@
             <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[12px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[115px]"/>
           </div>
 
-          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Arrow Right (▶)">
+          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Next Date (▶)">
             ▶
           </button>
         </div>
@@ -1660,12 +1660,6 @@
       } else if (e.key === "ArrowUp" || e.key === "k") {
         e.preventDefault();
         navigateStory(-1);
-      } else if (e.key === "ArrowLeft" || e.key === "[") {
-        e.preventDefault();
-        navigateDate(-1);
-      } else if (e.key === "ArrowRight" || e.key === "]") {
-        e.preventDefault();
-        navigateDate(1);
       } else if (e.key === "1") switchView('feed');
       else if (e.key === "2") switchView('anchor');
       else if (e.key === "3") switchView('ipo');
