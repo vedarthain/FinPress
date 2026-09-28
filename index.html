@@ -522,6 +522,26 @@
       }
     }
 
+    let currentFontScale = 100;
+    function initFontSize() {
+      const saved = localStorage.getItem('finpress_font_scale');
+      if (saved) {
+        currentFontScale = parseInt(saved, 10) || 100;
+      }
+      applyFontSize(currentFontScale);
+    }
+    function adjustFontSize(delta) {
+      currentFontScale = Math.min(130, Math.max(85, currentFontScale + (delta * 5)));
+      localStorage.setItem('finpress_font_scale', currentFontScale);
+      applyFontSize(currentFontScale);
+    }
+    function applyFontSize(scale) {
+      const label = document.getElementById("font-size-label");
+      if (label) label.textContent = `${scale}%`;
+      document.body.style.zoom = `${scale}%`;
+      document.documentElement.style.fontSize = `${(scale / 100) * 100}%`;
+    }
+
     let currentLayoutMode = "split";
 
     function setViewMode(mode) {
@@ -1771,6 +1791,7 @@
     });
 
     initTheme();
+    initFontSize();
     fetchDates();
     loadData();
   </script>
