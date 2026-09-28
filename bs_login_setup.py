@@ -44,10 +44,35 @@ async def setup_login():
 
         # Also save storage state JSON backup
         await context.storage_state(path="bs_storage_state.json")
-        print("\n✅ Session and browser profile saved successfully in 'bs_browser_profile' and 'bs_storage_state.json'!")
-        print("Now you can run: python main.py --source business_standard\n")
+        
+        # Encode to Base64 for GitHub Actions Secret
+        import base64
+        import subprocess
+        with open("bs_storage_state.json", "rb") as f:
+            b64_str = base64.b64encode(f.read()).decode("utf-8")
+        
+        with open("bs_storage_state_base64.txt", "w", encoding="utf-8") as f:
+            f.write(b64_str)
+
+        # Copy to clipboard on macOS
+        try:
+            subprocess.run(["pbcopy"], input=b64_str.encode("utf-8"), check=True)
+            copied_msg = "📋 Fresh Base64 secret COPIED TO CLIPBOARD automatically!"
+        except Exception:
+            copied_msg = "Base64 token written to 'bs_storage_state_base64.txt'"
+
+        print("\n" + "=" * 68)
+        print("✅ BUSINESS STANDARD SESSION CAPTURED SUCCESSFULLY!")
+        print("=" * 68)
+        print(f"{copied_msg}")
+        print("\n👉 ACTION: Update your GitHub Action Secret:")
+        print("   1. Go to: GitHub Repo -> Settings -> Secrets and variables -> Actions")
+        print("   2. Update 'BS_STORAGE_STATE_BASE64' with the copied token (Cmd+V).")
+        print("   3. Click 'Update secret'.")
+        print("=" * 68 + "\n")
 
         await context.close()
 
 if __name__ == "__main__":
     asyncio.run(setup_login())
+
