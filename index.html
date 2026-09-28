@@ -1422,12 +1422,12 @@
           found.push({ label: "VOLUME / IMPACT", value: jobMatch[0].trim(), context: "Scale / Volume Output" });
         }
 
-        if (found.length > 0) {
+        if (found.length >= 2) {
           kpis = found.slice(0, 4);
         }
       }
 
-      if (kpis.length === 0) return "";
+      if (!kpis || kpis.length < 2) return "";
 
       return `
         <div class="my-2 rounded-xl bg-gradient-to-br from-indigo-950/15 via-slate-900/10 to-blue-950/15 dark:from-[#0F1629] dark:to-[#0B1020] p-2.5 border border-indigo-200/80 dark:border-indigo-900/60 shadow-2xs">
