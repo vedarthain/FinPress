@@ -60,11 +60,11 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
             except Exception as e:
                 logger.warning(f"Financial Express run note: {e}")
 
-            logger.info("Step 2: Fetching & analyzing Business Standard edition...")
+            logger.info("Step 2: Fetching & analyzing Business Standard edition (36-page ePaper & Desks)...")
             bs_report = None
             try:
-                from bs_downloader import run_bs_pipeline
-                bs_report = run_bs_pipeline()
+                from bs_epaper_downloader import run_bs_full_edition_pipeline
+                bs_report = run_bs_full_edition_pipeline()
             except Exception as e:
                 logger.warning(f"Business Standard run note: {e}")
 
@@ -84,9 +84,9 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
                 report = agg.combine_and_deduplicate(reports_to_merge)
 
         elif source == "business_standard" or (custom_url and "business-standard" in custom_url):
-            logger.info("Step 1: Fetching all Business Standard daily print & edition articles...")
-            from bs_downloader import run_bs_pipeline
-            report = run_bs_pipeline()
+            logger.info("Step 1: Fetching all Business Standard daily print & edition articles (36 pages)...")
+            from bs_epaper_downloader import run_bs_full_edition_pipeline
+            report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
         else:
             logger.info("Step 1: Downloading Financial Express ePaper edition...")
             pdf_path = run_downloader(url=custom_url)
