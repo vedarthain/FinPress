@@ -38,9 +38,36 @@ class UnifiedNewsAggregator:
             stop_words = {"india", "indian", "says", "said", "will", "year", "month", "report", "first", "last", "over", "under", "after", "before", "financial", "standard", "express", "crore", "lakh", "worth", "plan", "plans", "govt", "government"}
             return {w for w in words if w not in stop_words}
 
-        fe_items = [s for s in stories if "Financial Express" in s.get("source", "")]
-        bs_items = [s for s in stories if "Business Standard" in s.get("source", "")]
-        other_items = [s for s in stories if s not in fe_items and s not in bs_items]
+        raw_fe_items = [s for s in stories if "Financial Express" in s.get("source", "")]
+        raw_bs_items = [s for s in stories if "Business Standard" in s.get("source", "")]
+        other_items = [s for s in stories if s not in raw_fe_items and s not in raw_bs_items]
+
+        def dedup_internal(items_list: List[Dict[str, Any]], source_label: str) -> List[Dict[str, Any]]:
+            deduped = []
+            for item in items_list:
+                item_words = clean_text(item["headline"] + " " + item.get("brief_details", "")[:100])
+                is_dup = False
+                for existing in deduped:
+                    ratio = difflib.SequenceMatcher(None, item["headline"].lower(), existing["headline"].lower()).ratio()
+                    ex_words = clean_text(existing["headline"] + " " + existing.get("brief_details", "")[:100])
+                    overlap = len(item_words & ex_words)
+                    
+                    if ratio > 0.60 or (overlap >= 4 and ratio > 0.40):
+                        is_dup = True
+                        p1 = existing.get("page_numbers", "")
+                        p2 = item.get("page_numbers", "")
+                        if p2 and p2 not in p1:
+                            existing["page_numbers"] = f"{p1}, {p2}" if p1 else p2
+                        if len(item.get("brief_details", "")) > len(existing.get("brief_details", "")):
+                            existing["brief_details"] = item["brief_details"]
+                        existing["bullet_points"] = list(dict.fromkeys(existing.get("bullet_points", []) + item.get("bullet_points", [])))[:6]
+                        break
+                if not is_dup:
+                    deduped.append(dict(item))
+            return deduped
+
+        fe_items = dedup_internal(raw_fe_items, "FE")
+        bs_items = dedup_internal(raw_bs_items, "BS")
 
         matched_fe = set()
         matched_bs = set()
@@ -74,8 +101,8 @@ class UnifiedNewsAggregator:
                 bs_s = bs_items[best_match_idx]
 
                 # Merge
-                p_fe = fe_s.get("page_numbers", "FE")
-                p_bs = bs_s.get("page_numbers", "BS")
+                p_fe = fe_s.get("page_numbers", "Page 1")
+                p_bs = bs_s.get("page_numbers", "Page 1")
                 combined_pages = f"FE ({p_fe}) / BS ({p_bs})"
                 
                 # Pick longer headline or combine
@@ -95,10 +122,12 @@ class UnifiedNewsAggregator:
         # Add all exclusive FE stories
         for fe_i, fe_s in enumerate(fe_items):
             if fe_i not in matched_fe:
+                p = fe_s.get("page_numbers", "Page 1")
+                formatted_p = p if "FE" in p else f"FE ({p})"
                 results.append(NewsStory(
                     headline=fe_s["headline"],
                     category=category,
-                    page_numbers=fe_s.get("page_numbers", "FE"),
+                    page_numbers=formatted_p,
                     brief_details=fe_s["brief_details"],
                     bullet_points=fe_s.get("bullet_points", []),
                     importance=fe_s.get("importance", "MEDIUM")
@@ -107,10 +136,12 @@ class UnifiedNewsAggregator:
         # Add all exclusive BS stories
         for bs_i, bs_s in enumerate(bs_items):
             if bs_i not in matched_bs:
+                p = bs_s.get("page_numbers", "Page 1")
+                formatted_p = p if "BS" in p else f"BS ({p})"
                 results.append(NewsStory(
                     headline=bs_s["headline"],
                     category=category,
-                    page_numbers=bs_s.get("page_numbers", "BS"),
+                    page_numbers=formatted_p,
                     brief_details=bs_s["brief_details"],
                     bullet_points=bs_s.get("bullet_points", []),
                     importance=bs_s.get("importance", "MEDIUM")

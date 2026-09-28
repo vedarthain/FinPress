@@ -1505,6 +1505,15 @@
       return "";
     }
 
+    function formatPageSource(pageStr) {
+      if (!pageStr) return "📰 FE / BS";
+      const p = pageStr.trim();
+      if (p.startsWith("FE") || p.startsWith("BS") || p.includes("FE (") || p.includes("BS (") || p.includes("FE / BS") || p.includes("FE:") || p.includes("BS:")) {
+        return `📰 ${p}`;
+      }
+      return `📰 FE / BS · ${p}`;
+    }
+
     function renderActiveStoryDetail(story, queryTokens = []) {
       const container = document.getElementById("feed-detail-container");
       if (!story) return;
@@ -1538,7 +1547,7 @@
           <div class="flex items-center gap-1.5">
             <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
             ${story.isFrontPage ? `<span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
-            <span class="text-[11.5px] text-slate-600 dark:text-slate-400 font-mono font-medium">${story.page_numbers}</span>
+            <span class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
           </div>
           <div class="flex items-center gap-1.5">
             ${sentBadge}
