@@ -170,6 +170,12 @@
               <span>🔴</span> (<span id="feed-count-bearish">0</span>)
             </button>
           </div>
+
+          <!-- View Layout Toggle (Split vs Table Matrix) -->
+          <div class="flex items-center bg-[#131F3B] p-0.5 rounded border border-slate-700 text-[10.5px] font-bold">
+            <button id="mode-split-btn" onclick="setViewMode('split')" class="px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs" title="Split Screen Wire & Reading Pane">📑 Split</button>
+            <button id="mode-matrix-btn" onclick="setViewMode('matrix')" class="px-2 py-0.5 rounded text-slate-300 hover:text-white" title="Dense Institutional Financial Table">📊 Table</button>
+          </div>
         </div>
 
         <!-- IPO Sub-stage Filter Buttons -->
@@ -305,8 +311,85 @@
         </div>
       </section>
 
+      <!-- ================= VIEW 3: TABULAR MASTER NEWS MATRIX (INSTITUTIONAL TABLE) ================= -->
+      <section id="view-matrix" class="hidden flex-col gap-2">
+        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex flex-col">
+          
+          <div class="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-[#11172A]/70 text-[12.5px] font-mono">
+            <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <span>📊</span> <span>MASTER FINANCIAL NEWS MATRIX (Full Unabridged Intelligence Stream)</span>
+            </span>
+            <span class="text-slate-400">Total Displayed: <b id="matrix-table-visible-count" class="text-brand-600 font-bold">0</b> Stories</span>
+          </div>
+
+          <div class="overflow-x-auto max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+            <table class="w-full text-left border-collapse text-[13.5px]">
+              <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-xs">
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-mono uppercase tracking-wider font-bold">
+                  <th class="py-2.5 px-3">#</th>
+                  <th class="py-2.5 px-3.5 min-w-[280px]">Headline & Core Development</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Section</th>
+                  <th class="py-2.5 px-3 min-w-[100px]">Sentiment</th>
+                  <th class="py-2.5 px-3 min-w-[120px]">Page / Source</th>
+                  <th class="py-2.5 px-3 min-w-[130px]">Tickers</th>
+                  <th class="py-2.5 px-3.5 min-w-[360px]">Executive Intelligence Summary</th>
+                  <th class="py-2.5 px-3 text-center">Full Info</th>
+                </tr>
+              </thead>
+              <tbody id="matrix-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/70">
+                <!-- Dynamically populated Matrix rows -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
     </main>
 
+  </div>
+
+  <!-- ================= STORY FULL DETAILS MODAL ================= -->
+  <div id="story-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="story-modal-category" class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200">Policy</span>
+            <span id="story-modal-sentiment" class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">🟢 BULLISH</span>
+            <span id="story-modal-pages" class="text-xs font-mono text-slate-500">FE (Page 1)</span>
+          </div>
+          <h2 id="story-modal-headline" class="text-xl font-extrabold text-slate-900 dark:text-white mt-1 leading-tight">Headline</h2>
+        </div>
+        <button onclick="closeStoryModal()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white font-bold flex items-center justify-center shrink-0">✕</button>
+      </div>
+
+      <div id="story-modal-tickers-container" class="flex items-center gap-1.5 flex-wrap">
+        <!-- Tickers -->
+      </div>
+
+      <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/90 dark:border-indigo-800">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1">⚡ Executive Intelligence</p>
+        <p id="story-modal-brief" class="text-sm text-slate-900 dark:text-slate-100 leading-relaxed"></p>
+      </div>
+
+      <div>
+        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-400 mb-1.5">Key Analyst Bullets & Metrics</p>
+        <ul id="story-modal-bullets" class="space-y-1.5">
+          <!-- Bullets -->
+        </ul>
+      </div>
+
+      <div id="story-modal-catalyst-box" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#11172A]">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-1">🎯 Trader Catalyst & Impact Analysis</p>
+        <p id="story-modal-catalyst" class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed"></p>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-400">
+        <span id="story-modal-source">FinPress Intelligence</span>
+        <button onclick="closeStoryModal()" class="px-4 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-colors">Close</button>
+      </div>
+    </div>
   </div>
 
   <!-- ================= IPO FULL DETAILS MODAL ================= -->
@@ -404,6 +487,35 @@
       }
     }
 
+    let currentLayoutMode = "split";
+
+    function setViewMode(mode) {
+      currentLayoutMode = mode;
+      const splitBtn = document.getElementById("mode-split-btn");
+      const matrixBtn = document.getElementById("mode-matrix-btn");
+      const viewFeed = document.getElementById("view-feed");
+      const viewMatrix = document.getElementById("view-matrix");
+
+      if (splitBtn) splitBtn.className = mode === "split" ? "px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs" : "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+      if (matrixBtn) matrixBtn.className = mode === "matrix" ? "px-2 py-0.5 rounded bg-indigo-600 text-white shadow-xs" : "px-2 py-0.5 rounded text-slate-300 hover:text-white";
+
+      if (currentView === "ipo") return;
+
+      if (mode === "split") {
+        viewFeed.classList.remove("hidden");
+        viewFeed.classList.add("grid");
+        viewMatrix.classList.add("hidden");
+        viewMatrix.classList.remove("flex");
+        renderFeedList();
+      } else {
+        viewFeed.classList.add("hidden");
+        viewFeed.classList.remove("grid");
+        viewMatrix.classList.remove("hidden");
+        viewMatrix.classList.add("flex");
+        renderMatrixTable();
+      }
+    }
+
     function switchView(viewName) {
       currentView = viewName;
       const tabFeed = document.getElementById("tab-btn-feed");
@@ -414,6 +526,7 @@
       const tabMacro = document.getElementById("tab-btn-macro");
       const viewFeed = document.getElementById("view-feed");
       const viewIpo = document.getElementById("view-ipo");
+      const viewMatrix = document.getElementById("view-matrix");
       const feedControls = document.getElementById("feed-controls");
       const ipoControls = document.getElementById("ipo-controls");
 
@@ -424,63 +537,58 @@
         b.className = "px-2 py-0.5 font-semibold rounded transition-all text-slate-300 hover:text-white flex items-center gap-1";
       });
 
-      if (viewName === "feed") {
-        tabFeed.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
-        viewFeed.classList.remove("hidden");
-        viewFeed.classList.add("grid");
-        viewIpo.classList.add("hidden");
-        feedControls.classList.remove("hidden");
-        ipoControls.classList.add("hidden");
-        selectedFeedCategory = "ALL";
-        document.getElementById("category-select").value = "ALL";
-        renderFeedList();
-      } else if (viewName === "anchor") {
-        tabAnchor.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
-        viewFeed.classList.remove("hidden");
-        viewFeed.classList.add("grid");
-        viewIpo.classList.add("hidden");
-        feedControls.classList.remove("hidden");
-        ipoControls.classList.add("hidden");
-        selectedFeedCategory = "ANCHOR";
-        renderFeedList();
-      } else if (viewName === "ipo") {
+      if (viewName === "ipo") {
         tabIpo.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
         viewFeed.classList.add("hidden");
         viewFeed.classList.remove("grid");
+        viewMatrix.classList.add("hidden");
+        viewMatrix.classList.remove("flex");
         viewIpo.classList.remove("hidden");
         viewIpo.classList.add("flex");
         feedControls.classList.add("hidden");
         ipoControls.classList.remove("hidden");
         ipoControls.classList.add("flex");
         renderIpoTable();
+        return;
+      }
+
+      viewIpo.classList.add("hidden");
+      viewIpo.classList.remove("flex");
+      ipoControls.classList.add("hidden");
+      feedControls.classList.remove("hidden");
+
+      if (currentLayoutMode === "split") {
+        viewFeed.classList.remove("hidden");
+        viewFeed.classList.add("grid");
+        viewMatrix.classList.add("hidden");
+        viewMatrix.classList.remove("flex");
+      } else {
+        viewFeed.classList.add("hidden");
+        viewFeed.classList.remove("grid");
+        viewMatrix.classList.remove("hidden");
+        viewMatrix.classList.add("flex");
+      }
+
+      if (viewName === "feed") {
+        tabFeed.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
+        selectedFeedCategory = "ALL";
+        document.getElementById("category-select").value = "ALL";
+      } else if (viewName === "anchor") {
+        tabAnchor.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
+        selectedFeedCategory = "ANCHOR";
       } else if (viewName === "corporate") {
         tabCorp.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
-        viewFeed.classList.remove("hidden");
-        viewFeed.classList.add("grid");
-        viewIpo.classList.add("hidden");
-        feedControls.classList.remove("hidden");
-        ipoControls.classList.add("hidden");
         selectedFeedCategory = "CORPORATE_ALL";
-        renderFeedList();
       } else if (viewName === "opinions") {
         tabOpinions.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
-        viewFeed.classList.remove("hidden");
-        viewFeed.classList.add("grid");
-        viewIpo.classList.add("hidden");
-        feedControls.classList.remove("hidden");
-        ipoControls.classList.add("hidden");
         selectedFeedCategory = "OPINIONS";
-        renderFeedList();
       } else if (viewName === "macro") {
         tabMacro.className = "px-2 py-0.5 font-bold rounded transition-all bg-indigo-600 text-white shadow-xs flex items-center gap-1";
-        viewFeed.classList.remove("hidden");
-        viewFeed.classList.add("grid");
-        viewIpo.classList.add("hidden");
-        feedControls.classList.remove("hidden");
-        ipoControls.classList.add("hidden");
         selectedFeedCategory = "MACRO_ALL";
-        renderFeedList();
       }
+
+      if (currentLayoutMode === "split") renderFeedList();
+      else renderMatrixTable();
     }
 
     function onCategorySelect(val) {
@@ -892,8 +1000,10 @@
       
       if (currentView === "ipo") {
         renderIpoTable();
-      } else {
+      } else if (currentLayoutMode === "split") {
         renderFeedList();
+      } else {
+        renderMatrixTable();
       }
     }
 
@@ -904,7 +1014,8 @@
       currentFeedPage = 1;
       document.getElementById("clear-search-btn").classList.add("hidden");
       if (currentView === "ipo") renderIpoTable();
-      else renderFeedList();
+      else if (currentLayoutMode === "split") renderFeedList();
+      else renderMatrixTable();
     }
 
     // ================= RIGHT HAND SIDEBAR: STOCKS IN FOCUS (EXCLUDES IPOS) =================
@@ -930,7 +1041,8 @@
           currentFeedPage = 1;
           document.getElementById("clear-ticker-filter").classList.toggle("hidden", !activeTickerFilter);
           renderStocksFocusSidebar();
-          renderFeedList();
+          if (currentLayoutMode === "split") renderFeedList();
+          else renderMatrixTable();
         };
         list.appendChild(btn);
       });
@@ -942,7 +1054,8 @@
       currentFeedPage = 1;
       document.getElementById("clear-ticker-filter").classList.add("hidden");
       renderStocksFocusSidebar();
-      renderFeedList();
+      if (currentLayoutMode === "split") renderFeedList();
+      else renderMatrixTable();
     }
 
     function setFeedSentiment(sent) {
@@ -960,7 +1073,8 @@
           ? "px-2.5 py-0.5 rounded bg-rose-600 text-white shadow-xs" 
           : "px-2.5 py-0.5 rounded bg-slate-800 text-white shadow-xs";
       }
-      renderFeedList();
+      if (currentLayoutMode === "split") renderFeedList();
+      else renderMatrixTable();
     }
 
     // ================= FEED LIST & ACTIVE STORY DETAIL (MAX 12 1-LINER STORIES PER PAGE) =================
@@ -1057,6 +1171,53 @@
       renderActiveStoryDetail(displayed[selectedStoryIndex], queryTokens);
     }
 
+    // Helper: Build Structured Key Quantitative Data Table from Bullet Points
+    function buildMetricsTableHtml(bullets) {
+      if (!bullets || bullets.length === 0) return "";
+      
+      const rows = [];
+      bullets.forEach(b => {
+        // Look for parameter: value or key numerical patterns
+        if (b.includes(":") || b.includes("₹") || b.includes("%") || b.includes("Rs") || b.includes("capped at") || b.includes("lowered to") || b.includes("threshold")) {
+          let param = "", val = "";
+          if (b.includes(":")) {
+            const parts = b.split(":");
+            param = parts[0].trim();
+            val = parts.slice(1).join(":").trim();
+          } else {
+            param = b.slice(0, 45) + "...";
+            val = b;
+          }
+          if (param && val) {
+            rows.push({ param, val });
+          }
+        }
+      });
+
+      if (rows.length >= 2) {
+        return `
+          <div class="mt-2 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xs">
+            <div class="bg-slate-100/90 dark:bg-[#141A2E] px-3 py-1.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <span>📊</span> <span>Key Quantitative Data & Regulatory Thresholds</span>
+              </span>
+            </div>
+            <table class="w-full text-left border-collapse text-[12.5px]">
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 font-mono">
+                ${rows.slice(0, 5).map(r => `
+                  <tr class="table-row-hover">
+                    <td class="py-1.5 px-3 font-bold text-slate-800 dark:text-slate-200 bg-slate-50/50 dark:bg-slate-900/30 w-1/3">${escapeQuotes(r.param)}</td>
+                    <td class="py-1.5 px-3 font-medium text-slate-950 dark:text-white">${highlightNumbers(escapeQuotes(r.val))}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+      return "";
+    }
+
     function renderActiveStoryDetail(story, queryTokens = []) {
       const container = document.getElementById("feed-detail-container");
       if (!story) return;
@@ -1083,6 +1244,7 @@
         : "text-slate-950 dark:text-slate-200 font-extrabold";
 
       const tickerBadges = story.tickers.map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const metricsTableHtml = buildMetricsTableHtml(story.bullet_points);
 
       container.innerHTML = `
         <!-- Mobile Fast Navigation Bar -->
@@ -1124,6 +1286,9 @@
           <p class="text-[13.5px] text-slate-950 dark:text-slate-100 leading-relaxed font-normal">${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}</p>
         </div>
 
+        <!-- Structured Key Quantitative Data Table (if applicable) -->
+        ${metricsTableHtml}
+
         <!-- Key Analyst Bullets (High Contrast Crisp Text) -->
         <div class="mt-2">
           <p class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Key Analyst Bullets</p>
@@ -1150,6 +1315,117 @@
           </p>
         </div>
       `;
+    }
+
+    // ================= MASTER NEWS MATRIX TABLE RENDERING =================
+    function renderMatrixTable() {
+      const tbody = document.getElementById("matrix-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
+      const queryTokens = rawQuery ? rawQuery.split(/\s+/).filter(Boolean) : [];
+      const displayed = getFilteredStories();
+
+      const countEl = document.getElementById("matrix-table-visible-count");
+      if (countEl) countEl.textContent = displayed.length;
+
+      if (displayed.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-slate-400 font-medium text-[13.5px]">No stories found matching filters.</td></tr>`;
+        return;
+      }
+
+      displayed.forEach((story, idx) => {
+        const tr = document.createElement("tr");
+        tr.className = "table-row-hover transition-colors border-b border-slate-100 dark:border-slate-800/80 cursor-pointer";
+        const numStr = (idx + 1).toString().padStart(2, '0');
+        
+        const isBullish = story.sentiment === "BULLISH";
+        const isBearish = story.sentiment === "BEARISH";
+        const sentBadge = isBullish 
+          ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200 whitespace-nowrap">🟢 BULLISH</span>`
+          : isBearish 
+          ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200 whitespace-nowrap">🔴 BEARISH</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200 whitespace-nowrap">⚪ NEUTRAL</span>`;
+
+        const tickerBadges = (story.tickers || []).map(t => `<span class="px-1.5 py-0.2 text-[10px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join(' ') || '<span class="text-slate-400 font-mono text-[11px]">—</span>';
+
+        tr.onclick = (e) => {
+          if (e.target.tagName !== 'BUTTON') {
+            openStoryModal(idx);
+          }
+        };
+
+        tr.innerHTML = `
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-400 font-semibold">${numStr}</td>
+          <td class="py-3 px-3.5 font-bold text-slate-900 dark:text-white max-w-sm">
+            <div class="flex items-start gap-1.5">
+              ${story.isFrontPage ? `<span class="shrink-0 text-[9px] font-mono font-extrabold px-1.5 py-0.2 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200 mt-0.5">PAGE 1</span>` : ''}
+              <div>
+                <p class="text-[13.5px] leading-tight font-bold text-slate-900 dark:text-white">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</p>
+                <p class="text-[11px] font-mono text-slate-400 truncate max-w-[280px] mt-0.5 font-normal">${story.catalyst}</p>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-3 whitespace-nowrap">
+            <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-extrabold bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+              ${story.category}
+            </span>
+          </td>
+          <td class="py-3 px-3 whitespace-nowrap">${sentBadge}</td>
+          <td class="py-3 px-3 font-mono text-[11.5px] text-slate-500 dark:text-slate-400 whitespace-nowrap">${story.page_numbers}</td>
+          <td class="py-3 px-3 whitespace-nowrap">${tickerBadges}</td>
+          <td class="py-3 px-3.5 max-w-md">
+            <p class="text-[12.5px] text-slate-700 dark:text-slate-300 leading-snug line-clamp-2 font-normal">
+              ${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}
+            </p>
+          </td>
+          <td class="py-3 px-3 text-center whitespace-nowrap">
+            <button onclick="openStoryModal(${idx})" class="px-2.5 py-1 rounded-md border border-brand-200 dark:border-slate-700 bg-brand-50/80 dark:bg-[#182035] hover:bg-brand-600 hover:text-white text-brand-700 dark:text-brand-300 text-[11px] font-mono font-bold transition-all shadow-2xs">
+              ℹ️ Details
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openStoryModal(idx) {
+      const displayed = getFilteredStories();
+      const story = displayed[idx];
+      if (!story) return;
+
+      document.getElementById("story-modal-headline").textContent = story.headline;
+      document.getElementById("story-modal-category").textContent = story.category;
+      document.getElementById("story-modal-pages").textContent = story.page_numbers;
+      
+      const sentEl = document.getElementById("story-modal-sentiment");
+      sentEl.textContent = story.sentiment === "BULLISH" ? "🟢 BULLISH" : story.sentiment === "BEARISH" ? "🔴 BEARISH" : "⚪ NEUTRAL";
+      sentEl.className = `px-2 py-0.5 rounded text-[10.5px] font-mono font-bold border ${story.sentiment === "BULLISH" ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : story.sentiment === "BEARISH" ? 'bg-rose-50 text-rose-800 border-rose-200' : 'bg-slate-100 text-slate-800 border-slate-200'}`;
+
+      document.getElementById("story-modal-brief").innerHTML = highlightNumbers(story.brief_details);
+
+      const bulletsContainer = document.getElementById("story-modal-bullets");
+      bulletsContainer.innerHTML = (story.bullet_points || []).map(bp => `
+        <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-slate-50 dark:bg-[#141A2E] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
+          <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none">›</span>
+          <span>${highlightNumbers(bp)}</span>
+        </li>
+      `).join('') || `<li class="text-slate-400 text-xs">No additional sub-bullets.</li>`;
+
+      document.getElementById("story-modal-catalyst").innerHTML = highlightNumbers(story.sentimentReasoning || story.catalyst);
+
+      const tickersEl = document.getElementById("story-modal-tickers-container");
+      tickersEl.innerHTML = (story.tickers || []).map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+
+      document.getElementById("story-modal").classList.remove("hidden");
+      document.getElementById("story-modal").classList.add("flex");
+    }
+
+    function closeStoryModal() {
+      const modal = document.getElementById("story-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
     }
 
     // ================= IPO TABLE RENDERING =================
