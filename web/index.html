@@ -758,18 +758,18 @@
       const opinionsCount = stories.filter(s => s.isOpinion).length;
 
       document.getElementById("top-total-count").textContent = stories.length;
-      document.getElementById("tab-feed-count").textContent = coreStories.length;
+      document.getElementById("tab-feed-count").textContent = stories.length;
       document.getElementById("tab-ipo-count").textContent = totalIpos;
       document.getElementById("tab-anchor-count").textContent = anchorCount;
       document.getElementById("tab-corp-count").textContent = corpCount;
       document.getElementById("tab-opinions-count").textContent = opinionsCount;
 
       let bCount = 0, rCount = 0;
-      coreStories.forEach(s => {
+      stories.forEach(s => {
         if (s.sentiment === "BULLISH") bCount++;
         else if (s.sentiment === "BEARISH") rCount++;
       });
-      document.getElementById("feed-count-all").textContent = coreStories.length;
+      document.getElementById("feed-count-all").textContent = stories.length;
       document.getElementById("feed-count-bullish").textContent = bCount;
       document.getElementById("feed-count-bearish").textContent = rCount;
 
@@ -845,15 +845,11 @@
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
         
         let matchSec = true;
-        if (selectedFeedCategory === "ALL") {
-          // Strictly exclude IPO, Corporate Events, Corporate Appointments, and Opinions
-          const isExcluded = s.category === "IPO" || s.category === "Corporate Events" || s.category === "Corporate Appointments" || s.isOpinion;
-          matchSec = !isExcluded;
-        }
+        if (selectedFeedCategory === "ALL") matchSec = true;
         else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
         else if (selectedFeedCategory === "OPINIONS") matchSec = s.isOpinion;
         else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
-        else if (selectedFeedCategory === "MACRO_ALL") matchSec = s.category === "Economy" || s.category === "Policy";
+        else if (selectedFeedCategory === "MACRO_ALL") matchSec = s.category === "Economy" || s.category === "Policy" || s.category === "Market";
         else matchSec = s.category === selectedFeedCategory;
 
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;

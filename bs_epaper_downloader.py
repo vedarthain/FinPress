@@ -140,6 +140,15 @@ class BusinessStandardEpaperDownloader:
             page = context.new_page()
 
             try:
+                # Prime session on root domain first to ensure SSO cookies propagate to epaper sub-domain
+                try:
+                    logger.info("Priming subscriber session on business-standard.com...")
+                    page.goto("https://www.business-standard.com", timeout=30000, wait_until="domcontentloaded")
+                    page.wait_for_timeout(2000)
+                except Exception as e:
+                    logger.warning(f"Root domain warmup notice: {e}")
+
+                logger.info(f"Navigating to ePaper reader: {epaper_url}")
                 page.goto(epaper_url, timeout=60000, wait_until="domcontentloaded")
                 page.wait_for_timeout(5000)
 
