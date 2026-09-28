@@ -280,24 +280,37 @@
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (STOCKS IN FOCUS - PROMINENT & EXPANDED) -->
-        <aside class="flex flex-col gap-2 lg:sticky lg:top-[70px] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (SECTORS & STOCKS IN FOCUS) -->
+        <aside class="flex flex-col gap-2.5 lg:sticky lg:top-[70px] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
           
-          <!-- Stocks in Focus Card -->
+          <!-- 1. Sectors in Focus Card -->
           <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2">
-            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
-              <span class="text-[12px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
-                <span>🏷️</span> <span>Stocks in Focus</span>
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
+              <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
+                <span>🏢</span> <span>Sectors in Focus</span>
               </span>
-              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-                Clear Filter (✕)
+              <button id="clear-sector-filter" onclick="clearSectorFilter()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                Clear (✕)
               </button>
             </div>
+            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight font-medium">Filter by sector / desk:</p>
+            <div id="sectors-focus-list" class="flex flex-wrap gap-1 max-h-[140px] overflow-y-auto pt-0.5">
+              <!-- Dynamically populated sector chips -->
+            </div>
+          </div>
 
-            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight font-medium">Click any stock to filter news:</p>
-
-            <!-- Stock Ticker Pill Matrix -->
-            <div id="stocks-focus-list" class="flex flex-wrap gap-1.5 max-h-[220px] lg:max-h-[calc(100vh-10rem)] overflow-y-auto pt-0.5">
+          <!-- 2. Stocks in Focus Card -->
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
+              <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
+                <span>🏷️</span> <span>Stocks in Focus</span>
+              </span>
+              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                Clear (✕)
+              </button>
+            </div>
+            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight font-medium">Filter by company stock:</p>
+            <div id="stocks-focus-list" class="flex flex-wrap gap-1 max-h-[220px] lg:max-h-[calc(100vh-22rem)] overflow-y-auto pt-0.5">
               <!-- Dynamically populated ticker chips -->
             </div>
           </div>
@@ -730,6 +743,14 @@
       const tabAnchor = document.getElementById("tab-btn-anchor");
       if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
       
+      const catSelect = document.getElementById("category-select");
+      if (catSelect && val !== "ALL" && !val.startsWith("IPO") && !val.startsWith("CORPORATE") && val !== "OPINIONS" && val !== "ANCHOR") {
+        catSelect.value = val;
+      } else if (catSelect && val === "ALL") {
+        catSelect.value = "ALL";
+      }
+
+      renderSectorsAndStocksSidebar();
       renderFeedList();
     }
 
@@ -1122,7 +1143,7 @@
         }
       }
 
-      renderStocksFocusSidebar();
+      renderSectorsAndStocksSidebar();
       renderFeedList();
     }
 
@@ -1227,44 +1248,78 @@
       else renderMatrixTable();
     }
 
-    // ================= RIGHT HAND SIDEBAR: STOCKS IN FOCUS (EXCLUDES IPOS) =================
-    function renderStocksFocusSidebar() {
-      const list = document.getElementById("stocks-focus-list");
-      list.innerHTML = "";
+    // ================= RIGHT HAND SIDEBAR: SECTORS & STOCKS IN FOCUS =================
+    function renderSectorsAndStocksSidebar() {
+      // 1. Render Sectors in Focus
+      const sectorList = document.getElementById("sectors-focus-list");
+      if (sectorList) {
+        sectorList.innerHTML = "";
+        const sectorCounts = {};
+        stories.forEach(s => {
+          if (s.category && s.category !== "FRONT_PAGE" && s.category !== "OTHERS") {
+            sectorCounts[s.category] = (sectorCounts[s.category] || 0) + 1;
+          }
+        });
+        const sortedSectors = Object.keys(sectorCounts).sort((a,b) => sectorCounts[b] - sectorCounts[a]);
+        
+        const clearSecBtn = document.getElementById("clear-sector-filter");
+        const isSectorActive = selectedFeedCategory !== "ALL" && !selectedFeedCategory.startsWith("IPO") && !selectedFeedCategory.startsWith("CORPORATE") && selectedFeedCategory !== "OPINIONS" && selectedFeedCategory !== "ANCHOR";
+        if (clearSecBtn) clearSecBtn.classList.toggle("hidden", !isSectorActive);
 
-      const counts = {};
-      stories.forEach(s => {
-        s.tickers.forEach(t => counts[t] = (counts[t] || 0) + 1);
-      });
+        sortedSectors.forEach(sec => {
+          const isSelected = selectedFeedCategory === sec;
+          const btn = document.createElement("button");
+          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-indigo-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`;
+          btn.textContent = `${sec} (${sectorCounts[sec]})`;
+          btn.onclick = () => {
+            onCategorySelect(isSelected ? "ALL" : sec);
+          };
+          sectorList.appendChild(btn);
+        });
+      }
 
-      const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+      // 2. Render Stocks in Focus
+      const tickerList = document.getElementById("stocks-focus-list");
+      if (tickerList) {
+        tickerList.innerHTML = "";
+        const tickerCounts = {};
+        stories.forEach(s => {
+          (s.tickers || []).forEach(t => tickerCounts[t] = (tickerCounts[t] || 0) + 1);
+        });
+        const sortedTickers = Object.keys(tickerCounts).sort((a,b) => tickerCounts[b] - tickerCounts[a]);
+        
+        const clearTickBtn = document.getElementById("clear-ticker-filter");
+        if (clearTickBtn) clearTickBtn.classList.toggle("hidden", !activeTickerFilter);
 
-      sorted.forEach(t => {
-        const isSelected = activeTickerFilter === t;
-        const btn = document.createElement("button");
-        btn.className = `px-2.5 py-1 rounded-md text-[11.5px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-brand-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400'}`;
-        btn.textContent = `${t} (${counts[t]})`;
-        btn.onclick = () => {
-          activeTickerFilter = activeTickerFilter === t ? null : t;
-          selectedStoryIndex = 0;
-          currentFeedPage = 1;
-          document.getElementById("clear-ticker-filter").classList.toggle("hidden", !activeTickerFilter);
-          renderStocksFocusSidebar();
-          if (currentLayoutMode === "split") renderFeedList();
-          else renderMatrixTable();
-        };
-        list.appendChild(btn);
-      });
+        sortedTickers.forEach(t => {
+          const isSelected = activeTickerFilter === t;
+          const btn = document.createElement("button");
+          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-amber-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400'}`;
+          btn.textContent = `${t} (${tickerCounts[t]})`;
+          btn.onclick = () => {
+            activeTickerFilter = activeTickerFilter === t ? null : t;
+            selectedStoryIndex = 0;
+            currentFeedPage = 1;
+            renderSectorsAndStocksSidebar();
+            if (currentLayoutMode === "split") renderFeedList();
+            else renderMatrixTable();
+          };
+          tickerList.appendChild(btn);
+        });
+      }
     }
 
     function clearTickerFilter() {
       activeTickerFilter = null;
       selectedStoryIndex = 0;
       currentFeedPage = 1;
-      document.getElementById("clear-ticker-filter").classList.add("hidden");
-      renderStocksFocusSidebar();
+      renderSectorsAndStocksSidebar();
       if (currentLayoutMode === "split") renderFeedList();
       else renderMatrixTable();
+    }
+
+    function clearSectorFilter() {
+      onCategorySelect("ALL");
     }
 
     function setFeedSentiment(sent) {
@@ -1393,7 +1448,7 @@
       if (p.startsWith("FE") || p.startsWith("BS") || p.includes("FE (") || p.includes("BS (") || p.includes("FE / BS") || p.includes("FE:") || p.includes("BS:")) {
         return `📰 ${p}`;
       }
-      return `📰 FE / BS · ${p}`;
+      return `📰 ${p}`;
     }
 
     function renderActiveStoryDetail(story, queryTokens = []) {
