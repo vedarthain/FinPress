@@ -36,14 +36,21 @@ SectionCategory = Literal[
 ]
 
 
+class KPIMetric(BaseModel):
+    label: str = Field(description="Metric title or parameter (e.g. 'Incentive Disbursed', 'Output Generated', 'Export Value', 'Jobs Created', 'Issue Size')")
+    value: str = Field(description="Metric value with unit (e.g. '₹19,090 Cr', '48%', '$29.36 Bn', '167,000', '₹62,500 Cr')")
+    context: Optional[str] = Field(default="", description="Brief 3-6 word context or benchmark")
+
+
 class NewsStory(BaseModel):
     headline: str = Field(description="The exact title or headline of the news article.")
     category: SectionCategory = Field(
         description="MUST be bifurcated into strictly ONE of: 'Economy', 'Policy', 'Sector', 'IPO', 'Market', 'Trade', 'Corporate Events', 'Corporate Appointments', 'International News', 'Others'."
     )
     page_numbers: str = Field(description="Page number(s) where this story appears (e.g., 'Page 1', 'Page 4').")
-    brief_details: str = Field(description="A 2-3 sentence executive summary of the story.")
-    bullet_points: List[str] = Field(description="3 to 5 key facts, numbers, quotes, or regulatory details from the article.")
+    brief_details: str = Field(description="A concise 1-2 sentence executive summary focused purely on key facts.")
+    bullet_points: List[str] = Field(description="3 to 5 crisp, punchy short data bullets with key numbers, metrics, regulatory details, or triggers. Avoid long paragraphs.")
+    kpis: Optional[List[KPIMetric]] = Field(default_factory=list, description="Key numerical metrics, financial figures, outlays, or percentages mentioned in the story or charts/tables.")
     importance: str = Field(description="Importance level: High, Medium, or Low.")
 
 
@@ -88,11 +95,13 @@ class GeminiNewsAnalyzer:
                 file_state = getattr(uploaded_file, "state", None)
 
             prompt = f"""
-You are a senior news editor performing an exhaustive, page-by-page extraction of these newspaper pages ({page_range_str}).
+You are a senior financial news intelligence analyst performing an exhaustive, page-by-page extraction of these newspaper pages ({page_range_str}).
 
-CRITICAL INSTRUCTION:
-Extract EVERY SINGLE distinct news article, report, column, IPO announcement, corporate filing, market briefing, or regulatory update present on these pages.
-Do NOT omit minor stories, company results, executive appointments, or brief news items. Aim to extract 8 to 15 distinct articles from these pages.
+CRITICAL INSTRUCTIONS:
+1. LOSSLESS COVERAGE: Extract EVERY SINGLE distinct news article, report, column, IPO announcement, corporate filing, market briefing, graphics/infographics ('Scale of Impact', charts), or regulatory update present on these pages.
+2. DO NOT SKIP ANY NEWS: Do not omit minor stories, company results, executive appointments, or brief news items. Skip ONLY purely commercial display advertisements. Aim to extract all 8 to 20 distinct news items on these pages.
+3. QUICK READ / NO PARAGRAPH WALLS: Provide crisp, short chunks of data. Bullet points MUST be short, punchy data facts with bold numbers. Avoid long prose paragraphs.
+4. INFOGRAPHIC KPIS: Extract any prominent figures, outlays, percentage shares, investment amounts, or export numbers into the 'kpis' array with label, value, and context.
 
 STRICT 10 SECTION CATEGORIES:
 Assign every story to EXACTLY ONE of:
@@ -106,14 +115,6 @@ Assign every story to EXACTLY ONE of:
 - Corporate Appointments
 - International News
 - Others
-
-For each story provide:
-- headline
-- category (exact match to 1 of 10)
-- page_numbers (e.g. '{page_range_str}')
-- brief_details (2-3 sentences)
-- bullet_points (3-5 key facts/metrics)
-- importance ('High', 'Medium', or 'Low')
 """
 
             candidate_models = ["gemini-flash-lite-latest", self.model_name]

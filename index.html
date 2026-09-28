@@ -368,9 +368,13 @@
         <!-- Tickers -->
       </div>
 
+      <div id="story-modal-kpis-container">
+        <!-- KPI Badges -->
+      </div>
+
       <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/90 dark:border-indigo-800">
-        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1">⚡ Executive Intelligence</p>
-        <p id="story-modal-brief" class="text-sm text-slate-900 dark:text-slate-100 leading-relaxed"></p>
+        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1">⚡ Executive Flash Points (Quick Read)</p>
+        <div id="story-modal-brief" class="space-y-1.5"></div>
       </div>
 
       <div>
@@ -1171,13 +1175,80 @@
       renderActiveStoryDetail(displayed[selectedStoryIndex], queryTokens);
     }
 
+    // Helper: Build High-Contrast Infographic KPI Badges Grid
+    function buildKpiCardsHtml(story) {
+      if (!story) return "";
+      let kpis = story.kpis || [];
+
+      if (kpis.length === 0) {
+        const full = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" "));
+        const found = [];
+
+        // 1. Currency patterns: ₹19,090 cr, ₹11.62 lakh cr, $29.36 billion, etc.
+        const curMatches = full.match(/(?:₹|rs\.?|\$)\s?[\d,]+(?:\.\d+)?\s?(?:lakh\s+crore|crore|cr|lakh|billion|bn|million|mn)/gi) || [];
+        curMatches.forEach(m => {
+          if (!found.some(f => f.value.toLowerCase() === m.toLowerCase()) && found.length < 4) {
+            found.push({ label: "FINANCIAL SCALE", value: m.trim(), context: "Key Financial Value" });
+          }
+        });
+
+        // 2. Percentage patterns: 48%, 51%, 1.5%, 5% + 3%, etc.
+        const pctMatches = full.match(/\b\d+(?:\.\d+)?%\b/g) || [];
+        pctMatches.forEach(m => {
+          if (!found.some(f => f.value === m) && found.length < 4) {
+            found.push({ label: "GROWTH / SHARE", value: m.trim(), context: "Impact Percentage" });
+          }
+        });
+
+        // 3. Jobs / Counts / Volume: 167,000 jobs, etc.
+        const jobMatch = full.match(/([\d,]+)\s*(?:jobs|direct and indirect jobs|workers|units|tonnes|ton|mw|gw)/i);
+        if (jobMatch && found.length < 4) {
+          found.push({ label: "VOLUME / IMPACT", value: jobMatch[0].trim(), context: "Scale / Volume Output" });
+        }
+
+        if (found.length > 0) {
+          kpis = found.slice(0, 4);
+        }
+      }
+
+      if (kpis.length === 0) return "";
+
+      return `
+        <div class="my-2 rounded-xl bg-gradient-to-br from-indigo-950/15 via-slate-900/10 to-blue-950/15 dark:from-[#0F1629] dark:to-[#0B1020] p-2.5 border border-indigo-200/80 dark:border-indigo-900/60 shadow-2xs">
+          <div class="flex items-center justify-between pb-1.5 mb-2 border-b border-indigo-100 dark:border-slate-800/80">
+            <span class="text-[10.5px] font-mono font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+              <span>📊</span> <span>SCALE OF IMPACT & INFOGRAPHIC KPIS</span>
+            </span>
+            <span class="text-[9.5px] font-mono font-bold text-slate-500 dark:text-slate-400">Quick Metrics</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            ${kpis.map((k, i) => {
+              const colors = [
+                'from-blue-500/10 to-indigo-500/10 border-blue-300 dark:border-blue-800 text-blue-700 dark:text-blue-300',
+                'from-emerald-500/10 to-teal-500/10 border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300',
+                'from-amber-500/10 to-orange-500/10 border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300',
+                'from-purple-500/10 to-pink-500/10 border-purple-300 dark:border-purple-800 text-purple-700 dark:text-purple-300'
+              ];
+              const colorClass = colors[i % colors.length];
+              return `
+                <div class="p-2 rounded-lg bg-gradient-to-br ${colorClass} border flex flex-col justify-between shadow-2xs">
+                  <span class="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 truncate">${escapeQuotes(k.label || 'METRIC')}</span>
+                  <span class="text-[15.5px] sm:text-[16.5px] font-mono font-black tracking-tight mt-0.5">${escapeQuotes(k.value)}</span>
+                  ${k.context ? `<span class="text-[9px] font-mono text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeQuotes(k.context)}</span>` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
     // Helper: Build Structured Key Quantitative Data Table from Bullet Points
     function buildMetricsTableHtml(bullets) {
       if (!bullets || bullets.length === 0) return "";
       
       const rows = [];
       bullets.forEach(b => {
-        // Look for parameter: value or key numerical patterns
         if (b.includes(":") || b.includes("₹") || b.includes("%") || b.includes("Rs") || b.includes("capped at") || b.includes("lowered to") || b.includes("threshold")) {
           let param = "", val = "";
           if (b.includes(":")) {
@@ -1199,7 +1270,7 @@
           <div class="mt-2 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xs">
             <div class="bg-slate-100/90 dark:bg-[#141A2E] px-3 py-1.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
               <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <span>📊</span> <span>Key Quantitative Data & Regulatory Thresholds</span>
+                <span>📋</span> <span>Key Quantitative Data & Regulatory Thresholds</span>
               </span>
             </div>
             <table class="w-full text-left border-collapse text-[12.5px]">
@@ -1244,7 +1315,11 @@
         : "text-slate-950 dark:text-slate-200 font-extrabold";
 
       const tickerBadges = story.tickers.map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const kpisHtml = buildKpiCardsHtml(story);
       const metricsTableHtml = buildMetricsTableHtml(story.bullet_points);
+
+      // Break brief details into short punchy sentences (NO paragraph walls)
+      const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
 
       container.innerHTML = `
         <!-- Mobile Fast Navigation Bar -->
@@ -1278,20 +1353,35 @@
           </div>
         ` : ''}
 
-        <!-- Executive Overview (High Contrast Dark Text) -->
-        <div class="mt-1.5 p-3 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/90 dark:border-indigo-500/30 shadow-2xs">
-          <p class="text-[11px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-300 mb-1 flex items-center gap-1">
-            <span>⚡</span> <span>Executive Intelligence</span>
-          </p>
-          <p class="text-[13.5px] text-slate-950 dark:text-slate-100 leading-relaxed font-normal">${highlightSearchTokens(highlightNumbers(story.brief_details), queryTokens)}</p>
+        <!-- 📊 INFOGRAPHIC KPI SCORECARD / METRICS GRID -->
+        ${kpisHtml}
+
+        <!-- ⚡ EXECUTIVE FLASH POINTS (QUICK READ - SHORT CHUNKS ONLY) -->
+        <div class="mt-1.5 rounded-lg border border-indigo-200/90 dark:border-indigo-900/60 bg-indigo-50/50 dark:bg-indigo-950/20 p-2.5 shadow-2xs flex flex-col gap-1.5">
+          <div class="flex items-center justify-between border-b border-indigo-100 dark:border-slate-800/80 pb-1">
+            <span class="text-[10.5px] font-mono font-black uppercase tracking-wider text-indigo-900 dark:text-indigo-300 flex items-center gap-1">
+              <span>⚡</span> <span>Executive Flash Points</span>
+            </span>
+            <span class="text-[9.5px] font-mono text-slate-400 font-bold">Quick Read</span>
+          </div>
+          <div class="grid grid-cols-1 gap-1.5">
+            ${briefSentences.map(sent => `
+              <div class="flex items-start gap-2 bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200/80 dark:border-slate-800/80 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
+                <span class="text-indigo-600 dark:text-indigo-400 font-black text-sm select-none">▸</span>
+                <span>${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+              </div>
+            `).join('')}
+          </div>
         </div>
 
         <!-- Structured Key Quantitative Data Table (if applicable) -->
         ${metricsTableHtml}
 
-        <!-- Key Analyst Bullets (High Contrast Crisp Text) -->
+        <!-- 📌 KEY ANALYST DATA BULLETS -->
         <div class="mt-2">
-          <p class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Key Analyst Bullets</p>
+          <p class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1">
+            <span>📌</span> <span>Key Analyst Data Points</span>
+          </p>
           <ul class="space-y-1.5">
             ${(story.bullet_points || []).map(bp => `
               <li class="flex items-start gap-2 text-[13px] text-slate-950 dark:text-slate-100 leading-snug bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200 dark:border-slate-800 shadow-2xs">
@@ -1302,19 +1392,20 @@
           </ul>
         </div>
 
-        <!-- Dedicated Trader Catalyst & Impact Rationale Card -->
-        <div class="mt-2 p-3 rounded-lg border ${reasonBoxBorder} shadow-2xs">
+        <!-- 💡 DEDICATED TRADER CATALYST & IMPACT RATIONALE CARD -->
+        <div class="mt-2 p-2.5 rounded-lg border ${reasonBoxBorder} shadow-2xs">
           <div class="flex items-center justify-between gap-1 mb-1">
-            <span class="text-[11.5px] font-mono uppercase tracking-wider ${reasonTitleColor} flex items-center gap-1">
+            <span class="text-[11px] font-mono uppercase tracking-wider ${reasonTitleColor} flex items-center gap-1">
               <span>💡</span> <span>Catalyst Rationale & Trader Impact</span>
             </span>
             <span class="text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
           </div>
-          <p class="text-[13px] text-slate-950 dark:text-slate-100 leading-relaxed font-medium">
+          <div class="bg-white dark:bg-[#11172A] p-2 rounded border border-slate-200/70 dark:border-slate-800 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
             ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
-          </p>
+          </div>
         </div>
       `;
+    }
     }
 
     // ================= MASTER NEWS MATRIX TABLE RENDERING =================
@@ -1401,13 +1492,27 @@
       
       const sentEl = document.getElementById("story-modal-sentiment");
       sentEl.textContent = story.sentiment === "BULLISH" ? "🟢 BULLISH" : story.sentiment === "BEARISH" ? "🔴 BEARISH" : "⚪ NEUTRAL";
-      sentEl.className = `px-2 py-0.5 rounded text-[10.5px] font-mono font-bold border ${story.sentiment === "BULLISH" ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : story.sentiment === "BEARISH" ? 'bg-rose-50 text-rose-800 border-rose-200' : 'bg-slate-100 text-slate-800 border-slate-200'}`;
+      sentEl.className = `px-2 py-0.5 rounded text-[10.5px] font-mono font-bold border ${story.sentiment === "BULLISH" ? 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300' : story.sentiment === "BEARISH" ? 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300' : 'bg-slate-100 text-slate-800 border-slate-200 dark:bg-slate-800 dark:text-slate-200'}`;
 
-      document.getElementById("story-modal-brief").innerHTML = highlightNumbers(story.brief_details);
+      // Render KPIs in modal
+      const kpisContainer = document.getElementById("story-modal-kpis-container");
+      if (kpisContainer) {
+        kpisContainer.innerHTML = buildKpiCardsHtml(story);
+      }
+
+      // Render brief details as crisp short chunks
+      const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
+      const briefContainer = document.getElementById("story-modal-brief");
+      briefContainer.innerHTML = briefSentences.map(sent => `
+        <div class="flex items-start gap-2 bg-white dark:bg-[#11172A] p-2 rounded-md border border-slate-200/80 dark:border-slate-800/80 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
+          <span class="text-indigo-600 dark:text-indigo-400 font-black text-sm select-none">▸</span>
+          <span>${highlightNumbers(sent)}</span>
+        </div>
+      `).join('') || `<p class="text-xs text-slate-400">No brief available.</p>`;
 
       const bulletsContainer = document.getElementById("story-modal-bullets");
       bulletsContainer.innerHTML = (story.bullet_points || []).map(bp => `
-        <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-slate-50 dark:bg-[#141A2E] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
+        <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white dark:bg-[#11172A] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800">
           <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none">›</span>
           <span>${highlightNumbers(bp)}</span>
         </li>
