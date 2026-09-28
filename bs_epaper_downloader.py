@@ -24,6 +24,11 @@ from analyzer import NewspaperEditionReport, analyze_newspaper_pdf
 logger = logging.getLogger("NewsAPI.BSEpaperDownloader")
 
 
+class BusinessStandardSessionError(Exception):
+    """Raised when Business Standard subscriber authentication or ePaper download fails."""
+    pass
+
+
 class BusinessStandardEpaperDownloader:
     def __init__(self, download_dir: Optional[Path] = None):
         self.download_dir = download_dir or config.download_dir
@@ -52,6 +57,9 @@ class BusinessStandardEpaperDownloader:
 
         merger = PdfMerger()
         pdf_names = sorted([name for name in z.namelist() if name.lower().endswith(".pdf")])
+        if not pdf_names:
+            raise BusinessStandardSessionError("Zip archive contained no valid page PDF files.")
+
         logger.info(f"Found {len(pdf_names)} page PDFs inside Business Standard zip archive.")
 
         for name in pdf_names:
@@ -74,17 +82,22 @@ class BusinessStandardEpaperDownloader:
         self,
         epaper_url: str = "https://epaper.business-standard.com/bs_new/index.php?rt=main/mainpage#1",
         storage_state_file: str = "bs_storage_state.json"
-    ) -> Optional[Path]:
+    ) -> Path:
         """
         Launches Playwright subscriber session to download all 1-36 pages or full zipped edition.
+        Raises BusinessStandardSessionError if authentication or session fails.
         """
         state_path = Path(storage_state_file)
         if not state_path.exists():
-            logger.warning(f"Business Standard session state '{storage_state_file}' not found.")
-            return None
+            error_msg = (
+                f"❌ CRITICAL SESSION FAILURE: Business Standard session state '{storage_state_file}' was not found. "
+                "Unable to authenticate with https://epaper.business-standard.com. "
+                "Please configure 'BS_STORAGE_STATE_BASE64' in GitHub Secrets or generate 'bs_storage_state.json' locally."
+            )
+            logger.error(error_msg)
+            raise BusinessStandardSessionError(error_msg)
 
         target_pdf = self.download_dir / f"business_standard_{self.date_str}.pdf"
-        page_images: List[bytes] = []
 
         logger.info(f"Launching subscriber session for Business Standard 36-page ePaper: {epaper_url}")
 
@@ -112,6 +125,19 @@ class BusinessStandardEpaperDownloader:
                 page.goto(epaper_url, timeout=60000, wait_until="domcontentloaded")
                 page.wait_for_timeout(5000)
 
+                current_url = page.url
+                page_title = page.title()
+
+                # Explicitly detect authentication failure or redirect to login/sso
+                if "sso-login" in current_url or "login" in current_url.lower() or "access denied" in page_title.lower():
+                    error_msg = (
+                        f"❌ SUBSCRIBER SESSION EXPIRED: Business Standard redirected to login / access denied. "
+                        f"(URL: {current_url}, Title: '{page_title}'). "
+                        "The subscriber session token has expired or is invalid. Please refresh the login session state."
+                    )
+                    logger.error(error_msg)
+                    raise BusinessStandardSessionError(error_msg)
+
                 # Check if download buttons exist on page
                 zip_buttons = page.query_selector_all("a[href*='download'], button[onclick*='download'], a[href*='zip'], a[title*='Download']")
                 if zip_buttons:
@@ -134,19 +160,25 @@ class BusinessStandardEpaperDownloader:
                         browser.close()
                         return target_pdf
 
+                # If no direct download trigger caught, check page rendering
+                raise BusinessStandardSessionError(
+                    "❌ Could not capture automatic zip/pdf download from ePaper viewer. Page requires active session interaction."
+                )
+
+            except BusinessStandardSessionError:
+                raise
             except Exception as e:
-                logger.error(f"Error during Playwright Business Standard epaper download: {e}")
+                error_msg = f"❌ Business Standard ePaper download error: {e}"
+                logger.error(error_msg)
+                raise BusinessStandardSessionError(error_msg) from e
             finally:
                 browser.close()
-
-        return None
 
 
 def run_bs_full_edition_pipeline(custom_pdf_or_zip: Optional[str] = None) -> NewspaperEditionReport:
     """
-    Executes the comprehensive Business Standard 36-page analysis:
-    - If custom PDF / zip provided, compiles and analyzes it.
-    - Otherwise tries full epaper download, and falls back gracefully to desk crawler.
+    Executes the comprehensive Business Standard 36-page analysis.
+    Explicitly raises BusinessStandardSessionError on authentication / download failure.
     """
     downloader = BusinessStandardEpaperDownloader()
     pdf_path = None
@@ -164,15 +196,5 @@ def run_bs_full_edition_pipeline(custom_pdf_or_zip: Optional[str] = None) -> New
         report = analyze_newspaper_pdf(pdf_path)
         return report
 
-    # Fallback to desk crawler
-    logger.info("Falling back to Business Standard multi-desk analysis pipeline...")
-    from bs_downloader import run_bs_pipeline
-    return run_bs_pipeline()
+    raise BusinessStandardSessionError("Business Standard master PDF was not generated.")
 
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-    import sys
-    arg = sys.argv[1] if len(sys.argv) > 1 else None
-    rep = run_bs_full_edition_pipeline(arg)
-    print(f"Business Standard Finished: {len(rep.major_stories)} stories extracted across all pages!")

@@ -65,9 +65,9 @@ jobs:
           R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
         run: |
           if [ -f bs_storage_state.json ]; then
-            python main.py --source business_standard
+            python main.py --source business_standard || echo "::error title=Business Standard Failure::Business Standard 36-page session failed to authenticate or download."
           else
-            echo "Skipping Business Standard (No session state)."
+            echo "::warning title=Business Standard Session Missing::No BS_STORAGE_STATE_BASE64 secret provided. Skipping Business Standard edition."
           fi
 
       - name: Run Unified Lossless Aggregation & Neon DB Sync

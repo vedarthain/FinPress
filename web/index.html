@@ -74,6 +74,10 @@
           </button>
         </div>
 
+        <div id="source-health-container" class="flex items-center gap-1.5 font-mono text-[10px]">
+          <!-- Dynamically populated FE / BS status pills -->
+        </div>
+
         <span id="total-news-counter-badge" class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold font-mono text-[10.5px]">
           🔥 Total: <b id="top-total-count">0</b>
         </span>
@@ -187,6 +191,15 @@
     <!-- ================= MAIN THREE-COLUMN WORKSPACE (COMPRESSED DENSITY) ================= -->
     <main class="mx-auto max-w-[1920px] w-full px-2.5 py-1.5 flex-1 flex flex-col gap-1.5">
       
+      <!-- Diagnostic Source Health Alert Banner (Appears when any paper fails) -->
+      <div id="source-alert-banner" class="hidden px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-900 dark:text-amber-200 text-[11px] font-mono flex items-center justify-between gap-2 shadow-2xs">
+        <div class="flex items-center gap-2">
+          <span class="text-sm">⚠️</span>
+          <span id="source-alert-text">Business Standard session failed to authenticate.</span>
+        </div>
+        <button onclick="document.getElementById('source-alert-banner').classList.add('hidden')" class="text-slate-400 hover:text-white text-xs font-bold px-1.5 py-0.5" title="Dismiss">✕</button>
+      </div>
+
       <!-- ================= VIEW 1: NEWS STREAM (SPLIT READER + STOCKS IN FOCUS ON RIGHT) ================= -->
       <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[380px_minmax(0,1fr)_280px] xl:grid-cols-[410px_minmax(0,1fr)_310px] gap-2 items-start">
         
@@ -752,6 +765,55 @@
       document.getElementById("feed-count-all").textContent = stories.length;
       document.getElementById("feed-count-bullish").textContent = bCount;
       document.getElementById("feed-count-bearish").textContent = rCount;
+
+      // Render Source Pipeline Health
+      const healthContainer = document.getElementById("source-health-container");
+      const alertBanner = document.getElementById("source-alert-banner");
+      const alertText = document.getElementById("source-alert-text");
+
+      if (healthContainer) {
+        healthContainer.innerHTML = "";
+        const statuses = (rawReport && rawReport.source_statuses) || {};
+        
+        let hasFailure = false;
+        let failureDetails = [];
+
+        const feStatus = statuses.financial_express || "✅ FE (Active)";
+        const bsStatus = statuses.business_standard || (stories.some(s => (s.page_numbers || "").includes("BS")) ? "✅ BS (Active)" : "❌ BS (Session Expired)");
+
+        const fePill = document.createElement("span");
+        fePill.className = feStatus.includes("✅") 
+          ? "px-1.5 py-0.2 rounded bg-slate-900 border border-slate-700 text-slate-300 font-bold" 
+          : "px-1.5 py-0.2 rounded bg-rose-500/20 border border-rose-500/40 text-rose-300 font-bold";
+        fePill.textContent = `FE: ${feStatus.includes("✅") ? '✅' : '❌'}`;
+        fePill.title = `Financial Express: ${feStatus}`;
+        healthContainer.appendChild(fePill);
+
+        const bsPill = document.createElement("span");
+        const bsOk = bsStatus.includes("✅") || bsStatus.includes("Active");
+        bsPill.className = bsOk 
+          ? "px-1.5 py-0.2 rounded bg-slate-900 border border-slate-700 text-slate-300 font-bold" 
+          : "px-1.5 py-0.2 rounded bg-rose-500/20 border border-rose-500/40 text-rose-300 font-bold";
+        bsPill.textContent = `BS: ${bsOk ? '✅' : '❌'}`;
+        bsPill.title = `Business Standard: ${bsStatus}`;
+        healthContainer.appendChild(bsPill);
+
+        if (!bsOk) {
+          hasFailure = true;
+          failureDetails.push("Business Standard subscriber session expired or was not authenticated. Showing Financial Express news.");
+        }
+        if (!feStatus.includes("✅")) {
+          hasFailure = true;
+          failureDetails.push("Financial Express edition failed to download.");
+        }
+
+        if (hasFailure && alertBanner && alertText) {
+          alertText.innerHTML = `<b>Edition Notice:</b> ${failureDetails.join(" · ")}`;
+          alertBanner.classList.remove("hidden");
+        } else if (alertBanner) {
+          alertBanner.classList.add("hidden");
+        }
+      }
 
       renderStocksFocusSidebar();
       renderFeedList();

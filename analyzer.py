@@ -58,6 +58,10 @@ class NewspaperEditionReport(BaseModel):
     major_stories: List[NewsStory] = Field(
         description="Complete exhaustive list of all distinct news stories extracted across all pages."
     )
+    source_statuses: Optional[dict] = Field(
+        default_factory=dict,
+        description="Health and fetch status of newspaper sources (e.g. Financial Express, Business Standard)"
+    )
 
 
 class GeminiNewsAnalyzer:

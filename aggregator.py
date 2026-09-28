@@ -129,7 +129,12 @@ class UnifiedNewsAggregator:
 
         return results
 
-    def combine_and_deduplicate(self, reports_with_sources: List[Any], date_str: Optional[str] = None) -> NewspaperEditionReport:
+    def combine_and_deduplicate(
+        self,
+        reports_with_sources: List[Any],
+        date_str: Optional[str] = None,
+        source_statuses: Optional[dict] = None
+    ) -> NewspaperEditionReport:
         """
         Combines stories from multiple reports, performs section-by-section deduplication,
         ensuring 100% of unique articles are retained.
@@ -159,11 +164,14 @@ class UnifiedNewsAggregator:
                     return "Corporate Events"
             return cat
 
+        sources_present = set()
         for item in reports_with_sources:
             if isinstance(item, tuple):
                 r, source_name = item
             else:
                 r, source_name = item, "Newspaper"
+
+            sources_present.add(source_name)
 
             for s in r.major_stories:
                 if is_filler_headline(s.headline):
@@ -193,16 +201,24 @@ class UnifiedNewsAggregator:
             master_stories.extend(deduped)
 
         summary = (
-            f"FinBrief Unified Financial Intelligence Edition ({target_date}) combines complete, unabridged daily reporting "
+            f"FinPress Unified Financial Intelligence Edition ({target_date}) combines complete daily reporting "
             f"across Financial Express and Business Standard. Covering {len(master_stories)} distinct corporate, policy, market, and "
-            f"macroeconomic developments, today's edition provides an exhaustive overview of the Indian and global business landscape."
+            f"macroeconomic developments."
         )
+
+        final_statuses = source_statuses or {}
+        if not final_statuses:
+            final_statuses = {
+                "financial_express": "✅ Active" if "Financial Express" in sources_present else "⚠️ Not Included",
+                "business_standard": "✅ Active" if "Business Standard" in sources_present else "❌ Failed / Session Expired"
+            }
 
         report = NewspaperEditionReport(
             edition_date=target_date,
             total_pages_analyzed=len(master_stories),
             edition_summary=summary,
             major_stories=master_stories,
+            source_statuses=final_statuses,
         )
 
         # 1. Save Date-stamped Unified Files
@@ -247,15 +263,23 @@ def run_unified_aggregation(date_str: Optional[str] = None) -> NewspaperEditionR
     bs_path = reports_dir / f"news_report_bs_{target_date}.json"
 
     reports = []
+    source_statuses = {}
+
     if fe_path.exists():
         with open(fe_path, "r", encoding="utf-8") as f:
             r = NewspaperEditionReport.model_validate_json(f.read())
             reports.append((r, "Financial Express"))
+            source_statuses["financial_express"] = f"✅ Active ({len(r.major_stories)} stories)"
+    else:
+        source_statuses["financial_express"] = "⚠️ FE Report Not Found"
 
     if bs_path.exists():
         with open(bs_path, "r", encoding="utf-8") as f:
             r = NewspaperEditionReport.model_validate_json(f.read())
             reports.append((r, "Business Standard"))
+            source_statuses["business_standard"] = f"✅ Active ({len(r.major_stories)} stories)"
+    else:
+        source_statuses["business_standard"] = "❌ Failed: Subscriber Session Expired / Not Fetched"
 
     if not reports:
         all_jsons = sorted(reports_dir.glob("news_report_*.json"))
@@ -267,7 +291,7 @@ def run_unified_aggregation(date_str: Optional[str] = None) -> NewspaperEditionR
                     reports.append((r, source_label))
 
     aggregator = UnifiedNewsAggregator()
-    return aggregator.combine_and_deduplicate(reports, date_str=target_date)
+    return aggregator.combine_and_deduplicate(reports, date_str=target_date, source_statuses=source_statuses)
 
 
 if __name__ == "__main__":

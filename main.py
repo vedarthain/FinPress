@@ -52,21 +52,29 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
             logger.info("Sending PDF to Google Gemini Flash API for analysis...")
             report = analyze_newspaper_pdf(pdf_path)
         elif source in ["all", "unified"]:
-            logger.info("Step 1: Downloading & analyzing Financial Express edition...")
+            source_statuses = {}
+
+            logger.info("Step 1: Downloading & analyzing Financial Express edition (24 pages)...")
             fe_report = None
             try:
                 pdf_path = run_downloader(url=custom_url)
                 fe_report = analyze_newspaper_pdf(pdf_path)
+                source_statuses["financial_express"] = f"✅ Success ({len(fe_report.major_stories)} stories extracted)"
             except Exception as e:
-                logger.warning(f"Financial Express run note: {e}")
+                err_fe = f"❌ FAILED: {e}"
+                logger.error(f"[SOURCE FAILURE] Financial Express: {err_fe}")
+                source_statuses["financial_express"] = err_fe
 
             logger.info("Step 2: Fetching & analyzing Business Standard edition (36-page ePaper & Desks)...")
             bs_report = None
             try:
                 from bs_epaper_downloader import run_bs_full_edition_pipeline
                 bs_report = run_bs_full_edition_pipeline()
+                source_statuses["business_standard"] = f"✅ Success ({len(bs_report.major_stories)} stories extracted)"
             except Exception as e:
-                logger.warning(f"Business Standard run note: {e}")
+                err_bs = f"❌ FAILED: {e}"
+                logger.error(f"[SOURCE FAILURE] Business Standard: {err_bs}")
+                source_statuses["business_standard"] = err_bs
 
             logger.info("Step 3: Running unified multi-source deduplication & aggregation...")
             from aggregator import UnifiedNewsAggregator
@@ -81,12 +89,19 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
                 report = run_unified_aggregation()
             else:
                 agg = UnifiedNewsAggregator()
-                report = agg.combine_and_deduplicate(reports_to_merge)
+                report = agg.combine_and_deduplicate(reports_to_merge, source_statuses=source_statuses)
 
         elif source == "business_standard" or (custom_url and "business-standard" in custom_url):
-            logger.info("Step 1: Fetching all Business Standard daily print & edition articles (36 pages)...")
+            logger.info("Step 1: Fetching Business Standard daily 36-page edition...")
             from bs_epaper_downloader import run_bs_full_edition_pipeline
-            report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
+            try:
+                report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
+            except Exception as e:
+                logger.error("=" * 60)
+                logger.error("❌ CRITICAL: BUSINESS STANDARD SUBSCRIBER SESSION FAILED!")
+                logger.error(f"Reason: {e}")
+                logger.error("=" * 60)
+                raise
         else:
             logger.info("Step 1: Downloading Financial Express ePaper edition...")
             pdf_path = run_downloader(url=custom_url)
@@ -94,14 +109,22 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
             report = analyze_newspaper_pdf(pdf_path)
 
         logger.info("==================================================")
-        logger.info("Pipeline executed successfully! Executive Summary:")
+        logger.info("Pipeline Execution Finished! Executive Summary:")
         logger.info(f"Total Stories Extracted: {len(report.major_stories)}")
+        if hasattr(report, "source_statuses") and report.source_statuses:
+            logger.info(f"Source Health: {report.source_statuses}")
         logger.info(f"Summary: {report.edition_summary[:200]}...")
         logger.info("==================================================")
 
         # Print top stories to console
         print("\n" + "=" * 60)
         print(f"📰 DAILY NEWSPAPER REPORT - {report.edition_date}")
+        if hasattr(report, "source_statuses") and report.source_statuses:
+            print("-" * 60)
+            print("📊 NEWSPAPER SOURCE PIPELINE HEALTH:")
+            for src, stat in report.source_statuses.items():
+                print(f"  • {src.replace('_', ' ').title():<20}: {stat}")
+            print("-" * 60)
         print("=" * 60)
         print(f"\nSummary:\n{report.edition_summary}\n")
         print("Top Headline Stories:")
