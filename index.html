@@ -429,9 +429,9 @@
         <div id="story-modal-brief" class="space-y-1.5"></div>
       </div>
 
-      <!-- 📌 KEY ANALYST DATA POINTS (AMBER CARD) -->
-      <div class="p-3 rounded-xl bg-amber-50/70 dark:bg-[#201608] border border-amber-300 dark:border-amber-800/80 shadow-2xs">
-        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-amber-950 dark:text-amber-300 mb-1.5 flex items-center gap-1">
+      <!-- 📌 KEY ANALYST DATA POINTS (ROSEMARY CARD) -->
+      <div class="p-3 rounded-xl bg-[#F0F6F2] dark:bg-[#13261C]/60 border border-[#4A725D]/60 dark:border-[#5E8E75]/70 shadow-2xs">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-[#183E28] dark:text-[#D1E7DD] mb-1.5 flex items-center gap-1">
           <span>📌</span> <span>Key Analyst Data Points</span>
         </p>
         <ul id="story-modal-bullets" class="space-y-1.5">
@@ -1590,18 +1590,18 @@
         <!-- 📋 3. STRUCTURED KEY QUANTITATIVE DATA TABLE -->
         ${metricsTableHtml}
 
-        <!-- 📌 4. KEY ANALYST DATA POINTS (WARM AMBER / GOLD BOX - HIGH CONTRAST) -->
-        <div class="mt-2 rounded-xl border-2 border-[#F59E0B] dark:border-[#FBBF24] bg-[#FEF3C7] dark:bg-[#451A03]/50 p-3 shadow-xs flex flex-col gap-2">
-          <div class="flex items-center justify-between border-b border-amber-300/80 dark:border-amber-900/60 pb-1.5">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#78350F] dark:text-[#FEF3C7] flex items-center gap-1.5">
+        <!-- 📌 4. KEY ANALYST DATA POINTS (ROSEMARY THEME - HIGH CONTRAST) -->
+        <div class="mt-2 rounded-xl border-2 border-[#4A725D] dark:border-[#5E8E75] bg-[#F0F6F2] dark:bg-[#13261C]/50 p-3 shadow-xs flex flex-col gap-2">
+          <div class="flex items-center justify-between border-b border-[#D0E2D6] dark:border-[#274635] pb-1.5">
+            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#183E28] dark:text-[#E2F0E8] flex items-center gap-1.5">
               <span>📌</span> <span>Key Analyst Data Points</span>
             </span>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-200/90 text-amber-950 dark:bg-amber-900/80 dark:text-amber-200">Metrics & Facts</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#D2E5D8] text-[#133824] dark:bg-[#1E432E] dark:text-[#D1E7DD]">Metrics & Facts</span>
           </div>
           <ul class="space-y-1.5">
             ${(story.bullet_points || []).map(bp => `
-              <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border border-amber-200/60 dark:border-slate-800 shadow-2xs font-medium">
-                <span class="text-[#D97706] dark:text-[#FBBF24] font-bold text-sm leading-none select-none mt-0.5">›</span>
+              <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border border-[#D5E5DA] dark:border-slate-800 shadow-2xs font-medium">
+                <span class="text-[#2F6D49] dark:text-[#76B494] font-bold text-sm leading-none select-none mt-0.5">›</span>
                 <span>${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
               </li>
             `).join('')}
