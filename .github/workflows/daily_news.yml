@@ -2,8 +2,8 @@ name: FinPress Daily Automation
 
 on:
   schedule:
-    # Runs daily at 00:30 UTC (06:00 AM IST)
-    - cron: '30 0 * * *'
+    # Runs daily at 00:15 UTC (05:45 AM IST) - off-peak minute avoids GitHub scheduler queue delays
+    - cron: '15 0 * * *'
   workflow_dispatch:
 
 jobs:
