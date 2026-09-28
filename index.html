@@ -429,9 +429,9 @@
         <div id="story-modal-brief" class="space-y-1.5"></div>
       </div>
 
-      <!-- 📌 KEY ANALYST DATA POINTS (ROSEMARY CARD) -->
-      <div class="p-3 rounded-xl bg-[#F0F6F2] dark:bg-[#13261C]/60 border border-[#4A725D]/60 dark:border-[#5E8E75]/70 shadow-2xs">
-        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-[#183E28] dark:text-[#D1E7DD] mb-1.5 flex items-center gap-1">
+      <!-- 📌 KEY ANALYST DATA POINTS (NEWSPAPER BROADSHEET CARD) -->
+      <div class="p-3 rounded-xl bg-[#F5EFEB] dark:bg-[#1E1914]/70 border border-[#B8A38E]/80 dark:border-[#524434] shadow-2xs">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-[#2E1F14] dark:text-[#F3ECE4] mb-1.5 flex items-center gap-1">
           <span>📌</span> <span>Key Analyst Data Points</span>
         </p>
         <ul id="story-modal-bullets" class="space-y-1.5">
@@ -1557,7 +1557,7 @@
           </div>
         </div>
 
-        <h1 class="text-[18px] sm:text-[20px] font-bold text-slate-900 dark:text-slate-100 leading-snug tracking-tight mt-0.5 mb-1">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
+        <h1 class="text-[18px] sm:text-[20px] font-semibold text-slate-950 dark:text-slate-50 leading-snug tracking-tight mt-0.5 mb-1">${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</h1>
 
         ${story.tickers.length > 0 ? `
           <div class="flex items-center gap-1.5 flex-wrap my-0.5">
@@ -1579,8 +1579,8 @@
           </div>
           <div class="grid grid-cols-1 gap-1.5">
             ${briefSentences.map(sent => `
-              <div class="flex items-start gap-2 bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border border-indigo-200/60 dark:border-slate-800 text-[13px] text-slate-900 dark:text-slate-100 leading-snug font-medium shadow-2xs">
-                <span class="text-[#4F46E5] dark:text-[#818CF8] font-black text-sm select-none">▸</span>
+              <div class="flex items-start gap-2 bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border border-indigo-200/60 dark:border-slate-800 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-normal shadow-2xs">
+                <span class="text-[#4F46E5] dark:text-[#818CF8] font-bold text-sm select-none">▸</span>
                 <span>${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
               </div>
             `).join('')}
@@ -1590,18 +1590,18 @@
         <!-- 📋 3. STRUCTURED KEY QUANTITATIVE DATA TABLE -->
         ${metricsTableHtml}
 
-        <!-- 📌 4. KEY ANALYST DATA POINTS (ROSEMARY THEME - HIGH CONTRAST) -->
-        <div class="mt-2 rounded-xl border-2 border-[#4A725D] dark:border-[#5E8E75] bg-[#F0F6F2] dark:bg-[#13261C]/50 p-3 shadow-xs flex flex-col gap-2">
-          <div class="flex items-center justify-between border-b border-[#D0E2D6] dark:border-[#274635] pb-1.5">
-            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#183E28] dark:text-[#E2F0E8] flex items-center gap-1.5">
+        <!-- 📌 4. KEY ANALYST DATA POINTS (NEWSPAPER BROADSHEET THEME) -->
+        <div class="mt-2 rounded-xl border-2 border-[#B8A38E] dark:border-[#524434] bg-[#F5EFEB] dark:bg-[#1E1914]/70 p-3 shadow-xs flex flex-col gap-2">
+          <div class="flex items-center justify-between border-b border-[#DFD3C4] dark:border-[#382E25] pb-1.5">
+            <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
               <span>📌</span> <span>Key Analyst Data Points</span>
             </span>
-            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#D2E5D8] text-[#133824] dark:bg-[#1E432E] dark:text-[#D1E7DD]">Metrics & Facts</span>
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#E6D9C8] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
           </div>
           <ul class="space-y-1.5">
             ${(story.bullet_points || []).map(bp => `
-              <li class="flex items-start gap-2 text-[13px] text-slate-900 dark:text-slate-100 leading-snug bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border border-[#D5E5DA] dark:border-slate-800 shadow-2xs font-medium">
-                <span class="text-[#2F6D49] dark:text-[#76B494] font-bold text-sm leading-none select-none mt-0.5">›</span>
+              <li class="flex items-start gap-2 text-[13px] text-slate-950 dark:text-slate-100 leading-snug bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border border-[#DFCFC0] dark:border-slate-800 shadow-2xs font-normal">
+                <span class="text-[#7A4B29] dark:text-[#CBB09C] font-bold text-sm leading-none select-none mt-0.5">›</span>
                 <span>${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
               </li>
             `).join('')}
@@ -1616,7 +1616,7 @@
             </span>
             <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900/80 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900/80 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
           </div>
-          <div class="bg-white/90 dark:bg-[#11172A] p-2.5 rounded-lg border ${isBullish ? 'border-emerald-200/60' : isBearish ? 'border-rose-200/60' : 'border-slate-200'} dark:border-slate-800 text-[13px] text-slate-900 dark:text-slate-100 leading-snug font-medium shadow-2xs">
+          <div class="bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border ${isBullish ? 'border-emerald-200/60' : isBearish ? 'border-rose-200/60' : 'border-slate-200'} dark:border-slate-800 text-[13px] text-slate-950 dark:text-slate-100 leading-snug font-normal shadow-2xs">
             ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
           </div>
         </div>
@@ -1625,7 +1625,7 @@
 
     function highlightNumbers(text) {
       if (!text) return "";
-      return text.replace(/(\b\d+(?:\.\d+)?%|\b₹\s?[\d,]+(?:\.\d+)?(?:\s?(?:cr|crore|lakh|bn|billion|tn|trillion))?|\b\$[\d,]+(?:\.\d+)?(?:\s?(?:bn|billion|million|mn|tn))?|\b[\d,]+(?:\.\d+)?\s?(?:crore|lakh|billion|million)\b)/gi, '<span class="text-brand-600 dark:text-amber-400 font-bold font-mono">$1</span>');
+      return text.replace(/(\b\d+(?:\.\d+)?%|\b₹\s?[\d,]+(?:\.\d+)?(?:\s?(?:cr|crore|lakh|bn|billion|tn|trillion))?|\b\$[\d,]+(?:\.\d+)?(?:\s?(?:bn|billion|million|mn|tn))?|\b[\d,]+(?:\.\d+)?\s?(?:crore|lakh|billion|million)\b)/gi, '<span class="text-slate-950 dark:text-amber-300 font-semibold font-mono">$1</span>');
     }
 
     function highlightSearchTokens(text, tokens) {
