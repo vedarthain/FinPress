@@ -30,30 +30,6 @@ jobs:
         run: |
           playwright install chromium --with-deps
 
-      - name: Restore Business Standard Session State (if provided)
-        env:
-          BS_STORAGE_STATE_BASE64: ${{ secrets.BS_STORAGE_STATE_BASE64 }}
-        run: |
-          python -c "
-          import os, base64, re, json
-          raw = os.environ.get('BS_STORAGE_STATE_BASE64', '').strip()
-          if raw:
-              clean = re.sub(r'[^A-Za-z0-9+/=]', '', raw)
-              pad_len = len(clean) % 4
-              if pad_len != 0:
-                  clean += '=' * (4 - pad_len)
-              try:
-                  decoded = base64.b64decode(clean).decode('utf-8', errors='ignore')
-                  json.loads(decoded)
-                  with open('bs_storage_state.json', 'w', encoding='utf-8') as f:
-                      f.write(decoded)
-                  print('✅ Restored Business Standard session state successfully.')
-              except Exception as e:
-                  print(f'⚠️ Warning: Could not decode BS_STORAGE_STATE_BASE64: {e}')
-          else:
-              print('ℹ️ No BS_STORAGE_STATE_BASE64 secret provided.')
-          "
-
       - name: Execute Business Standard Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -64,7 +40,6 @@ jobs:
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
           R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
-          BS_STORAGE_STATE_BASE64: ${{ secrets.BS_STORAGE_STATE_BASE64 }}
           BS_EMAIL: ${{ secrets.BS_EMAIL }}
           BS_USERNAME: ${{ secrets.BS_USERNAME }}
           BS_PASSWORD: ${{ secrets.BS_PASSWORD }}

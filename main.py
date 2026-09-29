@@ -96,17 +96,9 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
             from aggregator import run_unified_aggregation
             report = run_unified_aggregation()
         elif source == "business_standard" or (custom_url and "business-standard" in custom_url):
-            logger.info("Step 1: Fetching Business Standard daily 36-page edition...")
+            logger.info("Step 1: Fetching Business Standard daily 36-page ePaper edition...")
             from bs_epaper_downloader import run_bs_full_edition_pipeline
-            try:
-                report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
-            except Exception as e:
-                logger.warning("=" * 60)
-                logger.warning(f"⚠️ Business Standard ePaper PDF session unavailable: {e}")
-                logger.warning("🔄 Initiating automatic fallback to Business Standard All-Desk Institutional Extractor...")
-                logger.warning("=" * 60)
-                from bs_downloader import run_bs_pipeline
-                report = run_bs_pipeline()
+            report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
         else:
             logger.info("Step 1: Downloading Financial Express ePaper edition...")
             pdf_path = run_downloader(url=custom_url)
