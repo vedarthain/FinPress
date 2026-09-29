@@ -183,44 +183,44 @@
       </div>
 
       <!-- ================= VIEW 1: NEWS STREAM (3-COLUMN SIDE-BY-SIDE EXPANDED LAYOUT) ================= -->
-      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)_215px] xl:grid-cols-[295px_minmax(0,1fr)_230px] 2xl:grid-cols-[315px_minmax(0,1fr)_245px] gap-2 items-start w-full">
+      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)_250px] xl:grid-cols-[350px_minmax(0,1fr)_260px] 2xl:grid-cols-[380px_minmax(0,1fr)_275px] gap-2 items-start w-full">
         
         <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE (1-LINER STORIES, MAX 10 PER PAGE) -->
         <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col">
-          <div class="px-2.5 py-1.5 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/80 flex items-center justify-between text-[11px] font-mono">
+          <div class="px-3 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/80 flex items-center justify-between text-[12px] font-mono">
             <span id="feed-list-count" class="font-extrabold text-slate-900 dark:text-slate-100">0 Stories</span>
             <div class="flex items-center gap-1">
-              <button onclick="navigateStory(-1)" class="px-1.5 py-0.2 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700" title="Previous Story (Left / Up Arrow or K)">◀ Prev</button>
-              <button onclick="navigateStory(1)" class="px-1.5 py-0.2 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700" title="Next Story (Right / Down Arrow or J)">Next ▶</button>
+              <button onclick="navigateStory(-1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700" title="Previous Story (Left / Up Arrow or K)">◀ Prev</button>
+              <button onclick="navigateStory(1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700" title="Next Story (Right / Down Arrow or J)">Next ▶</button>
             </div>
           </div>
 
-          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 flex flex-col">
+          <div id="feed-list-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 flex flex-col p-1">
             <!-- Dynamically populated 1-liner story items (Max 10) -->
           </div>
 
           <!-- COLUMN 1 PAGINATION BAR (10 STORIES PER PAGE) -->
-          <div id="feed-pagination" class="px-2.5 py-1.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/80 flex items-center justify-between text-[11px] font-mono">
+          <div id="feed-pagination" class="px-3 py-2 border-t border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/80 flex items-center justify-between text-[12px] font-mono">
             <span id="feed-pagination-info" class="font-bold text-slate-700 dark:text-slate-300">Page 1 / 1</span>
             <div class="flex items-center gap-1">
-              <button id="feed-prev-page" onclick="changeFeedPage(-1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10.5px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev</button>
-              <button id="feed-next-page" onclick="changeFeedPage(1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[10.5px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">Next ▶</button>
+              <button id="feed-prev-page" onclick="changeFeedPage(-1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev</button>
+              <button id="feed-next-page" onclick="changeFeedPage(1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">Next ▶</button>
             </div>
           </div>
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE (WIDE READING PANE) -->
-        <div id="feed-detail-wrapper" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs lg:sticky lg:top-[44px] flex flex-col gap-2.5 lg:min-h-[calc(100vh-5.5rem)] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
-          <div id="feed-detail-container">
+        <div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs lg:sticky lg:top-[44px] flex flex-col gap-2.5 lg:min-h-[calc(100vh-5.5rem)] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
+          <div id="feed-detail-container" class="w-full">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (EXTREME RIGHT, INCREASED FONT, COLOR-CODED CLUSTERED STOCKS) -->
-        <aside id="view-feed-aside" class="flex flex-col gap-1.5 w-full min-w-[215px] max-w-[245px] ml-auto lg:sticky lg:top-[44px] lg:max-h-[calc(100vh-3.5rem)] lg:overflow-y-auto transition-all shrink-0">
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE DESKS & SECTORS) -->
+        <aside id="view-feed-aside" class="w-full flex flex-col gap-1.5 lg:sticky lg:top-[44px] lg:max-h-[calc(100vh-3.5rem)] lg:overflow-y-auto transition-all shrink-0">
           
           <!-- Tree Container (Renders 1. Categories Card, 2. Sectors Card, 3. Clustered Stocks Card) -->
-          <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans">
+          <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans w-full">
             <!-- Dynamically populated -->
           </div>
 
@@ -1694,7 +1694,7 @@
         const inactiveStyle = "bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-900/60 hover:bg-[#FAF5FF]/50 dark:hover:bg-slate-800/50 text-slate-900 dark:text-slate-100";
 
         const btn = document.createElement("button");
-        btn.className = `w-full text-left px-3.5 py-2.5 rounded-lg transition-all flex items-center gap-2.5 mb-2 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
+        btn.className = `w-full text-left px-3.5 py-3 rounded-lg transition-all flex items-center gap-3 mb-2 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
         btn.onclick = () => {
           selectedStoryIndex = globalIdx;
           renderFeedList();
@@ -1708,9 +1708,9 @@
         };
 
         btn.innerHTML = `
-          <span class="shrink-0 text-[11px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums w-4">${numStr}</span>
-          <span class="w-2 h-2 rounded-full shrink-0 ${dot}"></span>
-          <h4 class="text-[13.5px] font-sans font-medium ${isSelected ? 'text-[#581C87] dark:text-[#E9D5FF]' : 'text-[#090D16] dark:text-[#F8FAFC]'} tracking-tight truncate flex-1 min-w-0"  title="${escapeQuotes(s.headline)}">
+          <span class="shrink-0 text-[13px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums w-5.5">${numStr}</span>
+          <span class="w-2.5 h-2.5 rounded-full shrink-0 ${dot}"></span>
+          <h4 class="text-[15.5px] sm:text-[16px] font-sans font-medium ${isSelected ? 'text-[#581C87] dark:text-[#E9D5FF]' : 'text-[#090D16] dark:text-[#F8FAFC]'} tracking-tight truncate flex-1 min-w-0 leading-snug" title="${escapeQuotes(s.headline)}">
             ${highlightSearchTokens(s.headline, queryTokens)}
           </h4>
         `;
