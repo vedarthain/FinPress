@@ -110,11 +110,14 @@ class BusinessStandardEpaperDownloader:
                 except Exception as e:
                     logger.warning(f"Failed to auto-decode BS_STORAGE_STATE_BASE64: {e}")
 
-        if not state_path.exists():
+        bs_email = os.environ.get("BS_EMAIL", "").strip()
+        bs_password = os.environ.get("BS_PASSWORD", "").strip()
+
+        if not state_path.exists() and not (bs_email and bs_password):
             error_msg = (
                 f"❌ CRITICAL SESSION FAILURE: Business Standard session state '{storage_state_file}' was not found. "
                 "Unable to authenticate with https://epaper.business-standard.com. "
-                "Please configure 'BS_STORAGE_STATE_BASE64' in GitHub Secrets or generate 'bs_storage_state.json' locally."
+                "Please configure 'BS_STORAGE_STATE_BASE64' or ('BS_EMAIL' & 'BS_PASSWORD') in GitHub Secrets."
             )
             logger.error(error_msg)
             raise BusinessStandardSessionError(error_msg)
@@ -131,12 +134,15 @@ class BusinessStandardEpaperDownloader:
                     "--disable-web-security"
                 ]
             )
-            context = browser.new_context(
-                storage_state=str(state_path),
-                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-                viewport={"width": 1920, "height": 1080},
-                accept_downloads=True
-            )
+            context_kwargs = {
+                "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+                "viewport": {"width": 1920, "height": 1080},
+                "accept_downloads": True
+            }
+            if state_path.exists():
+                context_kwargs["storage_state"] = str(state_path)
+
+            context = browser.new_context(**context_kwargs)
             page = context.new_page()
 
             try:
@@ -156,6 +162,32 @@ class BusinessStandardEpaperDownloader:
                 page_title = page.title()
 
                 # Explicitly detect authentication failure or redirect to login/sso
+                if "sso-login" in current_url or "login" in current_url.lower() or "access denied" in page_title.lower():
+                    # Attempt credential auto-login if BS_EMAIL and BS_PASSWORD are provided
+                    if bs_email and bs_password:
+                        logger.info("Session expired. Attempting automatic credential re-authentication with BS_EMAIL/BS_PASSWORD...")
+                        try:
+                            page.goto("https://www.business-standard.com/sso-login", timeout=30000, wait_until="domcontentloaded")
+                            page.wait_for_timeout(2000)
+                            email_el = page.wait_for_selector('input[type="email"], input[name="email"], #email', timeout=10000)
+                            if email_el:
+                                email_el.fill(bs_email)
+                            pass_el = page.wait_for_selector('input[type="password"], input[name="password"], #password', timeout=10000)
+                            if pass_el:
+                                pass_el.fill(bs_password)
+                            submit_el = page.wait_for_selector('button[type="submit"], input[type="submit"], button:has-text("Sign In"), button:has-text("Login")', timeout=10000)
+                            if submit_el:
+                                submit_el.click()
+                                page.wait_for_timeout(6000)
+                                context.storage_state(path=str(state_path))
+                                logger.info("✅ Re-authenticated successfully via credentials! Retrying ePaper reader...")
+                                page.goto(epaper_url, timeout=60000, wait_until="domcontentloaded")
+                                page.wait_for_timeout(5000)
+                                current_url = page.url
+                                page_title = page.title()
+                        except Exception as auth_err:
+                            logger.warning(f"Credential auto-login attempt failed: {auth_err}")
+
                 if "sso-login" in current_url or "login" in current_url.lower() or "access denied" in page_title.lower():
                     error_msg = (
                         f"❌ SUBSCRIBER SESSION EXPIRED: Business Standard redirected to login / access denied. "
