@@ -110,7 +110,7 @@ class BusinessStandardEpaperDownloader:
                 except Exception as e:
                     logger.warning(f"Failed to auto-decode BS_STORAGE_STATE_BASE64: {e}")
 
-        bs_email = os.environ.get("BS_EMAIL", "").strip()
+        bs_email = (os.environ.get("BS_EMAIL") or os.environ.get("BS_USERNAME", "")).strip()
         bs_password = os.environ.get("BS_PASSWORD", "").strip()
 
         if not state_path.exists() and not (bs_email and bs_password):

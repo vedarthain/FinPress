@@ -66,6 +66,7 @@ jobs:
           R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
           BS_STORAGE_STATE_BASE64: ${{ secrets.BS_STORAGE_STATE_BASE64 }}
           BS_EMAIL: ${{ secrets.BS_EMAIL }}
+          BS_USERNAME: ${{ secrets.BS_USERNAME }}
           BS_PASSWORD: ${{ secrets.BS_PASSWORD }}
         run: |
           python main.py --source business_standard
