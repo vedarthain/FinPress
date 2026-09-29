@@ -92,9 +92,34 @@ class CloudflareR2Storage:
             logger.error(f"Error uploading {path.name} to Cloudflare R2: {e}")
             return None
 
+    def download_file(self, object_name: str, destination_path: Path | str) -> bool:
+        """Downloads an object from Cloudflare R2 bucket to a local file path."""
+        if not self.is_active():
+            return False
+
+        dest = Path(destination_path).resolve()
+        dest.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            logger.info(f"Downloading from Cloudflare R2 -> '{object_name}' to {dest}...")
+            self.s3_client.download_file(
+                Bucket=self.bucket_name,
+                Key=object_name,
+                Filename=str(dest),
+            )
+            logger.info(f"✅ Successfully downloaded {object_name} from Cloudflare R2.")
+            return True
+        except Exception as e:
+            logger.warning(f"Could not download {object_name} from Cloudflare R2: {e}")
+            return False
+
 
 # Global singleton instance
 r2_storage = CloudflareR2Storage()
 
 def upload_to_r2(file_path: Path | str, object_name: Optional[str] = None) -> Optional[str]:
     return r2_storage.upload_file(file_path, object_name)
+
+def download_from_r2(object_name: str, destination_path: Path | str) -> bool:
+    return r2_storage.download_file(object_name, destination_path)
+

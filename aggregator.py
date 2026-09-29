@@ -289,11 +289,21 @@ def run_unified_aggregation(date_str: Optional[str] = None) -> NewspaperEditionR
     """Loads existing FE & BS reports from reports dir and creates the unified deduplicated report."""
     target_date = date_str or datetime.now().strftime("%Y-%m-%d")
     reports_dir = Path(config.output_dir)
+    reports_dir.mkdir(parents=True, exist_ok=True)
 
     fe_path = reports_dir / f"news_report_fe_{target_date}.json"
     if not fe_path.exists():
         fe_path = reports_dir / f"news_report_{target_date}.json"
+    if not fe_path.exists():
+        from cloud_storage import download_from_r2
+        download_from_r2(f"reports/news_report_fe_{target_date}.json", fe_path)
+        if not fe_path.exists():
+            download_from_r2(f"reports/news_report_{target_date}.json", fe_path)
+
     bs_path = reports_dir / f"news_report_bs_{target_date}.json"
+    if not bs_path.exists():
+        from cloud_storage import download_from_r2
+        download_from_r2(f"reports/news_report_bs_{target_date}.json", bs_path)
 
     reports = []
     source_statuses = {}
