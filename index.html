@@ -216,53 +216,34 @@
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE VIEW: CATEGORIES [OPEN], SECTORS & STOCKS [COLLAPSED]) -->
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (COLLAPSIBLE VERTICAL PILL & ACCORDION DRAWER) -->
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE VIEW: CATEGORIES [OPEN], SECTORS & STOCKS [COLLAPSED] + HAMBURGER COLLAPSE) -->
         <div class="flex items-start gap-1 lg:sticky lg:top-[44px] lg:max-h-[calc(100vh-3.5rem)]">
           
-          <!-- A. Vertical Pill when Collapsed (Matching Image 1) -->
-          <button id="sidebar-vertical-pill" onclick="toggleSidebar()" class="hidden flex-col items-center gap-2 py-4 px-1.5 rounded-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0E1322] text-[#090D16] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shadow-sm cursor-pointer select-none transition-all shrink-0 w-8" title="Expand Categories, Sectors & Stocks">
-            <span class="text-xs font-bold text-slate-700 dark:text-slate-300">☰</span>
-            <span class="font-sans text-[10px] font-medium tracking-wider uppercase [writing-mode:vertical-lr] rotate-180 text-slate-700 dark:text-slate-300 py-1">
+          <!-- A. Vertical Pill when Collapsed (Hamburger kind of collapse) -->
+          <button id="sidebar-vertical-pill" onclick="toggleSidebar()" class="hidden flex-col items-center gap-2 py-4 px-1.5 rounded-full border border-[#DFC0A5] dark:border-slate-700 bg-[#FBE8D8] dark:bg-[#0E1322] text-[#1C1917] dark:text-slate-200 hover:bg-[#F3DECC] dark:hover:bg-slate-800 shadow-sm cursor-pointer select-none transition-all shrink-0 w-8" title="Expand Categories, Sectors & Stocks">
+            <span class="text-xs font-bold text-amber-900 dark:text-amber-400">☰</span>
+            <span class="font-mono text-[10px] font-bold tracking-wider uppercase [writing-mode:vertical-lr] rotate-180 text-[#3D2412] dark:text-slate-300 py-1">
               CATEGORIES & DESKS
             </span>
           </button>
 
-          <!-- B. Full Drawer when Open (Matching Image 2) -->
-          <aside id="view-feed-aside" class="flex flex-col rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden w-full min-w-[240px] max-w-[280px] lg:max-h-[calc(100vh-3.5rem)] lg:overflow-y-auto transition-all">
+          <!-- B. Full Right Sidebar when Open (The 3 Tree-format Cards) -->
+          <aside id="view-feed-aside" class="flex flex-col gap-2 min-w-[240px] max-w-[280px] lg:max-h-[calc(100vh-3.5rem)] lg:overflow-y-auto transition-all">
             
-            <!-- Header (Matching Image 2: Title, Count, Collapse Chevron < ) -->
-            <div class="flex items-center justify-between px-3 py-2.5 bg-white dark:bg-[#0E1322] border-b border-slate-100 dark:border-slate-800">
-              <span class="text-[11.5px] font-sans font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
-                CATEGORIES & DESKS
-              </span>
-              <div class="flex items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400">
-                <span id="sidebar-total-stat">14 · Total</span>
-                <button onclick="toggleSidebar()" class="w-6 h-6 rounded flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-black dark:hover:text-white font-bold cursor-pointer text-base leading-none transition-colors" title="Collapse to Pill (‹)">
-                  ‹
-                </button>
+            <!-- Top Header of Column 3 with Hamburger & Hide -->
+            <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#FBE8D8] dark:bg-[#151D33] border border-[#DFC0A5] dark:border-slate-800 shadow-2xs">
+              <div class="flex items-center gap-1.5 font-mono text-[11.5px] font-bold text-[#1C1917] dark:text-slate-100">
+                <span class="text-amber-800 dark:text-amber-400 font-extrabold text-sm">☰</span>
+                <span>Filters & Desks</span>
               </div>
-            </div>
-
-            <!-- Search Input Box (Matching Image 2) -->
-            <div class="p-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40">
-              <div class="relative">
-                <input type="text" id="sidebar-filter-input" oninput="onSidebarFilterInput(this.value)" placeholder="Search category or stock..." class="w-full text-[12px] pl-6 pr-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0E1322] text-[#090D16] dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 font-sans"/>
-                <span class="absolute left-2 top-1.5 text-slate-400 text-[10.5px]">🔍</span>
-              </div>
-            </div>
-
-            <!-- Expand / Collapse All Toggle (Matching Image 2) -->
-            <div class="flex items-center justify-between px-3 py-1.5 bg-white dark:bg-[#0E1322] text-[11px] font-sans border-b border-slate-100 dark:border-slate-800">
-              <span id="active-filter-indicator" class="text-amber-700 dark:text-amber-400 font-medium text-[10.5px]"></span>
-              <button onclick="toggleAllTreeSections()" id="expand-collapse-all-btn" class="text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white font-medium flex items-center gap-1 cursor-pointer">
-                <span>⊞</span> <span id="expand-all-text">Expand all</span>
+              <button onclick="toggleSidebar()" class="px-2 py-0.5 rounded hover:bg-black/10 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-black font-mono text-[11px] font-bold flex items-center gap-1 cursor-pointer transition-colors" title="Collapse Sidebar to Hamburger Pill">
+                <span>✕ Hide</span>
               </button>
             </div>
 
-            <!-- Dynamic Accordion Rows (Matching Image 2) -->
-            <div id="sidebar-accordion-container" class="divide-y divide-slate-100 dark:divide-slate-800/80 flex flex-col font-sans">
-              <!-- Dynamically populated accordion items with left blue border for active -->
+            <!-- Tree Container (Renders the 3 Tree Cards) -->
+            <div id="tree-sidebar-container" class="flex flex-col gap-2 font-mono">
+              <!-- Dynamically populated: 1. Categories Card, 2. Sectors Card, 3. Stocks Card -->
             </div>
 
           </aside>
@@ -1262,38 +1243,20 @@
       else renderMatrixTable();
     }
 
-    // ================= ACCORDION SIDEBAR (MATCHING ATTACHED IMAGE 2) =================
+    // ================= TREE-VIEW SIDEBAR: CATEGORIES [OPEN], SECTORS & STOCKS [COLLAPSED] =================
     let treeState = {
       categories: true,  // Open by default
-      desks: true,
       sectors: false,    // Collapsed by default
       stocks: false      // Collapsed by default
     };
-
-    let sidebarSearchTerm = "";
-
-    function onSidebarFilterInput(val) {
-      sidebarSearchTerm = val.trim().toLowerCase();
-      renderCategoriesAndStocksSidebar();
-    }
 
     function toggleTreeNode(section) {
       treeState[section] = !treeState[section];
       renderCategoriesAndStocksSidebar();
     }
 
-    function toggleAllTreeSections() {
-      const allOpen = treeState.categories && treeState.desks && treeState.sectors && treeState.stocks;
-      const nextState = !allOpen;
-      treeState.categories = nextState;
-      treeState.desks = nextState;
-      treeState.sectors = nextState;
-      treeState.stocks = nextState;
-      renderCategoriesAndStocksSidebar();
-    }
-
     function renderCategoriesAndStocksSidebar() {
-      const container = document.getElementById("sidebar-accordion-container");
+      const container = document.getElementById("tree-sidebar-container");
       if (!container) return;
 
       container.innerHTML = "";
@@ -1306,216 +1269,203 @@
       const corpCount = corpEventsCount + corpApptsCount;
       const opinionsCount = stories.filter(s => s.isOpinion).length;
 
-      // Group 1: Core News Desks
+      // Group 1: News Categories (Open by default)
       const coreNewsItems = [
-        { id: "ALL", label: "All News", count: coreStories.length },
-        { id: "ANCHOR", label: "Front Page", count: anchorCount },
-        { id: "Sector", label: "Sector News", count: stories.filter(s => s.category === "Sector" && !s.isOpinion).length },
-        { id: "Economy", label: "Economy", count: stories.filter(s => s.category === "Economy" && !s.isOpinion).length },
-        { id: "Policy", label: "Policy & Regulations", count: stories.filter(s => s.category === "Policy" && !s.isOpinion).length },
-        { id: "Market", label: "Market Pulse", count: stories.filter(s => s.category === "Market" && !s.isOpinion).length },
-        { id: "Trade", label: "Trade & FX", count: stories.filter(s => s.category === "Trade" && !s.isOpinion).length },
-        { id: "International News", label: "International", count: stories.filter(s => s.category === "International News" && !s.isOpinion).length },
-        { id: "Others", label: "General Features", count: stories.filter(s => s.category === "Others" && !s.isOpinion).length }
+        { id: "ALL", label: "⚡ All News", count: coreStories.length },
+        { id: "ANCHOR", label: "📰 Front Page", count: anchorCount },
+        { id: "Sector", label: "🏢 Sector News", count: stories.filter(s => s.category === "Sector" && !s.isOpinion).length },
+        { id: "Economy", label: "📈 Economy", count: stories.filter(s => s.category === "Economy" && !s.isOpinion).length },
+        { id: "Policy", label: "🏛️ Policy & Rules", count: stories.filter(s => s.category === "Policy" && !s.isOpinion).length },
+        { id: "Market", label: "📊 Market Pulse", count: stories.filter(s => s.category === "Market" && !s.isOpinion).length },
+        { id: "Trade", label: "🚢 Trade & FX", count: stories.filter(s => s.category === "Trade" && !s.isOpinion).length },
+        { id: "International News", label: "🌐 International", count: stories.filter(s => s.category === "International News" && !s.isOpinion).length },
+        { id: "Others", label: "📑 Features", count: stories.filter(s => s.category === "Others" && !s.isOpinion).length }
       ];
 
-      // Group 2: Specialized Desks
       const deskItems = [
-        { id: "IPO_ALL", label: "IPO Central", count: totalIpos },
-        { id: "CORPORATE_ALL", label: "Corporate Desk", count: corpCount },
-        { id: "EVENTS", label: "Corp Events", count: corpEventsCount },
-        { id: "APPOINTMENTS", label: "Appointments", count: corpApptsCount },
-        { id: "OPINIONS", label: "Opinions Desk", count: opinionsCount }
+        { id: "IPO_ALL", label: "🚀 IPO Central", count: totalIpos },
+        { id: "CORPORATE_ALL", label: "🏢 Corporate Desk", count: corpCount },
+        { id: "EVENTS", label: "📢 Corp Events", count: corpEventsCount },
+        { id: "APPOINTMENTS", label: "👔 Appointments", count: corpApptsCount },
+        { id: "OPINIONS", label: "✍️ Opinions Desk", count: opinionsCount }
       ];
 
-      // Group 3: Industry Sectors
+      // --- SECTION 1: CATEGORIES TREE CARD (OPEN BY DEFAULT) ---
+      const catCard = document.createElement("div");
+      catCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+      
+      const isCatOpen = treeState.categories;
+      catCard.innerHTML = `
+        <div class="px-3 py-2 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('categories')">
+          <div class="flex items-center gap-1.5 font-mono text-[11.5px] font-bold text-slate-900 dark:text-slate-100">
+            <span class="text-amber-600 dark:text-amber-400 text-xs">${isCatOpen ? '▼' : '▶'}</span>
+            <span>📁 News Categories</span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">${coreNewsItems.length + deskItems.length}</span>
+          </div>
+          ${selectedFeedCategory !== 'ALL' ? `<button onclick="event.stopPropagation(); onCategorySelect('ALL');" class="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">Reset (✕)</button>` : ''}
+        </div>
+      `;
+
+      if (isCatOpen) {
+        const catBody = document.createElement("div");
+        catBody.className = "p-2 flex flex-col gap-2 font-mono text-[11px]";
+
+        // Sub-group: Core News Desks
+        const coreDiv = document.createElement("div");
+        coreDiv.className = "flex flex-col gap-0.5";
+        coreDiv.innerHTML = `<span class="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 px-1 mb-0.5 tracking-wider">📰 Core Desks</span>`;
+
+        coreNewsItems.forEach(item => {
+          const isSelected = selectedFeedCategory === item.id;
+          const btn = document.createElement("button");
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 font-medium'}`;
+          btn.innerHTML = `
+            <span class="flex items-center gap-1.5 truncate">
+              <span class="text-slate-400 select-none ${isSelected ? 'text-white' : ''}">├─</span>
+              <span class="truncate">${item.label}</span>
+            </span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] ${isSelected ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}">${item.count}</span>
+          `;
+          btn.onclick = () => {
+            if (item.id === 'ANCHOR') switchView('anchor');
+            else onCategorySelect(isSelected ? 'ALL' : item.id);
+          };
+          coreDiv.appendChild(btn);
+        });
+        catBody.appendChild(coreDiv);
+
+        // Sub-group: Specialized Desks
+        const deskDiv = document.createElement("div");
+        deskDiv.className = "flex flex-col gap-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-800";
+        deskDiv.innerHTML = `<span class="text-[10px] font-bold uppercase text-amber-700 dark:text-amber-400 px-1 mb-0.5 tracking-wider">🏛️ Specialized Desks</span>`;
+
+        deskItems.forEach(item => {
+          const isSelected = selectedFeedCategory === item.id || (item.id === 'IPO_ALL' && currentView === 'ipo') || (item.id === 'CORPORATE_ALL' && currentView === 'corporate');
+          const btn = document.createElement("button");
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors ${isSelected ? 'bg-amber-700 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
+          btn.innerHTML = `
+            <span class="flex items-center gap-1.5 truncate">
+              <span class="text-slate-400 select-none ${isSelected ? 'text-white' : ''}">├─</span>
+              <span class="truncate">${item.label}</span>
+            </span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] ${isSelected ? 'bg-white/25 text-white' : 'bg-amber-100/70 dark:bg-amber-950/50 text-amber-900 dark:text-amber-300'}">${item.count}</span>
+          `;
+          btn.onclick = () => {
+            if (item.id === 'IPO_ALL') onDeskSelect('ipo');
+            else if (item.id === 'CORPORATE_ALL') onDeskSelect('corporate');
+            else if (item.id === 'EVENTS') selectCorporateSub('EVENTS');
+            else if (item.id === 'APPOINTMENTS') selectCorporateSub('APPOINTMENTS');
+            else if (item.id === 'OPINIONS') onDeskSelect('opinions');
+          };
+          deskDiv.appendChild(btn);
+        });
+        catBody.appendChild(deskDiv);
+
+        catCard.appendChild(catBody);
+      }
+      container.appendChild(catCard);
+
+      // --- SECTION 2: INDUSTRY SECTORS TREE CARD (COLLAPSED BY DEFAULT) ---
       const secCounts = {};
       stories.forEach(s => {
         (s.sectors || []).forEach(sec => secCounts[sec] = (secCounts[sec] || 0) + 1);
       });
       const sortedSecs = Object.keys(secCounts).sort((a,b) => secCounts[b] - secCounts[a]);
 
-      // Group 4: Company Stocks
+      const secCard = document.createElement("div");
+      secCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+      
+      const isSecOpen = treeState.sectors;
+      secCard.innerHTML = `
+        <div class="px-3 py-2 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('sectors')">
+          <div class="flex items-center gap-1.5 font-mono text-[11.5px] font-bold text-slate-900 dark:text-slate-100">
+            <span class="text-indigo-600 dark:text-indigo-400 text-xs">${isSecOpen ? '▼' : '▶'}</span>
+            <span>📈 Industry Sectors</span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">${sortedSecs.length}</span>
+          </div>
+          ${activeSectorFilter ? `<button onclick="event.stopPropagation(); activeSectorFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
+        </div>
+      `;
+
+      if (isSecOpen) {
+        const secBody = document.createElement("div");
+        secBody.className = "p-2 flex flex-col gap-0.5 font-mono text-[11px] max-h-[260px] overflow-y-auto";
+
+        sortedSecs.forEach(sec => {
+          const isSelected = activeSectorFilter === sec;
+          const btn = document.createElement("button");
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-medium'}`;
+          btn.innerHTML = `
+            <span class="flex items-center gap-1.5 truncate">
+              <span class="text-slate-400 select-none ${isSelected ? 'text-white' : ''}">├─</span>
+              <span class="truncate">${sec}</span>
+            </span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] ${isSelected ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}">${secCounts[sec]}</span>
+          `;
+          btn.onclick = () => {
+            activeSectorFilter = activeSectorFilter === sec ? null : sec;
+            selectedStoryIndex = 0;
+            currentFeedPage = 1;
+            renderCategoriesAndStocksSidebar();
+            if (currentLayoutMode === "split") renderFeedList();
+            else renderMatrixTable();
+          };
+          secBody.appendChild(btn);
+        });
+        secCard.appendChild(secBody);
+      }
+      container.appendChild(secCard);
+
+      // --- SECTION 3: COMPANY STOCKS TREE CARD (COLLAPSED BY DEFAULT) ---
       const stockCounts = {};
       stories.forEach(s => {
         (s.stocks || []).forEach(stk => stockCounts[stk] = (stockCounts[stk] || 0) + 1);
       });
       const sortedStocks = Object.keys(stockCounts).sort((a,b) => stockCounts[b] - stockCounts[a]);
 
-      const statEl = document.getElementById("sidebar-total-stat");
-      if (statEl) statEl.textContent = `${coreNewsItems.length + deskItems.length} · ${sortedStocks.length}`;
-
-      const expandText = document.getElementById("expand-all-text");
-      const allOpen = treeState.categories && treeState.desks && treeState.sectors && treeState.stocks;
-      if (expandText) expandText.textContent = allOpen ? "Collapse all" : "Expand all";
-
-      const filterIndicator = document.getElementById("active-filter-indicator");
-      if (filterIndicator) {
-        if (activeStockFilter || activeSectorFilter || selectedFeedCategory !== 'ALL') {
-          filterIndicator.innerHTML = `<button onclick="clearAllStockAndSectorFilters(); onCategorySelect('ALL');" class="hover:underline font-bold text-amber-700 dark:text-amber-400">Clear filters (✕)</button>`;
-        } else {
-          filterIndicator.textContent = "";
-        }
-      }
-
-      // Helper to build Accordion Group row matching Image 2
-      function createAccordionGroup(title, count, isExpanded, onToggle, items, renderItemFn) {
-        const groupWrapper = document.createElement("div");
-        groupWrapper.className = "flex flex-col";
-
-        const isGroupActive = items.some(it => it.isSelected);
-
-        const headerBtn = document.createElement("button");
-        headerBtn.className = `w-full text-left px-3 py-2.5 flex items-center justify-between transition-colors select-none ${
-          isGroupActive 
-            ? 'border-l-4 border-indigo-600 bg-slate-100/90 dark:bg-slate-800/80 font-bold text-slate-900 dark:text-white' 
-            : 'border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-200 font-medium'
-        }`;
-        headerBtn.onclick = onToggle;
-        headerBtn.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="text-[10px] text-slate-500 dark:text-slate-400 transition-transform ${isExpanded ? 'rotate-90' : ''}">▶</span>
-            <span class="text-[13px] font-sans font-medium">${title}</span>
-            <span class="text-[11.5px] font-normal text-slate-400 dark:text-slate-500 font-sans">(${count})</span>
+      const stockCard = document.createElement("div");
+      stockCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+      
+      const isStockOpen = treeState.stocks;
+      stockCard.innerHTML = `
+        <div class="px-3 py-2 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('stocks')">
+          <div class="flex items-center gap-1.5 font-mono text-[11.5px] font-bold text-slate-900 dark:text-slate-100">
+            <span class="text-amber-600 dark:text-amber-400 text-xs">${isStockOpen ? '▼' : '▶'}</span>
+            <span>🏢 Company Stocks</span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">${sortedStocks.length}</span>
           </div>
-        `;
-        groupWrapper.appendChild(headerBtn);
+          ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
+        </div>
+      `;
 
-        if (isExpanded) {
-          const bodyDiv = document.createElement("div");
-          bodyDiv.className = "pl-6 pr-2 py-1 flex flex-col gap-0.5 bg-slate-50/40 dark:bg-slate-900/30 border-t border-slate-100/80 dark:border-slate-800/50";
-          items.forEach(it => {
-            const itemRow = renderItemFn(it);
-            if (itemRow) bodyDiv.appendChild(itemRow);
-          });
-          groupWrapper.appendChild(bodyDiv);
-        }
+      if (isStockOpen) {
+        const stockBody = document.createElement("div");
+        stockBody.className = "p-2 flex flex-col gap-0.5 font-mono text-[11px] max-h-[260px] overflow-y-auto";
 
-        return groupWrapper;
+        sortedStocks.forEach(stk => {
+          const isSelected = activeStockFilter === stk;
+          const btn = document.createElement("button");
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors ${isSelected ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
+          btn.innerHTML = `
+            <span class="flex items-center gap-1.5 truncate">
+              <span class="text-slate-400 select-none ${isSelected ? 'text-white' : ''}">├─</span>
+              <span class="truncate">${stk}</span>
+            </span>
+            <span class="px-1.5 py-0.2 rounded text-[10px] ${isSelected ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}">${stockCounts[stk]}</span>
+          `;
+          btn.onclick = () => {
+            activeStockFilter = activeStockFilter === stk ? null : stk;
+            selectedStoryIndex = 0;
+            currentFeedPage = 1;
+            renderCategoriesAndStocksSidebar();
+            if (currentLayoutMode === "split") renderFeedList();
+            else renderMatrixTable();
+          };
+          stockBody.appendChild(btn);
+        });
+        stockCard.appendChild(stockBody);
       }
-
-      // 1. Core Categories Section
-      const filteredCore = coreNewsItems.filter(it => !sidebarSearchTerm || it.label.toLowerCase().includes(sidebarSearchTerm));
-      if (filteredCore.length > 0) {
-        const coreGroup = createAccordionGroup(
-          "News Categories",
-          coreNewsItems.length,
-          treeState.categories || !!sidebarSearchTerm,
-          () => toggleTreeNode('categories'),
-          filteredCore.map(it => ({ ...it, isSelected: selectedFeedCategory === it.id })),
-          (it) => {
-            const btn = document.createElement("button");
-            btn.className = `w-full text-left px-2 py-1 rounded text-[12px] font-sans flex items-center justify-between transition-colors ${
-              it.isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 font-medium'
-            }`;
-            btn.innerHTML = `
-              <span class="truncate">${it.label}</span>
-              <span class="text-[11px] opacity-75 font-mono">(${it.count})</span>
-            `;
-            btn.onclick = () => {
-              if (it.id === 'ANCHOR') switchView('anchor');
-              else onCategorySelect(it.isSelected ? 'ALL' : it.id);
-            };
-            return btn;
-          }
-        );
-        container.appendChild(coreGroup);
-      }
-
-      // 2. Specialized Desks Section
-      const filteredDesks = deskItems.filter(it => !sidebarSearchTerm || it.label.toLowerCase().includes(sidebarSearchTerm));
-      if (filteredDesks.length > 0) {
-        const deskGroup = createAccordionGroup(
-          "Specialized Desks",
-          deskItems.length,
-          treeState.desks || !!sidebarSearchTerm,
-          () => toggleTreeNode('desks'),
-          filteredDesks.map(it => ({ ...it, isSelected: selectedFeedCategory === it.id || (it.id === 'IPO_ALL' && currentView === 'ipo') || (it.id === 'CORPORATE_ALL' && currentView === 'corporate') })),
-          (it) => {
-            const btn = document.createElement("button");
-            btn.className = `w-full text-left px-2 py-1 rounded text-[12px] font-sans flex items-center justify-between transition-colors ${
-              it.isSelected ? 'bg-amber-700 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-amber-100/60 dark:hover:bg-amber-950/40 font-medium'
-            }`;
-            btn.innerHTML = `
-              <span class="truncate">${it.label}</span>
-              <span class="text-[11px] opacity-75 font-mono">(${it.count})</span>
-            `;
-            btn.onclick = () => {
-              if (it.id === 'IPO_ALL') onDeskSelect('ipo');
-              else if (it.id === 'CORPORATE_ALL') onDeskSelect('corporate');
-              else if (it.id === 'EVENTS') selectCorporateSub('EVENTS');
-              else if (it.id === 'APPOINTMENTS') selectCorporateSub('APPOINTMENTS');
-              else if (it.id === 'OPINIONS') onDeskSelect('opinions');
-            };
-            return btn;
-          }
-        );
-        container.appendChild(deskGroup);
-      }
-
-      // 3. Industry Sectors Section
-      const filteredSectors = sortedSecs.filter(sec => !sidebarSearchTerm || sec.toLowerCase().includes(sidebarSearchTerm));
-      if (filteredSectors.length > 0) {
-        const secGroup = createAccordionGroup(
-          "Industry Sectors",
-          sortedSecs.length,
-          treeState.sectors || !!sidebarSearchTerm,
-          () => toggleTreeNode('sectors'),
-          filteredSectors.map(sec => ({ id: sec, label: sec, count: secCounts[sec], isSelected: activeSectorFilter === sec })),
-          (it) => {
-            const btn = document.createElement("button");
-            btn.className = `w-full text-left px-2 py-1 rounded text-[12px] font-sans flex items-center justify-between transition-colors ${
-              it.isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-indigo-100/60 dark:hover:bg-indigo-950/40 font-medium'
-            }`;
-            btn.innerHTML = `
-              <span class="truncate">${it.label}</span>
-              <span class="text-[11px] opacity-75 font-mono">(${it.count})</span>
-            `;
-            btn.onclick = () => {
-              activeSectorFilter = activeSectorFilter === it.id ? null : it.id;
-              selectedStoryIndex = 0;
-              currentFeedPage = 1;
-              renderCategoriesAndStocksSidebar();
-              if (currentLayoutMode === "split") renderFeedList();
-              else renderMatrixTable();
-            };
-            return btn;
-          }
-        );
-        container.appendChild(secGroup);
-      }
-
-      // 4. Company Stocks Section
-      const filteredStocks = sortedStocks.filter(stk => !sidebarSearchTerm || stk.toLowerCase().includes(sidebarSearchTerm));
-      if (filteredStocks.length > 0) {
-        const stockGroup = createAccordionGroup(
-          "Company Stocks",
-          sortedStocks.length,
-          treeState.stocks || !!sidebarSearchTerm,
-          () => toggleTreeNode('stocks'),
-          filteredStocks.map(stk => ({ id: stk, label: stk, count: stockCounts[stk], isSelected: activeStockFilter === stk })),
-          (it) => {
-            const btn = document.createElement("button");
-            btn.className = `w-full text-left px-2 py-1 rounded text-[12px] font-sans flex items-center justify-between transition-colors ${
-              it.isSelected ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-amber-100/60 dark:hover:bg-amber-950/40 font-medium'
-            }`;
-            btn.innerHTML = `
-              <span class="truncate">${it.label}</span>
-              <span class="text-[11px] opacity-75 font-mono">(${it.count})</span>
-            `;
-            btn.onclick = () => {
-              activeStockFilter = activeStockFilter === it.id ? null : it.id;
-              selectedStoryIndex = 0;
-              currentFeedPage = 1;
-              renderCategoriesAndStocksSidebar();
-              if (currentLayoutMode === "split") renderFeedList();
-              else renderMatrixTable();
-            };
-            return btn;
-          }
-        );
-        container.appendChild(stockGroup);
-      }
+      container.appendChild(stockCard);
     }
 
     function clearAllStockAndSectorFilters() {
