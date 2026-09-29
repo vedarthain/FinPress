@@ -85,27 +85,45 @@ class BusinessStandardEpaperDownloader:
 
     def download_full_epaper(
         self,
-        epaper_url: str = "https://epaper.business-standard.com/bs_new/index.php?rt=main/mainpage#1"
+        epaper_url: str = "https://epaper.business-standard.com/bs_new/index.php?rt=main/mainpage#1",
+        storage_state_file: str = "bs_storage_state.json"
     ) -> Path:
         """
         Launches Playwright subscriber session to download all 1-36 pages or full zipped edition.
-        Authenticates directly using BS_USERNAME / BS_EMAIL and BS_PASSWORD.
+        Uses authenticated storage state or credentials.
         Raises BusinessStandardSessionError if authentication or session fails.
         """
+        state_path = Path(storage_state_file)
+        if not state_path.exists():
+            # Attempt to restore from BS_STORAGE_STATE_BASE64 environment variable
+            b64_env = os.environ.get("BS_STORAGE_STATE_BASE64", "").strip()
+            if b64_env:
+                try:
+                    import re, base64, json
+                    clean_b64 = re.sub(r'[^A-Za-z0-9+/=]', '', b64_env)
+                    pad_len = len(clean_b64) % 4
+                    if pad_len != 0:
+                        clean_b64 += '=' * (4 - pad_len)
+                    decoded_bytes = base64.b64decode(clean_b64)
+                    json.loads(decoded_bytes.decode('utf-8', errors='ignore'))
+                    state_path.write_bytes(decoded_bytes)
+                    logger.info(f"Restored '{storage_state_file}' from BS_STORAGE_STATE_BASE64 environment variable.")
+                except Exception as e:
+                    logger.warning(f"Failed to auto-decode BS_STORAGE_STATE_BASE64: {e}")
+
         bs_email = (os.environ.get("BS_EMAIL") or os.environ.get("BS_USERNAME", "")).strip()
         bs_password = os.environ.get("BS_PASSWORD", "").strip()
 
-        if not (bs_email and bs_password):
+        if not state_path.exists() and not (bs_email and bs_password):
             error_msg = (
-                "❌ CRITICAL CREDENTIAL FAILURE: 'BS_USERNAME' (or 'BS_EMAIL') and 'BS_PASSWORD' "
-                "were not found in environment variables / GitHub Secrets. "
-                "Please configure 'BS_USERNAME' and 'BS_PASSWORD' in GitHub Secrets."
+                "❌ CRITICAL SESSION FAILURE: Neither 'BS_STORAGE_STATE_BASE64' nor credentials "
+                "('BS_USERNAME' & 'BS_PASSWORD') were found in environment variables / GitHub Secrets."
             )
             logger.error(error_msg)
             raise BusinessStandardSessionError(error_msg)
 
         target_pdf = self.download_dir / f"business_standard_{self.date_str}.pdf"
-        logger.info(f"Launching subscriber session for Business Standard 36-page ePaper (User: {bs_email}): {epaper_url}")
+        logger.info(f"Launching subscriber session for Business Standard 36-page ePaper: {epaper_url}")
 
         with sync_playwright() as p:
             browser = p.chromium.launch(
@@ -116,57 +134,44 @@ class BusinessStandardEpaperDownloader:
                     "--disable-web-security"
                 ]
             )
-            context = browser.new_context(
-                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-                viewport={"width": 1920, "height": 1080},
-                accept_downloads=True
-            )
+            context_kwargs = {
+                "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+                "viewport": {"width": 1920, "height": 1080},
+                "accept_downloads": True
+            }
+            if state_path.exists():
+                context_kwargs["storage_state"] = str(state_path)
+
+            context = browser.new_context(**context_kwargs)
             page = context.new_page()
 
             try:
-                # 1. Perform Direct Credential Authentication
-                logger.info("Authenticating with Business Standard via SSO Login...")
-                page.goto("https://www.business-standard.com/sso-login", timeout=45000, wait_until="domcontentloaded")
-                page.wait_for_timeout(3000)
-
-                # Fill Email / Username
-                email_selector = 'input[type="email"], input[name="email"], input[name*="user"], #email, #username, input[placeholder*="Email"], input[placeholder*="User"]'
+                # Prime session on root domain first to ensure SSO cookies propagate to epaper sub-domain
                 try:
-                    email_el = page.wait_for_selector(email_selector, timeout=12000)
-                    if email_el:
-                        email_el.fill(bs_email)
-                        logger.info("Entered username/email on login form.")
-                except Exception as e:
-                    logger.warning(f"Email field notice: {e}")
-
-                # Check for two-step login (e.g. Next / Continue button)
-                next_btn = page.query_selector('button:has-text("Continue"), button:has-text("Next"), input[value*="Continue"]')
-                if next_btn and next_btn.is_visible():
-                    next_btn.click()
+                    logger.info("Priming subscriber session on business-standard.com...")
+                    page.goto("https://www.business-standard.com", timeout=30000, wait_until="domcontentloaded")
                     page.wait_for_timeout(2000)
-
-                # Fill Password
-                pass_selector = 'input[type="password"], input[name="password"], #password, input[placeholder*="Password"]'
-                try:
-                    pass_el = page.wait_for_selector(pass_selector, timeout=12000)
-                    if pass_el:
-                        pass_el.fill(bs_password)
-                        logger.info("Entered password on login form.")
                 except Exception as e:
-                    logger.warning(f"Password field notice: {e}")
+                    logger.warning(f"Root domain warmup notice: {e}")
 
-                # Submit Login
-                submit_selector = 'button[type="submit"], input[type="submit"], button:has-text("Sign In"), button:has-text("Login"), button:has-text("Log in"), button.btn-primary'
-                try:
-                    submit_el = page.wait_for_selector(submit_selector, timeout=10000)
-                    if submit_el:
-                        submit_el.click()
-                        logger.info("Submitted login credentials.")
-                except Exception:
-                    page.keyboard.press("Enter")
-
-                page.wait_for_timeout(6000)
-                logger.info(f"Post-login URL: {page.url}")
+                # If no storage state, attempt login
+                if not state_path.exists() and bs_email and bs_password:
+                    logger.info("No storage state found. Attempting credential login...")
+                    try:
+                        page.goto("https://www.business-standard.com/sso-login", timeout=30000, wait_until="domcontentloaded")
+                        page.wait_for_timeout(2000)
+                        email_el = page.wait_for_selector('input[type="email"], input[name="email"], #email', timeout=10000)
+                        if email_el:
+                            email_el.fill(bs_email)
+                        pass_el = page.wait_for_selector('input[type="password"], input[name="password"], #password', timeout=10000)
+                        if pass_el:
+                            pass_el.fill(bs_password)
+                        submit_el = page.wait_for_selector('button[type="submit"], input[type="submit"], button:has-text("Sign In"), button:has-text("Login")', timeout=10000)
+                        if submit_el:
+                            submit_el.click()
+                            page.wait_for_timeout(6000)
+                    except Exception as auth_err:
+                        logger.warning(f"Credential login notice: {auth_err}")
 
                 # 2. Navigate to ePaper reader
                 logger.info(f"Navigating to Business Standard ePaper reader: {epaper_url}")
