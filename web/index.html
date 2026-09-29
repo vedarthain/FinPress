@@ -684,6 +684,8 @@
       selectedStoryIndex = 0;
       currentFeedPage = 1;
       selectedFeedCategory = val;
+      activeStockFilter = null;
+      activeSectorFilter = null;
       
       const deskSelect = document.getElementById("desk-select");
       if (deskSelect) deskSelect.value = "";
@@ -1135,7 +1137,9 @@
         const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
         
         let matchSec = true;
-        if (selectedFeedCategory === "ALL") {
+        if (activeStockFilter || activeSectorFilter || queryTokens.length > 0) {
+          matchSec = true; // When filtering by stock, sector, or search, search across ALL stories!
+        } else if (selectedFeedCategory === "ALL") {
           matchSec = s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
         } else if (selectedFeedCategory === "ANCHOR") {
           matchSec = s.isFrontPage && s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
@@ -1162,8 +1166,8 @@
         }
 
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
-        const matchStock = !activeStockFilter || (s.stocks && s.stocks.includes(activeStockFilter));
-        const matchSector = !activeSectorFilter || (s.sectors && s.sectors.includes(activeSectorFilter)) || (s.category && s.category.toUpperCase().includes(activeSectorFilter));
+        const matchStock = !activeStockFilter || (s.stocks && s.stocks.includes(activeStockFilter)) || (s.tickers && s.tickers.includes(activeStockFilter)) || ((s.headline + " " + (s.brief_details || "")).toUpperCase().includes(activeStockFilter));
+        const matchSector = !activeSectorFilter || (s.sectors && s.sectors.includes(activeSectorFilter)) || (s.category && s.category.toUpperCase().includes(activeSectorFilter)) || ((s.headline + " " + (s.brief_details || "")).toUpperCase().includes(activeSectorFilter));
 
         return matchSec && matchSent && matchStock && matchSector && matchQuery;
       });
