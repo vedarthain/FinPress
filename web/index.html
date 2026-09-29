@@ -51,63 +51,63 @@
 <body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
   <div class="min-h-screen flex flex-col">
 
-    <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (NEWSPAPER BROADSHEET) ================= -->
-    <header class="sticky top-0 z-50 bg-[#FBE8D8] dark:bg-[#0E1320] border-b-2 border-[#DFC0A5] dark:border-slate-800 text-[#1C1917] dark:text-slate-100 shadow-sm px-3 py-1.5 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[12px] font-mono">
+    <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME) ================= -->
+    <header class="sticky top-0 z-50 bg-[#0A0E1A] dark:bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-md px-3 py-1.5 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[12px] font-mono">
       
       <!-- Left: FinPress Branding & Live Market Pulse -->
       <div class="flex items-center gap-3 shrink-0">
         <div class="flex items-center gap-1.5 shrink-0 cursor-pointer" onclick="onCategorySelect('ALL')" title="Reset to All News">
-          <div class="w-6.5 h-6.5 rounded bg-[#1C1917] dark:bg-amber-600 flex items-center justify-center shadow-xs border border-amber-900/40">
-            <span class="text-[#FDF2E9] text-[11px] font-bold tracking-tight font-mono">FP</span>
+          <div class="w-6.5 h-6.5 rounded bg-amber-600 flex items-center justify-center shadow-xs border border-amber-500/50">
+            <span class="text-white text-[11px] font-extrabold tracking-tight font-mono">FP</span>
           </div>
-          <span class="text-[15px] font-bold tracking-tight text-[#1C1917] dark:text-white mr-1 font-mono">
-            Fin<span class="text-amber-800 dark:text-amber-400">Press</span>
+          <span class="text-[15px] font-extrabold tracking-tight text-white font-mono mr-1">
+            Fin<span class="text-amber-400">Press</span>
           </span>
         </div>
 
-        <!-- Live Market Pulse Key Data in Newspaper Broadsheet Tone -->
-        <div class="flex items-center gap-3 text-[11.5px] border-l border-[#D5B599] dark:border-slate-800 pl-3">
-          <span class="text-[#3D2817] dark:text-slate-300 font-medium">NIFTY <b class="text-emerald-700 dark:text-emerald-400 font-bold font-mono">24,835 (+0.64%)</b></span>
-          <span class="text-[#3D2817] dark:text-slate-300 font-medium">BANK NIFTY <b class="text-emerald-700 dark:text-emerald-400 font-bold font-mono">54,120 (+0.82%)</b></span>
-          <span class="text-[#3D2817] dark:text-slate-300 font-medium">INDIA VIX <b class="text-rose-700 dark:text-rose-400 font-bold font-mono">12.85 (-3.2%)</b></span>
-          <span class="text-[#3D2817] dark:text-slate-300 font-medium">BRENT <b class="text-amber-800 dark:text-amber-300 font-bold font-mono">$74.2/bbl</b></span>
-          <span class="text-[#3D2817] dark:text-slate-300 font-medium">USD/INR <b class="text-[#1C1917] dark:text-slate-100 font-bold font-mono">₹83.65</b></span>
+        <!-- Live Market Pulse Key Data in Dark Ribbon -->
+        <div class="flex items-center gap-3 text-[11.5px] border-l border-slate-800 pl-3">
+          <span class="text-slate-300 font-medium">NIFTY <b class="text-emerald-400 font-bold font-mono">24,835 (+0.64%)</b></span>
+          <span class="text-slate-300 font-medium">BANK NIFTY <b class="text-emerald-400 font-bold font-mono">54,120 (+0.82%)</b></span>
+          <span class="text-slate-300 font-medium">INDIA VIX <b class="text-rose-400 font-bold font-mono">12.85 (-3.2%)</b></span>
+          <span class="text-slate-300 font-medium">BRENT <b class="text-amber-300 font-bold font-mono">$74.2/bbl</b></span>
+          <span class="text-slate-300 font-medium">USD/INR <b class="text-slate-100 font-bold font-mono">₹83.65</b></span>
         </div>
       </div>
 
-      <!-- Right: Hide/Unhide 3rd Col + Search + Calendar + Status + Total + Font + Theme -->
+      <!-- Right: Search + Calendar + Status + Total + Font + Theme -->
       <div class="flex items-center gap-2 shrink-0">
         
         <div class="relative w-36 sm:w-44">
-          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11.5px] pl-6 pr-5 py-1 rounded-md border border-[#D5B599] dark:border-slate-700 bg-white/90 dark:bg-slate-900 text-[#1C1917] dark:text-slate-100 placeholder-[#8C6D58] dark:placeholder-slate-400 focus:outline-none focus:border-amber-700 font-mono shadow-2xs"/>
-          <span class="absolute left-1.5 top-1.5 text-slate-500 text-[10.5px]">🔍</span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-1 text-slate-500 hover:text-black dark:hover:text-white text-[11px] font-bold p-0.5">✕</button>
+          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11.5px] pl-6 pr-5 py-1 rounded-md border border-slate-700 bg-slate-900 text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-2xs"/>
+          <span class="absolute left-1.5 top-1.5 text-slate-400 text-[10.5px]">🔍</span>
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-1 text-slate-400 hover:text-white text-[11px] font-bold p-0.5">✕</button>
         </div>
 
         <!-- Historical Calendar & Edition Navigation -->
-        <div class="flex items-center gap-0.5 bg-white/80 dark:bg-slate-900 p-0.5 rounded-md border border-[#D5B599] dark:border-slate-700/80 font-mono text-[11.5px]">
-          <button onclick="navigateDate(-1)" class="px-1.5 py-0.5 rounded hover:bg-black/10 dark:hover:bg-slate-800 text-[#1C1917] dark:text-slate-300 font-bold" title="Previous Date (◀)">◀</button>
-          <div class="flex items-center gap-1 px-1 py-0.5 bg-[#FBE8D8]/90 dark:bg-black/60 rounded border border-[#DFC0A5] dark:border-slate-800">
-            <span class="text-slate-600 dark:text-slate-400 text-[10.5px]">📅</span>
-            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-[#1C1917] dark:text-slate-100 font-bold font-mono text-[11.5px] focus:outline-none cursor-pointer [color-scheme:light] dark:[color-scheme:dark] max-w-[105px]"/>
+        <div class="flex items-center gap-0.5 bg-slate-900 p-0.5 rounded-md border border-slate-700/80 font-mono text-[11.5px]">
+          <button onclick="navigateDate(-1)" class="px-1.5 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Previous Date (◀)">◀</button>
+          <div class="flex items-center gap-1 px-1 py-0.5 bg-black/60 rounded border border-slate-800">
+            <span class="text-slate-400 text-[10.5px]">📅</span>
+            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11.5px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[105px]"/>
           </div>
-          <button onclick="navigateDate(1)" class="px-1.5 py-0.5 rounded hover:bg-black/10 dark:hover:bg-slate-800 text-[#1C1917] dark:text-slate-300 font-bold" title="Next Date (▶)">▶</button>
+          <button onclick="navigateDate(1)" class="px-1.5 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Next Date (▶)">▶</button>
         </div>
 
         <div id="source-health-container" class="flex items-center gap-1 font-mono text-[10.5px]"></div>
 
-        <span id="total-news-counter-badge" class="px-2 py-0.5 rounded bg-emerald-600/15 border border-emerald-600/30 text-emerald-900 dark:text-emerald-400 font-extrabold font-mono text-[11.5px]">
+        <span id="total-news-counter-badge" class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-extrabold font-mono text-[11.5px]">
           🔥 <b id="top-total-count">0</b>
         </span>
 
         <!-- Font Size Controls -->
-        <div class="flex items-center bg-white/80 dark:bg-slate-900 p-0.5 rounded-md border border-[#D5B599] dark:border-slate-700 text-[11px] font-mono font-semibold">
-          <button onclick="adjustFontSize(-1)" class="px-1.5 py-0.5 rounded text-[#1C1917] dark:text-slate-300 hover:bg-black/10 dark:hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
-          <span id="font-size-label" class="px-1 text-[9.5px] text-slate-700 dark:text-slate-400 select-none">100%</span>
-          <button onclick="adjustFontSize(1)" class="px-1.5 py-0.5 rounded text-[#1C1917] dark:text-slate-300 hover:bg-black/10 dark:hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
+        <div class="flex items-center bg-slate-900 p-0.5 rounded-md border border-slate-700 text-[11px] font-mono font-semibold">
+          <button onclick="adjustFontSize(-1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
+          <span id="font-size-label" class="px-1 text-[9.5px] text-slate-400 select-none">100%</span>
+          <button onclick="adjustFontSize(1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
         </div>
 
-        <button onclick="toggleTheme()" class="w-6.5 h-6.5 rounded-md border border-[#D5B599] dark:border-slate-700 bg-white/80 dark:bg-slate-900 text-[#1C1917] dark:text-slate-300 hover:bg-white dark:hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
+        <button onclick="toggleTheme()" class="w-6.5 h-6.5 rounded-md border border-slate-700 bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
@@ -1219,7 +1219,7 @@
       else renderMatrixTable();
     }
 
-    // ================= SQUEEZED COMPACT TREE-VIEW SIDEBAR =================
+    // ================= SQUEEZED COMPACT TREE-VIEW SIDEBAR (LARGER READABLE FONTS) =================
     let treeState = {
       categories: true,  // Open by default
       sectors: false,    // Collapsed by default
@@ -1273,34 +1273,34 @@
       const isCatOpen = treeState.categories;
       catCard.innerHTML = `
         <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('categories')">
-          <div class="flex items-center gap-1 text-[11px] font-sans font-bold text-slate-900 dark:text-slate-100">
-            <span class="text-amber-600 dark:text-amber-400 text-[9.5px]">${isCatOpen ? '▼' : '▶'}</span>
-            <span>📁 News Categories</span>
-            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono">(${coreNewsItems.length + deskItems.length})</span>
+          <div class="flex items-center gap-1.5 text-[12.5px] font-sans font-bold text-slate-900 dark:text-slate-100">
+            <span class="text-amber-600 dark:text-amber-400 text-[10.5px]">${isCatOpen ? '▼' : '▶'}</span>
+            <span>📁 Categories</span>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">(${coreNewsItems.length + deskItems.length})</span>
           </div>
-          ${selectedFeedCategory !== 'ALL' ? `<button onclick="event.stopPropagation(); onCategorySelect('ALL');" class="text-[9.5px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">Reset (✕)</button>` : ''}
+          ${selectedFeedCategory !== 'ALL' ? `<button onclick="event.stopPropagation(); onCategorySelect('ALL');" class="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">Reset (✕)</button>` : ''}
         </div>
       `;
 
       if (isCatOpen) {
         const catBody = document.createElement("div");
-        catBody.className = "p-1.5 flex flex-col gap-1 text-[11px] font-sans";
+        catBody.className = "p-1.5 flex flex-col gap-1 text-[12.5px] font-sans";
 
         // Sub-group: Core News Desks
         const coreDiv = document.createElement("div");
         coreDiv.className = "flex flex-col gap-0.5";
-        coreDiv.innerHTML = `<span class="text-[9.5px] font-bold uppercase text-slate-400 dark:text-slate-500 px-1 mb-0.5 tracking-wider">📰 Core Desks</span>`;
+        coreDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-slate-400 dark:text-slate-500 px-1 mb-0.5 tracking-wider">📰 Core Desks</span>`;
 
         coreNewsItems.forEach(item => {
           const isSelected = selectedFeedCategory === item.id;
           const btn = document.createElement("button");
-          btn.className = `w-full text-left px-1.5 py-0.5 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 font-medium'}`;
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 font-medium'}`;
           btn.innerHTML = `
-            <span class="flex items-center gap-1 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[10px] ${isSelected ? 'text-white' : ''}">├─</span>
+            <span class="flex items-center gap-1.5 min-w-0 truncate">
+              <span class="text-slate-400 select-none text-[10.5px] ${isSelected ? 'text-white' : ''}">├─</span>
               <span class="truncate">${item.label}</span>
             </span>
-            <span class="text-[10px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${item.count})</span>
+            <span class="text-[11px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${item.count})</span>
           `;
           btn.onclick = () => {
             if (item.id === 'ANCHOR') switchView('anchor');
@@ -1312,19 +1312,19 @@
 
         // Sub-group: Specialized Desks
         const deskDiv = document.createElement("div");
-        deskDiv.className = "flex flex-col gap-0.5 pt-1 border-t border-slate-100 dark:border-slate-800";
-        deskDiv.innerHTML = `<span class="text-[9.5px] font-bold uppercase text-amber-700 dark:text-amber-400 px-1 mb-0.5 tracking-wider">🏛️ Specialized Desks</span>`;
+        deskDiv.className = "flex flex-col gap-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-800";
+        deskDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-amber-700 dark:text-amber-400 px-1 mb-0.5 tracking-wider">🏛️ Specialized Desks</span>`;
 
         deskItems.forEach(item => {
           const isSelected = selectedFeedCategory === item.id || (item.id === 'IPO_ALL' && currentView === 'ipo') || (item.id === 'CORPORATE_ALL' && currentView === 'corporate');
           const btn = document.createElement("button");
-          btn.className = `w-full text-left px-1.5 py-0.5 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-amber-700 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-amber-700 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
           btn.innerHTML = `
-            <span class="flex items-center gap-1 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[10px] ${isSelected ? 'text-white' : ''}">├─</span>
+            <span class="flex items-center gap-1.5 min-w-0 truncate">
+              <span class="text-slate-400 select-none text-[10.5px] ${isSelected ? 'text-white' : ''}">├─</span>
               <span class="truncate">${item.label}</span>
             </span>
-            <span class="text-[10px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-amber-700 dark:text-amber-400'}">(${item.count})</span>
+            <span class="text-[11px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-amber-700 dark:text-amber-400'}">(${item.count})</span>
           `;
           btn.onclick = () => {
             if (item.id === 'IPO_ALL') onDeskSelect('ipo');
@@ -1354,29 +1354,29 @@
       const isSecOpen = treeState.sectors;
       secCard.innerHTML = `
         <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('sectors')">
-          <div class="flex items-center gap-1 text-[11px] font-sans font-bold text-slate-900 dark:text-slate-100">
-            <span class="text-indigo-600 dark:text-indigo-400 text-[9.5px]">${isSecOpen ? '▼' : '▶'}</span>
+          <div class="flex items-center gap-1.5 text-[12.5px] font-sans font-bold text-slate-900 dark:text-slate-100">
+            <span class="text-indigo-600 dark:text-indigo-400 text-[10.5px]">${isSecOpen ? '▼' : '▶'}</span>
             <span>📈 Industry Sectors</span>
-            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono">(${sortedSecs.length})</span>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">(${sortedSecs.length})</span>
           </div>
-          ${activeSectorFilter ? `<button onclick="event.stopPropagation(); activeSectorFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[9.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
+          ${activeSectorFilter ? `<button onclick="event.stopPropagation(); activeSectorFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
         </div>
       `;
 
       if (isSecOpen) {
         const secBody = document.createElement("div");
-        secBody.className = "p-1.5 flex flex-col gap-0.5 text-[11px] font-sans max-h-[260px] overflow-y-auto";
+        secBody.className = "p-1.5 flex flex-col gap-0.5 text-[12.5px] font-sans max-h-[260px] overflow-y-auto";
 
         sortedSecs.forEach(sec => {
           const isSelected = activeSectorFilter === sec;
           const btn = document.createElement("button");
-          btn.className = `w-full text-left px-1.5 py-0.5 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-medium'}`;
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-medium'}`;
           btn.innerHTML = `
-            <span class="flex items-center gap-1 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[10px] ${isSelected ? 'text-white' : ''}">├─</span>
+            <span class="flex items-center gap-1.5 min-w-0 truncate">
+              <span class="text-slate-400 select-none text-[10.5px] ${isSelected ? 'text-white' : ''}">├─</span>
               <span class="truncate">${sec}</span>
             </span>
-            <span class="text-[10px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${secCounts[sec]})</span>
+            <span class="text-[11px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${secCounts[sec]})</span>
           `;
           btn.onclick = () => {
             activeSectorFilter = activeSectorFilter === sec ? null : sec;
@@ -1405,29 +1405,29 @@
       const isStockOpen = treeState.stocks;
       stockCard.innerHTML = `
         <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('stocks')">
-          <div class="flex items-center gap-1 text-[11px] font-sans font-bold text-slate-900 dark:text-slate-100">
-            <span class="text-amber-600 dark:text-amber-400 text-[9.5px]">${isStockOpen ? '▼' : '▶'}</span>
+          <div class="flex items-center gap-1.5 text-[12.5px] font-sans font-bold text-slate-900 dark:text-slate-100">
+            <span class="text-amber-600 dark:text-amber-400 text-[10.5px]">${isStockOpen ? '▼' : '▶'}</span>
             <span>🏢 Company Stocks</span>
-            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono">(${sortedStocks.length})</span>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">(${sortedStocks.length})</span>
           </div>
-          ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[9.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
+          ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
         </div>
       `;
 
       if (isStockOpen) {
         const stockBody = document.createElement("div");
-        stockBody.className = "p-1.5 flex flex-col gap-0.5 text-[11px] font-sans max-h-[260px] overflow-y-auto";
+        stockBody.className = "p-1.5 flex flex-col gap-0.5 text-[12.5px] font-sans max-h-[260px] overflow-y-auto";
 
         sortedStocks.forEach(stk => {
           const isSelected = activeStockFilter === stk;
           const btn = document.createElement("button");
-          btn.className = `w-full text-left px-1.5 py-0.5 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
+          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
           btn.innerHTML = `
-            <span class="flex items-center gap-1 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[10px] ${isSelected ? 'text-white' : ''}">├─</span>
+            <span class="flex items-center gap-1.5 min-w-0 truncate">
+              <span class="text-slate-400 select-none text-[10.5px] ${isSelected ? 'text-white' : ''}">├─</span>
               <span class="truncate">${stk}</span>
             </span>
-            <span class="text-[10px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${stockCounts[stk]})</span>
+            <span class="text-[11px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${stockCounts[stk]})</span>
           `;
           btn.onclick = () => {
             activeStockFilter = activeStockFilter === stk ? null : stk;
@@ -1638,35 +1638,35 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start mt-2.5">
           
           <!-- LEFT COLUMN (lg:col-span-6): CORE TRADER TAKEAWAY + CATALYST DIRECTLY BELOW -->
-          <div class="lg:col-span-6 flex flex-col gap-3">
+          <div class="lg:col-span-6 flex flex-col gap-3.5">
             
-            <!-- ⚡ SECTION 1: EXECUTIVE GIST (MATCHING ATTACHED IMAGE FONT & LINE SPACING) -->
-            <div class="rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-indigo-50/60 dark:bg-[#13182E] p-3.5 shadow-xs flex flex-col gap-2.5">
+            <!-- ⚡ SECTION 1: EXECUTIVE GIST (LARGER CRISP FONT & AIRY LINE SPACING) -->
+            <div class="rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-indigo-50/60 dark:bg-[#13182E] p-4 shadow-xs flex flex-col gap-2.5">
               <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-900/60 pb-1.5">
-                <span class="text-[12px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
+                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
                   <span>⚡</span> <span>1. Executive Gist</span>
                 </span>
-                <span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Key Takeaway</span>
+                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Key Takeaway</span>
               </div>
-              <div class="space-y-2.5">
+              <div class="space-y-3">
                 ${briefSentences.map(sent => `
-                  <div class="flex items-start gap-2.5 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[14.5px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.6] font-normal shadow-2xs font-sans tracking-tight">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none mt-0.5">▸</span>
-                    <span class="leading-[1.6]">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+                  <div class="flex items-start gap-2.5 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[15.5px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.65] font-normal shadow-2xs font-sans tracking-tight">
+                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none mt-0.5 text-base">▸</span>
+                    <span class="leading-[1.65]">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
                   </div>
                 `).join('')}
               </div>
             </div>
 
-            <!-- 💡 SECTION 2: TRADER CATALYST & IMPACT ANALYSIS (PLACED DIRECTLY BELOW EXECUTIVE GIST!) -->
-            <div class="p-3.5 rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/70 dark:bg-[#064E3B]/30 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/70 dark:bg-[#881337]/30 dark:border-rose-600' : 'border-slate-400 bg-slate-50 dark:bg-slate-900/50 dark:border-slate-700'} shadow-xs flex flex-col gap-2.5">
+            <!-- 💡 SECTION 2: TRADER CATALYST & IMPACT ANALYSIS (LARGER CRISP FONT) -->
+            <div class="p-4 rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/70 dark:bg-[#064E3B]/30 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/70 dark:bg-[#881337]/30 dark:border-rose-600' : 'border-slate-400 bg-slate-50 dark:bg-slate-900/50 dark:border-slate-700'} shadow-xs flex flex-col gap-2.5">
               <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-1.5">
-                <span class="text-[12px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
+                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
                   <span>💡</span> <span>2. Catalyst & Market Impact</span>
                 </span>
-                <span class="text-[10.5px] font-mono font-extrabold uppercase px-2 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
+                <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
               </div>
-              <div class="bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[14.5px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.6] font-normal shadow-2xs font-sans tracking-tight">
+              <div class="bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[15.5px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.65] font-normal shadow-2xs font-sans tracking-tight">
                 ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
               </div>
             </div>
@@ -1676,19 +1676,19 @@
           <!-- RIGHT COLUMN (lg:col-span-6): KEY ANALYST DATA POINTS -->
           <div class="lg:col-span-6 flex flex-col gap-2">
             
-            <!-- 📌 SECTION 3: KEY ANALYST DATA POINTS (WITH EXACT IMAGE FONT & SPACING) -->
-            <div class="rounded-xl border-2 border-[#C9B7A5] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-3.5 shadow-xs flex flex-col gap-2.5">
+            <!-- 📌 SECTION 3: KEY ANALYST DATA POINTS (LARGER CRISP FONT & BULLETS) -->
+            <div class="rounded-xl border-2 border-[#C9B7A5] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-4 shadow-xs flex flex-col gap-2.5">
               <div class="flex items-center justify-between border-b border-[#E8DCCE] dark:border-[#382E25] pb-1.5">
-                <span class="text-[12px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
+                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
                   <span>📌</span> <span>3. Key Analyst Data Points</span>
                 </span>
-                <span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
+                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
               </div>
-              <ul class="space-y-2.5">
+              <ul class="space-y-3">
                 ${(story.bullet_points || []).map(bp => `
-                  <li class="flex items-start gap-2.5 text-[14.5px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.6] bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-[#EBE2D8] dark:border-slate-800 shadow-2xs font-normal font-sans tracking-tight">
+                  <li class="flex items-start gap-2.5 text-[15.5px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.65] bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-[#EBE2D8] dark:border-slate-800 shadow-2xs font-normal font-sans tracking-tight">
                     <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none mt-0.5 text-base">›</span>
-                    <span class="leading-[1.6]">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+                    <span class="leading-[1.65]">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
                   </li>
                 `).join('')}
               </ul>
