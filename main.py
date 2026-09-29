@@ -91,6 +91,10 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
                 agg = UnifiedNewsAggregator()
                 report = agg.combine_and_deduplicate(reports_to_merge, source_statuses=source_statuses)
 
+        elif source in ["aggregate", "combine"]:
+            logger.info("Running unified multi-source deduplication & aggregation from existing downloaded reports...")
+            from aggregator import run_unified_aggregation
+            report = run_unified_aggregation()
         elif source == "business_standard" or (custom_url and "business-standard" in custom_url):
             logger.info("Step 1: Fetching Business Standard daily 36-page edition...")
             from bs_epaper_downloader import run_bs_full_edition_pipeline
@@ -184,8 +188,8 @@ def main():
         "--source",
         type=str,
         default="all",
-        choices=["all", "unified", "financial_express", "business_standard"],
-        help="Newspaper source ('all', 'financial_express', or 'business_standard').",
+        choices=["all", "unified", "financial_express", "business_standard", "aggregate", "combine"],
+        help="Newspaper source ('all', 'financial_express', 'business_standard', or 'aggregate').",
     )
     parser.add_argument(
         "--pdf",
