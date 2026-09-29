@@ -280,39 +280,62 @@
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (SECTORS & STOCKS IN FOCUS) -->
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (CATEGORIES & STOCKS IN FOCUS) -->
         <aside class="flex flex-col gap-2.5 lg:sticky lg:top-[70px] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
           
-          <!-- 1. Sectors in Focus Card -->
+          <!-- 1. Categories in Focus Card (All News + Specialized Desks) -->
           <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
               <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
-                <span>🏢</span> <span>Sectors in Focus</span>
+                <span>📁</span> <span>Categories in Focus</span>
               </span>
-              <button id="clear-sector-filter" onclick="clearSectorFilter()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-                Clear (✕)
+              <button id="clear-category-filter" onclick="onCategorySelect('ALL')" class="hidden text-[10.5px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                Reset (✕)
               </button>
             </div>
-            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight font-medium">Filter by sector / desk:</p>
-            <div id="sectors-focus-list" class="flex flex-wrap gap-1 max-h-[140px] overflow-y-auto pt-0.5">
-              <!-- Dynamically populated sector chips -->
+            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight font-medium">All News & Specialized Desks:</p>
+            <div id="categories-focus-list" class="flex flex-wrap gap-1 max-h-[175px] overflow-y-auto pt-0.5">
+              <!-- Dynamically populated category & desk chips -->
             </div>
           </div>
 
-          <!-- 2. Stocks in Focus Card -->
-          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2">
+          <!-- 2. Stocks in Focus Card (Segregated Stocks vs Sectors) -->
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2.5">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
               <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
                 <span>🏷️</span> <span>Stocks in Focus</span>
               </span>
-              <button id="clear-ticker-filter" onclick="clearTickerFilter()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+              <button id="clear-stock-filter" onclick="clearAllStockAndSectorFilters()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
                 Clear (✕)
               </button>
             </div>
-            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight font-medium">Filter by company stock:</p>
-            <div id="stocks-focus-list" class="flex flex-wrap gap-1 max-h-[220px] lg:max-h-[calc(100vh-22rem)] overflow-y-auto pt-0.5">
-              <!-- Dynamically populated ticker chips -->
+
+            <!-- Sub-section A: Company Stocks (CDSL, NTPC, TATA SONS, OLA ELEC...) -->
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center justify-between">
+                <span class="text-[10.5px] font-bold uppercase text-amber-800 dark:text-amber-400 font-mono flex items-center gap-1">
+                  <span>🏢</span> <span>Company Stocks</span>
+                </span>
+                <span id="stocks-count-label" class="text-[10px] font-mono text-slate-400 font-bold">0 Tickers</span>
+              </div>
+              <div id="stocks-focus-list" class="flex flex-wrap gap-1 max-h-[140px] overflow-y-auto pt-0.5">
+                <!-- Dynamically populated company stock chips -->
+              </div>
             </div>
+
+            <!-- Sub-section B: Industry Sectors (Energy, IT, Banking, Auto, Real Estate...) -->
+            <div class="flex flex-col gap-1 pt-1.5 border-t border-slate-100 dark:border-slate-800/80">
+              <div class="flex items-center justify-between">
+                <span class="text-[10.5px] font-bold uppercase text-indigo-800 dark:text-indigo-400 font-mono flex items-center gap-1">
+                  <span>📈</span> <span>Industry Sectors</span>
+                </span>
+                <span id="sectors-count-label" class="text-[10px] font-mono text-slate-400 font-bold">0 Sectors</span>
+              </div>
+              <div id="industry-sectors-focus-list" class="flex flex-wrap gap-1 max-h-[140px] overflow-y-auto pt-0.5">
+                <!-- Dynamically populated industry sector chips -->
+              </div>
+            </div>
+
           </div>
 
         </aside>
@@ -513,7 +536,8 @@
     let currentView = "feed";
     let selectedFeedCategory = "ALL";
     let selectedFeedSentiment = "ALL";
-    let activeTickerFilter = null;
+    let activeStockFilter = null;
+    let activeSectorFilter = null;
     let selectedStoryIndex = 0;
     let currentFeedPage = 1;
     const FEED_PAGE_SIZE = 12;
@@ -526,15 +550,22 @@
       "ALL", "Sector", "Economy", "Policy", "Market", "Trade", "International News", "Others"
     ];
 
-    const tickerDictionary = [
+    const stockDictionary = [
       "RELIANCE", "TCS", "INFOSYS", "INFY", "HDFC BANK", "HDFCBANK", "ICICI BANK", "ICICIBANK", "SBI", "SBIN",
-      "BHARTI AIRTEL", "AIRTEL", "ITC", "KOTAK BANK", "L&T", "LT", "TATA MOTORS", "TATA STEEL", "MARUTI",
-      "SUN PHARMA", "TITAN", "BAJAJ FINANCE", "ADANI", "NTPC", "ONGC", "POWERGRID", "JSW STEEL", "COAL INDIA",
+      "BHARTI AIRTEL", "AIRTEL", "ITC", "KOTAK BANK", "L&T", "LT", "TATA MOTORS", "TATA STEEL", "TATA SONS", "TATA TRUSTS",
+      "MARUTI", "SUN PHARMA", "TITAN", "BAJAJ FINANCE", "ADANI", "NTPC", "ONGC", "POWERGRID", "JSW STEEL", "COAL INDIA",
       "COALINDIA", "SAIL", "BCCL", "NCL", "HINDALCO", "WIPRO", "TECH MAHINDRA", "ZOMATO", "PAYTM", "SWIGGY",
-      "HAL", "BEL", "BHEL", "BDL", "IRFC", "RVNL", "IREDA", "VEDANTA", "DLF", "GODREJ", "AXIS BANK", "ASIAN PAINTS",
-      "ULTRATECH", "HERO MOTOCORP", "BAJAJ AUTO", "EICHER", "DR REDDY", "CIPLA", "TRENT", "DMART", "POLYCAB",
-      "DIXON", "BSE", "MCX", "CDSL", "AUTO", "BANKING", "DEFENCE", "REALTY", "PHARMA", "IT", "METALS", "ENERGY",
-      "TELECOM", "FMCG", "INFRA", "POWER"
+      "OLA ELECTRIC", "OLA ELEC", "HAL", "BEL", "BHEL", "BDL", "IRFC", "RVNL", "IREDA", "VEDANTA", "DLF", "GODREJ",
+      "AXIS BANK", "ASIAN PAINTS", "ULTRATECH", "HERO MOTOCORP", "BAJAJ AUTO", "EICHER", "DR REDDY", "CIPLA", "TRENT",
+      "DMART", "POLYCAB", "DIXON", "BSE", "MCX", "CDSL", "AIR INDIA", "COFORGE", "V-GUARD", "HCLTECH", "AROVIA",
+      "EDELWEISS", "NATCO PHARMA", "GUJARAT THEMIS", "ORACLE", "NATRAJ ENERGY", "ESDS SOFTWARE", "INDO-MIM", "SAGARMALA",
+      "ALIBABA", "BYTEDANCE", "NVIDIA", "JIO", "NAYARA", "FIRESIDE", "META", "MONGODB"
+    ];
+
+    const sectorDictionary = [
+      "ENERGY", "POWER", "IT", "TECH", "REAL ESTATE", "REALTY", "BANKING", "FINANCE", "AUTO", "AUTOMOTIVE", "EV",
+      "PHARMA", "HEALTHCARE", "DEFENCE", "METALS", "STEEL", "MINING", "TELECOM", "FMCG", "CONSUMER", "INFRASTRUCTURE",
+      "INFRA", "AVIATION", "LOGISTICS", "CHEMICALS", "TEXTILES", "AGRICULTURE", "INSURANCE", "MEDIA", "RETAIL"
     ];
 
     function initTheme() {
@@ -750,7 +781,7 @@
         catSelect.value = "ALL";
       }
 
-      renderSectorsAndStocksSidebar();
+      renderCategoriesAndStocksSidebar();
       renderFeedList();
     }
 
@@ -836,13 +867,27 @@
         sentimentReasoning = matchedBearish.slice(0, 2).join(" Additionally, ");
       }
 
-      const detectedTickers = [];
+      const detectedStocks = [];
+      const detectedSectors = [];
       const upperText = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toUpperCase();
-      tickerDictionary.forEach(t => {
-        if (new RegExp(`\\b${t}\\b`, 'i').test(upperText)) detectedTickers.push(t);
+
+      stockDictionary.forEach(stk => {
+        if (new RegExp(`\\b${stk.replace('&', '\\&')}\\b`, 'i').test(upperText)) {
+          detectedStocks.push(stk);
+        }
+      });
+
+      sectorDictionary.forEach(sec => {
+        if (new RegExp(`\\b${sec.replace('&', '\\&')}\\b`, 'i').test(upperText)) {
+          detectedSectors.push(sec);
+        }
       });
 
       let catalyst = (story.bullet_points && story.bullet_points.length > 0) ? story.bullet_points[0] : story.brief_details.slice(0, 160) + "...";
+
+      const uniqueStocks = [...new Set(detectedStocks)].slice(0, 3);
+      const uniqueSectors = [...new Set(detectedSectors)].slice(0, 3);
+      const allTickers = [...new Set([...uniqueStocks, ...uniqueSectors])].slice(0, 4);
 
       return {
         ...story,
@@ -850,7 +895,9 @@
         category: category || "Others",
         sentiment,
         sentimentReasoning,
-        tickers: [...new Set(detectedTickers)].slice(0, 3),
+        stocks: uniqueStocks,
+        sectors: uniqueSectors,
+        tickers: allTickers,
         catalyst,
         isFrontPage,
         isOpinion,
@@ -1143,7 +1190,7 @@
         }
       }
 
-      renderSectorsAndStocksSidebar();
+      renderCategoriesAndStocksSidebar();
       renderFeedList();
     }
 
@@ -1192,9 +1239,10 @@
         }
 
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
-        const matchTicker = !activeTickerFilter || s.tickers.includes(activeTickerFilter);
+        const matchStock = !activeStockFilter || (s.stocks && s.stocks.includes(activeStockFilter));
+        const matchSector = !activeSectorFilter || (s.sectors && s.sectors.includes(activeSectorFilter)) || (s.category && s.category.toUpperCase().includes(activeSectorFilter));
 
-        return matchSec && matchSent && matchTicker && matchQuery;
+        return matchSec && matchSent && matchStock && matchSector && matchQuery;
       });
     }
 
@@ -1248,78 +1296,148 @@
       else renderMatrixTable();
     }
 
-    // ================= RIGHT HAND SIDEBAR: SECTORS & STOCKS IN FOCUS =================
-    function renderSectorsAndStocksSidebar() {
-      // 1. Render Sectors in Focus
-      const sectorList = document.getElementById("sectors-focus-list");
+    // ================= RIGHT HAND SIDEBAR: CATEGORIES & STOCKS IN FOCUS =================
+    function renderCategoriesAndStocksSidebar() {
+      // 1. Render Categories in Focus (All News + Specialized Desks)
+      const catList = document.getElementById("categories-focus-list");
+      if (catList) {
+        catList.innerHTML = "";
+        
+        const coreStories = stories.filter(s => s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion);
+        const totalIpos = ipoList.length;
+        const anchorCount = coreStories.filter(s => s.isFrontPage).length;
+        const corpEventsCount = stories.filter(s => s.category === "Corporate Events").length;
+        const corpApptsCount = stories.filter(s => s.category === "Corporate Appointments").length;
+        const corpCount = corpEventsCount + corpApptsCount;
+        const opinionsCount = stories.filter(s => s.isOpinion).length;
+
+        const categoryItems = [
+          { id: "ALL", label: "⚡ All News", count: coreStories.length, type: "category" },
+          { id: "Sector", label: "🏢 Sector", count: stories.filter(s => s.category === "Sector" && !s.isOpinion).length, type: "category" },
+          { id: "Policy", label: "🏛️ Policy", count: stories.filter(s => s.category === "Policy" && !s.isOpinion).length, type: "category" },
+          { id: "CORPORATE_ALL", label: "🏢 Corporate", count: corpCount, type: "desk" },
+          { id: "EVENTS", label: "📢 Corp Events", count: corpEventsCount, type: "desk" },
+          { id: "APPOINTMENTS", label: "👔 Appointments", count: corpApptsCount, type: "desk" },
+          { id: "Economy", label: "📈 Economy", count: stories.filter(s => s.category === "Economy" && !s.isOpinion).length, type: "category" },
+          { id: "IPO_ALL", label: "🚀 IPO Central", count: totalIpos, type: "desk" },
+          { id: "Market", label: "📊 Market", count: stories.filter(s => s.category === "Market" && !s.isOpinion).length, type: "category" },
+          { id: "Trade", label: "🚢 Trade & FX", count: stories.filter(s => s.category === "Trade" && !s.isOpinion).length, type: "category" },
+          { id: "International News", label: "🌐 International", count: stories.filter(s => s.category === "International News" && !s.isOpinion).length, type: "category" },
+          { id: "OPINIONS", label: "✍️ Opinions", count: opinionsCount, type: "desk" },
+          { id: "ANCHOR", label: "📰 Front Page", count: anchorCount, type: "category" },
+          { id: "Others", label: "📑 Features", count: stories.filter(s => s.category === "Others" && !s.isOpinion).length, type: "category" }
+        ];
+
+        const clearCatBtn = document.getElementById("clear-category-filter");
+        if (clearCatBtn) clearCatBtn.classList.toggle("hidden", selectedFeedCategory === "ALL");
+
+        categoryItems.forEach(item => {
+          const isSelected = selectedFeedCategory === item.id;
+          const btn = document.createElement("button");
+          const activeClass = item.type === "desk" 
+            ? "bg-amber-700 text-white shadow-xs font-bold ring-1 ring-amber-400" 
+            : "bg-[#1C1917] text-white dark:bg-amber-600 shadow-xs font-bold ring-1 ring-amber-400";
+          const inactiveClass = item.type === "desk"
+            ? "bg-amber-50/90 dark:bg-amber-950/40 border border-amber-300/80 dark:border-amber-800 text-amber-950 dark:text-amber-300 hover:border-amber-500 font-semibold"
+            : "bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 font-medium";
+
+          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono transition-all shadow-2xs ${isSelected ? activeClass : inactiveClass}`;
+          btn.textContent = `${item.label} (${item.count})`;
+          btn.onclick = () => {
+            if (item.id === "IPO_ALL") {
+              onDeskSelect("ipo");
+            } else if (item.id === "CORPORATE_ALL") {
+              onDeskSelect("corporate");
+            } else if (item.id === "EVENTS") {
+              selectCorporateSub("EVENTS");
+            } else if (item.id === "APPOINTMENTS") {
+              selectCorporateSub("APPOINTMENTS");
+            } else if (item.id === "OPINIONS") {
+              onDeskSelect("opinions");
+            } else if (item.id === "ANCHOR") {
+              switchView("anchor");
+            } else {
+              onCategorySelect(isSelected ? "ALL" : item.id);
+            }
+          };
+          catList.appendChild(btn);
+        });
+      }
+
+      // 2. Render Company Stocks in Focus
+      const stockList = document.getElementById("stocks-focus-list");
+      const stockCountLabel = document.getElementById("stocks-count-label");
+      if (stockList) {
+        stockList.innerHTML = "";
+        const stockCounts = {};
+        stories.forEach(s => {
+          (s.stocks || []).forEach(stk => stockCounts[stk] = (stockCounts[stk] || 0) + 1);
+        });
+        const sortedStocks = Object.keys(stockCounts).sort((a,b) => stockCounts[b] - stockCounts[a]);
+        if (stockCountLabel) stockCountLabel.textContent = `${sortedStocks.length} Tickers`;
+
+        sortedStocks.forEach(stk => {
+          const isSelected = activeStockFilter === stk;
+          const btn = document.createElement("button");
+          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-amber-600 text-white shadow-xs' : 'bg-amber-50/70 dark:bg-[#1A1F2E] border border-amber-200/80 dark:border-slate-800 text-amber-950 dark:text-amber-300 hover:border-amber-400 hover:text-amber-700'}`;
+          btn.textContent = `${stk} (${stockCounts[stk]})`;
+          btn.onclick = () => {
+            activeStockFilter = activeStockFilter === stk ? null : stk;
+            selectedStoryIndex = 0;
+            currentFeedPage = 1;
+            renderCategoriesAndStocksSidebar();
+            if (currentLayoutMode === "split") renderFeedList();
+            else renderMatrixTable();
+          };
+          stockList.appendChild(btn);
+        });
+      }
+
+      // 3. Render Industry Sectors in Focus
+      const sectorList = document.getElementById("industry-sectors-focus-list");
+      const sectorCountLabel = document.getElementById("sectors-count-label");
       if (sectorList) {
         sectorList.innerHTML = "";
-        const sectorCounts = {};
+        const secCounts = {};
         stories.forEach(s => {
-          if (s.category && s.category !== "FRONT_PAGE" && s.category !== "OTHERS") {
-            sectorCounts[s.category] = (sectorCounts[s.category] || 0) + 1;
-          }
+          (s.sectors || []).forEach(sec => secCounts[sec] = (secCounts[sec] || 0) + 1);
         });
-        const sortedSectors = Object.keys(sectorCounts).sort((a,b) => sectorCounts[b] - sectorCounts[a]);
-        
-        const clearSecBtn = document.getElementById("clear-sector-filter");
-        const isSectorActive = selectedFeedCategory !== "ALL" && !selectedFeedCategory.startsWith("IPO") && !selectedFeedCategory.startsWith("CORPORATE") && selectedFeedCategory !== "OPINIONS" && selectedFeedCategory !== "ANCHOR";
-        if (clearSecBtn) clearSecBtn.classList.toggle("hidden", !isSectorActive);
+        const sortedSecs = Object.keys(secCounts).sort((a,b) => secCounts[b] - secCounts[a]);
+        if (sectorCountLabel) sectorCountLabel.textContent = `${sortedSecs.length} Sectors`;
 
-        sortedSectors.forEach(sec => {
-          const isSelected = selectedFeedCategory === sec;
+        sortedSecs.forEach(sec => {
+          const isSelected = activeSectorFilter === sec;
           const btn = document.createElement("button");
-          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-indigo-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`;
-          btn.textContent = `${sec} (${sectorCounts[sec]})`;
+          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-indigo-600 text-white shadow-xs' : 'bg-indigo-50/70 dark:bg-[#141A2E] border border-indigo-200/80 dark:border-slate-800 text-indigo-950 dark:text-indigo-300 hover:border-indigo-400 hover:text-indigo-700'}`;
+          btn.textContent = `${sec} (${secCounts[sec]})`;
           btn.onclick = () => {
-            onCategorySelect(isSelected ? "ALL" : sec);
+            activeSectorFilter = activeSectorFilter === sec ? null : sec;
+            selectedStoryIndex = 0;
+            currentFeedPage = 1;
+            renderCategoriesAndStocksSidebar();
+            if (currentLayoutMode === "split") renderFeedList();
+            else renderMatrixTable();
           };
           sectorList.appendChild(btn);
         });
       }
 
-      // 2. Render Stocks in Focus
-      const tickerList = document.getElementById("stocks-focus-list");
-      if (tickerList) {
-        tickerList.innerHTML = "";
-        const tickerCounts = {};
-        stories.forEach(s => {
-          (s.tickers || []).forEach(t => tickerCounts[t] = (tickerCounts[t] || 0) + 1);
-        });
-        const sortedTickers = Object.keys(tickerCounts).sort((a,b) => tickerCounts[b] - tickerCounts[a]);
-        
-        const clearTickBtn = document.getElementById("clear-ticker-filter");
-        if (clearTickBtn) clearTickBtn.classList.toggle("hidden", !activeTickerFilter);
-
-        sortedTickers.forEach(t => {
-          const isSelected = activeTickerFilter === t;
-          const btn = document.createElement("button");
-          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-amber-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400'}`;
-          btn.textContent = `${t} (${tickerCounts[t]})`;
-          btn.onclick = () => {
-            activeTickerFilter = activeTickerFilter === t ? null : t;
-            selectedStoryIndex = 0;
-            currentFeedPage = 1;
-            renderSectorsAndStocksSidebar();
-            if (currentLayoutMode === "split") renderFeedList();
-            else renderMatrixTable();
-          };
-          tickerList.appendChild(btn);
-        });
-      }
+      const clearStockBtn = document.getElementById("clear-stock-filter");
+      if (clearStockBtn) clearStockBtn.classList.toggle("hidden", !activeStockFilter && !activeSectorFilter);
     }
 
-    function clearTickerFilter() {
-      activeTickerFilter = null;
+    function clearAllStockAndSectorFilters() {
+      activeStockFilter = null;
+      activeSectorFilter = null;
       selectedStoryIndex = 0;
       currentFeedPage = 1;
-      renderSectorsAndStocksSidebar();
+      renderCategoriesAndStocksSidebar();
       if (currentLayoutMode === "split") renderFeedList();
       else renderMatrixTable();
     }
 
-    function clearSectorFilter() {
-      onCategorySelect("ALL");
+    function clearStockFilter() {
+      clearAllStockAndSectorFilters();
     }
 
     function setFeedSentiment(sent) {
