@@ -473,7 +473,7 @@
         if (isSidebarVisible) {
           aside.classList.remove("hidden");
           if (pill) pill.classList.add("hidden");
-          viewFeed.className = "grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)_260px] xl:grid-cols-[300px_minmax(0,1fr)_275px] gap-2.5 items-start";
+          viewFeed.className = "grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)_250px] xl:grid-cols-[350px_minmax(0,1fr)_260px] 2xl:grid-cols-[380px_minmax(0,1fr)_275px] gap-2 items-stretch w-full flex-1 min-h-0 lg:h-full";
           if (openBtn) {
             openBtn.classList.add("hidden");
             openBtn.classList.remove("flex");
@@ -481,7 +481,7 @@
         } else {
           aside.classList.add("hidden");
           if (pill) pill.classList.remove("hidden");
-          viewFeed.className = "grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)_auto] xl:grid-cols-[300px_minmax(0,1fr)_auto] gap-2.5 items-start";
+          viewFeed.className = "grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)] xl:grid-cols-[350px_minmax(0,1fr)] 2xl:grid-cols-[380px_minmax(0,1fr)] gap-2 items-stretch w-full flex-1 min-h-0 lg:h-full";
           if (openBtn) {
             openBtn.classList.remove("hidden");
             openBtn.classList.add("flex");
@@ -1327,6 +1327,29 @@
       "TATA TRUSTS": { group: "Realty & Conglom", color: "amber" }
     };
 
+    let activeRightPanelView = 'ALL';
+    let stockSearchFilterText = '';
+
+    function setRightPanelView(view) {
+      activeRightPanelView = view;
+      if (view === 'CATEGORIES') { treeState.categories = true; }
+      else if (view === 'SECTORS') { treeState.sectors = true; }
+      else if (view === 'STOCKS') { treeState.stocks = true; }
+      else if (view === 'ALL') { treeState.categories = true; treeState.sectors = true; treeState.stocks = true; }
+      renderCategoriesAndStocksSidebar();
+    }
+
+    function onStockSearchInput(val) {
+      stockSearchFilterText = (val || '').trim().toUpperCase();
+      renderCategoriesAndStocksSidebar();
+      // Keep focus in input
+      const input = document.getElementById("sidebar-stock-search");
+      if (input) {
+        input.focus();
+        input.selectionStart = input.selectionEnd = input.value.length;
+      }
+    }
+
     function toggleTreeNode(section) {
       treeState[section] = !treeState[section];
       renderCategoriesAndStocksSidebar();
@@ -1346,7 +1369,18 @@
       const corpCount = corpEventsCount + corpApptsCount;
       const opinionsCount = stories.filter(s => s.isOpinion).length;
 
-      // Group 1: News Categories (Open by default)
+      // TOP QUICK FILTER TABS
+      const navDiv = document.createElement("div");
+      navDiv.className = "sticky top-0 z-20 bg-slate-100/95 dark:bg-[#070B14]/95 backdrop-blur-xs p-1 rounded-lg border border-slate-300 dark:border-slate-800 flex items-center justify-between gap-1 text-[11px] font-mono shadow-2xs mb-0.5";
+      navDiv.innerHTML = `
+        <button onclick="setRightPanelView('ALL')" class="flex-1 py-1 rounded text-center transition-all ${activeRightPanelView === 'ALL' ? 'bg-[#1C1917] text-white dark:bg-indigo-600 font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-800 font-medium'}">All</button>
+        <button onclick="setRightPanelView('CATEGORIES')" class="flex-1 py-1 rounded text-center transition-all ${activeRightPanelView === 'CATEGORIES' ? 'bg-[#1C1917] text-white dark:bg-indigo-600 font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-800 font-medium'}">📁 Desks</button>
+        <button onclick="setRightPanelView('SECTORS')" class="flex-1 py-1 rounded text-center transition-all ${activeRightPanelView === 'SECTORS' ? 'bg-[#1C1917] text-white dark:bg-indigo-600 font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-800 font-medium'}">📈 Sectors</button>
+        <button onclick="setRightPanelView('STOCKS')" class="flex-1 py-1 rounded text-center transition-all ${activeRightPanelView === 'STOCKS' ? 'bg-[#1C1917] text-white dark:bg-indigo-600 font-bold shadow-xs' : 'text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-800 font-medium'}">🏢 Stocks</button>
+      `;
+      container.appendChild(navDiv);
+
+      // Group 1: News Categories
       const coreNewsItems = [
         { id: "ALL", label: "⚡ All News", count: coreStories.length },
         { id: "ANCHOR", label: "📰 Front Page", count: anchorCount },
@@ -1367,178 +1401,189 @@
         { id: "OPINIONS", label: "✍️ Opinions Desk", count: opinionsCount }
       ];
 
-      // --- SECTION 1: CATEGORIES TREE CARD (OPEN BY DEFAULT - 1 LEVEL LARGER FONT) ---
-      const catCard = document.createElement("div");
-      catCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
-      
-      const isCatOpen = treeState.categories;
-      catCard.innerHTML = `
-        <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('categories')">
-          <div class="flex items-center gap-1.5 text-[13.5px] font-sans font-bold text-slate-900 dark:text-slate-100">
-            <span class="text-amber-600 dark:text-amber-400 text-[11px]">${isCatOpen ? '▼' : '▶'}</span>
-            <span>📁 Categories</span>
-            <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${coreNewsItems.length + deskItems.length})</span>
+      // --- SECTION 1: CATEGORIES TREE CARD ---
+      if (activeRightPanelView === 'ALL' || activeRightPanelView === 'CATEGORIES') {
+        const catCard = document.createElement("div");
+        catCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+        
+        const isCatOpen = treeState.categories;
+        catCard.innerHTML = `
+          <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('categories')">
+            <div class="flex items-center gap-1.5 text-[13px] font-sans font-bold text-slate-900 dark:text-slate-100">
+              <span class="text-amber-600 dark:text-amber-400 text-[11px]">${isCatOpen ? '▼' : '▶'}</span>
+              <span>📁 Categories</span>
+              <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${coreNewsItems.length + deskItems.length})</span>
+            </div>
+            ${selectedFeedCategory !== 'ALL' ? `<button onclick="event.stopPropagation(); onCategorySelect('ALL');" class="text-[10.5px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">Reset (✕)</button>` : ''}
           </div>
-          ${selectedFeedCategory !== 'ALL' ? `<button onclick="event.stopPropagation(); onCategorySelect('ALL');" class="text-[10.5px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">Reset (✕)</button>` : ''}
-        </div>
-      `;
+        `;
 
-      if (isCatOpen) {
-        const catBody = document.createElement("div");
-        catBody.className = "p-1.5 flex flex-col gap-1 text-[13.5px] font-sans";
+        if (isCatOpen) {
+          const catBody = document.createElement("div");
+          catBody.className = "p-1.5 flex flex-col gap-1 text-[13px] font-sans";
 
-        // Sub-group: Core News Desks
-        const coreDiv = document.createElement("div");
-        coreDiv.className = "flex flex-col gap-0.5";
-        coreDiv.innerHTML = `<span class="text-[11px] font-bold uppercase text-slate-400 dark:text-slate-500 px-1 mb-0.5 tracking-wider">📰 Core Desks</span>`;
+          // Sub-group: Core News Desks
+          const coreDiv = document.createElement("div");
+          coreDiv.className = "flex flex-col gap-0.5";
+          coreDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-slate-400 dark:text-slate-500 px-1 mb-0.5 tracking-wider">📰 Core Desks</span>`;
 
-        coreNewsItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
-          const btn = document.createElement("button");
-          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 font-medium'}`;
-          btn.innerHTML = `
-            <span class="flex items-center gap-1.5 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[11px] ${isSelected ? 'text-white' : ''}">├─</span>
-              <span class="truncate text-[13.5px]">${item.label}</span>
-            </span>
-            <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${item.count})</span>
-          `;
-          btn.onclick = () => {
-            if (item.id === 'ANCHOR') switchView('anchor');
-            else onCategorySelect(isSelected ? 'ALL' : item.id);
-          };
-          coreDiv.appendChild(btn);
-        });
-        catBody.appendChild(coreDiv);
+          coreNewsItems.forEach(item => {
+            const isSelected = selectedFeedCategory === item.id;
+            const btn = document.createElement("button");
+            btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 font-medium'}`;
+            btn.innerHTML = `
+              <span class="flex items-center gap-1.5 min-w-0 truncate">
+                <span class="text-slate-400 select-none text-[11px] ${isSelected ? 'text-white' : ''}">├─</span>
+                <span class="truncate text-[13px]">${item.label}</span>
+              </span>
+              <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${item.count})</span>
+            `;
+            btn.onclick = () => {
+              if (item.id === 'ANCHOR') switchView('anchor');
+              else onCategorySelect(isSelected ? 'ALL' : item.id);
+            };
+            coreDiv.appendChild(btn);
+          });
+          catBody.appendChild(coreDiv);
 
-        // Sub-group: Specialized Desks
-        const deskDiv = document.createElement("div");
-        deskDiv.className = "flex flex-col gap-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-800";
-        deskDiv.innerHTML = `<span class="text-[11px] font-bold uppercase text-amber-700 dark:text-amber-400 px-1 mb-0.5 tracking-wider">🏛️ Specialized Desks</span>`;
+          // Sub-group: Specialized Desks
+          const deskDiv = document.createElement("div");
+          deskDiv.className = "flex flex-col gap-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-800";
+          deskDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-amber-700 dark:text-amber-400 px-1 mb-0.5 tracking-wider">🏛️ Specialized Desks</span>`;
 
-        deskItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id || (item.id === 'IPO_ALL' && currentView === 'ipo') || (item.id === 'CORPORATE_ALL' && currentView === 'corporate');
-          const btn = document.createElement("button");
-          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-amber-700 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
-          btn.innerHTML = `
-            <span class="flex items-center gap-1.5 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[11px] ${isSelected ? 'text-white' : ''}">├─</span>
-              <span class="truncate text-[13.5px]">${item.label}</span>
-            </span>
-            <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-amber-700 dark:text-amber-400'}">(${item.count})</span>
-          `;
-          btn.onclick = () => {
-            if (item.id === 'IPO_ALL') onDeskSelect('ipo');
-            else if (item.id === 'CORPORATE_ALL') onDeskSelect('corporate');
-            else if (item.id === 'EVENTS') selectCorporateSub('EVENTS');
-            else if (item.id === 'APPOINTMENTS') selectCorporateSub('APPOINTMENTS');
-            else if (item.id === 'OPINIONS') onDeskSelect('opinions');
-          };
-          deskDiv.appendChild(btn);
-        });
-        catBody.appendChild(deskDiv);
+          deskItems.forEach(item => {
+            const isSelected = selectedFeedCategory === item.id || (item.id === 'IPO_ALL' && currentView === 'ipo') || (item.id === 'CORPORATE_ALL' && currentView === 'corporate');
+            const btn = document.createElement("button");
+            btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-amber-700 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-amber-50/60 dark:hover:bg-amber-950/30 font-medium'}`;
+            btn.innerHTML = `
+              <span class="flex items-center gap-1.5 min-w-0 truncate">
+                <span class="text-slate-400 select-none text-[11px] ${isSelected ? 'text-white' : ''}">├─</span>
+                <span class="truncate text-[13px]">${item.label}</span>
+              </span>
+              <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-amber-700 dark:text-amber-400'}">(${item.count})</span>
+            `;
+            btn.onclick = () => {
+              if (item.id === 'IPO_ALL') onDeskSelect('ipo');
+              else if (item.id === 'CORPORATE_ALL') onDeskSelect('corporate');
+              else if (item.id === 'EVENTS') selectCorporateSub('EVENTS');
+              else if (item.id === 'APPOINTMENTS') selectCorporateSub('APPOINTMENTS');
+              else if (item.id === 'OPINIONS') onDeskSelect('opinions');
+            };
+            deskDiv.appendChild(btn);
+          });
+          catBody.appendChild(deskDiv);
 
-        catCard.appendChild(catBody);
+          catCard.appendChild(catBody);
+        }
+        container.appendChild(catCard);
       }
-      container.appendChild(catCard);
 
-      // --- SECTION 2: INDUSTRY SECTORS TREE CARD (COLLAPSED BY DEFAULT) ---
-      const secCounts = {};
-      stories.forEach(s => {
-        (s.sectors || []).forEach(sec => secCounts[sec] = (secCounts[sec] || 0) + 1);
-      });
-      const sortedSecs = Object.keys(secCounts).sort((a,b) => secCounts[b] - secCounts[a]);
+      // --- SECTION 2: INDUSTRY SECTORS TREE CARD ---
+      if (activeRightPanelView === 'ALL' || activeRightPanelView === 'SECTORS') {
+        const secCounts = {};
+        stories.forEach(s => {
+          (s.sectors || []).forEach(sec => secCounts[sec] = (secCounts[sec] || 0) + 1);
+        });
+        const sortedSecs = Object.keys(secCounts).sort((a,b) => secCounts[b] - secCounts[a]);
 
-      const secCard = document.createElement("div");
-      secCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
-      
-      const isSecOpen = treeState.sectors;
-      secCard.innerHTML = `
-        <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('sectors')">
-          <div class="flex items-center gap-1.5 text-[13.5px] font-sans font-bold text-slate-900 dark:text-slate-100">
-            <span class="text-indigo-600 dark:text-indigo-400 text-[11px]">${isSecOpen ? '▼' : '▶'}</span>
-            <span>📈 Industry Sectors</span>
-            <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${sortedSecs.length})</span>
+        const secCard = document.createElement("div");
+        secCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+        
+        const isSecOpen = treeState.sectors;
+        secCard.innerHTML = `
+          <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('sectors')">
+            <div class="flex items-center gap-1.5 text-[13px] font-sans font-bold text-slate-900 dark:text-slate-100">
+              <span class="text-indigo-600 dark:text-indigo-400 text-[11px]">${isSecOpen ? '▼' : '▶'}</span>
+              <span>📈 Industry Sectors</span>
+              <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${sortedSecs.length})</span>
+            </div>
+            ${activeSectorFilter ? `<button onclick="event.stopPropagation(); activeSectorFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
           </div>
-          ${activeSectorFilter ? `<button onclick="event.stopPropagation(); activeSectorFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
-        </div>
-      `;
+        `;
 
-      if (isSecOpen) {
-        const secBody = document.createElement("div");
-        secBody.className = "p-1.5 flex flex-col gap-0.5 text-[13.5px] font-sans max-h-[260px] overflow-y-auto";
+        if (isSecOpen) {
+          const secBody = document.createElement("div");
+          secBody.className = "p-1.5 flex flex-col gap-0.5 text-[13px] font-sans";
 
-        sortedSecs.forEach(sec => {
-          const isSelected = activeSectorFilter === sec;
-          const btn = document.createElement("button");
-          btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-medium'}`;
-          btn.innerHTML = `
-            <span class="flex items-center gap-1.5 min-w-0 truncate">
-              <span class="text-slate-400 select-none text-[11px] ${isSelected ? 'text-white' : ''}">├─</span>
-              <span class="truncate text-[13.5px]">${sec}</span>
-            </span>
-            <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${secCounts[sec]})</span>
-          `;
-          btn.onclick = () => {
-            activeSectorFilter = activeSectorFilter === sec ? null : sec;
-            selectedStoryIndex = 0;
-            currentFeedPage = 1;
-            renderCategoriesAndStocksSidebar();
-            if (currentLayoutMode === "split") renderFeedList();
-            else renderMatrixTable();
-          };
-          secBody.appendChild(btn);
-        });
-        secCard.appendChild(secBody);
+          sortedSecs.forEach(sec => {
+            const isSelected = activeSectorFilter === sec;
+            const btn = document.createElement("button");
+            btn.className = `w-full text-left px-2 py-1 rounded flex items-center justify-between transition-colors cursor-pointer ${isSelected ? 'bg-indigo-600 text-white font-bold shadow-xs' : 'text-[#090D16] dark:text-slate-200 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-medium'}`;
+            btn.innerHTML = `
+              <span class="flex items-center gap-1.5 min-w-0 truncate">
+                <span class="text-slate-400 select-none text-[11px] ${isSelected ? 'text-white' : ''}">├─</span>
+                <span class="truncate text-[13px]">${sec}</span>
+              </span>
+              <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${secCounts[sec]})</span>
+            `;
+            btn.onclick = () => {
+              activeSectorFilter = activeSectorFilter === sec ? null : sec;
+              selectedStoryIndex = 0;
+              currentFeedPage = 1;
+              renderCategoriesAndStocksSidebar();
+              if (currentLayoutMode === "split") renderFeedList();
+              else renderMatrixTable();
+            };
+            secBody.appendChild(btn);
+          });
+          secCard.appendChild(secBody);
+        }
+        container.appendChild(secCard);
       }
-      container.appendChild(secCard);
 
       // --- SECTION 3: COMPANY STOCKS CLUSTERED & COLOR-CODED ---
-      const stockCounts = {};
-      stories.forEach(s => {
-        (s.stocks || []).forEach(stk => stockCounts[stk] = (stockCounts[stk] || 0) + 1);
-      });
-      const activeStockKeys = Object.keys(stockCounts);
+      if (activeRightPanelView === 'ALL' || activeRightPanelView === 'STOCKS') {
+        const stockCounts = {};
+        stories.forEach(s => {
+          (s.stocks || []).forEach(stk => stockCounts[stk] = (stockCounts[stk] || 0) + 1);
+        });
+        const activeStockKeys = Object.keys(stockCounts);
 
-      // Group detected stocks by similar cluster
-      const clusters = {};
-      activeStockKeys.forEach(stk => {
-        const info = stockClusterMap[stk] || { group: "Other Companies", color: "slate" };
-        const gName = info.group;
-        if (!clusters[gName]) clusters[gName] = { color: info.color, stocks: [] };
-        clusters[gName].stocks.push({ ticker: stk, count: stockCounts[stk] });
-      });
+        // Group detected stocks by similar cluster
+        const clusters = {};
+        activeStockKeys.forEach(stk => {
+          if (stockSearchFilterText && !stk.includes(stockSearchFilterText)) return;
+          const info = stockClusterMap[stk] || { group: "Other Companies", color: "slate" };
+          const gName = info.group;
+          if (!clusters[gName]) clusters[gName] = { color: info.color, stocks: [] };
+          clusters[gName].stocks.push({ ticker: stk, count: stockCounts[stk] });
+        });
 
-      // Sort clusters and stocks inside each cluster
-      const clusterEntries = Object.entries(clusters).sort((a, b) => {
-        const totalA = a[1].stocks.reduce((acc, s) => acc + s.count, 0);
-        const totalB = b[1].stocks.reduce((acc, s) => acc + s.count, 0);
-        return totalB - totalA;
-      });
+        // Sort clusters and stocks inside each cluster
+        const clusterEntries = Object.entries(clusters).sort((a, b) => {
+          const totalA = a[1].stocks.reduce((acc, s) => acc + s.count, 0);
+          const totalB = b[1].stocks.reduce((acc, s) => acc + s.count, 0);
+          return totalB - totalA;
+        });
 
-      const stockCard = document.createElement("div");
-      stockCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
-      
-      const isStockOpen = treeState.stocks;
-      stockCard.innerHTML = `
-        <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('stocks')">
-          <div class="flex items-center gap-1.5 text-[13.5px] font-sans font-bold text-slate-900 dark:text-slate-100">
-            <span class="text-amber-600 dark:text-amber-400 text-[11px]">${isStockOpen ? '▼' : '▶'}</span>
-            <span>🏢 Company Stocks</span>
-            <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${activeStockKeys.length})</span>
+        const stockCard = document.createElement("div");
+        stockCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+        
+        const isStockOpen = treeState.stocks;
+        stockCard.innerHTML = `
+          <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('stocks')">
+            <div class="flex items-center gap-1.5 text-[13px] font-sans font-bold text-slate-900 dark:text-slate-100">
+              <span class="text-amber-600 dark:text-amber-400 text-[11px]">${isStockOpen ? '▼' : '▶'}</span>
+              <span>🏢 Company Stocks</span>
+              <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${activeStockKeys.length})</span>
+            </div>
+            ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
           </div>
-          ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
-        </div>
-      `;
+        `;
 
-      if (isStockOpen) {
-        const stockBody = document.createElement("div");
-        stockBody.className = "p-1.5 flex flex-col gap-1.5 text-[13px] font-sans max-h-[320px] overflow-y-auto";
+        if (isStockOpen) {
+          const stockBody = document.createElement("div");
+          stockBody.className = "p-1.5 flex flex-col gap-1.5 text-[12.5px] font-sans";
 
-        clusterEntries.forEach(([gName, gData]) => {
-          const gDiv = document.createElement("div");
-          gDiv.className = "flex flex-col gap-0.5";
-          
+          // Stock search box
+          const searchDiv = document.createElement("div");
+          searchDiv.className = "px-0.5 pb-1 border-b border-slate-100 dark:border-slate-800 flex items-center gap-1";
+          searchDiv.innerHTML = `
+            <input type="text" id="sidebar-stock-search" value="${stockSearchFilterText}" oninput="onStockSearchInput(this.value)" placeholder="🔍 Search stock..." class="w-full text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-2xs"/>
+            ${stockSearchFilterText ? `<button onclick="onStockSearchInput('')" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-[11px] font-bold px-1">✕</button>` : ''}
+          `;
+          stockBody.appendChild(searchDiv);
+
           // Color coding themes
           const colorStyles = {
             blue: "bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800",
@@ -1552,42 +1597,54 @@
             indigo: "bg-indigo-50 text-indigo-900 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-300 dark:border-indigo-800"
           };
 
-          const activeColor = colorStyles[gData.color] || colorStyles.slate;
+          if (clusterEntries.length === 0) {
+            const noMatch = document.createElement("div");
+            noMatch.className = "p-2 text-[11px] text-slate-400 font-mono text-center";
+            noMatch.textContent = "No stocks matching search";
+            stockBody.appendChild(noMatch);
+          }
 
-          gDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase px-1 text-slate-500 dark:text-slate-400 tracking-wider mb-0.5">${gName}</span>`;
-
-          gData.stocks.sort((a, b) => b.count - a.count).forEach(stkItem => {
-            const isSelected = activeStockFilter === stkItem.ticker;
-            const btn = document.createElement("button");
+          clusterEntries.forEach(([gName, gData]) => {
+            const gDiv = document.createElement("div");
+            gDiv.className = "flex flex-col gap-0.5";
             
-            const btnStyle = isSelected
-              ? "bg-amber-600 text-white font-bold shadow-xs border border-amber-600"
-              : `hover:opacity-90 border font-medium ${activeColor}`;
+            const activeColor = colorStyles[gData.color] || colorStyles.slate;
 
-            btn.className = `w-full text-left px-2 py-0.5 rounded text-[12.5px] flex items-center justify-between transition-colors cursor-pointer mb-0.5 ${btnStyle}`;
-            btn.innerHTML = `
-              <span class="flex items-center gap-1 min-w-0 truncate">
-                <span class="truncate font-mono font-bold">${stkItem.ticker}</span>
-              </span>
-              <span class="text-[11px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white' : 'opacity-80'}">(${stkItem.count})</span>
-            `;
-            btn.onclick = () => {
-              activeStockFilter = activeStockFilter === stkItem.ticker ? null : stkItem.ticker;
-              selectedStoryIndex = 0;
-              currentFeedPage = 1;
-              renderCategoriesAndStocksSidebar();
-              if (currentLayoutMode === "split") renderFeedList();
-              else renderMatrixTable();
-            };
-            gDiv.appendChild(btn);
+            gDiv.innerHTML = `<span class="text-[10px] font-bold uppercase px-1 text-slate-500 dark:text-slate-400 tracking-wider mb-0.5">${gName}</span>`;
+
+            gData.stocks.sort((a, b) => b.count - a.count).forEach(stkItem => {
+              const isSelected = activeStockFilter === stkItem.ticker;
+              const btn = document.createElement("button");
+              
+              const btnStyle = isSelected
+                ? "bg-amber-600 text-white font-bold shadow-xs border border-amber-600"
+                : `hover:opacity-90 border font-medium ${activeColor}`;
+
+              btn.className = `w-full text-left px-2 py-0.5 rounded text-[12px] flex items-center justify-between transition-colors cursor-pointer mb-0.5 ${btnStyle}`;
+              btn.innerHTML = `
+                <span class="flex items-center gap-1 min-w-0 truncate">
+                  <span class="truncate font-mono font-bold">${stkItem.ticker}</span>
+                </span>
+                <span class="text-[10.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white' : 'opacity-80'}">(${stkItem.count})</span>
+              `;
+              btn.onclick = () => {
+                activeStockFilter = activeStockFilter === stkItem.ticker ? null : stkItem.ticker;
+                selectedStoryIndex = 0;
+                currentFeedPage = 1;
+                renderCategoriesAndStocksSidebar();
+                if (currentLayoutMode === "split") renderFeedList();
+                else renderMatrixTable();
+              };
+              gDiv.appendChild(btn);
+            });
+
+            stockBody.appendChild(gDiv);
           });
 
-          stockBody.appendChild(gDiv);
-        });
-
-        stockCard.appendChild(stockBody);
+          stockCard.appendChild(stockBody);
+        }
+        container.appendChild(stockCard);
       }
-      container.appendChild(stockCard);
     }
 
     function clearAllStockAndSectorFilters() {
