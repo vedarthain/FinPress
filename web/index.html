@@ -51,77 +51,34 @@
 <body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
   <div class="min-h-screen flex flex-col">
 
-    <!-- ================= 1. TOPMOST MARKET PULSE & CALENDAR RIBBON ================= -->
-    <div class="sticky top-0 z-50 bg-[#060911] text-slate-200 text-[12px] sm:text-[12.5px] font-mono px-3.5 py-1.5 flex items-center justify-between overflow-x-auto whitespace-nowrap gap-3.5 border-b border-slate-800 shadow-sm">
-      <div class="flex items-center gap-3.5">
-        <span class="text-amber-400 font-extrabold flex items-center gap-1.5 text-[12.5px]">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>MARKET PULSE:</span>
-        </span>
-        <span class="text-slate-200 font-medium">NIFTY <b class="text-emerald-400 font-bold">24,835 (+0.64%)</b></span>
-        <span class="text-slate-200 font-medium">BANK NIFTY <b class="text-emerald-400 font-bold">54,120 (+0.82%)</b></span>
-        <span class="text-slate-200 font-medium">INDIA VIX <b class="text-rose-400 font-bold">12.85 (-3.2%)</b></span>
-        <span class="text-slate-200 font-medium">BRENT <b class="text-amber-300 font-bold">$74.2/bbl</b></span>
-        <span class="text-slate-200 font-medium">USD/INR <b class="text-slate-100 font-bold">₹83.65</b></span>
-      </div>
-
-      <!-- Historical Calendar & Edition Navigation -->
-      <div class="flex items-center gap-2.5 shrink-0 text-[12px]">
-        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded border border-slate-700/80">
-          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Previous Date (◀)">
-            ◀
-          </button>
-          
-          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/60 rounded border border-slate-700/60">
-            <span class="text-slate-400 text-[11px]">📅</span>
-            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[12px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[115px]"/>
-          </div>
-
-          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white text-[12px] font-bold transition-colors cursor-pointer" title="Next Date (▶)">
-            ▶
-          </button>
-        </div>
-
-        <div id="source-health-container" class="flex items-center gap-1.5 font-mono text-[11px]">
-          <!-- Dynamically populated FE / BS status pills -->
-        </div>
-
-        <span id="total-news-counter-badge" class="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-extrabold font-mono text-[12px]">
-          🔥 Total: <b id="top-total-count">0</b>
-        </span>
-      </div>
-    </div>
-
-    <!-- ================= 2. MAIN NAVIGATION TOOLBAR (FINANCIAL BROADSHEET NEWSPAPER RIBBON) ================= -->
-    <header class="sticky top-[34px] z-40 bg-[#FBE8D8] dark:bg-[#151922] border-b-2 border-[#E2BFA2] dark:border-slate-800 text-slate-900 dark:text-slate-100 shadow-sm px-3.5 py-1.5 flex items-center justify-between gap-2.5 overflow-x-auto flex-nowrap whitespace-nowrap">
+    <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON ================= -->
+    <header class="sticky top-0 z-50 bg-[#0B0F19] dark:bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-md px-3 py-1.5 flex items-center justify-between gap-2.5 overflow-x-auto whitespace-nowrap text-[12px] font-mono">
       
-      <!-- Left: Logo & Primary Navigation Tabs -->
-      <div class="flex items-center gap-3 shrink-0">
+      <!-- Left: FinPress Branding & Front Page Tab -->
+      <div class="flex items-center gap-2 shrink-0">
         <div class="flex items-center gap-1.5 shrink-0 cursor-pointer" onclick="switchView('feed')">
-          <div class="w-7 h-7 rounded-md bg-[#1C1917] dark:bg-amber-600 flex items-center justify-center shadow-xs border border-amber-900/40">
-            <span class="text-[#FDF2E9] text-[11px] font-bold tracking-tight">FP</span>
+          <div class="w-6.5 h-6.5 rounded bg-amber-600 flex items-center justify-center shadow-xs border border-amber-500/50">
+            <span class="text-white text-[11px] font-extrabold tracking-tight font-mono">FP</span>
           </div>
-          <span class="text-[17px] font-bold tracking-tight text-[#1C1917] dark:text-white mr-0.5">
-            Fin<span class="text-amber-700 dark:text-amber-400">Press</span>
+          <span class="text-[15px] font-extrabold tracking-tight text-white font-mono mr-1">
+            Fin<span class="text-amber-400">Press</span>
           </span>
         </div>
 
         <!-- Front Page Tab (Right next to FinPress) -->
-        <nav class="flex items-center bg-[#F3DECC] dark:bg-[#0D121D] p-0.5 rounded-lg border border-[#DFC0A5] dark:border-slate-700 text-[12.5px] shrink-0 font-medium">
-          <button id="tab-btn-anchor" onclick="switchView('anchor')" class="px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium">
+        <nav class="flex items-center bg-slate-900/90 p-0.5 rounded-lg border border-slate-700">
+          <button id="tab-btn-anchor" onclick="switchView('anchor')" class="px-2.5 py-0.5 rounded-md transition-all text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-1.5 font-semibold">
             <span>📰 Front Page</span>
-            <span id="tab-anchor-count" class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-amber-200/90 text-amber-950 dark:bg-amber-500/20 dark:text-amber-300 font-semibold">0</span>
+            <span id="tab-anchor-count" class="px-1.5 py-0.2 rounded text-[10px] bg-amber-500/20 text-amber-300 font-bold">0</span>
           </button>
         </nav>
       </div>
 
-      <!-- Center Controls (Core Sections Dropdown + Specialized Desks Dropdown + Sentiment Filters) -->
+      <!-- Center Controls (All News Dropdown + Specialized Desks + Sentiment Filters) -->
       <div class="flex items-center gap-2 shrink-0">
-        
-        <!-- Feed & Desks Controls -->
         <div id="feed-controls" class="flex items-center gap-2">
-          <!-- 1. All News Dropdown (with dynamic numbers) -->
-          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[12px] font-medium px-2.5 py-1 rounded-md border border-[#D5B599] dark:border-slate-700 bg-white/85 dark:bg-[#1A202E] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-600 cursor-pointer shadow-2xs">
+          <!-- 1. All News Dropdown -->
+          <select id="category-select" onchange="onCategorySelect(this.value)" class="text-[11.5px] font-medium px-2.5 py-1 rounded-md border border-slate-700 bg-slate-900 text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer shadow-2xs font-mono">
             <option value="ALL">⚡ All News (0)</option>
             <option value="Sector">Sector (0)</option>
             <option value="Economy">Economy (0)</option>
@@ -132,8 +89,8 @@
             <option value="Others">General Features (0)</option>
           </select>
 
-          <!-- 2. Specialized Desks Dropdown (IPO Central, Corporate, Opinion with dynamic numbers) -->
-          <select id="desk-select" onchange="onDeskSelect(this.value)" class="text-[12px] font-semibold px-2.5 py-1 rounded-md border border-amber-600/70 dark:border-amber-500/50 bg-[#FFF7F0] dark:bg-[#1A202E] text-amber-950 dark:text-amber-300 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer shadow-2xs">
+          <!-- 2. Specialized Desks Dropdown -->
+          <select id="desk-select" onchange="onDeskSelect(this.value)" class="text-[11.5px] font-bold px-2.5 py-1 rounded-md border border-amber-500/60 bg-amber-950/40 text-amber-300 focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer shadow-2xs font-mono">
             <option value="" disabled selected>🏛️ Specialized Desks ▾</option>
             <option value="ipo">🚀 IPO Central (0)</option>
             <option value="corporate">🏢 Corporate (0)</option>
@@ -141,37 +98,52 @@
           </select>
 
           <!-- Sentiment Filter Buttons -->
-          <div class="flex items-center bg-[#F3DECC] dark:bg-[#0D121D] p-0.5 rounded-lg border border-[#DFC0A5] dark:border-slate-700 text-[11.5px] font-medium">
-            <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2.5 py-0.5 rounded-md bg-[#1C1917] text-white dark:bg-slate-700 shadow-xs font-semibold">
+          <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[11px] font-mono">
+            <button id="sent-all" onclick="setFeedSentiment('ALL')" class="px-2.5 py-0.5 rounded-md bg-slate-700 text-white shadow-xs font-bold">
               All (<span id="feed-count-all">0</span>)
             </button>
-            <button id="sent-bullish" onclick="setFeedSentiment('BULLISH')" class="px-2 py-0.5 rounded-md text-emerald-900 dark:text-emerald-400 hover:bg-emerald-100/60 dark:hover:bg-emerald-950/40 flex items-center gap-0.5 font-medium">
+            <button id="sent-bullish" onclick="setFeedSentiment('BULLISH')" class="px-2 py-0.5 rounded-md text-emerald-400 hover:bg-emerald-950/40 flex items-center gap-0.5 font-medium">
               <span>🟢</span> (<span id="feed-count-bullish">0</span>)
             </button>
-            <button id="sent-bearish" onclick="setFeedSentiment('BEARISH')" class="px-2 py-0.5 rounded-md text-rose-900 dark:text-rose-400 hover:bg-rose-100/60 dark:hover:bg-rose-950/40 flex items-center gap-0.5 font-medium">
+            <button id="sent-bearish" onclick="setFeedSentiment('BEARISH')" class="px-2 py-0.5 rounded-md text-rose-400 hover:bg-rose-950/40 flex items-center gap-0.5 font-medium">
               <span>🔴</span> (<span id="feed-count-bearish">0</span>)
             </button>
           </div>
         </div>
-
       </div>
 
-      <!-- Right: Search + Font Scaler + Theme Switcher -->
+      <!-- Right: Search + Calendar + Status + Total + Font + Theme -->
       <div class="flex items-center gap-2 shrink-0">
-        <div class="relative w-36 sm:w-48">
-          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[12px] pl-6.5 pr-5 py-1 rounded-md border border-[#D5B599] dark:border-slate-700 bg-white/90 dark:bg-[#1A202E] text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-amber-600 font-medium shadow-2xs"/>
-          <span class="absolute left-2 top-1.5 text-slate-500 text-[11px]">🔍</span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-1 text-slate-500 hover:text-black dark:hover:text-white text-[11px] font-bold p-0.5">✕</button>
+        <div class="relative w-36 sm:w-44">
+          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11.5px] pl-6 pr-5 py-1 rounded-md border border-slate-700 bg-slate-900 text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-2xs"/>
+          <span class="absolute left-1.5 top-1.5 text-slate-400 text-[10.5px]">🔍</span>
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-1 text-slate-400 hover:text-white text-[11px] font-bold p-0.5">✕</button>
         </div>
 
-        <!-- Font Size Controls (A- / A+) -->
-        <div class="flex items-center bg-[#F3DECC] dark:bg-[#0D121D] p-0.5 rounded-lg border border-[#DFC0A5] dark:border-slate-700 text-[11.5px] font-mono font-semibold">
-          <button onclick="adjustFontSize(-1)" class="px-2 py-0.5 rounded text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
-          <span id="font-size-label" class="px-1 text-[10px] text-slate-700 dark:text-slate-400 select-none">100%</span>
-          <button onclick="adjustFontSize(1)" class="px-2 py-0.5 rounded text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
+        <!-- Historical Calendar & Edition Navigation -->
+        <div class="flex items-center gap-0.5 bg-slate-900 p-0.5 rounded-md border border-slate-700/80 font-mono text-[11.5px]">
+          <button onclick="navigateDate(-1)" class="px-1.5 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Previous Date (◀)">◀</button>
+          <div class="flex items-center gap-1 px-1 py-0.5 bg-black/60 rounded border border-slate-800">
+            <span class="text-slate-400 text-[10.5px]">📅</span>
+            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11.5px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[105px]"/>
+          </div>
+          <button onclick="navigateDate(1)" class="px-1.5 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Next Date (▶)">▶</button>
         </div>
 
-        <button onclick="toggleTheme()" class="w-7 h-7 rounded-lg border border-[#D5B599] dark:border-slate-700 bg-white/80 dark:bg-[#1A202E] text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white flex items-center justify-center text-[12px] shadow-xs" title="Toggle Light/Dark Theme">
+        <div id="source-health-container" class="flex items-center gap-1 font-mono text-[10.5px]"></div>
+
+        <span id="total-news-counter-badge" class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-extrabold font-mono text-[11.5px]">
+          🔥 <b id="top-total-count">0</b>
+        </span>
+
+        <!-- Font Size Controls -->
+        <div class="flex items-center bg-slate-900 p-0.5 rounded-md border border-slate-700 text-[11px] font-mono font-semibold">
+          <button onclick="adjustFontSize(-1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
+          <span id="font-size-label" class="px-1 text-[9.5px] text-slate-400 select-none">100%</span>
+          <button onclick="adjustFontSize(1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
+        </div>
+
+        <button onclick="toggleTheme()" class="w-6.5 h-6.5 rounded-md border border-slate-700 bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
@@ -274,68 +246,59 @@
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE (WIDE READING PANE) -->
-        <div id="feed-detail-wrapper" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs lg:sticky lg:top-[70px] flex flex-col gap-2.5 lg:min-h-[calc(100vh-5.5rem)] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
+        <div id="feed-detail-wrapper" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs lg:sticky lg:top-[44px] flex flex-col gap-2.5 lg:min-h-[calc(100vh-5.5rem)] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
           <div id="feed-detail-container">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
-        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (CATEGORIES & STOCKS IN FOCUS) -->
-        <aside class="flex flex-col gap-2.5 lg:sticky lg:top-[70px] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
+        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (CATEGORIES, SECTORS & STOCKS AT A GLANCE) -->
+        <aside class="flex flex-col gap-2 lg:sticky lg:top-[44px] lg:max-h-[calc(100vh-3.5rem)] lg:overflow-y-auto">
           
           <!-- 1. Categories in Focus Card (All News + Specialized Desks) -->
-          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2">
-            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
-              <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1 font-mono">
                 <span>📁</span> <span>Categories in Focus</span>
               </span>
-              <button id="clear-category-filter" onclick="onCategorySelect('ALL')" class="hidden text-[10.5px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">
+              <button id="clear-category-filter" onclick="onCategorySelect('ALL')" class="hidden text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold hover:underline">
                 Reset (✕)
               </button>
             </div>
-            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-tight font-medium">All News & Specialized Desks:</p>
-            <div id="categories-focus-list" class="flex flex-wrap gap-1 max-h-[175px] overflow-y-auto pt-0.5">
+            <div id="categories-focus-list" class="flex flex-wrap gap-1 pt-0.5">
               <!-- Dynamically populated category & desk chips -->
             </div>
           </div>
 
-          <!-- 2. Stocks in Focus Card (Segregated Stocks vs Sectors) -->
-          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 shadow-xs flex flex-col gap-2.5">
-            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
-              <span class="text-[11.5px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5 font-mono">
-                <span>🏷️</span> <span>Stocks in Focus</span>
+          <!-- 2. Industry Sectors in Focus Card -->
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-300 flex items-center gap-1 font-mono">
+                <span>📈</span> <span>Industry Sectors</span>
               </span>
-              <button id="clear-stock-filter" onclick="clearAllStockAndSectorFilters()" class="hidden text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-                Clear (✕)
-              </button>
+              <span id="sectors-count-label" class="text-[10px] font-mono text-slate-400 font-bold">0 Sectors</span>
             </div>
+            <div id="industry-sectors-focus-list" class="flex flex-wrap gap-1 pt-0.5">
+              <!-- Dynamically populated industry sector chips -->
+            </div>
+          </div>
 
-            <!-- Sub-section A: Company Stocks (CDSL, NTPC, TATA SONS, OLA ELEC...) -->
-            <div class="flex flex-col gap-1">
-              <div class="flex items-center justify-between">
-                <span class="text-[10.5px] font-bold uppercase text-amber-800 dark:text-amber-400 font-mono flex items-center gap-1">
-                  <span>🏢</span> <span>Company Stocks</span>
-                </span>
+          <!-- 3. Company Stocks in Focus Card -->
+          <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs flex flex-col gap-1.5">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-amber-900 dark:text-amber-400 flex items-center gap-1 font-mono">
+                <span>🏢</span> <span>Stocks in Focus</span>
+              </span>
+              <div class="flex items-center gap-1.5">
                 <span id="stocks-count-label" class="text-[10px] font-mono text-slate-400 font-bold">0 Tickers</span>
-              </div>
-              <div id="stocks-focus-list" class="flex flex-wrap gap-1 max-h-[140px] overflow-y-auto pt-0.5">
-                <!-- Dynamically populated company stock chips -->
-              </div>
-            </div>
-
-            <!-- Sub-section B: Industry Sectors (Energy, IT, Banking, Auto, Real Estate...) -->
-            <div class="flex flex-col gap-1 pt-1.5 border-t border-slate-100 dark:border-slate-800/80">
-              <div class="flex items-center justify-between">
-                <span class="text-[10.5px] font-bold uppercase text-indigo-800 dark:text-indigo-400 font-mono flex items-center gap-1">
-                  <span>📈</span> <span>Industry Sectors</span>
-                </span>
-                <span id="sectors-count-label" class="text-[10px] font-mono text-slate-400 font-bold">0 Sectors</span>
-              </div>
-              <div id="industry-sectors-focus-list" class="flex flex-wrap gap-1 max-h-[140px] overflow-y-auto pt-0.5">
-                <!-- Dynamically populated industry sector chips -->
+                <button id="clear-stock-filter" onclick="clearAllStockAndSectorFilters()" class="hidden text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                  Clear (✕)
+                </button>
               </div>
             </div>
-
+            <div id="stocks-focus-list" class="flex flex-wrap gap-1 pt-0.5">
+              <!-- Dynamically populated company stock chips -->
+            </div>
           </div>
 
         </aside>
@@ -454,29 +417,29 @@
       </div>
 
       <!-- ⚡ EXECUTIVE GIST (INDIGO CARD) -->
-      <div class="p-3.5 rounded-xl bg-indigo-50/80 dark:bg-[#10182E] border border-indigo-200/90 dark:border-indigo-800 shadow-2xs">
+      <div class="p-3 rounded-xl bg-indigo-50/80 dark:bg-[#10182E] border border-indigo-200/90 dark:border-indigo-800 shadow-2xs">
         <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-indigo-950 dark:text-indigo-300 mb-1 flex items-center gap-1">
-          <span>⚡</span> <span>Executive Gist (Core Takeaway)</span>
+          <span>⚡</span> <span>1. Executive Gist (Core Takeaway)</span>
         </p>
         <div id="story-modal-brief" class="space-y-1.5"></div>
+      </div>
+
+      <!-- 💡 TRADER CATALYST (DYNAMIC EMERALD/ROSE/SLATE CARD - DIRECTLY BELOW GIST) -->
+      <div id="story-modal-catalyst-box" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#11172A] shadow-2xs">
+        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300 mb-1 flex items-center gap-1">
+          <span>💡</span> <span>2. Trader Catalyst & Market Impact</span>
+        </p>
+        <div id="story-modal-catalyst" class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-medium bg-white dark:bg-[#0B1020] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800"></div>
       </div>
 
       <!-- 📌 KEY ANALYST DATA POINTS (NEWSPAPER BROADSHEET CARD) -->
       <div class="p-3 rounded-xl bg-[#F5EFEB] dark:bg-[#1E1914]/70 border border-[#B8A38E]/80 dark:border-[#524434] shadow-2xs">
         <p class="text-[11px] font-mono uppercase tracking-wider font-extrabold text-[#2E1F14] dark:text-[#F3ECE4] mb-1.5 flex items-center gap-1">
-          <span>📌</span> <span>Key Analyst Data Points</span>
+          <span>📌</span> <span>3. Key Analyst Data Points</span>
         </p>
         <ul id="story-modal-bullets" class="space-y-1.5">
           <!-- Bullets -->
         </ul>
-      </div>
-
-      <!-- 💡 TRADER CATALYST (DYNAMIC EMERALD/ROSE/SLATE CARD) -->
-      <div id="story-modal-catalyst-box" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#11172A] shadow-2xs">
-        <p class="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-600 dark:text-slate-300 mb-1 flex items-center gap-1">
-          <span>💡</span> <span>Trader Catalyst & Impact Analysis</span>
-        </p>
-        <div id="story-modal-catalyst" class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-medium bg-white dark:bg-[#0B1020] p-2.5 rounded-lg border border-slate-200/80 dark:border-slate-800"></div>
       </div>
 
       <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-400">
@@ -1341,7 +1304,7 @@
             ? "bg-amber-50/90 dark:bg-amber-950/40 border border-amber-300/80 dark:border-amber-800 text-amber-950 dark:text-amber-300 hover:border-amber-500 font-semibold"
             : "bg-slate-100 dark:bg-[#141A2E] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 font-medium";
 
-          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono transition-all shadow-2xs ${isSelected ? activeClass : inactiveClass}`;
+          btn.className = `px-1.5 py-0.5 rounded text-[10.5px] font-mono transition-all shadow-2xs ${isSelected ? activeClass : inactiveClass}`;
           btn.textContent = `${item.label} (${item.count})`;
           btn.onclick = () => {
             if (item.id === "IPO_ALL") {
@@ -1379,7 +1342,7 @@
         sortedStocks.forEach(stk => {
           const isSelected = activeStockFilter === stk;
           const btn = document.createElement("button");
-          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-amber-600 text-white shadow-xs' : 'bg-amber-50/70 dark:bg-[#1A1F2E] border border-amber-200/80 dark:border-slate-800 text-amber-950 dark:text-amber-300 hover:border-amber-400 hover:text-amber-700'}`;
+          btn.className = `px-1.5 py-0.5 rounded text-[10.5px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-amber-600 text-white shadow-xs' : 'bg-amber-50/70 dark:bg-[#1A1F2E] border border-amber-200/80 dark:border-slate-800 text-amber-950 dark:text-amber-300 hover:border-amber-400 hover:text-amber-700'}`;
           btn.textContent = `${stk} (${stockCounts[stk]})`;
           btn.onclick = () => {
             activeStockFilter = activeStockFilter === stk ? null : stk;
@@ -1408,7 +1371,7 @@
         sortedSecs.forEach(sec => {
           const isSelected = activeSectorFilter === sec;
           const btn = document.createElement("button");
-          btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-indigo-600 text-white shadow-xs' : 'bg-indigo-50/70 dark:bg-[#141A2E] border border-indigo-200/80 dark:border-slate-800 text-indigo-950 dark:text-indigo-300 hover:border-indigo-400 hover:text-indigo-700'}`;
+          btn.className = `px-1.5 py-0.5 rounded text-[10.5px] font-mono font-bold transition-all shadow-2xs ${isSelected ? 'bg-indigo-600 text-white shadow-xs' : 'bg-indigo-50/70 dark:bg-[#141A2E] border border-indigo-200/80 dark:border-slate-800 text-indigo-950 dark:text-indigo-300 hover:border-indigo-400 hover:text-indigo-700'}`;
           btn.textContent = `${sec} (${secCounts[sec]})`;
           btn.onclick = () => {
             activeSectorFilter = activeSectorFilter === sec ? null : sec;
@@ -1615,58 +1578,68 @@
           ${story.tickers.length > 0 ? tickerBadges : ''}
         </h1>
 
-        <!-- 2-COLUMN SIDE-BY-SIDE GRID FOR SECTION 1 & SECTION 2 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch mt-1.5">
+        <!-- 2-COLUMN SIDE-BY-SIDE GRID: LEFT (GIST + CATALYST) & RIGHT (KEY ANALYST DATA POINTS) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start mt-2">
           
-          <!-- ⚡ SECTION 1: EXECUTIVE GIST (CORE TAKEAWAY) -->
-          <div class="rounded-xl border-2 border-[#6366F1] dark:border-[#818CF8] bg-[#EEF2FF] dark:bg-[#1E1B4B]/60 p-3.5 shadow-xs flex flex-col gap-2.5">
-            <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-800/80 pb-1.5">
-              <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-[#1E1B4B] dark:text-[#E0E7FF] flex items-center gap-1.5">
-                <span>⚡</span> <span>1. Executive Gist</span>
-              </span>
-              <span class="text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Quick Read</span>
+          <!-- LEFT COLUMN (lg:col-span-6): CORE TRADER TAKEAWAY + CATALYST DIRECTLY BELOW -->
+          <div class="lg:col-span-6 flex flex-col gap-2.5">
+            
+            <!-- ⚡ SECTION 1: EXECUTIVE GIST (CORE TAKEAWAY) -->
+            <div class="rounded-xl border-2 border-indigo-400/80 dark:border-indigo-700 bg-indigo-50/70 dark:bg-[#151930] p-3 shadow-xs flex flex-col gap-2">
+              <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-900/60 pb-1">
+                <span class="text-[11.5px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
+                  <span>⚡</span> <span>1. Executive Gist</span>
+                </span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.2 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Quick Read</span>
+              </div>
+              <div class="space-y-1.5">
+                ${briefSentences.map(sent => `
+                  <div class="flex items-start gap-1.5 text-[13.5px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
+                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none mt-0.5">▸</span>
+                    <span>${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+                  </div>
+                `).join('')}
+              </div>
             </div>
-            <div class="grid grid-cols-1 gap-2 flex-1">
-              ${briefSentences.map(sent => `
-                <div class="flex items-start gap-2 bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border border-indigo-200/60 dark:border-slate-800 text-[14px] sm:text-[14.5px] text-slate-950 dark:text-slate-100 leading-relaxed font-normal shadow-2xs">
-                  <span class="text-[#4F46E5] dark:text-[#818CF8] font-bold text-base select-none mt-0.5">▸</span>
-                  <span>${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
-                </div>
-              `).join('')}
+
+            <!-- 💡 SECTION 2: TRADER CATALYST & IMPACT ANALYSIS (PLACED DIRECTLY BELOW EXECUTIVE GIST!) -->
+            <div class="p-3 rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/80 dark:bg-[#064E3B]/30 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/80 dark:bg-[#881337]/30 dark:border-rose-600' : 'border-slate-400 bg-slate-50 dark:bg-slate-900/50 dark:border-slate-700'} shadow-xs flex flex-col gap-2">
+              <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-1">
+                <span class="text-[11.5px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
+                  <span>💡</span> <span>2. Catalyst & Market Impact</span>
+                </span>
+                <span class="text-[10px] font-mono font-extrabold uppercase px-2 py-0.2 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
+              </div>
+              <div class="text-[13.5px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
+                ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
+              </div>
             </div>
+
           </div>
 
-          <!-- 📌 SECTION 2: KEY ANALYST DATA POINTS -->
-          <div class="rounded-xl border-2 border-[#B8A38E] dark:border-[#524434] bg-[#F5EFEB] dark:bg-[#1E1914]/70 p-3.5 shadow-xs flex flex-col gap-2.5">
-            <div class="flex items-center justify-between border-b border-[#DFD3C4] dark:border-[#382E25] pb-1.5">
-              <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
-                <span>📌</span> <span>2. Key Analyst Data Points</span>
-              </span>
-              <span class="text-[10.5px] font-mono font-bold px-2.5 py-0.5 rounded bg-[#E6D9C8] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
+          <!-- RIGHT COLUMN (lg:col-span-6): KEY ANALYST DATA POINTS -->
+          <div class="lg:col-span-6 flex flex-col gap-2">
+            
+            <!-- 📌 SECTION 3: KEY ANALYST DATA POINTS -->
+            <div class="rounded-xl border-2 border-[#B8A38E] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-3 shadow-xs flex flex-col gap-2">
+              <div class="flex items-center justify-between border-b border-[#E8DCCE] dark:border-[#382E25] pb-1">
+                <span class="text-[11.5px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
+                  <span>📌</span> <span>3. Key Analyst Data Points</span>
+                </span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.2 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
+              </div>
+              <ul class="space-y-2">
+                ${(story.bullet_points || []).map(bp => `
+                  <li class="flex items-start gap-1.5 text-[13.5px] text-slate-950 dark:text-slate-100 leading-snug font-medium">
+                    <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none mt-0.5">›</span>
+                    <span>${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+                  </li>
+                `).join('')}
+              </ul>
             </div>
-            <ul class="space-y-2 flex-1">
-              ${(story.bullet_points || []).map(bp => `
-                <li class="flex items-start gap-2 text-[14px] sm:text-[14.5px] text-slate-950 dark:text-slate-100 leading-relaxed bg-white/95 dark:bg-[#11172A] p-2.5 rounded-lg border border-[#DFCFC0] dark:border-slate-800 shadow-2xs font-normal">
-                  <span class="text-[#7A4B29] dark:text-[#CBB09C] font-bold text-base leading-none select-none mt-0.5">›</span>
-                  <span>${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
-                </li>
-              `).join('')}
-            </ul>
+
           </div>
 
-        </div>
-
-        <!-- 💡 SECTION 3 (BELOW): CATALYST RATIONALE & TRADER IMPACT -->
-        <div class="mt-3 p-3.5 rounded-xl border-2 ${isBullish ? 'border-[#10B981] bg-[#ECFDF5] dark:bg-[#064E3B]/40 dark:border-[#34D399]' : isBearish ? 'border-[#F43F5E] bg-[#FFF1F2] dark:bg-[#881337]/40 dark:border-[#FB7185]' : 'border-[#64748B] bg-[#F8FAFC] dark:bg-[#1E293B]/60 dark:border-[#94A3B8]'} shadow-xs flex flex-col gap-2.5">
-          <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-700'} pb-1.5">
-            <span class="text-[12px] font-mono font-bold uppercase tracking-wider ${isBullish ? 'text-[#064E3B] dark:text-[#A7F3D0]' : isBearish ? 'text-[#881337] dark:text-[#FECDD3]' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
-              <span>💡</span> <span>Catalyst Rationale & Trader Impact</span>
-            </span>
-            <span class="text-[10.5px] font-mono font-bold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900/80 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900/80 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
-          </div>
-          <div class="bg-white/95 dark:bg-[#11172A] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60' : isBearish ? 'border-rose-200/60' : 'border-slate-200'} dark:border-slate-800 text-[14px] sm:text-[14.5px] text-slate-950 dark:text-slate-100 leading-relaxed font-normal shadow-2xs">
-            ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
-          </div>
         </div>
       `;
     }
