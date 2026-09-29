@@ -105,10 +105,29 @@ class UnifiedNewsAggregator:
                 p_bs = bs_s.get("page_numbers", "Page 1")
                 combined_pages = f"FE ({p_fe}) / BS ({p_bs})"
                 
-                # Pick longer headline or combine
+                # Pick the most comprehensive headline
                 chosen_hl = fe_s["headline"] if len(fe_s["headline"]) >= len(bs_s["headline"]) else bs_s["headline"]
-                combined_brief = f"{fe_s['brief_details']} Additionally: {bs_s['brief_details']}"
-                combined_bullets = list(dict.fromkeys(fe_s.get("bullet_points", []) + bs_s.get("bullet_points", [])))[:6]
+                
+                # Deduplicate brief_details to prevent repetitive text
+                b_fe = fe_s.get("brief_details", "").strip()
+                b_bs = bs_s.get("brief_details", "").strip()
+                brief_ratio = difflib.SequenceMatcher(None, b_fe.lower(), b_bs.lower()).ratio()
+                
+                if not b_bs or b_fe.lower() == b_bs.lower() or brief_ratio > 0.60:
+                    combined_brief = b_fe if len(b_fe) >= len(b_bs) else b_bs
+                elif not b_fe:
+                    combined_brief = b_bs
+                else:
+                    combined_brief = f"{b_fe} (BS: {b_bs})"
+
+                # Deduplicate bullet points using fuzzy matching
+                raw_bullets = fe_s.get("bullet_points", []) + bs_s.get("bullet_points", [])
+                seen_bullets = []
+                for bp in raw_bullets:
+                    bp_clean = bp.strip()
+                    if bp_clean and not any(difflib.SequenceMatcher(None, bp_clean.lower(), seen.lower()).ratio() > 0.70 for seen in seen_bullets):
+                        seen_bullets.append(bp_clean)
+                combined_bullets = seen_bullets[:6]
 
                 results.append(NewsStory(
                     headline=chosen_hl,
