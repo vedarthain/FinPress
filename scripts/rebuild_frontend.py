@@ -175,6 +175,10 @@ def rebuild():
         '<header id="app-header" class="bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">',
         dom_part
     )
+    dom_part = dom_part.replace(
+        'onclick="onCategorySelect(\'ALL\')" title="Reset to All Stories"',
+        'onclick="onCategorySelect(\'ANCHOR\')" title="Reset to News (Front Page)"'
+    )
 
     # Add IPO Hub toggle button to header if missing
     if 'id="top-ipo-hub-btn"' not in dom_part:
@@ -357,12 +361,12 @@ def rebuild():
     # 10. Clean script_part
     clean_script = script_part.split('</script>')[0].replace('<script>', '', 1).strip()
 
-    # Add top global variables
+    # Add top global variables (Defaulting to News Front Page)
     clean_script = '''    let rawReport = null;
     let stories = [];
     let ipoList = [];
     let currentView = "feed";
-    let selectedFeedCategory = "ALL";
+    let selectedFeedCategory = "ANCHOR";
     let selectedFeedSentiment = "ALL";
     let activeStockFilter = null;
     let activeSectorFilter = null;
@@ -628,7 +632,7 @@ def rebuild():
 
             <div class="flex items-center gap-2" onclick="event.stopPropagation()">
               <button onclick="openStoryCutoutModal(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100 dark:hover:bg-indigo-900 shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer">
-                <span>🔍</span> <span>Full-Res Zoom ↗</span>
+                <span>🔍</span> <span>View Authentic Clipping ↗</span>
               </button>
               <button onclick="copyStoryById(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
                 <span>📋</span> <span>Copy</span>
@@ -666,6 +670,16 @@ def rebuild():
         end_det = clean_script.find('function highlightNumbers')
     if start_det != -1 and end_det != -1:
         clean_script = clean_script[:start_det] + detail_fn_code + '\n\n    ' + clean_script[end_det:]
+
+    # Update sidebar items to start with News (Front Page) and remove All Stories
+    clean_script = clean_script.replace(
+        'const coreNewsItems = [\n        { id: "ALL", label: "⚡ All Stories", count: stories.length },\n        { id: "ANCHOR", label: "📰 Front Page", count: anchorCount },',
+        'const coreNewsItems = [\n        { id: "ANCHOR", label: "📰 News (Front Page)", count: anchorCount },'
+    )
+    clean_script = clean_script.replace(
+        '<option value="ALL">⚡ All Stories (${stories.length})</option>',
+        '<option value="ANCHOR">📰 News (Front Page) (${stories.filter(s => s.isFrontPage).length})</option>'
+    )
 
     # Add cutouts helper
     cutout_render_fn = '''    function renderArticleCutout(story, queryTokens = []) {

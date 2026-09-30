@@ -152,7 +152,7 @@
       
       <!-- Left: FinPress Branding & Live Market Pulse -->
       <div class="flex items-center gap-4 shrink-0">
-        <div class="flex items-center gap-2.5 shrink-0 cursor-pointer group" onclick="onCategorySelect('ALL')" title="Reset to All Stories">
+        <div class="flex items-center gap-2.5 shrink-0 cursor-pointer group" onclick="onCategorySelect('ANCHOR')" title="Reset to News (Front Page)">
           <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-md border border-amber-400/40 group-hover:scale-105 transition-transform">
             <span class="text-white text-[13px] font-extrabold tracking-tight font-mono">FP</span>
           </div>
@@ -584,7 +584,7 @@
     let stories = [];
     let ipoList = [];
     let currentView = "feed";
-    let selectedFeedCategory = "ALL";
+    let selectedFeedCategory = "ANCHOR";
     let selectedFeedSentiment = "ALL";
     let activeStockFilter = null;
     let activeSectorFilter = null;
@@ -1238,7 +1238,7 @@ const allowedSections = [
           Others: stories.filter(s => s.category === "Others" && !s.isOpinion).length
         };
         catSelect.innerHTML = `
-          <option value="ALL">⚡ All Stories (${stories.length})</option>
+          <option value="ANCHOR">📰 News (Front Page) (${stories.filter(s => s.isFrontPage).length})</option>
           <option value="Sector">Sector (${counts.Sector})</option>
           <option value="Economy">Economy (${counts.Economy})</option>
           <option value="Policy">Policy (${counts.Policy})</option>
@@ -1636,8 +1636,7 @@ const allowedSections = [
 
       // Group 1: News Categories
       const coreNewsItems = [
-        { id: "ALL", label: "⚡ All Stories", count: stories.length },
-        { id: "ANCHOR", label: "📰 Front Page", count: anchorCount },
+        { id: "ANCHOR", label: "📰 News (Front Page)", count: anchorCount },
         { id: "Sector", label: "🏢 Sector News", count: stories.filter(s => s.category === "Sector").length },
         { id: "Economy", label: "📈 Economy", count: stories.filter(s => s.category === "Economy").length },
         { id: "Policy", label: "🏛️ Policy & Rules", count: stories.filter(s => s.category === "Policy").length },
@@ -2208,7 +2207,7 @@ const allowedSections = [
 
             <div class="flex items-center gap-2" onclick="event.stopPropagation()">
               <button onclick="openStoryCutoutModal(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100 dark:hover:bg-indigo-900 shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer">
-                <span>🔍</span> <span>Full-Res Zoom ↗</span>
+                <span>🔍</span> <span>View Authentic Clipping ↗</span>
               </button>
               <button onclick="copyStoryById(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
                 <span>📋</span> <span>Copy</span>
