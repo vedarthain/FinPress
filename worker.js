@@ -86,6 +86,47 @@ export default {
       }
     }
 
+    // API: Web Cron Job Trigger Endpoint (Supports simple GET/POST for cron-job.org / EasyCron)
+    if (url.pathname === '/api/cron' || url.pathname === '/api/trigger-cron') {
+      const token = url.searchParams.get('token') || env.GH_TOKEN || env.GITHUB_TOKEN;
+      if (!token) {
+        return new Response(JSON.stringify({
+          success: false,
+          error: 'Missing token. Pass ?token=YOUR_GITHUB_PAT in the cron URL, or configure GH_TOKEN in Cloudflare.'
+        }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+
+      try {
+        const ghResp = await fetch('https://api.github.com/repos/vedarthain/FinPress/actions/workflows/daily_master_pipeline.yml/dispatches', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `Bearer ${token}`,
+            'User-Agent': 'FinPress-Web-Cron',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ref: 'main' })
+        });
+
+        const ok = ghResp.status === 204 || ghResp.ok;
+        return new Response(JSON.stringify({
+          success: ok,
+          timestamp: new Date().toISOString(),
+          message: ok ? '⚡ Daily Master Newspaper Pipeline triggered successfully via Web Cron!' : `GitHub API status: ${ghResp.status}`
+        }), {
+          headers: { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }
+        });
+      } catch (err) {
+        return new Response(JSON.stringify({ success: false, error: err.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+    }
+
     // API: Business Standard 1-Click Session Sync Endpoint
     if (url.pathname === '/api/session/bs' && request.method === 'POST') {
       try {
