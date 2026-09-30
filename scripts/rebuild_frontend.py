@@ -2,15 +2,14 @@ import re
 import subprocess
 
 def rebuild():
-    # Load original base from git HEAD
-    git_html = subprocess.check_output(['git', 'show', 'HEAD:web/index.html']).decode('utf-8')
+    # Load clean base from commit 01c7cbd
+    git_html = subprocess.check_output(['git', 'show', '01c7cbd:web/index.html']).decode('utf-8')
 
-    # Extract DOM part
     parts = git_html.split('<!-- ================= CLIENT JAVASCRIPT ================= -->')
     dom_part = parts[0]
-    after_dom = parts[1]
-    
-    # Clean <head> in dom_part
+    script_part = parts[1]
+
+    # 1. Clean <head> with guaranteed fixed-viewport edge-to-edge layout
     head_pattern = r'<head>(.*?)</head>'
     clean_head = '''<head>
   <meta charset="utf-8"/>
@@ -70,7 +69,12 @@ def rebuild():
     mark { background-color: #FEF08A; color: #854D0E; padding: 0 2px; border-radius: 2px; font-weight: 700; }
     .dark mark { background-color: #854D0E; color: #FEF08A; }
 
-    /* ROCK-SOLID FIXED VIEWPORT LAYOUT: 100% EDGE-TO-EDGE NO GAPS */
+    /* Strict visibility classes */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Fixed Viewport Edge-to-Edge Layout */
     #app-header {
       position: fixed;
       top: 0;
@@ -94,12 +98,9 @@ def rebuild():
     .dark #app-main {
       background-color: #070B14;
     }
-    #view-feed {
-      position: absolute;
-      top: 8px;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
+    #view-feed:not(.hidden) {
+      width: 100%;
+      height: 100%;
       display: grid !important;
       grid-template-columns: 320px minmax(0, 1fr) 260px !important;
       grid-template-rows: 100% !important;
@@ -107,14 +108,22 @@ def rebuild():
       overflow: hidden !important;
     }
     @media (min-width: 1280px) {
-      #view-feed {
+      #view-feed:not(.hidden) {
         grid-template-columns: 350px minmax(0, 1fr) 280px !important;
       }
     }
     @media (min-width: 1536px) {
-      #view-feed {
+      #view-feed:not(.hidden) {
         grid-template-columns: 380px minmax(0, 1fr) 300px !important;
       }
+    }
+    #view-ipo:not(.hidden) {
+      width: 100%;
+      height: 100%;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      overflow: hidden !important;
     }
     #col-news-wire {
       height: 100% !important;
@@ -144,86 +153,212 @@ def rebuild():
       overflow-y: auto !important;
       flex-shrink: 0 !important;
     }
-    #view-ipo {
-      position: absolute;
-      top: 8px;
-      bottom: 8px;
-      left: 8px;
-      right: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      overflow: hidden;
-    }
   </style>
 </head>'''
     dom_part = re.sub(head_pattern, clean_head, dom_part, flags=re.DOTALL)
 
-    # Clean body
+    # 2. Clean body tag
     dom_part = re.sub(
         r'<body[^>]*>',
         '<body class="w-full h-full overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 m-0 p-0 select-none">',
         dom_part
     )
 
-    # Clean header ID
+    # Remove outer extra wrapper div if present
+    dom_part = dom_part.replace('<div class="h-screen max-h-screen flex flex-col overflow-hidden w-full">', '')
+    if '</div>\n\n  <!-- ================= STORY FULL DETAILS MODAL' in dom_part:
+        dom_part = dom_part.replace('</div>\n\n  <!-- ================= STORY FULL DETAILS MODAL', '<!-- ================= STORY FULL DETAILS MODAL')
+
+    # 3. Clean header tag
     dom_part = re.sub(
         r'<header class="[^"]*">',
         '<header id="app-header" class="bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">',
         dom_part
     )
 
-    # Clean main ID
+    # Add IPO Hub toggle button to header if missing
+    if 'id="top-ipo-hub-btn"' not in dom_part:
+        ipo_btn_html = '''        <!-- IPO Hub Toggle Button -->
+        <button onclick="switchView(currentView === 'ipo' ? 'feed' : 'ipo')" id="top-ipo-hub-btn" class="px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Open Business Standard style IPO Tracker & Listed Performance">
+          <span>🚀</span> <span>IPO Hub</span>
+        </button>'''
+        dom_part = dom_part.replace(
+            '<button onclick="triggerGitHubPipeline()"',
+            f'{ipo_btn_html}\n\n        <button onclick="triggerGitHubPipeline()"'
+        )
+
+    # 4. Clean main tag
     dom_part = re.sub(
         r'<main class="[^"]*">',
         '<main id="app-main">',
         dom_part
     )
 
-    # Clean view-feed grid
+    # 5. Clean view-feed grid
     dom_part = re.sub(
         r'<section id="view-feed" class="[^"]*">',
         '<section id="view-feed">',
         dom_part
     )
 
-    # Clean Column 1 (Left News Wire) with explicit ID
+    # 6. Clean Column 1 (Left News Wire)
     dom_part = re.sub(
         r'<div class="rounded-lg bg-white dark:bg-\[#0E1322\] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-full min-h-0">',
         '<div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs">',
         dom_part
     )
 
-    # Clean Column 2 (Middle Reading Pane)
+    # 7. Clean Column 2 (Middle Reading Pane)
     dom_part = re.sub(
         r'<div id="feed-detail-wrapper" class="[^"]*">',
         '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 shadow-xs">',
         dom_part
     )
 
-    # Ensure feed-detail-container fills full height
-    dom_part = re.sub(
-        r'<div id="feed-detail-container" class="[^"]*">',
-        '<div id="feed-detail-container" class="w-full flex flex-col">',
-        dom_part
-    )
-
-    # Clean Column 3 (Right Sidebar)
+    # 8. Clean Column 3 (Right Sidebar)
     dom_part = re.sub(
         r'<aside id="view-feed-aside" class="[^"]*">',
         '<aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">',
         dom_part
     )
 
-    # Base script extraction from git
-    script_part = after_dom.split('</script>')[0].replace('<script>', '', 1).strip()
-    
-    # Slice exactly up to the end of triggerGitHubPipeline
-    init_pos = script_part.find('initTheme();')
-    base_script = script_part[:init_pos].strip()
+    # 9. Add BS-style IPO Hub section into dom_part if missing
+    if 'id="view-ipo"' not in dom_part:
+        view_ipo_html = '''
+      <!-- ================= VIEW 2: BUSINESS STANDARD STYLE IPO HUB ================= -->
+      <section id="view-ipo" class="hidden">
+        
+        <!-- Top Summary Cards Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 shrink-0">
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Total Tracked</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-total" class="text-[20px] font-mono font-black text-slate-900 dark:text-white">0</span>
+              <span class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">Issues</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Active Bidding</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-bidding" class="text-[20px] font-mono font-black text-emerald-600 dark:text-emerald-400">0</span>
+              <span class="text-[10.5px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">Live Now</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Upcoming DRHPs</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-drhp" class="text-[20px] font-mono font-black text-amber-600 dark:text-amber-400">0</span>
+              <span class="text-[10.5px] font-mono text-amber-600 dark:text-amber-400 font-semibold">In Pipeline</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Avg Listing Gain</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-gain" class="text-[20px] font-mono font-black text-indigo-600 dark:text-indigo-400">+38.5%</span>
+              <span class="text-[10.5px] font-mono text-slate-400">Day 1</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col col-span-2 sm:col-span-1">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Capital Mobilised</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-capital" class="text-[20px] font-mono font-black text-slate-900 dark:text-white">₹14,500</span>
+              <span class="text-[10.5px] font-mono text-slate-400">Cr (FY26)</span>
+            </div>
+          </div>
+        </div>
 
-    # Top global variables
-    top_declarations = '''    let rawReport = null;
+        <!-- Main IPO Table Card (100% Full Height) -->
+        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex-1 min-h-0 flex flex-col">
+          
+          <!-- Master Hub Header & Controls -->
+          <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-[#11172A]/90 flex items-center justify-between flex-wrap gap-3 shrink-0">
+            
+            <!-- Left: Dual Mode Selector (IPO Tracker vs Already Listed) -->
+            <div class="flex items-center gap-3">
+              <div class="flex items-center bg-slate-200/90 dark:bg-[#151D33] p-1 rounded-xl border border-slate-300 dark:border-slate-700 text-[12px] font-mono font-bold shadow-2xs">
+                <button id="ipo-mode-tracker-btn" onclick="setIpoViewMode('tracker')" class="px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer">
+                  <span>🚀</span> <span>IPO Tracker</span>
+                </button>
+                <button id="ipo-mode-listed-btn" onclick="setIpoViewMode('listed')" class="px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer">
+                  <span>📈</span> <span>Already Listed</span>
+                </button>
+              </div>
+
+              <!-- Quick Sub-Category Filters -->
+              <div id="ipo-subfilter-container" class="flex items-center gap-1.5 text-[11.5px] font-mono font-semibold">
+                <button onclick="setIpoFilterCategory('ALL')" id="ipo-filter-all" class="px-2.5 py-1 rounded-md bg-slate-900 text-white dark:bg-indigo-600 dark:text-white font-bold shadow-2xs">All Issues</button>
+                <button onclick="setIpoFilterCategory('MAINBOARD')" id="ipo-filter-mb" class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Mainboard</button>
+                <button onclick="setIpoFilterCategory('SME')" id="ipo-filter-sme" class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">SME / Emerge</button>
+              </div>
+            </div>
+
+            <!-- Right: Search + Count -->
+            <div class="flex items-center gap-3">
+              <div class="relative w-48 sm:w-64">
+                <input type="text" id="ipo-table-search" oninput="onIpoSearchInput(this.value)" placeholder="Search company or sector..." class="w-full text-[12px] pl-7 pr-6 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 font-mono shadow-2xs"/>
+                <span class="absolute left-2 top-2 text-slate-400 text-[11px]">🔍</span>
+              </div>
+              <span class="text-[12px] font-mono text-slate-500 dark:text-slate-400 font-bold shrink-0">
+                <b id="ipo-table-visible-count" class="text-indigo-600 dark:text-indigo-400">0</b> Records
+              </span>
+            </div>
+
+          </div>
+
+          <!-- TAB 1: IPO TRACKER TABLE CONTAINER -->
+          <div id="ipo-tracker-table-wrap" class="flex-1 min-h-0 overflow-auto">
+            <table class="w-full text-left border-collapse text-[13.5px]">
+              <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-2xs border-b border-slate-200 dark:border-slate-800 font-mono text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-bold">
+                <tr>
+                  <th class="py-2.5 px-3 w-12 text-center">#</th>
+                  <th class="py-2.5 px-3 min-w-[240px]">Company & Exchange</th>
+                  <th class="py-2.5 px-3 min-w-[130px]">Issue Dates</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Price Band</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Issue Size</th>
+                  <th class="py-2.5 px-3 min-w-[100px]">Lot Size</th>
+                  <th class="py-2.5 px-3 min-w-[180px]">Subscription Demand</th>
+                  <th class="py-2.5 px-3 min-w-[130px]">Status</th>
+                  <th class="py-2.5 px-3 min-w-[100px] text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="ipo-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/80 font-sans">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TAB 2: ALREADY LISTED IPO PERFORMANCE TABLE CONTAINER -->
+          <div id="ipo-listed-table-wrap" class="hidden flex-1 min-h-0 overflow-auto">
+            <table class="w-full text-left border-collapse text-[13.5px]">
+              <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-2xs border-b border-slate-200 dark:border-slate-800 font-mono text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-bold">
+                <tr>
+                  <th class="py-2.5 px-3 w-12 text-center">#</th>
+                  <th class="py-2.5 px-3 min-w-[220px]">Company & Ticker</th>
+                  <th class="py-2.5 px-3 min-w-[120px]">Listing Date</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Issue Price</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Listing Price</th>
+                  <th class="py-2.5 px-3 min-w-[140px]">Listing Day Gain</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Current Price (CMP)</th>
+                  <th class="py-2.5 px-3 min-w-[140px]">Return Since IPO</th>
+                  <th class="py-2.5 px-3 min-w-[120px]">Verdict</th>
+                </tr>
+              </thead>
+              <tbody id="ipo-listed-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/80 font-sans">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </section>'''
+        dom_part = dom_part.replace('</main>', f'{view_ipo_html}\n    </main>')
+
+    # 10. Clean script_part
+    clean_script = script_part.split('</script>')[0].replace('<script>', '', 1).strip()
+
+    # Add top global variables
+    clean_script = '''    let rawReport = null;
     let stories = [];
     let ipoList = [];
     let currentView = "feed";
@@ -254,14 +389,83 @@ def rebuild():
       { id: 7, name: "Arkade Developers Ltd", ticker: "ARKADE", date: "20 Sep 2026", issuePrice: 128, listPrice: 175, cmp: 168, exchange: "NSE / BSE Mainboard" },
       { id: 8, name: "Western Carriers India Ltd", ticker: "WESTERN", date: "21 Sep 2026", issuePrice: 172, listPrice: 170, cmp: 158, exchange: "NSE / BSE Mainboard" },
       { id: 9, name: "Northern Arc Capital Ltd", ticker: "NORTHARC", date: "19 Sep 2026", issuePrice: 263, listPrice: 351, cmp: 325, exchange: "NSE / BSE Mainboard" }
-    ];'''
+    ];\n\n''' + clean_script[clean_script.find('const allowedSections = ['):]
 
-    # Replace old declarations with top_declarations
-    allowed_sec_idx = base_script.find('const allowedSections = [')
-    base_script = top_declarations + '\n\n    ' + base_script[allowed_sec_idx:]
+    # Update switchView in clean_script
+    switch_view_code = '''    function switchView(viewName) {
+      currentView = viewName;
+      const tabAnchor = document.getElementById("tab-btn-anchor");
+      const viewFeed = document.getElementById("view-feed");
+      const viewIpo = document.getElementById("view-ipo");
+      const viewMatrix = document.getElementById("view-matrix");
+      const corpBanner = document.getElementById("corporate-subtabs-banner");
+      const ipoBanner = document.getElementById("ipo-subtabs-banner");
+      const deskSelect = document.getElementById("desk-select");
+      const categorySelect = document.getElementById("category-select");
+      const topIpoBtn = document.getElementById("top-ipo-hub-btn");
 
-    # Rich expansive reading detail pane view
-    new_render_detail = r'''
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+
+      if (viewName === "ipo" || viewName === "ipo_hub") {
+        if (topIpoBtn) {
+          topIpoBtn.className = "px-3 py-1 rounded-lg bg-amber-600 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer ring-2 ring-amber-400";
+          topIpoBtn.innerHTML = "<span>📰</span> <span>Back to News</span>";
+        }
+        if (viewFeed) viewFeed.classList.add("hidden");
+        if (viewMatrix) viewMatrix.classList.add("hidden");
+        if (viewIpo) viewIpo.classList.remove("hidden");
+        setIpoViewMode(activeIpoMode || 'tracker');
+        return;
+      }
+
+      if (topIpoBtn) {
+        topIpoBtn.className = "px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer";
+        topIpoBtn.innerHTML = "<span>🚀</span> <span>IPO Hub</span>";
+      }
+
+      if (viewIpo) viewIpo.classList.add("hidden");
+      if (viewMatrix) viewMatrix.classList.add("hidden");
+      if (viewFeed) viewFeed.classList.remove("hidden");
+
+      if (viewName === "feed") {
+        selectedFeedCategory = "ALL";
+        if (categorySelect) categorySelect.value = "ALL";
+        if (deskSelect) deskSelect.value = "";
+        if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) ipoBanner.classList.add("hidden");
+      } else if (viewName === "anchor") {
+        if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs flex items-center gap-1.5 font-semibold";
+        selectedFeedCategory = "ANCHOR";
+        if (deskSelect) deskSelect.value = "";
+        if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) ipoBanner.classList.add("hidden");
+      } else if (viewName === "corporate") {
+        if (deskSelect) deskSelect.value = "corporate";
+        if (ipoBanner) ipoBanner.classList.add("hidden");
+        if (corpBanner) {
+          corpBanner.classList.remove("hidden");
+          corpBanner.classList.add("flex");
+          selectCorporateSub("ALL");
+          return;
+        }
+      } else if (viewName === "opinions") {
+        if (deskSelect) deskSelect.value = "opinions";
+        selectedFeedCategory = "OPINIONS";
+        if (corpBanner) corpBanner.classList.add("hidden");
+        if (ipoBanner) ipoBanner.classList.add("hidden");
+      }
+
+      renderFeedList();
+    }'''
+
+    start_sw = clean_script.find('function switchView(')
+    end_sw = clean_script.find('function onDeskSelect(')
+    if start_sw != -1 and end_sw != -1:
+        clean_script = clean_script[:start_sw] + switch_view_code + '\n\n    ' + clean_script[end_sw:]
+
+    # Update renderActiveStoryDetail in clean_script
+    detail_fn_code = r'''
     function toggleCutoutExpanded() {
       isCutoutExpanded = !isCutoutExpanded;
       const body = document.getElementById("cutout-content-body");
@@ -454,19 +658,43 @@ def rebuild():
           </div>
         </div>
       `;
-    }
-'''
+    }'''
 
-    # Replace renderActiveStoryDetail cleanly using exact slicing
-    start_idx = base_script.find('function renderActiveStoryDetail')
-    end_idx = base_script.find('function renderArticleCutout')
-    if start_idx != -1 and end_idx != -1:
-        base_script = base_script[:start_idx] + new_render_detail + '\n\n    ' + base_script[end_idx:]
+    start_det = clean_script.find('function renderActiveStoryDetail')
+    end_det = clean_script.find('function renderRawArticleText')
+    if end_det == -1:
+        end_det = clean_script.find('function highlightNumbers')
+    if start_det != -1 and end_det != -1:
+        clean_script = clean_script[:start_det] + detail_fn_code + '\n\n    ' + clean_script[end_det:]
 
-    # Clean IPO functions (matching Business Standard IPO Hub)
-    ipo_functions_clean = '''
-    // ================= IPO HUB CONTROLLER FUNCTIONS (BUSINESS STANDARD STYLE) =================
-    function switchIpoViewMode(mode) {
+    # Add cutouts helper
+    cutout_render_fn = '''    function renderArticleCutout(story, queryTokens = []) {
+      if (!story) return "";
+      if (story.cutout_url) {
+        return `
+          <div class="mt-2 flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-100/90 dark:bg-[#070B14] rounded-lg border border-slate-200 dark:border-slate-800/80 overflow-hidden shadow-inner">
+            <div class="relative group max-w-full overflow-hidden rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-black shadow-md cursor-zoom-in" onclick="openImageModal('${story.cutout_url}', '${escapeQuotes(story.headline)}')">
+              <img src="${story.cutout_url}" alt="${escapeQuotes(story.headline)}" class="w-auto max-h-[620px] object-contain mx-auto transition-transform duration-200 group-hover:scale-[1.01]"/>
+              <div class="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-white text-[11px] font-mono font-bold px-2.5 py-1 rounded shadow pointer-events-none flex items-center gap-1.5">
+                <span>🔍</span> <span>Click to Zoom</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      return `
+        <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg text-xs font-mono text-amber-900 dark:text-amber-200">
+          Authentic newspaper clipping processing in progress for ${formatPageSource(story.page_numbers)}.
+        </div>
+      `;
+    }'''
+    if 'function renderArticleCutout' not in clean_script:
+        clean_script += '\n\n' + cutout_render_fn
+
+    # IPO Hub functions
+    ipo_hub_functions = '''
+    // ================= IPO HUB CONTROLLER FUNCTIONS =================
+    function setIpoViewMode(mode) {
       activeIpoMode = mode;
       const trackerBtn = document.getElementById("ipo-mode-tracker-btn");
       const listedBtn = document.getElementById("ipo-mode-listed-btn");
@@ -650,9 +878,11 @@ def rebuild():
       if (s) showStoryModal(s);
     }
 '''
+    if 'function setIpoViewMode' not in clean_script:
+        clean_script += '\n\n' + ipo_hub_functions
 
-    modal_and_utility_code = '''
-    // ================= MODAL & UTILITY FUNCTIONS =================
+    # Modals and utilities
+    modals_code = '''
     function showStoryModal(story) {
       if (!story) return;
       const modal = document.getElementById("story-modal");
@@ -763,25 +993,12 @@ def rebuild():
       renderFeedList();
     }
 '''
-
-    init_execution_block = '''
-    // ================= INITIALIZATION =================
-    initTheme();
-    initFontSize();
-    initBsBookmarklet();
-    fetchDates();
-    loadData();
-'''
+    if 'function showStoryModal' not in clean_script:
+        clean_script += '\n\n' + modals_code
 
     final_script = f'''  <!-- ================= CLIENT JAVASCRIPT ================= -->
   <script>
-{base_script}
-
-{ipo_functions_clean}
-
-{modal_and_utility_code}
-
-{init_execution_block}
+{clean_script}
   </script>'''
 
     zoom_modal = '''
@@ -808,7 +1025,7 @@ def rebuild():
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print("Rebuilt web/index.html cleanly with fixed full-page viewport!")
+    print("Rebuilt web/index.html cleanly!")
 
 if __name__ == '__main__':
     rebuild()
