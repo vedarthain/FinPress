@@ -51,22 +51,22 @@
 <body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
   <div class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
 
-    <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME) ================= -->
-    <header class="sticky top-0 z-50 bg-[#0A0E1A] dark:bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-md px-3 py-1.5 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[12px] font-mono">
+    <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME - ENLARGED) ================= -->
+    <header class="sticky top-0 z-50 bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">
       
       <!-- Left: FinPress Branding & Live Market Pulse -->
-      <div class="flex items-center gap-3 shrink-0">
-        <div class="flex items-center gap-1.5 shrink-0 cursor-pointer" onclick="onCategorySelect('ALL')" title="Reset to All News">
-          <div class="w-6.5 h-6.5 rounded bg-amber-600 flex items-center justify-center shadow-xs border border-amber-500/50">
-            <span class="text-white text-[11px] font-extrabold tracking-tight font-mono">FP</span>
+      <div class="flex items-center gap-4 shrink-0">
+        <div class="flex items-center gap-2.5 shrink-0 cursor-pointer group" onclick="onCategorySelect('ALL')" title="Reset to All Stories">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-md border border-amber-400/40 group-hover:scale-105 transition-transform">
+            <span class="text-white text-[13px] font-extrabold tracking-tight font-mono">FP</span>
           </div>
-          <span class="text-[15px] font-extrabold tracking-tight text-white font-mono mr-1">
+          <span class="text-[19px] sm:text-[21px] font-black tracking-tight text-white font-mono mr-1 drop-shadow-xs">
             Fin<span class="text-amber-400">Press</span>
           </span>
         </div>
 
         <!-- Live Market Pulse Key Data in Dark Ribbon -->
-        <div class="flex items-center gap-3 text-[11.5px] border-l border-slate-800 pl-3">
+        <div class="flex items-center gap-3.5 text-[12px] border-l border-slate-800 pl-4">
           <span class="text-slate-300 font-medium">NIFTY <b class="text-emerald-400 font-bold font-mono">24,835 (+0.64%)</b></span>
           <span class="text-slate-300 font-medium">BANK NIFTY <b class="text-emerald-400 font-bold font-mono">54,120 (+0.82%)</b></span>
           <span class="text-slate-300 font-medium">INDIA VIX <b class="text-rose-400 font-bold font-mono">12.85 (-3.2%)</b></span>
@@ -76,43 +76,43 @@
       </div>
 
       <!-- Right: Search + Calendar + Status + Total + Font + Theme -->
-      <div class="flex items-center gap-2 shrink-0">
+      <div class="flex items-center gap-2.5 shrink-0">
         
-        <div class="relative w-36 sm:w-44">
-          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[11.5px] pl-6 pr-5 py-1 rounded-md border border-slate-700 bg-slate-900 text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-2xs"/>
-          <span class="absolute left-1.5 top-1.5 text-slate-400 text-[10.5px]">🔍</span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-1.5 top-1 text-slate-400 hover:text-white text-[11px] font-bold p-0.5">✕</button>
+        <div class="relative w-40 sm:w-52">
+          <input type="text" id="global-search" oninput="onSearchInput()" placeholder="Search stock or news..." class="w-full text-[12px] pl-7 pr-6 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-2xs"/>
+          <span class="absolute left-2 top-2 text-slate-400 text-[11px]">🔍</span>
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2 top-1.5 text-slate-400 hover:text-white text-[12px] font-bold p-0.5">✕</button>
         </div>
 
         <!-- Historical Calendar & Edition Navigation -->
-        <div class="flex items-center gap-0.5 bg-slate-900 p-0.5 rounded-md border border-slate-700/80 font-mono text-[11.5px]">
-          <button onclick="navigateDate(-1)" class="px-1.5 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Previous Date (◀)">◀</button>
-          <div class="flex items-center gap-1 px-1 py-0.5 bg-black/60 rounded border border-slate-800">
-            <span class="text-slate-400 text-[10.5px]">📅</span>
-            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[11.5px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[105px]"/>
+        <div class="flex items-center gap-1 bg-slate-900 p-1 rounded-lg border border-slate-700 font-mono text-[12px]">
+          <button onclick="navigateDate(-1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Previous Date (◀)">◀</button>
+          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/60 rounded border border-slate-800">
+            <span class="text-slate-400 text-[11px]">📅</span>
+            <input type="date" id="calendar-picker" onchange="onCalendarSelect(this.value)" class="bg-transparent text-slate-100 font-bold font-mono text-[12px] focus:outline-none cursor-pointer [color-scheme:dark] max-w-[110px]"/>
           </div>
-          <button onclick="navigateDate(1)" class="px-1.5 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Next Date (▶)">▶</button>
+          <button onclick="navigateDate(1)" class="px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 hover:text-white font-bold" title="Next Date (▶)">▶</button>
         </div>
 
-        <div id="source-health-container" class="flex items-center gap-1 font-mono text-[10.5px]"></div>
+        <div id="source-health-container" class="flex items-center gap-1.5 font-mono text-[11px]"></div>
 
-        <span id="total-news-counter-badge" class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-extrabold font-mono text-[11.5px]">
-          🔥 <b id="top-total-count">0</b>
+        <span id="total-news-counter-badge" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-extrabold font-mono text-[12.5px] shadow-xs">
+          🔥 <b id="top-total-count">0</b> Stories
         </span>
 
         <!-- Font Size Controls -->
-        <div class="flex items-center bg-slate-900 p-0.5 rounded-md border border-slate-700 text-[11px] font-mono font-semibold">
-          <button onclick="adjustFontSize(-1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
-          <span id="font-size-label" class="px-1 text-[9.5px] text-slate-400 select-none">100%</span>
-          <button onclick="adjustFontSize(1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
+        <div class="flex items-center bg-slate-900 p-1 rounded-lg border border-slate-700 text-[11.5px] font-mono font-semibold">
+          <button onclick="adjustFontSize(-1)" class="px-2 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Decrease Font Size (A-)">A-</button>
+          <span id="font-size-label" class="px-1.5 text-[10.5px] text-slate-400 select-none font-bold">100%</span>
+          <button onclick="adjustFontSize(1)" class="px-2 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
         </div>
 
         <!-- Run Pipeline Trigger Button -->
-        <button onclick="triggerGitHubPipeline()" class="px-2 py-0.5 rounded bg-amber-600 hover:bg-amber-700 text-white font-mono text-[11px] font-bold flex items-center gap-1 shadow-xs transition-transform active:scale-95 cursor-pointer" title="Trigger GitHub Actions pipeline in cloud">
+        <button onclick="triggerGitHubPipeline()" class="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Trigger GitHub Actions pipeline in cloud">
           <span>⚡</span> <span class="hidden sm:inline">Run Pipeline</span>
         </button>
 
-        <button onclick="toggleTheme()" class="w-6.5 h-6.5 rounded-md border border-slate-700 bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs cursor-pointer" title="Toggle Light/Dark Theme">
+        <button onclick="toggleTheme()" class="w-8 h-8 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center text-[12.5px] shadow-xs cursor-pointer" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
@@ -1052,7 +1052,7 @@
           Others: stories.filter(s => s.category === "Others" && !s.isOpinion).length
         };
         catSelect.innerHTML = `
-          <option value="ALL">⚡ All News (${coreCount})</option>
+          <option value="ALL">⚡ All Stories (${stories.length})</option>
           <option value="Sector">Sector (${counts.Sector})</option>
           <option value="Economy">Economy (${counts.Economy})</option>
           <option value="Policy">Policy (${counts.Policy})</option>
@@ -1206,9 +1206,11 @@
         if (activeStockFilter || activeSectorFilter || queryTokens.length > 0) {
           matchSec = true; // When filtering by stock, sector, or search, search across ALL stories!
         } else if (selectedFeedCategory === "ALL") {
+          matchSec = true; // Complete 100% Unabridged Multi-Source News Feed (zero stories omitted)
+        } else if (selectedFeedCategory === "CORE") {
           matchSec = s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
         } else if (selectedFeedCategory === "ANCHOR") {
-          matchSec = s.isFrontPage && s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
+          matchSec = s.isFrontPage;
         } else if (selectedFeedCategory === "IPO_ALL") {
           matchSec = s.category === "IPO";
         } else if (selectedFeedCategory === "IPO_DRHP") {
@@ -1226,9 +1228,9 @@
         } else if (selectedFeedCategory === "OPINIONS") {
           matchSec = s.isOpinion;
         } else if (selectedFeedCategory === "Others") {
-          matchSec = s.category === "Others" && !s.isOpinion;
+          matchSec = s.category === "Others";
         } else {
-          matchSec = s.category === selectedFeedCategory && !s.isOpinion;
+          matchSec = s.category === selectedFeedCategory;
         }
 
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
@@ -1448,15 +1450,15 @@
 
       // Group 1: News Categories
       const coreNewsItems = [
-        { id: "ALL", label: "⚡ All News", count: coreStories.length },
+        { id: "ALL", label: "⚡ All Stories", count: stories.length },
         { id: "ANCHOR", label: "📰 Front Page", count: anchorCount },
-        { id: "Sector", label: "🏢 Sector News", count: stories.filter(s => s.category === "Sector" && !s.isOpinion).length },
-        { id: "Economy", label: "📈 Economy", count: stories.filter(s => s.category === "Economy" && !s.isOpinion).length },
-        { id: "Policy", label: "🏛️ Policy & Rules", count: stories.filter(s => s.category === "Policy" && !s.isOpinion).length },
-        { id: "Market", label: "📊 Market Pulse", count: stories.filter(s => s.category === "Market" && !s.isOpinion).length },
-        { id: "Trade", label: "🚢 Trade & FX", count: stories.filter(s => s.category === "Trade" && !s.isOpinion).length },
-        { id: "International News", label: "🌐 International", count: stories.filter(s => s.category === "International News" && !s.isOpinion).length },
-        { id: "Others", label: "📑 Features", count: stories.filter(s => s.category === "Others" && !s.isOpinion).length }
+        { id: "Sector", label: "🏢 Sector News", count: stories.filter(s => s.category === "Sector").length },
+        { id: "Economy", label: "📈 Economy", count: stories.filter(s => s.category === "Economy").length },
+        { id: "Policy", label: "🏛️ Policy & Rules", count: stories.filter(s => s.category === "Policy").length },
+        { id: "Market", label: "📊 Market Pulse", count: stories.filter(s => s.category === "Market").length },
+        { id: "Trade", label: "🚢 Trade & FX", count: stories.filter(s => s.category === "Trade").length },
+        { id: "International News", label: "🌐 International", count: stories.filter(s => s.category === "International News").length },
+        { id: "Others", label: "📑 Features", count: stories.filter(s => s.category === "Others").length }
       ];
 
       const deskItems = [
