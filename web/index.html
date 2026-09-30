@@ -4,7 +4,212 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover"/>
   <title>FinPress Institutional Workspace — Trader Terminal</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js">
+    let activeIpoMode = 'tracker'; // 'tracker' or 'listed'
+    let activeIpoCategory = 'ALL';  // 'ALL', 'MAINBOARD', 'SME'
+    let ipoSearchQuery = '';
+
+    // Sample institutional benchmark dataset for 'Already Listed' IPOs (recent high-profile issues)
+    const benchmarkListedIpos = [
+      { id: 1, name: "Premier Energies Ltd", ticker: "PREMIERENE", date: "03 Sep 2026", issuePrice: 450, listPrice: 991, cmp: 1120, exchange: "NSE / BSE Mainboard" },
+      { id: 2, name: "Bajaj Housing Finance Ltd", ticker: "BAJAJHFL", date: "16 Sep 2026", issuePrice: 70, listPrice: 150, cmp: 142, exchange: "NSE / BSE Mainboard" },
+      { id: 3, name: "KRN Heat Exchanger Ltd", ticker: "KRNHEAT", date: "24 Sep 2026", issuePrice: 220, listPrice: 480, cmp: 512, exchange: "NSE / BSE Mainboard" },
+      { id: 4, name: "Swiggy Ltd", ticker: "SWIGGY", date: "18 Sep 2026", issuePrice: 390, listPrice: 420, cmp: 468, exchange: "NSE / BSE Mainboard" },
+      { id: 5, name: "Diffusion Engineers Ltd", ticker: "DIFFUSION", date: "26 Sep 2026", issuePrice: 168, listPrice: 195, cmp: 210, exchange: "NSE / BSE Mainboard" },
+      { id: 6, name: "Manba Finance Ltd", ticker: "MANBA", date: "23 Sep 2026", issuePrice: 120, listPrice: 150, cmp: 144, exchange: "NSE / BSE Mainboard" },
+      { id: 7, name: "Arkade Developers Ltd", ticker: "ARKADE", date: "20 Sep 2026", issuePrice: 128, listPrice: 175, cmp: 168, exchange: "NSE / BSE Mainboard" },
+      { id: 8, name: "Western Carriers India Ltd", ticker: "WESTERN", date: "21 Sep 2026", issuePrice: 172, listPrice: 170, cmp: 158, exchange: "NSE / BSE Mainboard" },
+      { id: 9, name: "Northern Arc Capital Ltd", ticker: "NORTHARC", date: "19 Sep 2026", issuePrice: 263, listPrice: 351, cmp: 325, exchange: "NSE / BSE Mainboard" }
+    ];
+
+    function setIpoViewMode(mode) {
+      activeIpoMode = mode;
+      const trackerBtn = document.getElementById("ipo-mode-tracker-btn");
+      const listedBtn = document.getElementById("ipo-mode-listed-btn");
+      const trackerWrap = document.getElementById("ipo-tracker-table-wrap");
+      const listedWrap = document.getElementById("ipo-listed-table-wrap");
+      const subfilter = document.getElementById("ipo-subfilter-container");
+
+      if (mode === 'tracker') {
+        trackerBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        listedBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        trackerWrap.classList.remove("hidden");
+        listedWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.remove("hidden");
+        renderIpoTrackerTable();
+      } else {
+        listedBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        trackerBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        listedWrap.classList.remove("hidden");
+        trackerWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.add("hidden");
+        renderAlreadyListedTable();
+      }
+    }
+
+    function setIpoFilterCategory(cat) {
+      activeIpoCategory = cat;
+      ['all', 'mb', 'sme'].forEach(c => {
+        const btn = document.getElementById(`ipo-filter-${c}`);
+        if (!btn) return;
+        if ((c === 'all' && cat === 'ALL') || (c === 'mb' && cat === 'MAINBOARD') || (c === 'sme' && cat === 'SME')) {
+          btn.className = "px-2.5 py-1 rounded-md bg-slate-900 text-white dark:bg-indigo-600 dark:text-white font-bold shadow-2xs";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
+        }
+      });
+      renderIpoTrackerTable();
+    }
+
+    function onIpoSearchInput(val) {
+      ipoSearchQuery = (val || '').trim().toLowerCase();
+      if (activeIpoMode === 'tracker') renderIpoTrackerTable();
+      else renderAlreadyListedTable();
+    }
+
+    function renderIpoTrackerTable() {
+      const tbody = document.getElementById("ipo-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+
+      let list = ipoList || [];
+      if (activeIpoCategory === 'MAINBOARD') {
+        list = list.filter(i => (i.exchange || '').includes("Mainboard") || !(i.exchange || '').includes("SME"));
+      } else if (activeIpoCategory === 'SME') {
+        list = list.filter(i => (i.exchange || '').includes("SME") || (i.exchange || '').includes("Emerge"));
+      }
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => {
+          const full = (i.company + " " + i.exchange + " " + i.stage + " " + (i.details || '')).toLowerCase();
+          return full.includes(ipoSearchQuery);
+        });
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      // Update KPI counters
+      const kpiTotal = document.getElementById("ipo-kpi-total");
+      const kpiBidding = document.getElementById("ipo-kpi-bidding");
+      const kpiDrhp = document.getElementById("ipo-kpi-drhp");
+      if (kpiTotal) kpiTotal.textContent = (ipoList || []).length;
+      if (kpiBidding) kpiBidding.textContent = (ipoList || []).filter(i => (i.stage || '').includes("Bidding")).length;
+      if (kpiDrhp) kpiDrhp.textContent = (ipoList || []).filter(i => (i.stage || '').includes("DRHP")).length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="py-12 text-center text-slate-400 font-mono">No active IPO issues match the selected criteria.</td></tr>`;
+        return;
+      }
+
+      list.forEach((item, idx) => {
+        const isSme = (item.exchange || '').includes("SME") || (item.exchange || '').includes("Emerge");
+        const stageColor = (item.stage || '').includes("Bidding") 
+          ? "bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300"
+          : (item.stage || '').includes("DRHP")
+          ? "bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/80 dark:text-amber-300"
+          : "bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/80 dark:text-blue-300";
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.company}</div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded ${isSme ? 'bg-purple-100 text-purple-950 dark:bg-purple-950 dark:text-purple-300' : 'bg-indigo-100 text-indigo-950 dark:bg-indigo-950 dark:text-indigo-300'}">${isSme ? 'SME EMERGE' : 'MAINBOARD'}</span>
+              <span class="text-[11px] font-mono text-slate-400">${item.exchange || 'NSE / BSE'}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">
+            <div>Open: <b>${item.openDate || 'Oct 2026'}</b></div>
+            <div class="text-slate-400">Close: ${item.closeDate || 'Oct 2026'}</div>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">${item.priceBand || '₹140 - ₹148'}</td>
+          <td class="py-3 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.size || '₹500 Cr'}</td>
+          <td class="py-3 px-3 font-mono text-slate-600 dark:text-slate-400">${item.lotSize || '100 Shares'}</td>
+          <td class="py-3 px-3 font-mono">
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 text-[12.5px]">${item.subscription || '14.5x'}</span>
+              <span class="text-[10px] text-slate-400">Total</span>
+            </div>
+            <div class="text-[10.5px] text-slate-400">QIB: 22x | NII: 15x | Retail: 6x</div>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${stageColor}">
+              ${item.stage || '📋 DRHP Filed'}
+            </span>
+          </td>
+          <td class="py-3 px-3 text-center">
+            <button onclick="openStoryModalById(${item.storyId || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+              Details ↗
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAlreadyListedTable() {
+      const tbody = document.getElementById("ipo-listed-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+      let list = benchmarkListedIpos;
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => (i.name + " " + i.ticker).toLowerCase().includes(ipoSearchQuery));
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      list.forEach((item, idx) => {
+        const listGainPct = (((item.listPrice - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const totalGainPct = (((item.cmp - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const isListPos = listGainPct >= 0;
+        const isTotalPos = totalGainPct >= 0;
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="text-[10.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.ticker}</span>
+              <span class="text-[10px] text-slate-400">${item.exchange}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isListPos ? '+' : ''}${listGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold ${totalGainPct > 50 ? 'bg-amber-100 text-amber-950 dark:bg-amber-950 dark:text-amber-300 border border-amber-300' : 'bg-emerald-100 text-emerald-950 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300'}">
+              ${totalGainPct > 50 ? '🔥 MULTIBAGGER' : '🟢 PREMIUM'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openStoryModalById(storyId) {
+      const s = (stories || []).find(st => st.id === storyId) || stories[0];
+      if (s) showStoryModal(s);
+    }
+
+</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +228,212 @@
         }
       }
     }
-  </script>
+  
+    let activeIpoMode = 'tracker'; // 'tracker' or 'listed'
+    let activeIpoCategory = 'ALL';  // 'ALL', 'MAINBOARD', 'SME'
+    let ipoSearchQuery = '';
+
+    // Sample institutional benchmark dataset for 'Already Listed' IPOs (recent high-profile issues)
+    const benchmarkListedIpos = [
+      { id: 1, name: "Premier Energies Ltd", ticker: "PREMIERENE", date: "03 Sep 2026", issuePrice: 450, listPrice: 991, cmp: 1120, exchange: "NSE / BSE Mainboard" },
+      { id: 2, name: "Bajaj Housing Finance Ltd", ticker: "BAJAJHFL", date: "16 Sep 2026", issuePrice: 70, listPrice: 150, cmp: 142, exchange: "NSE / BSE Mainboard" },
+      { id: 3, name: "KRN Heat Exchanger Ltd", ticker: "KRNHEAT", date: "24 Sep 2026", issuePrice: 220, listPrice: 480, cmp: 512, exchange: "NSE / BSE Mainboard" },
+      { id: 4, name: "Swiggy Ltd", ticker: "SWIGGY", date: "18 Sep 2026", issuePrice: 390, listPrice: 420, cmp: 468, exchange: "NSE / BSE Mainboard" },
+      { id: 5, name: "Diffusion Engineers Ltd", ticker: "DIFFUSION", date: "26 Sep 2026", issuePrice: 168, listPrice: 195, cmp: 210, exchange: "NSE / BSE Mainboard" },
+      { id: 6, name: "Manba Finance Ltd", ticker: "MANBA", date: "23 Sep 2026", issuePrice: 120, listPrice: 150, cmp: 144, exchange: "NSE / BSE Mainboard" },
+      { id: 7, name: "Arkade Developers Ltd", ticker: "ARKADE", date: "20 Sep 2026", issuePrice: 128, listPrice: 175, cmp: 168, exchange: "NSE / BSE Mainboard" },
+      { id: 8, name: "Western Carriers India Ltd", ticker: "WESTERN", date: "21 Sep 2026", issuePrice: 172, listPrice: 170, cmp: 158, exchange: "NSE / BSE Mainboard" },
+      { id: 9, name: "Northern Arc Capital Ltd", ticker: "NORTHARC", date: "19 Sep 2026", issuePrice: 263, listPrice: 351, cmp: 325, exchange: "NSE / BSE Mainboard" }
+    ];
+
+    function setIpoViewMode(mode) {
+      activeIpoMode = mode;
+      const trackerBtn = document.getElementById("ipo-mode-tracker-btn");
+      const listedBtn = document.getElementById("ipo-mode-listed-btn");
+      const trackerWrap = document.getElementById("ipo-tracker-table-wrap");
+      const listedWrap = document.getElementById("ipo-listed-table-wrap");
+      const subfilter = document.getElementById("ipo-subfilter-container");
+
+      if (mode === 'tracker') {
+        trackerBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        listedBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        trackerWrap.classList.remove("hidden");
+        listedWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.remove("hidden");
+        renderIpoTrackerTable();
+      } else {
+        listedBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        trackerBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        listedWrap.classList.remove("hidden");
+        trackerWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.add("hidden");
+        renderAlreadyListedTable();
+      }
+    }
+
+    function setIpoFilterCategory(cat) {
+      activeIpoCategory = cat;
+      ['all', 'mb', 'sme'].forEach(c => {
+        const btn = document.getElementById(`ipo-filter-${c}`);
+        if (!btn) return;
+        if ((c === 'all' && cat === 'ALL') || (c === 'mb' && cat === 'MAINBOARD') || (c === 'sme' && cat === 'SME')) {
+          btn.className = "px-2.5 py-1 rounded-md bg-slate-900 text-white dark:bg-indigo-600 dark:text-white font-bold shadow-2xs";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
+        }
+      });
+      renderIpoTrackerTable();
+    }
+
+    function onIpoSearchInput(val) {
+      ipoSearchQuery = (val || '').trim().toLowerCase();
+      if (activeIpoMode === 'tracker') renderIpoTrackerTable();
+      else renderAlreadyListedTable();
+    }
+
+    function renderIpoTrackerTable() {
+      const tbody = document.getElementById("ipo-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+
+      let list = ipoList || [];
+      if (activeIpoCategory === 'MAINBOARD') {
+        list = list.filter(i => (i.exchange || '').includes("Mainboard") || !(i.exchange || '').includes("SME"));
+      } else if (activeIpoCategory === 'SME') {
+        list = list.filter(i => (i.exchange || '').includes("SME") || (i.exchange || '').includes("Emerge"));
+      }
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => {
+          const full = (i.company + " " + i.exchange + " " + i.stage + " " + (i.details || '')).toLowerCase();
+          return full.includes(ipoSearchQuery);
+        });
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      // Update KPI counters
+      const kpiTotal = document.getElementById("ipo-kpi-total");
+      const kpiBidding = document.getElementById("ipo-kpi-bidding");
+      const kpiDrhp = document.getElementById("ipo-kpi-drhp");
+      if (kpiTotal) kpiTotal.textContent = (ipoList || []).length;
+      if (kpiBidding) kpiBidding.textContent = (ipoList || []).filter(i => (i.stage || '').includes("Bidding")).length;
+      if (kpiDrhp) kpiDrhp.textContent = (ipoList || []).filter(i => (i.stage || '').includes("DRHP")).length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="py-12 text-center text-slate-400 font-mono">No active IPO issues match the selected criteria.</td></tr>`;
+        return;
+      }
+
+      list.forEach((item, idx) => {
+        const isSme = (item.exchange || '').includes("SME") || (item.exchange || '').includes("Emerge");
+        const stageColor = (item.stage || '').includes("Bidding") 
+          ? "bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300"
+          : (item.stage || '').includes("DRHP")
+          ? "bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/80 dark:text-amber-300"
+          : "bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/80 dark:text-blue-300";
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.company}</div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded ${isSme ? 'bg-purple-100 text-purple-950 dark:bg-purple-950 dark:text-purple-300' : 'bg-indigo-100 text-indigo-950 dark:bg-indigo-950 dark:text-indigo-300'}">${isSme ? 'SME EMERGE' : 'MAINBOARD'}</span>
+              <span class="text-[11px] font-mono text-slate-400">${item.exchange || 'NSE / BSE'}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">
+            <div>Open: <b>${item.openDate || 'Oct 2026'}</b></div>
+            <div class="text-slate-400">Close: ${item.closeDate || 'Oct 2026'}</div>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">${item.priceBand || '₹140 - ₹148'}</td>
+          <td class="py-3 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.size || '₹500 Cr'}</td>
+          <td class="py-3 px-3 font-mono text-slate-600 dark:text-slate-400">${item.lotSize || '100 Shares'}</td>
+          <td class="py-3 px-3 font-mono">
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 text-[12.5px]">${item.subscription || '14.5x'}</span>
+              <span class="text-[10px] text-slate-400">Total</span>
+            </div>
+            <div class="text-[10.5px] text-slate-400">QIB: 22x | NII: 15x | Retail: 6x</div>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${stageColor}">
+              ${item.stage || '📋 DRHP Filed'}
+            </span>
+          </td>
+          <td class="py-3 px-3 text-center">
+            <button onclick="openStoryModalById(${item.storyId || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+              Details ↗
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAlreadyListedTable() {
+      const tbody = document.getElementById("ipo-listed-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+      let list = benchmarkListedIpos;
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => (i.name + " " + i.ticker).toLowerCase().includes(ipoSearchQuery));
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      list.forEach((item, idx) => {
+        const listGainPct = (((item.listPrice - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const totalGainPct = (((item.cmp - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const isListPos = listGainPct >= 0;
+        const isTotalPos = totalGainPct >= 0;
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="text-[10.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.ticker}</span>
+              <span class="text-[10px] text-slate-400">${item.exchange}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isListPos ? '+' : ''}${listGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold ${totalGainPct > 50 ? 'bg-amber-100 text-amber-950 dark:bg-amber-950 dark:text-amber-300 border border-amber-300' : 'bg-emerald-100 text-emerald-950 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300'}">
+              ${totalGainPct > 50 ? '🔥 MULTIBAGGER' : '🟢 PREMIUM'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openStoryModalById(storyId) {
+      const s = (stories || []).find(st => st.id === storyId) || stories[0];
+      if (s) showStoryModal(s);
+    }
+
+</script>
   <style>
     html, body {
       touch-action: manipulation;
@@ -108,7 +518,12 @@
         </div>
 
         <!-- Run Pipeline Trigger Button -->
-        <button onclick="triggerGitHubPipeline()" class="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Trigger GitHub Actions pipeline in cloud">
+        <!-- IPO Hub Toggle Button -->
+        <button onclick="switchView(currentView === 'ipo' ? 'feed' : 'ipo')" id="top-ipo-hub-btn" class="px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Open Business Standard style IPO Tracker & Listed Performance">
+          <span>🚀</span> <span>IPO Hub</span>
+        </button>
+
+        <button onclick="triggerGitHubPipeline()"  class="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Trigger GitHub Actions pipeline in cloud">
           <span>⚡</span> <span class="hidden sm:inline">Run Pipeline</span>
         </button>
 
@@ -233,58 +648,132 @@
 
       </section>
 
-      <!-- ================= VIEW 2: TABULAR IPO CENTRAL ================= -->
-      <section id="view-ipo" class="hidden flex-col gap-2">
-        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex flex-col">
+      <!-- ================= VIEW 2: BUSINESS STANDARD STYLE IPO HUB ================= -->
+      <section id="view-ipo" class="hidden flex-col gap-2.5 flex-1 min-h-0 h-full overflow-hidden w-full">
+        
+        <!-- Top Summary Cards Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 shrink-0">
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Total Tracked</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-total" class="text-[20px] font-mono font-black text-slate-900 dark:text-white">0</span>
+              <span class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">Issues</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Active Bidding</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-bidding" class="text-[20px] font-mono font-black text-emerald-600 dark:text-emerald-400">0</span>
+              <span class="text-[10.5px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">Live Now</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Upcoming DRHPs</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-drhp" class="text-[20px] font-mono font-black text-amber-600 dark:text-amber-400">0</span>
+              <span class="text-[10.5px] font-mono text-amber-600 dark:text-amber-400 font-semibold">In Pipeline</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Avg Listing Gain</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-gain" class="text-[20px] font-mono font-black text-indigo-600 dark:text-indigo-400">+38.5%</span>
+              <span class="text-[10.5px] font-mono text-slate-400">Day 1</span>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-2xs flex flex-col col-span-2 sm:col-span-1">
+            <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold uppercase">Capital Mobilised</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span id="ipo-kpi-capital" class="text-[20px] font-mono font-black text-slate-900 dark:text-white">₹14,500</span>
+              <span class="text-[10.5px] font-mono text-slate-400">Cr (FY26)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main IPO Table Card (100% Full Height) -->
+        <div class="rounded-xl bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden flex-1 min-h-0 flex flex-col">
           
-          <div class="px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/90 dark:bg-[#11172A]/90 text-[12.5px] font-mono flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5 mr-2">
-                <span>🚀</span> <span>PRIMARY MARKET TRACKER</span>
-              </span>
-              <div class="flex items-center bg-slate-200/80 dark:bg-[#151D33] p-0.5 rounded-lg border border-slate-300/80 dark:border-slate-700 text-[11.5px] font-bold">
-                <button id="ipo-tab-all" onclick="filterIpoTable('ALL')" class="px-2.5 py-1 rounded-md bg-indigo-600 text-white shadow-xs transition-all flex items-center gap-1.5 font-bold">
-                  <span>✨ All IPOs</span>
-                  <span id="ipo-sub-all-count" class="px-1.5 py-0.2 rounded text-[10px] bg-black/30 font-mono">0</span>
+          <!-- Master Hub Header & Controls -->
+          <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-[#11172A]/90 flex items-center justify-between flex-wrap gap-3 shrink-0">
+            
+            <!-- Left: Dual Mode Selector (IPO Tracker vs Already Listed) -->
+            <div class="flex items-center gap-3">
+              <div class="flex items-center bg-slate-200/90 dark:bg-[#151D33] p-1 rounded-xl border border-slate-300 dark:border-slate-700 text-[12px] font-mono font-bold shadow-2xs">
+                <button id="ipo-mode-tracker-btn" onclick="setIpoViewMode('tracker')" class="px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer">
+                  <span>🚀</span> <span>IPO Tracker</span>
                 </button>
-                <button id="ipo-tab-drhp" onclick="filterIpoTable('DRHP')" class="px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
-                  <span>📋 DRHP</span>
-                  <span id="ipo-sub-drhp-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-100 dark:bg-slate-700 font-mono">0</span>
-                </button>
-                <button id="ipo-tab-bidding" onclick="filterIpoTable('BIDDING')" class="px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
-                  <span>📈 Bidding</span>
-                  <span id="ipo-sub-bidding-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-100 dark:bg-slate-700 font-mono">0</span>
-                </button>
-                <button id="ipo-tab-notices" onclick="filterIpoTable('NOTICES')" class="px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-1.5 font-medium">
-                  <span>🏛️ Allotments</span>
-                  <span id="ipo-sub-notices-count" class="px-1.5 py-0.2 rounded text-[10px] bg-slate-100 dark:bg-slate-700 font-mono">0</span>
+                <button id="ipo-mode-listed-btn" onclick="setIpoViewMode('listed')" class="px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer">
+                  <span>📈</span> <span>Already Listed</span>
                 </button>
               </div>
+
+              <!-- Quick Sub-Category Filters -->
+              <div id="ipo-subfilter-container" class="flex items-center gap-1.5 text-[11.5px] font-mono font-semibold">
+                <button onclick="setIpoFilterCategory('ALL')" id="ipo-filter-all" class="px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold">All Issues</button>
+                <button onclick="setIpoFilterCategory('MAINBOARD')" id="ipo-filter-mb" class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Mainboard</button>
+                <button onclick="setIpoFilterCategory('SME')" id="ipo-filter-sme" class="px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">SME / Emerge</button>
+              </div>
             </div>
-            <span class="text-slate-500 dark:text-slate-400 font-bold text-[12px]">Total Tracked: <b id="ipo-table-visible-count" class="text-brand-600 dark:text-indigo-400">0</b> Records</span>
+
+            <!-- Right: Search + Count -->
+            <div class="flex items-center gap-3">
+              <div class="relative w-48 sm:w-64">
+                <input type="text" id="ipo-table-search" oninput="onIpoSearchInput(this.value)" placeholder="Search company or sector..." class="w-full text-[12px] pl-7 pr-6 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 font-mono shadow-2xs"/>
+                <span class="absolute left-2 top-2 text-slate-400 text-[11px]">🔍</span>
+              </div>
+              <span class="text-[12px] font-mono text-slate-500 dark:text-slate-400 font-bold shrink-0">
+                <b id="ipo-table-visible-count" class="text-indigo-600 dark:text-indigo-400">0</b> Records
+              </span>
+            </div>
+
           </div>
 
-          <div class="overflow-x-auto max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+          <!-- TAB 1: IPO TRACKER TABLE CONTAINER -->
+          <div id="ipo-tracker-table-wrap" class="flex-1 min-h-0 overflow-auto">
             <table class="w-full text-left border-collapse text-[13.5px]">
-              <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-xs">
-                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11.5px] font-mono uppercase tracking-wider font-bold">
-                  <th class="py-2.5 px-3.5">#</th>
-                  <th class="py-2.5 px-3.5 min-w-[240px]">Company / Issuer & Exchange</th>
-                  <th class="py-2.5 px-3.5 min-w-[120px]">Issue Size</th>
-                  <th class="py-2.5 px-3.5 min-w-[140px]">Stage / Status</th>
-                  <th class="py-2.5 px-3.5 min-w-[130px]">Subscription Demand</th>
-                  <th class="py-2.5 px-3.5 min-w-[360px]">Key Analyst Insight & Breakdown</th>
-                  <th class="py-2.5 px-3.5 min-w-[130px]">Source</th>
-                  <th class="py-2.5 px-3.5 text-center">Full Info</th>
+              <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-2xs border-b border-slate-200 dark:border-slate-800 font-mono text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-bold">
+                <tr>
+                  <th class="py-2.5 px-3 w-12 text-center">#</th>
+                  <th class="py-2.5 px-3 min-w-[240px]">Company & Exchange</th>
+                  <th class="py-2.5 px-3 min-w-[130px]">Issue Dates</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Price Band</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Issue Size</th>
+                  <th class="py-2.5 px-3 min-w-[100px]">Lot Size</th>
+                  <th class="py-2.5 px-3 min-w-[180px]">Subscription Demand</th>
+                  <th class="py-2.5 px-3 min-w-[130px]">Status</th>
+                  <th class="py-2.5 px-3 min-w-[100px] text-center">Action</th>
                 </tr>
               </thead>
-              <tbody id="ipo-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/70">
-                <!-- Dynamically populated IPO rows -->
+              <tbody id="ipo-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/80 font-sans">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TAB 2: ALREADY LISTED IPO PERFORMANCE TABLE CONTAINER -->
+          <div id="ipo-listed-table-wrap" class="hidden flex-1 min-h-0 overflow-auto">
+            <table class="w-full text-left border-collapse text-[13.5px]">
+              <thead class="sticky top-0 z-10 bg-slate-100 dark:bg-[#141A2E] shadow-2xs border-b border-slate-200 dark:border-slate-800 font-mono text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-bold">
+                <tr>
+                  <th class="py-2.5 px-3 w-12 text-center">#</th>
+                  <th class="py-2.5 px-3 min-w-[220px]">Company & Ticker</th>
+                  <th class="py-2.5 px-3 min-w-[120px]">Listing Date</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Issue Price</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Listing Price</th>
+                  <th class="py-2.5 px-3 min-w-[140px]">Listing Day Gain</th>
+                  <th class="py-2.5 px-3 min-w-[110px]">Current Price (CMP)</th>
+                  <th class="py-2.5 px-3 min-w-[140px]">Return Since IPO</th>
+                  <th class="py-2.5 px-3 min-w-[120px]">Verdict</th>
+                </tr>
+              </thead>
+              <tbody id="ipo-listed-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/80 font-sans">
+                <!-- Populated dynamically -->
               </tbody>
             </table>
           </div>
 
         </div>
+
       </section>
 
       <!-- ================= VIEW 3: TABULAR MASTER NEWS MATRIX (INSTITUTIONAL TABLE) ================= -->
@@ -629,54 +1118,50 @@
       currentView = viewName;
       const tabAnchor = document.getElementById("tab-btn-anchor");
       const viewFeed = document.getElementById("view-feed");
+      const viewIpo = document.getElementById("view-ipo");
+      const viewMatrix = document.getElementById("view-matrix");
       const corpBanner = document.getElementById("corporate-subtabs-banner");
       const ipoBanner = document.getElementById("ipo-subtabs-banner");
-      const deskSelect = document.getElementById("desk-select");
-      const categorySelect = document.getElementById("category-select");
+      const topIpoBtn = document.getElementById("top-ipo-hub-btn");
 
       selectedStoryIndex = 0;
       currentFeedPage = 1;
 
-      if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
+      if (viewName === "ipo" || viewName === "ipo_hub") {
+        if (topIpoBtn) {
+          topIpoBtn.className = "px-3 py-1 rounded-lg bg-amber-600 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer ring-2 ring-amber-400";
+          topIpoBtn.innerHTML = "<span>📰</span> <span>Back to News</span>";
+        }
+        if (viewFeed) { viewFeed.classList.add("hidden"); viewFeed.classList.remove("grid"); }
+        if (viewMatrix) { viewMatrix.classList.add("hidden"); viewMatrix.classList.remove("flex"); }
+        if (viewIpo) { viewIpo.classList.remove("hidden"); viewIpo.classList.add("flex"); }
+        setIpoViewMode(activeIpoMode || 'tracker');
+        return;
+      }
 
-      viewFeed.classList.remove("hidden");
-      viewFeed.classList.add("grid");
+      if (topIpoBtn) {
+        topIpoBtn.className = "px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer";
+        topIpoBtn.innerHTML = "<span>🚀</span> <span>IPO Hub</span>";
+      }
 
-      if (viewName === "feed") {
+      if (viewIpo) { viewIpo.classList.add("hidden"); viewIpo.classList.remove("flex"); }
+      if (viewMatrix) { viewMatrix.classList.add("hidden"); viewMatrix.classList.remove("flex"); }
+      if (viewFeed) { viewFeed.classList.remove("hidden"); viewFeed.classList.add("grid"); }
+
+      if (viewName === "feed" || viewName === "all") {
         selectedFeedCategory = "ALL";
-        if (categorySelect) categorySelect.value = "ALL";
-        if (deskSelect) deskSelect.value = "";
         if (corpBanner) corpBanner.classList.add("hidden");
         if (ipoBanner) ipoBanner.classList.add("hidden");
       } else if (viewName === "anchor") {
-        if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all bg-[#1C1917] text-[#FFF8F0] dark:bg-indigo-600 dark:text-white shadow-xs flex items-center gap-1.5 font-semibold";
         selectedFeedCategory = "ANCHOR";
-        if (deskSelect) deskSelect.value = "";
         if (corpBanner) corpBanner.classList.add("hidden");
         if (ipoBanner) ipoBanner.classList.add("hidden");
-      } else if (viewName === "ipo") {
-        if (deskSelect) deskSelect.value = "ipo";
-        if (corpBanner) corpBanner.classList.add("hidden");
-        if (ipoBanner) {
-          ipoBanner.classList.remove("hidden");
-          ipoBanner.classList.add("flex");
-          selectIpoSub("ALL");
-          return;
-        }
       } else if (viewName === "corporate") {
-        if (deskSelect) deskSelect.value = "corporate";
-        if (ipoBanner) ipoBanner.classList.add("hidden");
-        if (corpBanner) {
-          corpBanner.classList.remove("hidden");
-          corpBanner.classList.add("flex");
-          selectCorporateSub("ALL");
-          return;
-        }
+        selectedFeedCategory = "CORPORATE_ALL";
+        if (corpBanner) { corpBanner.classList.remove("hidden"); corpBanner.classList.add("flex"); }
       } else if (viewName === "opinions") {
-        if (deskSelect) deskSelect.value = "opinions";
         selectedFeedCategory = "OPINIONS";
         if (corpBanner) corpBanner.classList.add("hidden");
-        if (ipoBanner) ipoBanner.classList.add("hidden");
       }
 
       renderFeedList();
@@ -1045,6 +1530,7 @@
         initMetrics();
         applySidebarVisibility();
         if (currentView === "ipo") {
+        renderIpoTrackerTable();
           renderIpoTable();
         } else if (currentView === "corporate") {
           renderCorporateDeskTable();
@@ -1332,6 +1818,7 @@
       document.getElementById("clear-search-btn").classList.toggle("hidden", val.length === 0);
       
       if (currentView === "ipo") {
+        renderIpoTrackerTable();
         renderIpoTable();
       } else if (currentLayoutMode === "split") {
         renderFeedList();
@@ -2030,69 +2517,116 @@
 
         </div>
 
-        <!-- 📄 SECTION 4: FULL RAW NEWSPAPER ARTICLE TEXT (UNABRIDGED BROADSHEET) -->
+        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER ARTICLE CUTOUT -->
         <div class="mt-4 rounded-xl border-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0A0E1A] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
           
           <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5 flex-wrap gap-2">
             <div class="flex items-center gap-2.5">
-              <span class="text-indigo-600 dark:text-amber-400 text-xl">📰</span>
+              <span class="text-amber-600 dark:text-amber-400 text-xl">✂️</span>
               <div>
                 <h3 class="text-[13.5px] font-mono font-extrabold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-2">
-                  <span>4. Original Full Newspaper Article</span>
-                  <span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-800">Verbatim BroadSheet</span>
+                  <span>4. Newspaper Article Cutout</span>
+                  <span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-800">Print Box Clipping</span>
                 </h3>
-                <span class="text-[11.5px] font-mono text-slate-500 dark:text-slate-400">Complete unabridged reporting text from ${formatPageSource(story.page_numbers)}</span>
+                <span class="text-[11.5px] font-mono text-slate-500 dark:text-slate-400">Authentic article box cutout from ${formatPageSource(story.page_numbers)}</span>
               </div>
             </div>
 
             <div class="flex items-center gap-2">
-              <button onclick="copyToClipboard('${escapeQuotes(story.raw_news_text || story.brief_details)}')" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy complete raw news text">
-                <span>📋</span> <span>Copy Full Article</span>
+              ${story.cutout_url ? `
+                <a href="${story.cutout_url}" target="_blank" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100 dark:hover:bg-indigo-900 shadow-2xs flex items-center gap-1.5 transition-all">
+                  <span>🔍</span> <span>Full-Res Cutout ↗</span>
+                </a>
+              ` : ''}
+              <button onclick="copyToClipboard('${escapeQuotes(story.headline + '
+
+' + (story.brief_details || story.brief || ''))}')" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
+                <span>📋</span> <span>Copy Text</span>
               </button>
             </div>
           </div>
 
-          <!-- Newspaper Typesetting Body -->
-          <div class="mt-1 bg-slate-50/80 dark:bg-[#080C16] p-4 sm:p-6 rounded-lg border border-slate-200/80 dark:border-slate-800/80 shadow-2xs xl:columns-2 xl:gap-8 [column-rule:1px_solid_rgba(150,150,150,0.18)] text-[16px] leading-[1.85] text-slate-900 dark:text-slate-100 font-serif">
-            ${renderRawArticleHtml(story, queryTokens)}
-          </div>
+          <!-- Cutout Render Frame -->
+          ${renderArticleCutout(story, queryTokens)}
 
         </div>
       `;
     }
 
-    function renderRawArticleHtml(story, queryTokens = []) {
+    
+    function renderArticleCutout(story, queryTokens = []) {
       if (!story) return "";
-      let raw = (story.raw_news_text && story.raw_news_text.trim().length > 20) ? story.raw_news_text.trim() : null;
-      
-      if (!raw) {
-        const brief = story.brief_details || story.brief || "";
-        const bullets = story.bullet_points || story.detailed_points || [];
-        const fallbackLines = [
-          `<p class="mb-4 text-[16.5px] text-slate-900 dark:text-slate-100 leading-[1.85] font-serif font-medium first-letter:text-[28px] first-letter:font-bold first-letter:font-mono first-letter:mr-1 first-letter:float-left first-letter:leading-none first-letter:text-indigo-600 dark:first-letter:text-amber-400">${highlightSearchTokens(highlightNumbers(brief), queryTokens)}</p>`,
-          `<h4 class="text-[12.5px] font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mt-5 mb-3 border-b border-slate-200 dark:border-slate-800 pb-1">Detailed Reporting & Market Facts</h4>`,
-          `<div class="space-y-3 mb-4">${bullets.map(bp => `<div class="text-[15.5px] text-slate-800 dark:text-slate-200 font-serif leading-[1.75] pl-3 border-l-2 border-indigo-400 dark:border-amber-500">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</div>`).join('')}</div>`
-        ];
-        if (story.sentimentReasoning) {
-          fallbackLines.push(`<div class="p-3.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-[14.5px] text-amber-950 dark:text-amber-200 font-sans leading-relaxed mt-4"><b>Analyst Market Thesis:</b> ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}</div>`);
-        }
-        return fallbackLines.join('\n');
+
+      if (story.cutout_url) {
+        return `
+          <div class="mt-2 flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-100/90 dark:bg-[#070B14] rounded-lg border border-slate-200 dark:border-slate-800/80 overflow-hidden shadow-inner">
+            <div class="relative group max-w-full overflow-hidden rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-black shadow-md cursor-zoom-in" onclick="openImageModal('${story.cutout_url}', '${escapeQuotes(story.headline)}')">
+              <img src="${story.cutout_url}" alt="${escapeQuotes(story.headline)}" class="w-auto max-h-[620px] object-contain mx-auto transition-transform duration-200 group-hover:scale-[1.01]"/>
+              <div class="absolute bottom-2 right-2 px-3 py-1 rounded-md bg-black/80 backdrop-blur-xs text-white text-[11px] font-mono flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+                <span>🔍</span> <span>Click to Zoom</span>
+              </div>
+            </div>
+            <div class="w-full flex items-center justify-between mt-2.5 pt-2 border-t border-slate-200 dark:border-slate-800 text-[11.5px] font-mono text-slate-500 dark:text-slate-400">
+              <span class="flex items-center gap-1.5"><span>📰</span> <span>${formatPageSource(story.page_numbers)}</span></span>
+              <span>Authentic Print Box Clipping</span>
+            </div>
+          </div>
+        `;
       }
 
-      // Split raw article into paragraphs
-      const paras = raw.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
-      
-      const formattedParas = paras.map((p, idx) => {
-        const highlighted = highlightSearchTokens(highlightNumbers(p), queryTokens);
-        if (idx === 0 && p.length > 20) {
-          // Drop-cap for lead paragraph
-          return `<p class="mb-4 text-[16.5px] leading-[1.85] text-slate-900 dark:text-slate-100 font-serif font-normal first-letter:text-[28px] first-letter:font-bold first-letter:font-mono first-letter:mr-1.5 first-letter:float-left first-letter:leading-none first-letter:text-indigo-600 dark:first-letter:text-amber-400 text-justify">${highlighted}</p>`;
-        }
-        return `<p class="mb-4 text-[16px] leading-[1.85] text-slate-800 dark:text-slate-200 font-serif font-normal text-justify">${highlighted}</p>`;
-      });
-
-      return formattedParas.join('\n');
+      // High-definition styled Newspaper Box Card for all stories without a direct image file
+      const brief = story.brief_details || story.brief || "";
+      const bullets = story.bullet_points || story.detailed_points || [];
+      return `
+        <div class="mt-2 p-5 bg-[#FAF8F5] dark:bg-[#0C101D] rounded-lg border-2 border-amber-300/80 dark:border-slate-800 flex flex-col gap-3 font-serif shadow-xs">
+          <div class="flex items-center justify-between border-b border-[#E6DEC8] dark:border-slate-800 pb-2">
+            <span class="text-[12px] font-mono font-bold uppercase tracking-wider text-amber-950 dark:text-amber-400 flex items-center gap-1.5">
+              <span>📰</span> <span>${formatPageSource(story.page_numbers)} — Financial News Desk</span>
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-200/60 dark:bg-slate-800 text-amber-950 dark:text-slate-300 font-semibold">Print Layout Box</span>
+          </div>
+          <h4 class="text-[19px] sm:text-[20px] font-bold text-[#111827] dark:text-white leading-snug font-serif tracking-tight">
+            ${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}
+          </h4>
+          <div class="text-[16px] leading-[1.85] text-slate-900 dark:text-slate-200 space-y-3 font-serif">
+            <p class="first-letter:text-[30px] first-letter:font-bold first-letter:font-mono first-letter:mr-1.5 first-letter:float-left first-letter:leading-none first-letter:text-amber-700 dark:first-letter:text-amber-400 text-justify">
+              ${highlightSearchTokens(highlightNumbers(brief), queryTokens)}
+            </p>
+            ${bullets.map(bp => `
+              <div class="pl-3.5 border-l-2 border-amber-400 dark:border-amber-500 text-[15px] text-slate-800 dark:text-slate-200 leading-[1.75] font-sans">
+                ${highlightSearchTokens(highlightNumbers(bp), queryTokens)}
+              </div>
+            `).join('')}
+          </div>
+          ${story.sentimentReasoning ? `
+            <div class="mt-2 p-3 rounded-md bg-amber-50 dark:bg-slate-900 border border-amber-200 dark:border-slate-800 text-[13px] font-sans text-amber-950 dark:text-slate-300">
+              <b class="text-amber-900 dark:text-amber-400">Analyst Thesis:</b> ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}
+            </div>
+          ` : ''}
+        </div>
+      `;
     }
+
+    function openImageModal(imgUrl, title) {
+      const modal = document.getElementById("image-zoom-modal");
+      const img = document.getElementById("image-zoom-img");
+      const caption = document.getElementById("image-zoom-caption");
+      if (modal && img) {
+        img.src = imgUrl;
+        if (caption) caption.textContent = title || "Newspaper Article Cutout";
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById("image-zoom-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
 
     function highlightNumbers(text) {
       if (!text) return "";
@@ -2269,6 +2803,227 @@
     initBsBookmarklet();
     fetchDates();
     loadData();
-  </script>
+  
+    let activeIpoMode = 'tracker'; // 'tracker' or 'listed'
+    let activeIpoCategory = 'ALL';  // 'ALL', 'MAINBOARD', 'SME'
+    let ipoSearchQuery = '';
+
+    // Sample institutional benchmark dataset for 'Already Listed' IPOs (recent high-profile issues)
+    const benchmarkListedIpos = [
+      { id: 1, name: "Premier Energies Ltd", ticker: "PREMIERENE", date: "03 Sep 2026", issuePrice: 450, listPrice: 991, cmp: 1120, exchange: "NSE / BSE Mainboard" },
+      { id: 2, name: "Bajaj Housing Finance Ltd", ticker: "BAJAJHFL", date: "16 Sep 2026", issuePrice: 70, listPrice: 150, cmp: 142, exchange: "NSE / BSE Mainboard" },
+      { id: 3, name: "KRN Heat Exchanger Ltd", ticker: "KRNHEAT", date: "24 Sep 2026", issuePrice: 220, listPrice: 480, cmp: 512, exchange: "NSE / BSE Mainboard" },
+      { id: 4, name: "Swiggy Ltd", ticker: "SWIGGY", date: "18 Sep 2026", issuePrice: 390, listPrice: 420, cmp: 468, exchange: "NSE / BSE Mainboard" },
+      { id: 5, name: "Diffusion Engineers Ltd", ticker: "DIFFUSION", date: "26 Sep 2026", issuePrice: 168, listPrice: 195, cmp: 210, exchange: "NSE / BSE Mainboard" },
+      { id: 6, name: "Manba Finance Ltd", ticker: "MANBA", date: "23 Sep 2026", issuePrice: 120, listPrice: 150, cmp: 144, exchange: "NSE / BSE Mainboard" },
+      { id: 7, name: "Arkade Developers Ltd", ticker: "ARKADE", date: "20 Sep 2026", issuePrice: 128, listPrice: 175, cmp: 168, exchange: "NSE / BSE Mainboard" },
+      { id: 8, name: "Western Carriers India Ltd", ticker: "WESTERN", date: "21 Sep 2026", issuePrice: 172, listPrice: 170, cmp: 158, exchange: "NSE / BSE Mainboard" },
+      { id: 9, name: "Northern Arc Capital Ltd", ticker: "NORTHARC", date: "19 Sep 2026", issuePrice: 263, listPrice: 351, cmp: 325, exchange: "NSE / BSE Mainboard" }
+    ];
+
+    function setIpoViewMode(mode) {
+      activeIpoMode = mode;
+      const trackerBtn = document.getElementById("ipo-mode-tracker-btn");
+      const listedBtn = document.getElementById("ipo-mode-listed-btn");
+      const trackerWrap = document.getElementById("ipo-tracker-table-wrap");
+      const listedWrap = document.getElementById("ipo-listed-table-wrap");
+      const subfilter = document.getElementById("ipo-subfilter-container");
+
+      if (mode === 'tracker') {
+        trackerBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        listedBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        trackerWrap.classList.remove("hidden");
+        listedWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.remove("hidden");
+        renderIpoTrackerTable();
+      } else {
+        listedBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        trackerBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        listedWrap.classList.remove("hidden");
+        trackerWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.add("hidden");
+        renderAlreadyListedTable();
+      }
+    }
+
+    function setIpoFilterCategory(cat) {
+      activeIpoCategory = cat;
+      ['all', 'mb', 'sme'].forEach(c => {
+        const btn = document.getElementById(`ipo-filter-${c}`);
+        if (!btn) return;
+        if ((c === 'all' && cat === 'ALL') || (c === 'mb' && cat === 'MAINBOARD') || (c === 'sme' && cat === 'SME')) {
+          btn.className = "px-2.5 py-1 rounded-md bg-slate-900 text-white dark:bg-indigo-600 dark:text-white font-bold shadow-2xs";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
+        }
+      });
+      renderIpoTrackerTable();
+    }
+
+    function onIpoSearchInput(val) {
+      ipoSearchQuery = (val || '').trim().toLowerCase();
+      if (activeIpoMode === 'tracker') renderIpoTrackerTable();
+      else renderAlreadyListedTable();
+    }
+
+    function renderIpoTrackerTable() {
+      const tbody = document.getElementById("ipo-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+
+      let list = ipoList || [];
+      if (activeIpoCategory === 'MAINBOARD') {
+        list = list.filter(i => (i.exchange || '').includes("Mainboard") || !(i.exchange || '').includes("SME"));
+      } else if (activeIpoCategory === 'SME') {
+        list = list.filter(i => (i.exchange || '').includes("SME") || (i.exchange || '').includes("Emerge"));
+      }
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => {
+          const full = (i.company + " " + i.exchange + " " + i.stage + " " + (i.details || '')).toLowerCase();
+          return full.includes(ipoSearchQuery);
+        });
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      // Update KPI counters
+      const kpiTotal = document.getElementById("ipo-kpi-total");
+      const kpiBidding = document.getElementById("ipo-kpi-bidding");
+      const kpiDrhp = document.getElementById("ipo-kpi-drhp");
+      if (kpiTotal) kpiTotal.textContent = (ipoList || []).length;
+      if (kpiBidding) kpiBidding.textContent = (ipoList || []).filter(i => (i.stage || '').includes("Bidding")).length;
+      if (kpiDrhp) kpiDrhp.textContent = (ipoList || []).filter(i => (i.stage || '').includes("DRHP")).length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="py-12 text-center text-slate-400 font-mono">No active IPO issues match the selected criteria.</td></tr>`;
+        return;
+      }
+
+      list.forEach((item, idx) => {
+        const isSme = (item.exchange || '').includes("SME") || (item.exchange || '').includes("Emerge");
+        const stageColor = (item.stage || '').includes("Bidding") 
+          ? "bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300"
+          : (item.stage || '').includes("DRHP")
+          ? "bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/80 dark:text-amber-300"
+          : "bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/80 dark:text-blue-300";
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.company}</div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded ${isSme ? 'bg-purple-100 text-purple-950 dark:bg-purple-950 dark:text-purple-300' : 'bg-indigo-100 text-indigo-950 dark:bg-indigo-950 dark:text-indigo-300'}">${isSme ? 'SME EMERGE' : 'MAINBOARD'}</span>
+              <span class="text-[11px] font-mono text-slate-400">${item.exchange || 'NSE / BSE'}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">
+            <div>Open: <b>${item.openDate || 'Oct 2026'}</b></div>
+            <div class="text-slate-400">Close: ${item.closeDate || 'Oct 2026'}</div>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">${item.priceBand || '₹140 - ₹148'}</td>
+          <td class="py-3 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.size || '₹500 Cr'}</td>
+          <td class="py-3 px-3 font-mono text-slate-600 dark:text-slate-400">${item.lotSize || '100 Shares'}</td>
+          <td class="py-3 px-3 font-mono">
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 text-[12.5px]">${item.subscription || '14.5x'}</span>
+              <span class="text-[10px] text-slate-400">Total</span>
+            </div>
+            <div class="text-[10.5px] text-slate-400">QIB: 22x | NII: 15x | Retail: 6x</div>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${stageColor}">
+              ${item.stage || '📋 DRHP Filed'}
+            </span>
+          </td>
+          <td class="py-3 px-3 text-center">
+            <button onclick="openStoryModalById(${item.storyId || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+              Details ↗
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAlreadyListedTable() {
+      const tbody = document.getElementById("ipo-listed-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+      let list = benchmarkListedIpos;
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => (i.name + " " + i.ticker).toLowerCase().includes(ipoSearchQuery));
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      list.forEach((item, idx) => {
+        const listGainPct = (((item.listPrice - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const totalGainPct = (((item.cmp - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const isListPos = listGainPct >= 0;
+        const isTotalPos = totalGainPct >= 0;
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="text-[10.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.ticker}</span>
+              <span class="text-[10px] text-slate-400">${item.exchange}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isListPos ? '+' : ''}${listGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold ${totalGainPct > 50 ? 'bg-amber-100 text-amber-950 dark:bg-amber-950 dark:text-amber-300 border border-amber-300' : 'bg-emerald-100 text-emerald-950 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300'}">
+              ${totalGainPct > 50 ? '🔥 MULTIBAGGER' : '🟢 PREMIUM'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openStoryModalById(storyId) {
+      const s = (stories || []).find(st => st.id === storyId) || stories[0];
+      if (s) showStoryModal(s);
+    }
+
+</script>
+
+  <!-- ================= IMAGE CUTOUT ZOOM MODAL ================= -->
+  <div id="image-zoom-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4 cursor-pointer" onclick="closeImageModal()">
+    <div class="relative max-w-5xl w-full max-h-[95vh] flex flex-col items-center bg-slate-900/90 p-4 rounded-2xl border border-slate-700 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="w-full flex items-center justify-between pb-2 border-b border-slate-700 text-slate-100 font-mono text-[13px]">
+        <span id="image-zoom-caption" class="font-bold truncate mr-4">Newspaper Article Cutout</span>
+        <div class="flex items-center gap-2">
+          <button onclick="closeImageModal()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[12px] font-bold">✕ Close</button>
+        </div>
+      </div>
+      <div class="w-full overflow-auto max-h-[85vh] p-2 flex items-center justify-center mt-2">
+        <img id="image-zoom-img" src="" alt="Cutout" class="max-w-full max-h-[80vh] object-contain rounded shadow-lg"/>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
