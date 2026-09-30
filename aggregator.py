@@ -128,6 +128,7 @@ class UnifiedNewsAggregator:
                     if bp_clean and not any(difflib.SequenceMatcher(None, bp_clean.lower(), seen.lower()).ratio() > 0.70 for seen in seen_bullets):
                         seen_bullets.append(bp_clean)
                 combined_bullets = seen_bullets[:6]
+                raw_txt = fe_s.get("raw_news_text") or bs_s.get("raw_news_text") or ""
 
                 results.append(NewsStory(
                     headline=chosen_hl,
@@ -135,6 +136,7 @@ class UnifiedNewsAggregator:
                     page_numbers=combined_pages,
                     brief_details=combined_brief,
                     bullet_points=combined_bullets,
+                    raw_news_text=raw_txt,
                     importance="HIGH" if ("HIGH" in (fe_s.get("importance"), bs_s.get("importance"))) else "MEDIUM"
                 ))
 
@@ -149,6 +151,7 @@ class UnifiedNewsAggregator:
                     page_numbers=formatted_p,
                     brief_details=fe_s["brief_details"],
                     bullet_points=fe_s.get("bullet_points", []),
+                    raw_news_text=fe_s.get("raw_news_text", ""),
                     importance=fe_s.get("importance", "MEDIUM")
                 ))
 
@@ -163,6 +166,7 @@ class UnifiedNewsAggregator:
                     page_numbers=formatted_p,
                     brief_details=bs_s["brief_details"],
                     bullet_points=bs_s.get("bullet_points", []),
+                    raw_news_text=bs_s.get("raw_news_text", ""),
                     importance=bs_s.get("importance", "MEDIUM")
                 ))
 
@@ -174,6 +178,7 @@ class UnifiedNewsAggregator:
                 page_numbers=s.get("page_numbers", "Print/Web"),
                 brief_details=s["brief_details"],
                 bullet_points=s.get("bullet_points", []),
+                raw_news_text=s.get("raw_news_text", ""),
                 importance=s.get("importance", "MEDIUM")
             ))
 
@@ -237,6 +242,7 @@ class UnifiedNewsAggregator:
                     "brief_details": s.brief_details,
                     "bullet_points": s.bullet_points,
                     "page_numbers": s.page_numbers,
+                    "raw_news_text": getattr(s, "raw_news_text", "") or "",
                     "importance": s.importance,
                 })
 
