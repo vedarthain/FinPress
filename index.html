@@ -87,25 +87,59 @@
     .dark #app-main {
       background-color: #070B14;
     }
+
+    /* Main Workspace Grid (Views Container + Permanent 3rd Column Sidebar) */
+    #workspace-grid {
+      width: 100%;
+      height: 100%;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) 260px !important;
+      grid-template-rows: 100% !important;
+      gap: 8px !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
+    }
+    @media (min-width: 1280px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 280px !important;
+      }
+    }
+    @media (min-width: 1536px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 300px !important;
+      }
+    }
+
+    #workspace-views {
+      width: 100%;
+      height: 100%;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
     #view-feed:not(.hidden) {
       width: 100%;
       height: 100%;
       display: grid !important;
-      grid-template-columns: 320px minmax(0, 1fr) 260px !important;
+      grid-template-columns: 320px minmax(0, 1fr) !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
     }
     @media (min-width: 1280px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 350px minmax(0, 1fr) 280px !important;
+        grid-template-columns: 350px minmax(0, 1fr) !important;
       }
     }
     @media (min-width: 1536px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 380px minmax(0, 1fr) 300px !important;
+        grid-template-columns: 380px minmax(0, 1fr) !important;
       }
     }
+
     #view-ipo:not(.hidden) {
       width: 100%;
       height: 100%;
@@ -114,6 +148,16 @@
       gap: 8px !important;
       overflow: hidden !important;
     }
+
+    #view-matrix:not(.hidden) {
+      width: 100%;
+      height: 100%;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      overflow: hidden !important;
+    }
+
     #col-news-wire {
       height: 100% !important;
       display: flex !important;
@@ -140,6 +184,7 @@
       display: flex !important;
       flex-direction: column !important;
       overflow-y: auto !important;
+      min-width: 0 !important;
       flex-shrink: 0 !important;
     }
   </style>
@@ -289,10 +334,15 @@
       </div>
 
       <!-- ================= VIEW 1: NEWS STREAM (3-COLUMN SIDE-BY-SIDE EXPANDED LAYOUT) ================= -->
-      <section id="view-feed">
+            <!-- Main Workspace Grid (Views Container + Permanent 3rd Column Sidebar) -->
+      <div id="workspace-grid">
         
-        <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE (1-LINER STORIES, MAX 10 PER PAGE) -->
-        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-auto lg:h-[calc(100vh-72px)] lg:max-h-[calc(100vh-72px)] min-h-0">
+        <!-- Left & Center Area (Views Container) -->
+        <div id="workspace-views">
+          <section id="view-feed">
+        
+        <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE -->
+        <div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs">
           <div class="px-3 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/80 flex items-center justify-between text-[12px] font-mono shrink-0">
             <span id="feed-list-count" class="font-extrabold text-slate-900 dark:text-slate-100">0 Stories</span>
             <div class="flex items-center gap-1">
@@ -323,14 +373,7 @@
         </div>
 
         <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE DESKS & SECTORS) -->
-        <aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">
-          
-          <!-- Tree Container (Renders 1. Categories Card, 2. Sectors Card, 3. Clustered Stocks Card) -->
-          <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans w-full">
-            <!-- Dynamically populated -->
-          </div>
-
-        </aside>
+        
 
       </section>
 
@@ -421,6 +464,17 @@
 
         </div>
       </section>
+        </div>
+
+                <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE DESKS & SECTORS) - PERMANENT SIDEBAR -->
+        <aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">
+          <!-- Tree Container (Renders 1. Categories Card, 2. Sectors Card, 3. Clustered Stocks Card) -->
+          <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans w-full">
+            <!-- Dynamically populated -->
+          </div>
+        </aside>
+
+      </div>
 
     </main>
 
@@ -765,6 +819,7 @@ const allowedSections = [
         if (viewMatrix) viewMatrix.classList.add("hidden");
         if (viewIpo) viewIpo.classList.remove("hidden");
         setIpoViewMode(activeIpoMode || 'tracker');
+        renderCategoriesAndStocksSidebar();
         return;
       }
 
@@ -778,8 +833,8 @@ const allowedSections = [
       if (viewFeed) viewFeed.classList.remove("hidden");
 
       if (viewName === "feed") {
-        selectedFeedCategory = "ALL";
-        if (categorySelect) categorySelect.value = "ALL";
+        selectedFeedCategory = "ANCHOR";
+        if (categorySelect) categorySelect.value = "ANCHOR";
         if (deskSelect) deskSelect.value = "";
         if (corpBanner) corpBanner.classList.add("hidden");
         if (ipoBanner) ipoBanner.classList.add("hidden");
@@ -805,6 +860,7 @@ const allowedSections = [
         if (ipoBanner) ipoBanner.classList.add("hidden");
       }
 
+      renderCategoriesAndStocksSidebar();
       renderFeedList();
     }
 
@@ -871,7 +927,20 @@ const allowedSections = [
       renderFeedList();
     }
 
-    function onCategorySelect(val) {
+        function onCategorySelect(val) {
+      if (currentView === "ipo") {
+        currentView = "feed";
+        const topIpoBtn = document.getElementById("top-ipo-hub-btn");
+        if (topIpoBtn) {
+          topIpoBtn.className = "px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer";
+          topIpoBtn.innerHTML = "<span>🚀</span> <span>IPO Hub</span>";
+        }
+        const viewIpo = document.getElementById("view-ipo");
+        if (viewIpo) viewIpo.classList.add("hidden");
+        const viewFeed = document.getElementById("view-feed");
+        if (viewFeed) viewFeed.classList.remove("hidden");
+      }
+
       selectedStoryIndex = 0;
       currentFeedPage = 1;
       selectedFeedCategory = val;
@@ -892,8 +961,8 @@ const allowedSections = [
       const catSelect = document.getElementById("category-select");
       if (catSelect && val !== "ALL" && !val.startsWith("IPO") && !val.startsWith("CORPORATE") && val !== "OPINIONS" && val !== "ANCHOR") {
         catSelect.value = val;
-      } else if (catSelect && val === "ALL") {
-        catSelect.value = "ALL";
+      } else if (catSelect && val === "ANCHOR") {
+        catSelect.value = "ANCHOR";
       }
 
       renderCategoriesAndStocksSidebar();
@@ -2110,7 +2179,6 @@ const allowedSections = [
             <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
           </div>
           <div class="flex items-center gap-2">
-            <button id="feed-open-sidebar-btn" onclick="toggleSidebar()" class="hidden font-bold px-2 py-0.5 rounded border border-[#DFC0A5] dark:border-slate-700 bg-[#FBE8D8] dark:bg-[#1E1B4B] text-[#1C1917] dark:text-[#E0E7FF] hover:bg-[#F3DECC] shadow-2xs items-center gap-1 cursor-pointer transition-all" title="Open 3rd Column Filters & Desks"><span>☰</span> <span>Filters</span></button>
             ${sentBadge}
             <button onclick="copyStoryById(${story.id})" class="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
               📋 Copy
@@ -2175,10 +2243,10 @@ const allowedSections = [
                 <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
               </div>
               <ul class="space-y-2.5">
-                ${bullets.map(bp => `
-                  <li class="flex items-start gap-2 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-[#EBE2D8] dark:border-slate-800 text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed shadow-2xs font-normal font-sans tracking-tight">
-                    <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none mt-0.5 text-sm">›</span>
-                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+                ${bullets.map(b => `
+                  <li class="flex items-start gap-2.5 bg-white/90 dark:bg-[#13100D] p-3 rounded-lg border border-[#E3D5C5] dark:border-[#3D3228] text-[15px] sm:text-[15.5px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs tracking-tight">
+                    <span class="text-[#8C6239] dark:text-[#C59B6D] shrink-0 font-bold mt-0.5 text-base">•</span>
+                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
                   </li>
                 `).join('')}
               </ul>
@@ -2188,10 +2256,10 @@ const allowedSections = [
 
         </div>
 
-        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER ARTICLE CUTOUT (COLLAPSIBLE WITH ZOOM MODAL) -->
-        <div class="mt-3 rounded-xl border-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0A0E1A] shadow-xs overflow-hidden shrink-0">
+        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER CUTOUT SECTION -->
+        <div class="mt-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0E1322] shadow-xs overflow-hidden">
           
-          <div onclick="toggleCutoutExpanded()" class="flex items-center justify-between p-3 bg-slate-50/90 dark:bg-[#11172A] hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer select-none transition-colors border-b border-slate-200 dark:border-slate-800 flex-wrap gap-2">
+          <div class="px-4 py-2.5 bg-slate-100/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
             <div class="flex items-center gap-2">
               <span class="text-amber-600 dark:text-amber-400 text-base">✂️</span>
               <div>
@@ -2497,7 +2565,7 @@ const allowedSections = [
     }
 
     function onIpoSearchInput(val) {
-      ipoSearchQuery = (val || '').trim().toLowerCase();
+      ipoSearchQuery = (val || '').toLowerCase().trim();
       if (activeIpoMode === 'tracker') renderIpoTrackerTable();
       else renderAlreadyListedTable();
     }
@@ -2508,17 +2576,17 @@ const allowedSections = [
       if (!tbody) return;
 
       tbody.innerHTML = "";
-
       let list = ipoList || [];
+
       if (activeIpoCategory === 'MAINBOARD') {
-        list = list.filter(i => (i.exchange || '').includes("Mainboard") || !(i.exchange || '').includes("SME"));
+        list = list.filter(i => !(i.exchange || '').includes("SME") && !(i.exchange || '').includes("Emerge"));
       } else if (activeIpoCategory === 'SME') {
         list = list.filter(i => (i.exchange || '').includes("SME") || (i.exchange || '').includes("Emerge"));
       }
 
       if (ipoSearchQuery) {
         list = list.filter(i => {
-          const full = ((i.company || '') + " " + (i.exchange || '') + " " + (i.stage || '') + " " + (i.details || '')).toLowerCase();
+          const full = (i.company + " " + i.exchange + " " + i.stage + " " + (i.details || '')).toLowerCase();
           return full.includes(ipoSearchQuery);
         });
       }
@@ -2577,7 +2645,7 @@ const allowedSections = [
             </span>
           </td>
           <td class="py-3 px-3 text-center">
-            <button onclick="openStoryModalById(${item.storyId || item.id || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+            <button onclick="openStoryModalById(${item.storyId || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700 cursor-pointer">
               Details ↗
             </button>
           </td>
@@ -2612,17 +2680,20 @@ const allowedSections = [
           <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
           <td class="py-3 px-3">
             <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
-            <div class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${item.ticker} • ${item.exchange}</div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="text-[10.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.ticker}</span>
+              <span class="text-[10px] text-slate-400">${item.exchange}</span>
+            </div>
           </td>
           <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
-          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
             <span>${isListPos ? '+' : ''}${listGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
           </td>
-          <td class="py-3 px-3 font-mono font-extrabold text-indigo-600 dark:text-indigo-400">₹${item.cmp}</td>
-          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
             <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
           </td>

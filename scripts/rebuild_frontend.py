@@ -9,7 +9,7 @@ def rebuild():
     dom_part = parts[0]
     script_part = parts[1]
 
-    # 1. Clean <head> with guaranteed fixed-viewport edge-to-edge layout
+    # 1. Clean <head> with guaranteed fixed-viewport edge-to-edge layout and workspace-grid
     head_pattern = r'<head>(.*?)</head>'
     clean_head = '''<head>
   <meta charset="utf-8"/>
@@ -98,25 +98,59 @@ def rebuild():
     .dark #app-main {
       background-color: #070B14;
     }
+
+    /* Main Workspace Grid (Views Container + Permanent 3rd Column Sidebar) */
+    #workspace-grid {
+      width: 100%;
+      height: 100%;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) 260px !important;
+      grid-template-rows: 100% !important;
+      gap: 8px !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
+    }
+    @media (min-width: 1280px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 280px !important;
+      }
+    }
+    @media (min-width: 1536px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 300px !important;
+      }
+    }
+
+    #workspace-views {
+      width: 100%;
+      height: 100%;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
     #view-feed:not(.hidden) {
       width: 100%;
       height: 100%;
       display: grid !important;
-      grid-template-columns: 320px minmax(0, 1fr) 260px !important;
+      grid-template-columns: 320px minmax(0, 1fr) !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
     }
     @media (min-width: 1280px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 350px minmax(0, 1fr) 280px !important;
+        grid-template-columns: 350px minmax(0, 1fr) !important;
       }
     }
     @media (min-width: 1536px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 380px minmax(0, 1fr) 300px !important;
+        grid-template-columns: 380px minmax(0, 1fr) !important;
       }
     }
+
     #view-ipo:not(.hidden) {
       width: 100%;
       height: 100%;
@@ -125,6 +159,16 @@ def rebuild():
       gap: 8px !important;
       overflow: hidden !important;
     }
+
+    #view-matrix:not(.hidden) {
+      width: 100%;
+      height: 100%;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      overflow: hidden !important;
+    }
+
     #col-news-wire {
       height: 100% !important;
       display: flex !important;
@@ -151,6 +195,7 @@ def rebuild():
       display: flex !important;
       flex-direction: column !important;
       overflow-y: auto !important;
+      min-width: 0 !important;
       flex-shrink: 0 !important;
     }
   </style>
@@ -191,45 +236,50 @@ def rebuild():
             f'{ipo_btn_html}\n\n        <button onclick="triggerGitHubPipeline()"'
         )
 
-    # 4. Clean main tag
+    # 4. Extract Aside and Clean Workspace Structure
+    aside_start = dom_part.find('<aside id="view-feed-aside"')
+    aside_end = dom_part.find('</aside>', aside_start) + len('</aside>')
+    clean_aside = '''        <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE DESKS & SECTORS) - PERMANENT SIDEBAR -->
+        <aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">
+          <!-- Tree Container (Renders 1. Categories Card, 2. Sectors Card, 3. Clustered Stocks Card) -->
+          <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans w-full">
+            <!-- Dynamically populated -->
+          </div>
+        </aside>'''
+
+    # Remove aside from inside view-feed
+    dom_part = dom_part[:aside_start] + dom_part[aside_end:]
+
+    # Clean main tag
     dom_part = re.sub(
         r'<main class="[^"]*">',
         '<main id="app-main">',
         dom_part
     )
 
-    # 5. Clean view-feed grid
+    # Clean view-feed grid
     dom_part = re.sub(
         r'<section id="view-feed" class="[^"]*">',
         '<section id="view-feed">',
         dom_part
     )
 
-    # 6. Clean Column 1 (Left News Wire)
+    # Clean Column 1 (Left News Wire)
     dom_part = re.sub(
-        r'<div class="rounded-lg bg-white dark:bg-\[#0E1322\] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-full min-h-0">',
-        '<div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs">',
+        r'<!-- COLUMN 1:[^\n]*\n\s*<div class="[^"]*">',
+        '<!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE -->\n        <div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs">',
         dom_part
     )
 
-    # 7. Clean Column 2 (Middle Reading Pane)
+    # Clean Column 2 (Middle Reading Pane)
     dom_part = re.sub(
         r'<div id="feed-detail-wrapper" class="[^"]*">',
         '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 shadow-xs">',
         dom_part
     )
 
-    # 8. Clean Column 3 (Right Sidebar)
-    dom_part = re.sub(
-        r'<aside id="view-feed-aside" class="[^"]*">',
-        '<aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">',
-        dom_part
-    )
-
-    # 9. Add BS-style IPO Hub section into dom_part if missing
-    if 'id="view-ipo"' not in dom_part:
-        view_ipo_html = '''
-      <!-- ================= VIEW 2: BUSINESS STANDARD STYLE IPO HUB ================= -->
+    # Add BS-style IPO Hub section
+    view_ipo_html = '''      <!-- ================= VIEW 2: BUSINESS STANDARD STYLE IPO HUB ================= -->
       <section id="view-ipo" class="hidden">
         
         <!-- Top Summary Cards Ribbon -->
@@ -356,9 +406,30 @@ def rebuild():
         </div>
 
       </section>'''
-        dom_part = dom_part.replace('</main>', f'{view_ipo_html}\n    </main>')
 
-    # 10. Clean script_part
+    # Wrap views in workspace-grid and workspace-views
+    vf_idx = dom_part.find('<section id="view-feed">')
+    main_end_idx = dom_part.find('</main>')
+
+    views_content = dom_part[vf_idx:main_end_idx].strip()
+    if 'id="view-ipo"' not in views_content:
+        views_content += '\n\n' + view_ipo_html
+
+    workspace_html = f'''      <!-- Main Workspace Grid (Views Container + Permanent 3rd Column Sidebar) -->
+      <div id="workspace-grid">
+        
+        <!-- Left & Center Area (Views Container) -->
+        <div id="workspace-views">
+          {views_content}
+        </div>
+
+        {clean_aside}
+
+      </div>'''
+
+    dom_part = dom_part[:vf_idx] + workspace_html + '\n\n    ' + dom_part[main_end_idx:]
+
+    # 5. Clean script_part
     clean_script = script_part.split('</script>')[0].replace('<script>', '', 1).strip()
 
     # Add top global variables (Defaulting to News Front Page)
@@ -420,6 +491,7 @@ def rebuild():
         if (viewMatrix) viewMatrix.classList.add("hidden");
         if (viewIpo) viewIpo.classList.remove("hidden");
         setIpoViewMode(activeIpoMode || 'tracker');
+        renderCategoriesAndStocksSidebar();
         return;
       }
 
@@ -433,8 +505,8 @@ def rebuild():
       if (viewFeed) viewFeed.classList.remove("hidden");
 
       if (viewName === "feed") {
-        selectedFeedCategory = "ALL";
-        if (categorySelect) categorySelect.value = "ALL";
+        selectedFeedCategory = "ANCHOR";
+        if (categorySelect) categorySelect.value = "ANCHOR";
         if (deskSelect) deskSelect.value = "";
         if (corpBanner) corpBanner.classList.add("hidden");
         if (ipoBanner) ipoBanner.classList.add("hidden");
@@ -460,6 +532,7 @@ def rebuild():
         if (ipoBanner) ipoBanner.classList.add("hidden");
       }
 
+      renderCategoriesAndStocksSidebar();
       renderFeedList();
     }'''
 
@@ -467,6 +540,54 @@ def rebuild():
     end_sw = clean_script.find('function onDeskSelect(')
     if start_sw != -1 and end_sw != -1:
         clean_script = clean_script[:start_sw] + switch_view_code + '\n\n    ' + clean_script[end_sw:]
+
+    # Update onCategorySelect
+    cat_sel_code = '''    function onCategorySelect(val) {
+      if (currentView === "ipo") {
+        currentView = "feed";
+        const topIpoBtn = document.getElementById("top-ipo-hub-btn");
+        if (topIpoBtn) {
+          topIpoBtn.className = "px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer";
+          topIpoBtn.innerHTML = "<span>🚀</span> <span>IPO Hub</span>";
+        }
+        const viewIpo = document.getElementById("view-ipo");
+        if (viewIpo) viewIpo.classList.add("hidden");
+        const viewFeed = document.getElementById("view-feed");
+        if (viewFeed) viewFeed.classList.remove("hidden");
+      }
+
+      selectedStoryIndex = 0;
+      currentFeedPage = 1;
+      selectedFeedCategory = val;
+      activeStockFilter = null;
+      activeSectorFilter = null;
+      
+      const deskSelect = document.getElementById("desk-select");
+      if (deskSelect) deskSelect.value = "";
+      
+      const corpBanner = document.getElementById("corporate-subtabs-banner");
+      if (corpBanner) corpBanner.classList.add("hidden");
+      const ipoBanner = document.getElementById("ipo-subtabs-banner");
+      if (ipoBanner) ipoBanner.classList.add("hidden");
+      
+      const tabAnchor = document.getElementById("tab-btn-anchor");
+      if (tabAnchor) tabAnchor.className = "px-2.5 py-1 rounded-md transition-all text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 flex items-center gap-1.5 font-medium";
+      
+      const catSelect = document.getElementById("category-select");
+      if (catSelect && val !== "ALL" && !val.startsWith("IPO") && !val.startsWith("CORPORATE") && val !== "OPINIONS" && val !== "ANCHOR") {
+        catSelect.value = val;
+      } else if (catSelect && val === "ANCHOR") {
+        catSelect.value = "ANCHOR";
+      }
+
+      renderCategoriesAndStocksSidebar();
+      renderFeedList();
+    }'''
+
+    start_cat = clean_script.find('function onCategorySelect(')
+    end_cat = clean_script.find('function isFillerHeadline(', start_cat)
+    if start_cat != -1 and end_cat != -1:
+        clean_script = clean_script[:start_cat] + cat_sel_code + '\n\n    ' + clean_script[end_cat:]
 
     # Update renderActiveStoryDetail in clean_script
     detail_fn_code = r'''
@@ -535,7 +656,6 @@ def rebuild():
             <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
           </div>
           <div class="flex items-center gap-2">
-            <button id="feed-open-sidebar-btn" onclick="toggleSidebar()" class="hidden font-bold px-2 py-0.5 rounded border border-[#DFC0A5] dark:border-slate-700 bg-[#FBE8D8] dark:bg-[#1E1B4B] text-[#1C1917] dark:text-[#E0E7FF] hover:bg-[#F3DECC] shadow-2xs items-center gap-1 cursor-pointer transition-all" title="Open 3rd Column Filters & Desks"><span>☰</span> <span>Filters</span></button>
             ${sentBadge}
             <button onclick="copyStoryById(${story.id})" class="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
               📋 Copy
@@ -600,10 +720,10 @@ def rebuild():
                 <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
               </div>
               <ul class="space-y-2.5">
-                ${bullets.map(bp => `
-                  <li class="flex items-start gap-2 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-[#EBE2D8] dark:border-slate-800 text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed shadow-2xs font-normal font-sans tracking-tight">
-                    <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none mt-0.5 text-sm">›</span>
-                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+                ${bullets.map(b => `
+                  <li class="flex items-start gap-2.5 bg-white/90 dark:bg-[#13100D] p-3 rounded-lg border border-[#E3D5C5] dark:border-[#3D3228] text-[15px] sm:text-[15.5px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs tracking-tight">
+                    <span class="text-[#8C6239] dark:text-[#C59B6D] shrink-0 font-bold mt-0.5 text-base">•</span>
+                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
                   </li>
                 `).join('')}
               </ul>
@@ -613,10 +733,10 @@ def rebuild():
 
         </div>
 
-        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER ARTICLE CUTOUT (COLLAPSIBLE WITH ZOOM MODAL) -->
-        <div class="mt-3 rounded-xl border-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0A0E1A] shadow-xs overflow-hidden shrink-0">
+        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER CUTOUT SECTION -->
+        <div class="mt-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0E1322] shadow-xs overflow-hidden">
           
-          <div onclick="toggleCutoutExpanded()" class="flex items-center justify-between p-3 bg-slate-50/90 dark:bg-[#11172A] hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer select-none transition-colors border-b border-slate-200 dark:border-slate-800 flex-wrap gap-2">
+          <div class="px-4 py-2.5 bg-slate-100/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
             <div class="flex items-center gap-2">
               <span class="text-amber-600 dark:text-amber-400 text-base">✂️</span>
               <div>
@@ -748,7 +868,7 @@ def rebuild():
     }
 
     function onIpoSearchInput(val) {
-      ipoSearchQuery = (val || '').trim().toLowerCase();
+      ipoSearchQuery = (val || '').toLowerCase().trim();
       if (activeIpoMode === 'tracker') renderIpoTrackerTable();
       else renderAlreadyListedTable();
     }
@@ -759,17 +879,17 @@ def rebuild():
       if (!tbody) return;
 
       tbody.innerHTML = "";
-
       let list = ipoList || [];
+
       if (activeIpoCategory === 'MAINBOARD') {
-        list = list.filter(i => (i.exchange || '').includes("Mainboard") || !(i.exchange || '').includes("SME"));
+        list = list.filter(i => !(i.exchange || '').includes("SME") && !(i.exchange || '').includes("Emerge"));
       } else if (activeIpoCategory === 'SME') {
         list = list.filter(i => (i.exchange || '').includes("SME") || (i.exchange || '').includes("Emerge"));
       }
 
       if (ipoSearchQuery) {
         list = list.filter(i => {
-          const full = ((i.company || '') + " " + (i.exchange || '') + " " + (i.stage || '') + " " + (i.details || '')).toLowerCase();
+          const full = (i.company + " " + i.exchange + " " + i.stage + " " + (i.details || '')).toLowerCase();
           return full.includes(ipoSearchQuery);
         });
       }
@@ -828,7 +948,7 @@ def rebuild():
             </span>
           </td>
           <td class="py-3 px-3 text-center">
-            <button onclick="openStoryModalById(${item.storyId || item.id || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+            <button onclick="openStoryModalById(${item.storyId || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700 cursor-pointer">
               Details ↗
             </button>
           </td>
@@ -863,17 +983,20 @@ def rebuild():
           <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
           <td class="py-3 px-3">
             <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
-            <div class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${item.ticker} • ${item.exchange}</div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="text-[10.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.ticker}</span>
+              <span class="text-[10px] text-slate-400">${item.exchange}</span>
+            </div>
           </td>
           <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
-          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
             <span>${isListPos ? '+' : ''}${listGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
           </td>
-          <td class="py-3 px-3 font-mono font-extrabold text-indigo-600 dark:text-indigo-400">₹${item.cmp}</td>
-          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
             <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
           </td>
@@ -892,10 +1015,10 @@ def rebuild():
       if (s) showStoryModal(s);
     }
 '''
-    if 'function setIpoViewMode' not in clean_script:
+    if 'function renderIpoTrackerTable' not in clean_script:
         clean_script += '\n\n' + ipo_hub_functions
 
-    # Modals and utilities
+    # Story & IPO modals
     modals_code = '''
     function showStoryModal(story) {
       if (!story) return;
