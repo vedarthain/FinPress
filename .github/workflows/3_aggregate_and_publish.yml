@@ -18,6 +18,8 @@ jobs:
   aggregate:
     name: ⚡ Deduplicate, Merge & Publish
     runs-on: ubuntu-latest
+    # Only execute if triggered manually, scheduled, or if the triggering workflow succeeded (NOT cancelled, NOT failed)
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout Code Repository
