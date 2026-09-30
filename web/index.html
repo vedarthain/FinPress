@@ -2008,7 +2008,7 @@
     });
 
     // ================= BUSINESS STANDARD 1-CLICK AUTH & SYNC =================
-    const BS_BOOKMARKLET_JS = "javascript:(function(){try{const cookies=document.cookie;if(!cookies||!cookies.includes('=')){alert('⚠️ No cookies found! Please log in to https://epaper.business-standard.com first.');return;}const endpoint='https://finpress.deb5045ai.workers.dev/api/session/bs';const toast=document.createElement('div');toast.style.cssText='position:fixed;top:20px;right:20px;z-index:999999;background:#1e1b4b;color:#fff;padding:16px 20px;border-radius:12px;font-family:sans-serif;font-size:14px;box-shadow:0 10px 25px rgba(0,0,0,0.5);border:2px solid #8b5cf6;max-width:380px;';toast.innerHTML='<b>FinPress Sync</b><br>⏳ Syncing your Business Standard session...';document.body.appendChild(toast);fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cookieString:cookies,domain:window.location.hostname,url:window.location.href,localStorage:JSON.stringify(window.localStorage)}),mode:'cors'}).then(r=>r.json()).then(data=>{if(data.success){toast.style.borderColor='#10b981';toast.innerHTML='<b>FinPress Sync ✅</b><br>Session synced & GitHub Actions triggered!<br><small>Your live dashboard will update with today\\'s BS paper in 2-3 minutes.</small>';setTimeout(()=>toast.remove(),7000);}else{toast.style.borderColor='#ef4444';toast.innerHTML='<b>FinPress Sync ⚠️</b><br>'+(data.message||'Error syncing session.');setTimeout(()=>toast.remove(),7000);}}).catch(err=>{toast.style.borderColor='#ef4444';toast.innerHTML='<b>FinPress Sync ❌</b><br>Failed to connect: '+err.message;setTimeout(()=>toast.remove(),7000);});}catch(e){alert('FinPress Sync Error: '+e.message);}})();";
+    const BS_BOOKMARKLET_JS = "javascript:(function(){try{if(!window.location.hostname.includes('business-standard.com')){alert('📌 Please click this bookmark while viewing https://epaper.business-standard.com (logged in).\\n\\nTo install: Drag this button up to your browser Bookmarks Bar (Cmd+Shift+B)!');return;}const cookies=document.cookie;if(!cookies||!cookies.includes('=')){alert('⚠️ No cookies found! Please log in to https://epaper.business-standard.com first.');return;}const endpoint='https://finpress.deb5045ai.workers.dev/api/session/bs';const toast=document.createElement('div');toast.style.cssText='position:fixed;top:20px;right:20px;z-index:999999;background:#1e1b4b;color:#fff;padding:16px 20px;border-radius:12px;font-family:sans-serif;font-size:14px;box-shadow:0 10px 25px rgba(0,0,0,0.5);border:2px solid #8b5cf6;max-width:380px;';toast.innerHTML='<b>FinPress Sync</b><br>⏳ Syncing your Business Standard session...';document.body.appendChild(toast);fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cookieString:cookies,domain:window.location.hostname,url:window.location.href,localStorage:JSON.stringify(window.localStorage)}),mode:'cors'}).then(r=>r.json()).then(data=>{if(data.success){toast.style.borderColor='#10b981';toast.innerHTML='<b>FinPress Sync ✅</b><br>Session synced & GitHub Actions triggered!<br><small>Your live dashboard will update with today\\'s BS paper in 2-3 minutes.</small>';setTimeout(()=>toast.remove(),7000);}else{toast.style.borderColor='#ef4444';toast.innerHTML='<b>FinPress Sync ⚠️</b><br>'+(data.message||'Error syncing session.');setTimeout(()=>toast.remove(),7000);}}).catch(err=>{toast.style.borderColor='#ef4444';toast.innerHTML='<b>FinPress Sync ❌</b><br>Failed to connect: '+err.message;setTimeout(()=>toast.remove(),7000);});}catch(e){alert('FinPress Sync Error: '+e.message);}})();";
 
     function openBsSyncModal() {
       const modal = document.getElementById("bs-sync-modal");
@@ -2030,12 +2030,18 @@
       const link = document.getElementById("bs-bookmarklet-link");
       if (link) {
         link.setAttribute("href", BS_BOOKMARKLET_JS);
+        link.onclick = (e) => {
+          if (!window.location.hostname.includes("business-standard.com")) {
+            e.preventDefault();
+            alert("👉 Don't click here directly!\n\n1. Press Cmd+Shift+B (Mac) or Ctrl+Shift+B (Windows) to show your Bookmarks Bar.\n2. DRAG this orange button up into your Bookmarks Bar.\n3. Open https://epaper.business-standard.com and click the bookmark from your top bar!");
+          }
+        };
       }
     }
 
     function copyBookmarkletCode() {
       navigator.clipboard.writeText(BS_BOOKMARKLET_JS).then(() => {
-        alert("Bookmarklet JavaScript copied to clipboard! You can paste this as a bookmark URL in your browser.");
+        alert("Bookmarklet JavaScript copied to clipboard! You can paste this as a bookmark URL or in DevTools Console on epaper.business-standard.com.");
       }).catch(err => {
         prompt("Copy this bookmarklet code:", BS_BOOKMARKLET_JS);
       });
