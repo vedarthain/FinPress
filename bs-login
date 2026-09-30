@@ -1,4 +1,8 @@
 #!/bin/bash
 # Shortcut to launch Business Standard Google SSO Login Setup
 cd "$(dirname "$0")"
-python3 bs_login_setup.py
+if [ -f "venv/bin/python" ]; then
+    venv/bin/python bs_login_setup.py
+else
+    python3 bs_login_setup.py
+fi

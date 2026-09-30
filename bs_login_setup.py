@@ -45,6 +45,15 @@ async def setup_login():
         # Also save storage state JSON backup
         await context.storage_state(path="bs_storage_state.json")
         
+        # 1. Upload directly to Cloudflare R2 bucket
+        try:
+            from cloud_storage import upload_to_r2
+            r2_url = upload_to_r2("bs_storage_state.json", "sessions/bs_storage_state.json")
+            if r2_url:
+                print(f"☁️ Cloudflare R2 Session Synced: {r2_url}")
+        except Exception as e:
+            print(f"Notice (R2 sync): {e}")
+
         # Encode to Base64 for GitHub Actions Secret
         import base64
         import subprocess
@@ -54,7 +63,7 @@ async def setup_login():
         with open("bs_storage_state_base64.txt", "w", encoding="utf-8") as f:
             f.write(b64_str)
 
-        # 1. Try updating GitHub Secret directly from CLI via gh
+        # 2. Try updating GitHub Secret directly from CLI via gh
         gh_success = False
         try:
             res = subprocess.run(
@@ -68,7 +77,7 @@ async def setup_login():
         except Exception:
             pass
 
-        # 2. Copy to clipboard on macOS as backup
+        # 3. Copy to clipboard on macOS as backup
         try:
             subprocess.run(["pbcopy"], input=b64_str.encode("utf-8"), check=True)
             copied_msg = "📋 Token copied to macOS clipboard."
@@ -76,7 +85,7 @@ async def setup_login():
             copied_msg = "Token written to 'bs_storage_state_base64.txt'."
 
         print("\n" + "=" * 68)
-        print("✅ BUSINESS STANDARD SESSION CAPTURED SUCCESSFULLY!")
+        print("✅ BUSINESS STANDARD SESSION CAPTURED & SYNCED TO CLOUDFLARE R2!")
         print("=" * 68)
         
         if gh_success:

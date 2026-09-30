@@ -107,7 +107,12 @@
           <button onclick="adjustFontSize(1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white hover:bg-slate-800" title="Increase Font Size (A+)">A+</button>
         </div>
 
-        <button onclick="toggleTheme()" class="w-6.5 h-6.5 rounded-md border border-slate-700 bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs" title="Toggle Light/Dark Theme">
+        <!-- Run Pipeline Trigger Button -->
+        <button onclick="triggerGitHubPipeline()" class="px-2 py-0.5 rounded bg-amber-600 hover:bg-amber-700 text-white font-mono text-[11px] font-bold flex items-center gap-1 shadow-xs transition-transform active:scale-95 cursor-pointer" title="Trigger GitHub Actions pipeline in cloud">
+          <span>⚡</span> <span class="hidden sm:inline">Run Pipeline</span>
+        </button>
+
+        <button onclick="toggleTheme()" class="w-6.5 h-6.5 rounded-md border border-slate-700 bg-slate-900 text-slate-300 hover:text-white flex items-center justify-center text-[11px] shadow-xs cursor-pointer" title="Toggle Light/Dark Theme">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
@@ -2090,6 +2095,47 @@
       } catch (err) {
         status.textContent = `❌ Error: ${err.message}`;
         status.className = "text-xs font-mono font-bold text-rose-500";
+      }
+    }
+
+    async function triggerGitHubPipeline() {
+      let token = localStorage.getItem("finpress_gh_token");
+      if (!token) {
+        token = prompt("Enter your GitHub Personal Access Token (with 'repo' or 'workflow' scope) to trigger GitHub Actions directly from this button:\n\n(It will be stored securely in your browser localStorage)", "");
+        if (!token || !token.trim()) return;
+        localStorage.setItem("finpress_gh_token", token.trim());
+      }
+
+      const alertBanner = document.getElementById("source-alert-banner");
+      const alertText = document.getElementById("source-alert-text");
+      if (alertBanner && alertText) {
+        alertText.innerHTML = "⏳ <b>Triggering GitHub Actions pipeline in cloud...</b>";
+        alertBanner.classList.remove("hidden");
+      }
+
+      try {
+        const res = await fetch("/api/trigger-pipeline", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: token.trim() })
+        });
+        const data = await res.json();
+        if (data.success) {
+          if (alertBanner && alertText) {
+            alertText.innerHTML = `🚀 <b>GitHub Actions Triggered!</b> Downloading & analyzing papers in cloud. <a href="https://github.com/vedarthain/FinPress/actions/workflows/2_fetch_business_standard.yml" target="_blank" class="underline font-bold ml-2 text-indigo-300">View Live Run ↗</a>`;
+            alertBanner.classList.remove("hidden");
+          }
+          alert("🚀 GitHub Actions pipeline triggered successfully!\n\nYour dashboard will automatically refresh in 2-3 minutes.");
+        } else {
+          if (data.needsToken || res.status === 401) {
+            localStorage.removeItem("finpress_gh_token");
+            alert("Invalid or expired GitHub Token. Please try again.");
+          } else {
+            alert("Failed to trigger pipeline: " + (data.error || "Unknown error"));
+          }
+        }
+      } catch (err) {
+        alert("Error: " + err.message);
       }
     }
 

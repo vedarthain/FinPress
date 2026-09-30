@@ -25,6 +25,76 @@ export default {{
       }});
     }}
 
+    // API: Trigger GitHub Actions Pipeline Endpoint
+    if (url.pathname === '/api/trigger-pipeline' && request.method === 'POST') {{
+      try {{
+        let payload = {{}};
+        try {{ payload = await request.json(); }} catch(e) {{}}
+        const token = payload.token || env.GH_TOKEN || env.GITHUB_TOKEN;
+        
+        if (!token) {{
+          return new Response(JSON.stringify({{
+            success: false,
+            needsToken: true,
+            error: 'GitHub Personal Access Token is required to trigger GitHub Actions.'
+          }}), {{
+            status: 401,
+            headers: {{
+              'Content-Type': 'application/json; charset=utf-8',
+              'Access-Control-Allow-Origin': '*'
+            }}
+          }});
+        }}
+
+        const workflow = payload.workflow || '2_fetch_business_standard.yml';
+        const ghResp = await fetch(`https://api.github.com/repos/vedarthain/FinPress/actions/workflows/${{workflow}}/dispatches`, {{
+          method: 'POST',
+          headers: {{
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `Bearer ${{token}}`,
+            'User-Agent': 'FinPress-Cloudflare-Worker',
+            'Content-Type': 'application/json'
+          }},
+          body: JSON.stringify({{ ref: 'main' }})
+        }});
+
+        if (ghResp.status === 204 || ghResp.ok) {{
+          return new Response(JSON.stringify({{
+            success: true,
+            message: 'GitHub Actions workflow triggered successfully!'
+          }}), {{
+            headers: {{
+              'Content-Type': 'application/json; charset=utf-8',
+              'Access-Control-Allow-Origin': '*'
+            }}
+          }});
+        }} else {{
+          const errText = await ghResp.text();
+          return new Response(JSON.stringify({{
+            success: false,
+            error: `GitHub API returned status ${{ghResp.status}}: ${{errText}}`
+          }}), {{
+            status: ghResp.status,
+            headers: {{
+              'Content-Type': 'application/json; charset=utf-8',
+              'Access-Control-Allow-Origin': '*'
+            }}
+          }});
+        }}
+      }} catch (err) {{
+        return new Response(JSON.stringify({{
+          success: false,
+          error: err.message
+        }}), {{
+          status: 500,
+          headers: {{
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': '*'
+          }}
+        }});
+      }}
+    }}
+
     // API: Business Standard 1-Click Session Sync Endpoint
     if (url.pathname === '/api/session/bs' && request.method === 'POST') {{
       try {{
@@ -80,10 +150,10 @@ export default {{
 
         // Trigger GitHub Actions repository_dispatch if token is configured
         let gaTriggered = false;
-        const ghToken = env.GH_TOKEN || env.GITHUB_TOKEN;
+        const ghToken = payload.token || env.GH_TOKEN || env.GITHUB_TOKEN;
         if (ghToken) {{
           try {{
-            const ghResp = await fetch('https://api.github.com/repos/vedarthain/FinPress/dispatches', {{
+            const ghResp = await fetch('https://api.github.com/repos/vedarthain/FinPress/actions/workflows/2_fetch_business_standard.yml/dispatches', {{
               method: 'POST',
               headers: {{
                 'Accept': 'application/vnd.github.v3+json',
@@ -91,14 +161,7 @@ export default {{
                 'User-Agent': 'FinPress-Cloudflare-Worker',
                 'Content-Type': 'application/json'
               }},
-              body: JSON.stringify({{
-                event_type: 'trigger-bs-pipeline',
-                client_payload: {{
-                  source: 'finpress_bookmarklet_sync',
-                  cookies_count: cookiesList.length,
-                  timestamp: new Date().toISOString()
-                }}
-              }})
+              body: JSON.stringify({{ ref: 'main' }})
             }});
             gaTriggered = (ghResp.status === 204 || ghResp.ok);
           }} catch (ghErr) {{

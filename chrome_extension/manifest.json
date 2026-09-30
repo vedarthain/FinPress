@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "FinPress - Business Standard 1-Click Sync",
+  "version": "1.0.0",
+  "description": "1-Click session sync for Business Standard ePaper into FinPress Cloudflare R2 & GitHub Actions pipeline.",
+  "permissions": [
+    "cookies",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.business-standard.com/*",
+    "https://finpress.deb5045ai.workers.dev/*",
+    "https://api.github.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FinPress 1-Click Sync"
+  }
+}
