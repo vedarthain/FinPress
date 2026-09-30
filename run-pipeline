@@ -1,0 +1,4 @@
+#!/bin/bash
+# Shortcut to run complete unified pipeline (FE + BS + Aggregation + R2 Upload)
+cd "$(dirname "$0")"
+python3 main.py --source all

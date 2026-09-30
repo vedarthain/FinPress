@@ -1,0 +1,5 @@
+#!/bin/bash
+# Shortcut to build and deploy Cloudflare Worker
+cd "$(dirname "$0")"
+python3 scripts/build_worker.py
+npx wrangler deploy

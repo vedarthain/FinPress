@@ -21,3 +21,4 @@ __pycache__/
 downloads/
 scratch/
 .DS_Store
+.wrangler/

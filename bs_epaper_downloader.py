@@ -94,22 +94,33 @@ class BusinessStandardEpaperDownloader:
         Raises BusinessStandardSessionError if authentication or session fails.
         """
         state_path = Path(storage_state_file)
-        if not state_path.exists():
-            # Attempt to restore from BS_STORAGE_STATE_BASE64 environment variable
-            b64_env = os.environ.get("BS_STORAGE_STATE_BASE64", "").strip()
-            if b64_env:
-                try:
-                    import re, base64, json
-                    clean_b64 = re.sub(r'[^A-Za-z0-9+/=]', '', b64_env)
-                    pad_len = len(clean_b64) % 4
-                    if pad_len != 0:
-                        clean_b64 += '=' * (4 - pad_len)
-                    decoded_bytes = base64.b64decode(clean_b64)
-                    json.loads(decoded_bytes.decode('utf-8', errors='ignore'))
-                    state_path.write_bytes(decoded_bytes)
-                    logger.info(f"Restored '{storage_state_file}' from BS_STORAGE_STATE_BASE64 environment variable.")
-                except Exception as e:
-                    logger.warning(f"Failed to auto-decode BS_STORAGE_STATE_BASE64: {e}")
+        if not state_path.exists() or state_path.stat().st_size < 50:
+            # 1. Attempt to fetch latest live session from Cloudflare R2 (synced via website/bookmarklet)
+            try:
+                r2_session_url = f"{config.r2_public_url.rstrip('/')}/sessions/bs_storage_state.json"
+                r = requests.get(r2_session_url, timeout=10)
+                if r.ok and len(r.content) > 50:
+                    state_path.write_bytes(r.content)
+                    logger.info(f"✅ Successfully fetched live Business Standard session from Cloudflare R2 ({len(r.content)} bytes).")
+            except Exception as e:
+                logger.debug(f"Notice: Could not fetch session from Cloudflare R2: {e}")
+
+            # 2. Attempt to restore from BS_STORAGE_STATE_BASE64 environment variable
+            if not state_path.exists():
+                b64_env = os.environ.get("BS_STORAGE_STATE_BASE64", "").strip()
+                if b64_env:
+                    try:
+                        import re, base64, json
+                        clean_b64 = re.sub(r'[^A-Za-z0-9+/=]', '', b64_env)
+                        pad_len = len(clean_b64) % 4
+                        if pad_len != 0:
+                            clean_b64 += '=' * (4 - pad_len)
+                        decoded_bytes = base64.b64decode(clean_b64)
+                        json.loads(decoded_bytes.decode('utf-8', errors='ignore'))
+                        state_path.write_bytes(decoded_bytes)
+                        logger.info(f"Restored '{storage_state_file}' from BS_STORAGE_STATE_BASE64 environment variable.")
+                    except Exception as e:
+                        logger.warning(f"Failed to auto-decode BS_STORAGE_STATE_BASE64: {e}")
 
         bs_email = (os.environ.get("BS_EMAIL") or os.environ.get("BS_USERNAME", "")).strip()
         bs_password = os.environ.get("BS_PASSWORD", "").strip()

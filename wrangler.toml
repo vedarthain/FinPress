@@ -1,3 +1,7 @@
 name = "finpress"
 main = "worker.js"
 compatibility_date = "2026-09-27"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "newsbucket"
