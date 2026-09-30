@@ -589,36 +589,8 @@ def rebuild():
     if start_cat != -1 and end_cat != -1:
         clean_script = clean_script[:start_cat] + cat_sel_code + '\n\n    ' + clean_script[end_cat:]
 
-    # Update renderActiveStoryDetail in clean_script
+    # Update renderActiveStoryDetail in clean_script (Clean layout without cutout)
     detail_fn_code = r'''
-    function toggleCutoutExpanded() {
-      isCutoutExpanded = !isCutoutExpanded;
-      const body = document.getElementById("cutout-content-body");
-      const btn = document.getElementById("cutout-toggle-btn");
-      if (body) {
-        if (isCutoutExpanded) {
-          body.classList.remove("hidden");
-          body.classList.add("block");
-        } else {
-          body.classList.add("hidden");
-          body.classList.remove("block");
-        }
-      }
-      if (btn) {
-        btn.innerHTML = `<span>${isCutoutExpanded ? '▲' : '▼'}</span> <span>${isCutoutExpanded ? 'Collapse Cutout' : 'Expand Cutout'}</span>`;
-      }
-    }
-
-    function openStoryCutoutModal(storyId) {
-      const s = (stories || []).find(st => st.id === storyId) || stories[0];
-      if (!s) return;
-      if (s.cutout_url) {
-        openImageModal(s.cutout_url, s.headline);
-      } else {
-        showStoryModal(s);
-      }
-    }
-
     function renderActiveStoryDetail(story, queryTokens = []) {
       const container = document.getElementById("feed-detail-container");
       if (!container) return;
@@ -733,44 +705,6 @@ def rebuild():
 
         </div>
 
-        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER CUTOUT SECTION -->
-        <div class="mt-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0E1322] shadow-xs overflow-hidden">
-          
-          <div class="px-4 py-2.5 bg-slate-100/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <span class="text-amber-600 dark:text-amber-400 text-base">✂️</span>
-              <div>
-                <h3 class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-2">
-                  <span>4. Newspaper Article Cutout</span>
-                  <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-800">
-                    ${story.cutout_url ? 'Authentic Clipping' : 'Print Layout Box'}
-                  </span>
-                </h3>
-                <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400">Authentic article box cutout from ${formatPageSource(story.page_numbers)}</span>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2" onclick="event.stopPropagation()">
-              <button onclick="openStoryCutoutModal(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100 dark:hover:bg-indigo-900 shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer">
-                <span>🔍</span> <span>View Authentic Clipping ↗</span>
-              </button>
-              <button onclick="copyStoryById(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
-                <span>📋</span> <span>Copy</span>
-              </button>
-              <button id="cutout-toggle-btn" onclick="toggleCutoutExpanded()" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white hover:bg-black dark:hover:bg-indigo-500 shadow-xs cursor-pointer flex items-center gap-1.5">
-                <span>${isCutoutExpanded ? '▲' : '▼'}</span>
-                <span>${isCutoutExpanded ? 'Collapse Cutout' : 'Expand Cutout'}</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Cutout Render Frame (Collapsed by Default) -->
-          <div id="cutout-content-body" class="${isCutoutExpanded ? 'block' : 'hidden'} p-3 sm:p-4 bg-slate-50/50 dark:bg-[#070B14]">
-            ${renderArticleCutout(story, queryTokens)}
-          </div>
-
-        </div>
-
         <!-- 🏁 END OF STORY FOOTER BAR -->
         <div class="mt-4 pt-3 pb-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
           <span class="flex items-center gap-1.5 font-bold text-slate-600 dark:text-slate-300">
@@ -800,30 +734,6 @@ def rebuild():
         '<option value="ALL">⚡ All Stories (${stories.length})</option>',
         '<option value="ANCHOR">📰 News (Front Page) (${stories.filter(s => s.isFrontPage).length})</option>'
     )
-
-    # Add cutouts helper
-    cutout_render_fn = '''    function renderArticleCutout(story, queryTokens = []) {
-      if (!story) return "";
-      if (story.cutout_url) {
-        return `
-          <div class="mt-2 flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-100/90 dark:bg-[#070B14] rounded-lg border border-slate-200 dark:border-slate-800/80 overflow-hidden shadow-inner">
-            <div class="relative group max-w-full overflow-hidden rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-black shadow-md cursor-zoom-in" onclick="openImageModal('${story.cutout_url}', '${escapeQuotes(story.headline)}')">
-              <img src="${story.cutout_url}" alt="${escapeQuotes(story.headline)}" class="w-auto max-h-[620px] object-contain mx-auto transition-transform duration-200 group-hover:scale-[1.01]"/>
-              <div class="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-white text-[11px] font-mono font-bold px-2.5 py-1 rounded shadow pointer-events-none flex items-center gap-1.5">
-                <span>🔍</span> <span>Click to Zoom</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-      return `
-        <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg text-xs font-mono text-amber-900 dark:text-amber-200">
-          Authentic newspaper clipping processing in progress for ${formatPageSource(story.page_numbers)}.
-        </div>
-      `;
-    }'''
-    if 'function renderArticleCutout' not in clean_script:
-        clean_script += '\n\n' + cutout_render_fn
 
     # IPO Hub functions
     ipo_hub_functions = '''
@@ -1020,27 +930,6 @@ def rebuild():
 
     # Story & IPO modals
     modals_code = '''
-    function openImageModal(url, caption = "Newspaper Article Cutout") {
-      if (!url) return;
-      const modal = document.getElementById("image-zoom-modal");
-      const img = document.getElementById("image-zoom-img");
-      const cap = document.getElementById("image-zoom-caption");
-      if (img) img.src = url;
-      if (cap) cap.textContent = caption || "Newspaper Article Cutout";
-      if (modal) {
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-      }
-    }
-
-    function closeImageModal() {
-      const modal = document.getElementById("image-zoom-modal");
-      if (modal) {
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
-      }
-    }
-
     function showStoryModal(story) {
       if (!story) return;
       const modal = document.getElementById("story-modal");
@@ -1159,26 +1048,11 @@ def rebuild():
 {clean_script}
   </script>'''
 
-    zoom_modal = '''
-  <!-- ================= IMAGE CUTOUT ZOOM MODAL ================= -->
-  <div id="image-zoom-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4 cursor-pointer" onclick="closeImageModal()">
-    <div class="relative max-w-5xl w-full max-h-[95vh] flex flex-col items-center bg-slate-900/90 p-4 rounded-2xl border border-slate-700 shadow-2xl" onclick="event.stopPropagation()">
-      <div class="w-full flex items-center justify-between pb-2 border-b border-slate-700 text-slate-100 font-mono text-[13px]">
-        <span id="image-zoom-caption" class="font-bold truncate mr-4">Newspaper Article Cutout</span>
-        <div class="flex items-center gap-2">
-          <button onclick="closeImageModal()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[12px] font-bold">✕ Close</button>
-        </div>
-      </div>
-      <div class="w-full overflow-auto max-h-[85vh] p-2 flex items-center justify-center mt-2">
-        <img id="image-zoom-img" src="" alt="Cutout" class="max-w-full max-h-[80vh] object-contain rounded shadow-lg"/>
-      </div>
-    </div>
-  </div>
-
+    closing_html = '''
 </body>
 </html>'''
 
-    final_html = dom_part + final_script + '\n' + zoom_modal
+    final_html = dom_part + final_script + closing_html
 
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
