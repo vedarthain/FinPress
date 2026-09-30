@@ -38,6 +38,11 @@ def rebuild():
   </script>
   <style>
     html, body {
+      height: 100%;
+      height: 100dvh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
       touch-action: manipulation;
       -webkit-text-size-adjust: 100%;
     }
@@ -51,16 +56,40 @@ def rebuild():
     .dark .table-row-hover:hover { background-color: rgba(99, 102, 241, 0.10); }
     mark { background-color: #FEF08A; color: #854D0E; padding: 0 2px; border-radius: 2px; font-weight: 700; }
     .dark mark { background-color: #854D0E; color: #FEF08A; }
-    @supports (padding: max(0px)) {
-      body {
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-    }
   </style>
 </head>'''
     dom_part = re.sub(head_pattern, clean_head, dom_part, flags=re.DOTALL)
+
+    # Clean body and layout containers for 100% height to bottom
+    dom_part = dom_part.replace(
+        '<body class="h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col">\n  <div class="h-screen max-h-screen flex flex-col overflow-hidden w-full">',
+        '<body class="h-screen h-[100dvh] max-h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col m-0 p-0 w-full">'
+    )
+
+    # Adjust main container to zero wasted bottom margin
+    dom_part = re.sub(
+        r'<main class="[^"]*">',
+        '<main class="w-full px-2 pt-1 pb-1 flex-1 flex flex-col gap-1 min-h-0 overflow-hidden">',
+        dom_part
+    )
+
+    # Ensure view-feed has 3 side-by-side columns stretching full height
+    dom_part = re.sub(
+        r'<section id="view-feed" class="[^"]*">',
+        '<section id="view-feed" class="grid grid-cols-[330px_minmax(0,1fr)_260px] xl:grid-cols-[360px_minmax(0,1fr)_280px] 2xl:grid-cols-[400px_minmax(0,1fr)_300px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">',
+        dom_part
+    )
+
+    # Wrap column 3 in matching full-height rounded card
+    dom_part = re.sub(
+        r'<aside id="view-feed-aside" class="[^"]*">',
+        '<aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2 shadow-xs flex flex-col h-full min-h-0 overflow-y-auto shrink-0">',
+        dom_part
+    )
+
+    # Remove extra trailing </div> if inner div wrapper was removed
+    if '</div>\n\n  <!-- ================= STORY FULL DETAILS MODAL' in dom_part:
+        dom_part = dom_part.replace('</div>\n\n  <!-- ================= STORY FULL DETAILS MODAL', '<!-- ================= STORY FULL DETAILS MODAL')
 
     # Base script extraction from git
     script_part = after_dom.split('</script>')[0].replace('<script>', '', 1).strip()
@@ -453,7 +482,7 @@ def rebuild():
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print("Rebuilt web/index.html cleanly!")
+    print("Rebuilt web/index.html cleanly with full-height layout!")
 
 if __name__ == '__main__':
     rebuild()
