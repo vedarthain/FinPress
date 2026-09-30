@@ -46,7 +46,20 @@ def rebuild():
       touch-action: manipulation;
       -webkit-text-size-adjust: 100%;
     }
-    body { font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 400; color: #090D16; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+    body {
+      font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #090D16;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
+    }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -56,14 +69,82 @@ def rebuild():
     .dark .table-row-hover:hover { background-color: rgba(99, 102, 241, 0.10); }
     mark { background-color: #FEF08A; color: #854D0E; padding: 0 2px; border-radius: 2px; font-weight: 700; }
     .dark mark { background-color: #854D0E; color: #FEF08A; }
+
+    /* Guaranteed Full-Height Edge-to-Edge Terminal Layout */
+    header {
+      flex-shrink: 0;
+    }
+    main {
+      flex: 1 1 0% !important;
+      min-height: 0 !important;
+      height: calc(100dvh - 52px) !important;
+      max-height: calc(100dvh - 52px) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      padding: 6px 8px 8px 8px !important;
+    }
+    #view-feed {
+      display: grid !important;
+      grid-template-columns: 320px minmax(0, 1fr) 260px !important;
+      grid-template-rows: minmax(0, 1fr) !important;
+      height: 100% !important;
+      max-height: 100% !important;
+      flex: 1 1 0% !important;
+      min-height: 0 !important;
+      gap: 8px !important;
+      overflow: hidden !important;
+    }
+    @media (min-width: 1280px) {
+      #view-feed {
+        grid-template-columns: 350px minmax(0, 1fr) 280px !important;
+      }
+    }
+    @media (min-width: 1536px) {
+      #view-feed {
+        grid-template-columns: 380px minmax(0, 1fr) 300px !important;
+      }
+    }
+    #view-feed > div, #view-feed > aside {
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+    }
+    #feed-list-container {
+      flex: 1 1 0% !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+    }
+    #feed-detail-wrapper {
+      height: 100% !important;
+      max-height: 100% !important;
+      flex: 1 1 0% !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+    }
+    #view-feed-aside {
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      flex-shrink: 0 !important;
+    }
+    #view-ipo {
+      height: 100% !important;
+      max-height: 100% !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
+      overflow: hidden !important;
+    }
   </style>
 </head>'''
     dom_part = re.sub(head_pattern, clean_head, dom_part, flags=re.DOTALL)
 
     # Clean body and layout containers for 100% height to bottom
-    dom_part = dom_part.replace(
-        '<body class="h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col">\n  <div class="h-screen max-h-screen flex flex-col overflow-hidden w-full">',
-        '<body class="h-screen h-[100dvh] max-h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col m-0 p-0 w-full">'
+    dom_part = re.sub(
+        r'<body[^>]*>',
+        '<body class="h-screen h-[100dvh] max-h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col m-0 p-0 w-full">',
+        dom_part
     )
 
     # Adjust main container to zero wasted bottom margin
@@ -76,21 +157,21 @@ def rebuild():
     # Ensure view-feed has 3 side-by-side columns stretching full height
     dom_part = re.sub(
         r'<section id="view-feed" class="[^"]*">',
-        '<section id="view-feed" class="grid grid-cols-[320px_minmax(0,1fr)_260px] xl:grid-cols-[350px_minmax(0,1fr)_275px] 2xl:grid-cols-[380px_minmax(0,1fr)_290px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">',
+        '<section id="view-feed" class="grid grid-cols-[320px_minmax(0,1fr)_260px] xl:grid-cols-[350px_minmax(0,1fr)_280px] 2xl:grid-cols-[380px_minmax(0,1fr)_300px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">',
         dom_part
     )
 
-    # MIDDLE COLUMN (FEED DETAIL WRAPPER): NO SCROLLING, UN-SCROLLABLE FULL-VIEW PANEL
+    # MIDDLE COLUMN (FEED DETAIL WRAPPER): RESTORE SMOOTH SCROLLING DETAIL PANE
     dom_part = re.sub(
         r'<div id="feed-detail-wrapper" class="[^"]*">',
-        '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 sm:p-3 shadow-xs flex flex-col h-full min-h-0 overflow-hidden">',
+        '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col h-full min-h-0 overflow-y-auto">',
         dom_part
     )
 
-    # Ensure feed-detail-container fills full height without scroll
+    # Ensure feed-detail-container fills full height
     dom_part = re.sub(
         r'<div id="feed-detail-container" class="[^"]*">',
-        '<div id="feed-detail-container" class="w-full h-full flex flex-col justify-between overflow-hidden">',
+        '<div id="feed-detail-container" class="w-full min-h-full flex flex-col">',
         dom_part
     )
 
@@ -131,6 +212,7 @@ def rebuild():
     let activeIpoMode = "tracker"; // 'tracker' or 'listed'
     let activeIpoCategory = "ALL";  // 'ALL', 'MAINBOARD', 'SME'
     let ipoSearchQuery = "";
+    let isCutoutExpanded = false;
 
     // Benchmark dataset for 'Already Listed' IPOs
     const benchmarkListedIpos = [
@@ -149,8 +231,26 @@ def rebuild():
     allowed_sec_idx = base_script.find('const allowedSections = [')
     base_script = top_declarations + '\n\n    ' + base_script[allowed_sec_idx:]
 
-    # Upgrade renderActiveStoryDetail in base_script to fit seamlessly with NO scrolling in the middle column
+    # Restore previous rich view for renderActiveStoryDetail with full-width sections and collapsible cutout
     new_render_detail = r'''
+    function toggleCutoutExpanded() {
+      isCutoutExpanded = !isCutoutExpanded;
+      const body = document.getElementById("cutout-content-body");
+      const btn = document.getElementById("cutout-toggle-btn");
+      if (body) {
+        if (isCutoutExpanded) {
+          body.classList.remove("hidden");
+          body.classList.add("block");
+        } else {
+          body.classList.add("hidden");
+          body.classList.remove("block");
+        }
+      }
+      if (btn) {
+        btn.innerHTML = `<span>${isCutoutExpanded ? '▲' : '▼'}</span> <span>${isCutoutExpanded ? 'Collapse Cutout' : 'Expand Cutout'}</span>`;
+      }
+    }
+
     function openStoryCutoutModal(storyId) {
       const s = (stories || []).find(st => st.id === storyId) || stories[0];
       if (!s) return;
@@ -163,78 +263,88 @@ def rebuild():
 
     function renderActiveStoryDetail(story, queryTokens = []) {
       const container = document.getElementById("feed-detail-container");
-      if (!story) return;
+      if (!container) return;
 
-      const isBullish = story.sentiment === "BULLISH";
-      const isBearish = story.sentiment === "BEARISH";
+      if (!story) {
+        container.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
+            <span class="text-4xl mb-3">📰</span>
+            <p class="font-mono text-sm font-semibold">Select any story from the News Wire on the left to read full intelligence breakdown.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const isBullish = (story.sentiment || '').includes('BULLISH');
+      const isBearish = (story.sentiment || '').includes('BEARISH');
       
       const sentBadge = isBullish 
-        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
+        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
         : isBearish 
-        ? `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
-        : `<span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
+        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
+        : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
-      const tickerBadges = (story.tickers || []).slice(0, 3).map(t => `<span class="px-2 py-0.5 text-[10.5px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const tickerBadges = (story.tickers || []).slice(0, 4).map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
 
-      const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean).slice(0, 3);
-      const bullets = (story.bullet_points || story.detailed_points || []).slice(0, 4);
+      const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
+      const bullets = story.bullet_points || story.detailed_points || [];
 
       container.innerHTML = `
-        <!-- TOP ROW: METADATA & BADGES -->
-        <div class="flex items-center justify-between gap-1.5 pb-1 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[11.5px] font-mono">
+        <!-- TOP ROW: METADATA & ACTION BUTTONS -->
+        <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
-            ${story.isFrontPage ? `<span class="font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
-            <span class="font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
+            <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
+            ${story.isFrontPage ? `<span class="font-semibold px-2.5 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
+            <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
           </div>
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-2">
             <button id="feed-open-sidebar-btn" onclick="toggleSidebar()" class="hidden font-bold px-2 py-0.5 rounded border border-[#DFC0A5] dark:border-slate-700 bg-[#FBE8D8] dark:bg-[#1E1B4B] text-[#1C1917] dark:text-[#E0E7FF] hover:bg-[#F3DECC] shadow-2xs items-center gap-1 cursor-pointer transition-all" title="Open 3rd Column Filters & Desks"><span>☰</span> <span>Filters</span></button>
             ${sentBadge}
-            <button onclick="copyStoryById(${story.id})" class="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
+            <button onclick="copyStoryById(${story.id})" class="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
               📋 Copy
             </button>
           </div>
         </div>
 
         <!-- HEADLINE -->
-        <h1 class="text-[16px] sm:text-[17.5px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-1.5 shrink-0 flex items-center flex-wrap gap-1.5">
+        <h1 class="text-[18px] sm:text-[20px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-3 shrink-0 flex items-center flex-wrap gap-2">
           <span>${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</span>
           ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
         </h1>
 
-        <!-- 2-COLUMN SIDE-BY-SIDE GRID (FLEX-1 TO FIT VIEWPORT WITH ZERO SCROLLING) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 items-stretch flex-1 min-h-0 overflow-hidden my-1">
+        <!-- MAIN CONTENT GRID (PREVIOUS VIEW WITH 2 COLUMNS) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start my-1">
           
           <!-- LEFT COLUMN (lg:col-span-6): EXECUTIVE GIST & TRADER CATALYST -->
-          <div class="lg:col-span-6 flex flex-col gap-2 h-full min-h-0 justify-between">
+          <div class="lg:col-span-6 flex flex-col gap-3.5">
             
             <!-- ⚡ SECTION 1: EXECUTIVE GIST -->
-            <div class="rounded-lg border border-indigo-200 dark:border-indigo-800/80 bg-indigo-50/50 dark:bg-[#13182E] p-2.5 shadow-2xs flex flex-col flex-1 min-h-0">
-              <div class="flex items-center justify-between border-b border-indigo-200/80 dark:border-indigo-900/60 pb-1 mb-1.5">
-                <span class="text-[11.5px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1">
+            <div class="rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-indigo-50/60 dark:bg-[#13182E] p-3.5 sm:p-4 shadow-xs flex flex-col gap-2.5">
+              <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-900/60 pb-1.5">
+                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
                   <span>⚡</span> <span>1. Executive Gist</span>
                 </span>
-                <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Core Points</span>
+                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Key Takeaway</span>
               </div>
-              <div class="space-y-1.5 flex-1 min-h-0 overflow-y-auto">
+              <div class="space-y-2.5">
                 ${briefSentences.map(sent => `
-                  <div class="flex items-start gap-1.5 bg-white/95 dark:bg-[#0E1322] p-2 rounded border border-indigo-100 dark:border-slate-800 text-[13px] sm:text-[13.5px] text-[#090D16] dark:text-[#F8FAFC] leading-snug font-normal shadow-2xs font-sans tracking-tight">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none text-xs mt-0.5">▸</span>
-                    <span class="leading-snug">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+                  <div class="flex items-start gap-2.5 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans tracking-tight">
+                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none mt-0.5 text-sm">▸</span>
+                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
                   </div>
                 `).join('')}
               </div>
             </div>
 
             <!-- 💡 SECTION 2: TRADER CATALYST & IMPACT ANALYSIS -->
-            <div class="p-2.5 rounded-lg border ${isBullish ? 'border-emerald-400 bg-emerald-50/60 dark:bg-[#064E3B]/20 dark:border-emerald-700' : isBearish ? 'border-rose-400 bg-rose-50/60 dark:bg-[#881337]/20 dark:border-rose-700' : 'border-slate-300 bg-slate-50 dark:bg-slate-900/40 dark:border-slate-700'} shadow-2xs flex flex-col shrink-0">
-              <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-1 mb-1">
-                <span class="text-[11.5px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1">
-                  <span>💡</span> <span>2. Catalyst & Impact</span>
+            <div class="p-3.5 sm:p-4 rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/70 dark:bg-[#064E3B]/30 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/70 dark:bg-[#881337]/30 dark:border-rose-600' : 'border-slate-400 bg-slate-50 dark:bg-slate-900/50 dark:border-slate-700'} shadow-xs flex flex-col gap-2.5">
+              <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-1.5">
+                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
+                  <span>💡</span> <span>2. Catalyst & Market Impact</span>
                 </span>
-                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.2 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment}</span>
+                <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
               </div>
-              <div class="bg-white/95 dark:bg-[#0E1322] p-2 rounded border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[13px] sm:text-[13.5px] text-[#090D16] dark:text-[#F8FAFC] leading-snug font-normal shadow-2xs font-sans tracking-tight">
+              <div class="bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans tracking-tight">
                 ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || ""), queryTokens)}
               </div>
             </div>
@@ -242,21 +352,21 @@ def rebuild():
           </div>
 
           <!-- RIGHT COLUMN (lg:col-span-6): KEY ANALYST DATA POINTS -->
-          <div class="lg:col-span-6 flex flex-col h-full min-h-0">
+          <div class="lg:col-span-6 flex flex-col gap-2">
             
             <!-- 📌 SECTION 3: KEY ANALYST DATA POINTS -->
-            <div class="rounded-lg border border-[#C9B7A5] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-2.5 shadow-2xs flex flex-col h-full min-h-0">
-              <div class="flex items-center justify-between border-b border-[#E8DCCE] dark:border-[#382E25] pb-1 mb-1.5">
-                <span class="text-[11.5px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1">
+            <div class="rounded-xl border-2 border-[#C9B7A5] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-3.5 sm:p-4 shadow-xs flex flex-col gap-2.5">
+              <div class="flex items-center justify-between border-b border-[#E8DCCE] dark:border-[#382E25] pb-1.5">
+                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
                   <span>📌</span> <span>3. Key Analyst Data Points</span>
                 </span>
-                <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
+                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
               </div>
-              <ul class="space-y-1.5 flex-1 min-h-0 overflow-y-auto">
+              <ul class="space-y-2.5">
                 ${bullets.map(bp => `
-                  <li class="flex items-start gap-1.5 text-[13px] sm:text-[13.5px] text-[#090D16] dark:text-[#F8FAFC] leading-snug bg-white/95 dark:bg-[#0E1322] p-2 rounded border border-[#EBE2D8] dark:border-slate-800 shadow-2xs font-normal font-sans tracking-tight">
-                    <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none text-xs mt-0.5">›</span>
-                    <span class="leading-snug">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+                  <li class="flex items-start gap-2 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-[#EBE2D8] dark:border-slate-800 text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed shadow-2xs font-normal font-sans tracking-tight">
+                    <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none mt-0.5 text-sm">›</span>
+                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
                   </li>
                 `).join('')}
               </ul>
@@ -266,29 +376,52 @@ def rebuild():
 
         </div>
 
-        <!-- 📰 SECTION 4: SLEEK COMPACT NEWSPAPER ARTICLE CUTOUT BAR (CLICK TO ZOOM / VIEW MODAL) -->
-        <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-[#11172A] p-2 flex items-center justify-between shrink-0 my-1 shadow-2xs">
-          <div class="flex items-center gap-2">
-            <span class="text-amber-600 dark:text-amber-400 text-sm">✂️</span>
-            <span class="text-[12px] font-mono font-bold text-slate-800 dark:text-slate-200">
-              4. Newspaper Cutout: <span class="font-normal text-slate-500 dark:text-slate-400">${story.cutout_url ? 'Authentic Clipping Available' : 'Financial Desk Print Box'}</span>
-            </span>
+        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER ARTICLE CUTOUT (COLLAPSIBLE WITH ZOOM MODAL) -->
+        <div class="mt-3 rounded-xl border-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0A0E1A] shadow-xs overflow-hidden shrink-0">
+          
+          <div onclick="toggleCutoutExpanded()" class="flex items-center justify-between p-3 bg-slate-50/90 dark:bg-[#11172A] hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer select-none transition-colors border-b border-slate-200 dark:border-slate-800 flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-amber-600 dark:text-amber-400 text-base">✂️</span>
+              <div>
+                <h3 class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>4. Newspaper Article Cutout</span>
+                  <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-800">
+                    ${story.cutout_url ? 'Authentic Clipping' : 'Print Layout Box'}
+                  </span>
+                </h3>
+                <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400">Authentic article box cutout from ${formatPageSource(story.page_numbers)}</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+              <button onclick="openStoryCutoutModal(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100 dark:hover:bg-indigo-900 shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer">
+                <span>🔍</span> <span>Full-Res Zoom ↗</span>
+              </button>
+              <button onclick="copyStoryById(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
+                <span>📋</span> <span>Copy</span>
+              </button>
+              <button id="cutout-toggle-btn" onclick="toggleCutoutExpanded()" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white hover:bg-black dark:hover:bg-indigo-500 shadow-xs cursor-pointer flex items-center gap-1.5">
+                <span>${isCutoutExpanded ? '▲' : '▼'}</span>
+                <span>${isCutoutExpanded ? 'Collapse Cutout' : 'Expand Cutout'}</span>
+              </button>
+            </div>
           </div>
-          <div class="flex items-center gap-1.5">
-            <button onclick="openStoryCutoutModal(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 border border-indigo-200 dark:border-indigo-800 shadow-2xs cursor-pointer flex items-center gap-1">
-              <span>🔍</span> <span>View Full Cutout ↗</span>
-            </button>
+
+          <!-- Cutout Render Frame (Collapsed by Default) -->
+          <div id="cutout-content-body" class="${isCutoutExpanded ? 'block' : 'hidden'} p-3 sm:p-4 bg-slate-50/50 dark:bg-[#070B14]">
+            ${renderArticleCutout(story, queryTokens)}
           </div>
+
         </div>
 
         <!-- 🏁 END OF STORY FOOTER BAR -->
-        <div class="pt-1.5 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400 shrink-0 mt-auto">
-          <span class="flex items-center gap-1 font-bold text-slate-600 dark:text-slate-300">
-            <span>🏁</span> <span>Story #${story.id} (${formatPageSource(story.page_numbers)})</span>
+        <div class="mt-4 pt-3 pb-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
+          <span class="flex items-center gap-1.5 font-bold text-slate-600 dark:text-slate-300">
+            <span>🏁</span> <span>End of Story #${story.id} (${formatPageSource(story.page_numbers)})</span>
           </span>
-          <div class="flex items-center gap-1.5">
-            <button onclick="navigateStory(-1)" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs text-[10.5px]">◀ Prev (K)</button>
-            <button onclick="navigateStory(1)" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs text-[10.5px]">Next (J) ▶</button>
+          <div class="flex items-center gap-2">
+            <button onclick="navigateStory(-1)" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev Story (K)</button>
+            <button onclick="navigateStory(1)" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">Next Story (J) ▶</button>
           </div>
         </div>
       `;
@@ -299,9 +432,10 @@ def rebuild():
     detail_regex = r'function renderActiveStoryDetail\(story, queryTokens = \[\]\) \{.*?^\s*\}\s*$'
     base_script = re.sub(detail_regex, lambda m: new_render_detail, base_script, flags=re.DOTALL | re.MULTILINE)
 
+    # Clean IPO functions (matching Business Standard IPO Hub)
     ipo_functions_clean = '''
-    // ================= IPO HUB TAB & SEARCH FUNCTIONS =================
-    function setIpoViewMode(mode) {
+    // ================= IPO HUB CONTROLLER FUNCTIONS (BUSINESS STANDARD STYLE) =================
+    function switchIpoViewMode(mode) {
       activeIpoMode = mode;
       const trackerBtn = document.getElementById("ipo-mode-tracker-btn");
       const listedBtn = document.getElementById("ipo-mode-listed-btn");
@@ -456,20 +590,17 @@ def rebuild():
           <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
           <td class="py-3 px-3">
             <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
-            <div class="flex items-center gap-1.5 mt-0.5">
-              <span class="text-[10.5px] font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.ticker}</span>
-              <span class="text-[10px] text-slate-400">${item.exchange}</span>
-            </div>
+            <div class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${item.ticker} • ${item.exchange}</div>
           </td>
           <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
-          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
             <span>${isListPos ? '+' : ''}${listGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
           </td>
-          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
-          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+          <td class="py-3 px-3 font-mono font-extrabold text-indigo-600 dark:text-indigo-400">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
             <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
           </td>
@@ -646,7 +777,7 @@ def rebuild():
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print("Rebuilt web/index.html cleanly with un-scrollable middle column layout!")
+    print("Rebuilt web/index.html cleanly with full-height canvas and restored previous detail view!")
 
 if __name__ == '__main__':
     rebuild()
