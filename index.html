@@ -2442,7 +2442,7 @@
           <div class="flex items-center gap-1.5">
             <button id="feed-open-sidebar-btn" onclick="toggleSidebar()" class="hidden text-[11.5px] font-mono font-bold px-2.5 py-0.5 rounded border border-[#DFC0A5] dark:border-slate-700 bg-[#FBE8D8] dark:bg-[#1E1B4B] text-[#1C1917] dark:text-[#E0E7FF] hover:bg-[#F3DECC] shadow-2xs items-center gap-1.5 cursor-pointer transition-all" title="Open 3rd Column Filters & Desks"><span>☰</span> <span>Filters</span></button>
             ${sentBadge}
-            <button onclick="copyToClipboard('${escapeQuotes(story.headline + '\\n\\n' + story.brief_details)}')" class="text-[11.5px] text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs" title="Copy story summary">
+            <button onclick="copyStoryById(${story.id})" class="text-[11.5px] text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
               📋 Copy
             </button>
           </div>
@@ -2538,9 +2538,7 @@
                   <span>🔍</span> <span>Full-Res Cutout ↗</span>
                 </a>
               ` : ''}
-              <button onclick="copyToClipboard('${escapeQuotes(story.headline + '
-
-' + (story.brief_details || story.brief || ''))}')" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
+              <button onclick="copyStoryById(${story.id})" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
                 <span>📋</span> <span>Copy Text</span>
               </button>
             </div>
