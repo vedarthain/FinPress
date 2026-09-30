@@ -26,7 +26,8 @@
   </script>
   <style>
     html, body {
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       height: 100dvh;
       margin: 0;
       padding: 0;
@@ -42,11 +43,10 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      height: 100dvh;
-      max-height: 100dvh;
+      background-color: #F1F5F9;
+    }
+    .dark body {
+      background-color: #070B14;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -58,28 +58,39 @@
     mark { background-color: #FEF08A; color: #854D0E; padding: 0 2px; border-radius: 2px; font-weight: 700; }
     .dark mark { background-color: #854D0E; color: #FEF08A; }
 
-    /* Guaranteed Full-Height Edge-to-Edge Terminal Layout */
-    header {
-      flex-shrink: 0;
+    /* ROCK-SOLID FIXED VIEWPORT LAYOUT: 100% EDGE-TO-EDGE NO GAPS */
+    #app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      z-index: 50;
     }
-    main {
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
-      height: calc(100dvh - 52px) !important;
-      max-height: calc(100dvh - 52px) !important;
-      display: flex !important;
-      flex-direction: column !important;
-      overflow: hidden !important;
-      padding: 6px 8px 8px 8px !important;
+    #app-main {
+      position: fixed;
+      top: 48px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: #F1F5F9;
+    }
+    .dark #app-main {
+      background-color: #070B14;
     }
     #view-feed {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
       display: grid !important;
       grid-template-columns: 320px minmax(0, 1fr) 260px !important;
-      grid-template-rows: minmax(0, 1fr) !important;
-      height: 100% !important;
-      max-height: 100% !important;
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
+      grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
     }
@@ -93,43 +104,51 @@
         grid-template-columns: 380px minmax(0, 1fr) 300px !important;
       }
     }
-    #view-feed > div, #view-feed > aside {
+    #col-news-wire {
       height: 100% !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
     #feed-list-container {
       flex: 1 1 0% !important;
       min-height: 0 !important;
       overflow-y: auto !important;
     }
+    #feed-pagination {
+      flex-shrink: 0 !important;
+      margin-top: auto !important;
+    }
     #feed-detail-wrapper {
       height: 100% !important;
-      max-height: 100% !important;
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
       overflow-y: auto !important;
     }
     #view-feed-aside {
       height: 100% !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
       overflow-y: auto !important;
       flex-shrink: 0 !important;
     }
     #view-ipo {
-      height: 100% !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
-      flex: 1 1 0% !important;
-      overflow: hidden !important;
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
     }
   </style>
 </head>
-<body class="h-screen h-[100dvh] max-h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col m-0 p-0 w-full">
+<body class="w-full h-full overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 m-0 p-0 select-none">
 
     <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME - ENLARGED) ================= -->
-    <header class="shrink-0 sticky top-0 z-50 bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">
+    <header id="app-header" class="bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">
       
       <!-- Left: FinPress Branding & Live Market Pulse -->
       <div class="flex items-center gap-4 shrink-0">
@@ -202,7 +221,7 @@
     </header>
 
     <!-- ================= MAIN THREE-COLUMN WORKSPACE (FULL-WIDTH 3-COLUMN LAYOUT) ================= -->
-    <main class="w-full px-2 pt-1 pb-1 flex-1 flex flex-col gap-1 min-h-0 overflow-hidden">
+    <main id="app-main">
       
       <!-- Diagnostic Source Health Alert Banner (Appears when any paper fails) -->
       <div id="source-alert-banner" class="hidden shrink-0 px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-900 dark:text-amber-200 text-[11px] font-mono flex items-center justify-between gap-2 shadow-2xs">
@@ -270,10 +289,10 @@
       </div>
 
       <!-- ================= VIEW 1: NEWS STREAM (3-COLUMN SIDE-BY-SIDE EXPANDED LAYOUT) ================= -->
-      <section id="view-feed" class="grid grid-cols-[320px_minmax(0,1fr)_260px] xl:grid-cols-[350px_minmax(0,1fr)_280px] 2xl:grid-cols-[380px_minmax(0,1fr)_300px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">
+      <section id="view-feed">
         
         <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE (1-LINER STORIES, MAX 10 PER PAGE) -->
-        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-full min-h-0">
+        <div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs">
           <div class="px-3 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/80 flex items-center justify-between text-[12px] font-mono shrink-0">
             <span id="feed-list-count" class="font-extrabold text-slate-900 dark:text-slate-100">0 Stories</span>
             <div class="flex items-center gap-1">
@@ -297,14 +316,14 @@
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE (WIDE READING PANE) -->
-        <div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col h-full min-h-0 overflow-y-auto">
-          <div id="feed-detail-container" class="w-full min-h-full flex flex-col">
+        <div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 shadow-xs">
+          <div id="feed-detail-container" class="w-full flex flex-col">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
         <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE DESKS & SECTORS) -->
-        <aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2 shadow-xs flex flex-col h-full min-h-0 overflow-y-auto shrink-0">
+        <aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">
           
           <!-- Tree Container (Renders 1. Categories Card, 2. Sectors Card, 3. Clustered Stocks Card) -->
           <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans w-full">
@@ -633,7 +652,7 @@
     </div>
   </div>
 
-            <!-- ================= CLIENT JAVASCRIPT ================= -->
+              <!-- ================= CLIENT JAVASCRIPT ================= -->
   <script>
     let rawReport = null;
     let stories = [];
@@ -2149,6 +2168,35 @@
       }
     }
 
+    
+    function toggleCutoutExpanded() {
+      isCutoutExpanded = !isCutoutExpanded;
+      const body = document.getElementById("cutout-content-body");
+      const btn = document.getElementById("cutout-toggle-btn");
+      if (body) {
+        if (isCutoutExpanded) {
+          body.classList.remove("hidden");
+          body.classList.add("block");
+        } else {
+          body.classList.add("hidden");
+          body.classList.remove("block");
+        }
+      }
+      if (btn) {
+        btn.innerHTML = `<span>${isCutoutExpanded ? '▲' : '▼'}</span> <span>${isCutoutExpanded ? 'Collapse Cutout' : 'Expand Cutout'}</span>`;
+      }
+    }
+
+    function openStoryCutoutModal(storyId) {
+      const s = (stories || []).find(st => st.id === storyId) || stories[0];
+      if (!s) return;
+      if (s.cutout_url) {
+        openImageModal(s.cutout_url, s.headline);
+      } else {
+        showStoryModal(s);
+      }
+    }
+
     function renderActiveStoryDetail(story, queryTokens = []) {
       const container = document.getElementById("feed-detail-container");
       if (!container) return;
@@ -2172,14 +2220,14 @@
         ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
         : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
-      const tickerBadges = (story.tickers || []).slice(0, 4).map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const tickerBadges = (story.tickers || []).slice(0, 4).map(t => `<span class="px-2.5 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
 
       const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
       const bullets = story.bullet_points || story.detailed_points || [];
 
       container.innerHTML = `
         <!-- TOP ROW: METADATA & ACTION BUTTONS -->
-        <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
+        <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
           <div class="flex items-center gap-1.5 flex-wrap">
             <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
             ${story.isFrontPage ? `<span class="font-semibold px-2.5 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
@@ -2195,12 +2243,12 @@
         </div>
 
         <!-- HEADLINE -->
-        <h1 class="text-[18px] sm:text-[20px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-3 shrink-0 flex items-center flex-wrap gap-2">
+        <h1 class="text-[19px] sm:text-[21px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-3 shrink-0 flex items-center flex-wrap gap-2">
           <span>${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</span>
           ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
         </h1>
 
-        <!-- MAIN CONTENT GRID (PREVIOUS VIEW WITH 2 COLUMNS) -->
+        <!-- MAIN CONTENT GRID -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start my-1">
           
           <!-- LEFT COLUMN (lg:col-span-6): EXECUTIVE GIST & TRADER CATALYST -->
@@ -2303,7 +2351,7 @@
         </div>
 
         <!-- 🏁 END OF STORY FOOTER BAR -->
-        <div class="mt-4 pt-3 pb-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
+        <div class="mt-4 pt-3 pb-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
           <span class="flex items-center gap-1.5 font-bold text-slate-600 dark:text-slate-300">
             <span>🏁</span> <span>End of Story #${story.id} (${formatPageSource(story.page_numbers)})</span>
           </span>
@@ -2314,6 +2362,7 @@
         </div>
       `;
     }
+
 
     function renderArticleCutout(story, queryTokens = []) {
       if (!story) return "";
@@ -3648,6 +3697,309 @@
           </td>
           <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.cmp}</td>
           <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600'}">
+            <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold ${totalGainPct > 50 ? 'bg-amber-100 text-amber-950 dark:bg-amber-950 dark:text-amber-300 border border-amber-300' : 'bg-emerald-100 text-emerald-950 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300'}">
+              ${totalGainPct > 50 ? '🔥 MULTIBAGGER' : '🟢 PREMIUM'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openStoryModalById(storyId) {
+      const s = (stories || []).find(st => st.id === storyId) || stories[0];
+      if (s) showStoryModal(s);
+    }
+
+
+
+    // ================= MODAL & UTILITY FUNCTIONS =================
+    function showStoryModal(story) {
+      if (!story) return;
+      const modal = document.getElementById("story-modal");
+      if (!modal) return;
+
+      const catEl = document.getElementById("story-modal-category");
+      const sentEl = document.getElementById("story-modal-sentiment");
+      const pageEl = document.getElementById("story-modal-pages");
+      const hlEl = document.getElementById("story-modal-headline");
+      const tickersEl = document.getElementById("story-modal-tickers-container");
+      const briefEl = document.getElementById("story-modal-brief");
+      const catBoxEl = document.getElementById("story-modal-catalyst");
+      const bullEl = document.getElementById("story-modal-bullets");
+      const srcEl = document.getElementById("story-modal-source");
+
+      if (catEl) catEl.textContent = story.category || "General";
+      if (sentEl) {
+        const isBull = (story.sentiment || "").includes("BULLISH");
+        const isBear = (story.sentiment || "").includes("BEARISH");
+        sentEl.className = `px-2 py-0.5 rounded text-[10.5px] font-mono font-bold ${
+          isBull ? "bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300" :
+          isBear ? "bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-950 dark:text-rose-300" :
+          "bg-slate-100 text-slate-800 border border-slate-200 dark:bg-slate-800 dark:text-slate-200"
+        }`;
+        sentEl.textContent = story.sentiment || "NEUTRAL";
+      }
+      if (pageEl) pageEl.textContent = formatPageSource(story.page_numbers || "FE / BS");
+      if (hlEl) hlEl.textContent = story.headline || "Story Details";
+      if (tickersEl) {
+        tickersEl.innerHTML = (story.tickers || []).map(t => `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300">${t}</span>`).join("");
+      }
+      if (briefEl) briefEl.innerHTML = `<p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">${story.brief_details || story.brief || ""}</p>`;
+      if (catBoxEl) catBoxEl.innerHTML = story.catalyst || story.brief_details || "";
+      if (bullEl) {
+        const pts = story.bullet_points || story.detailed_points || [];
+        bullEl.innerHTML = pts.map(p => `<li class="flex items-start gap-1.5 text-xs text-[#3E2B1E] dark:text-[#E2D8CC] leading-relaxed"><span class="text-amber-800 shrink-0 font-bold">•</span><span>${p}</span></li>`).join("");
+      }
+      if (srcEl) srcEl.textContent = (story.source_paper || "FE / BS") + " Intelligence";
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeStoryModal() {
+      const modal = document.getElementById("story-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function openIpoModal(item) {
+      if (!item) return;
+      const modal = document.getElementById("ipo-modal");
+      if (!modal) return;
+      const compEl = document.getElementById("modal-ipo-company");
+      const exchEl = document.getElementById("modal-ipo-exchange");
+      const stageEl = document.getElementById("modal-ipo-stage");
+      const priceEl = document.getElementById("modal-ipo-price");
+      const sizeEl = document.getElementById("modal-ipo-size");
+      const lotEl = document.getElementById("modal-ipo-lot");
+      const subEl = document.getElementById("modal-ipo-sub");
+      const descEl = document.getElementById("modal-ipo-desc");
+
+      if (compEl) compEl.textContent = item.company || "IPO Issue";
+      if (exchEl) exchEl.textContent = item.exchange || "NSE / BSE";
+      if (stageEl) stageEl.textContent = item.stage || "DRHP";
+      if (priceEl) priceEl.textContent = item.priceBand || item.issuePrice || "₹--";
+      if (sizeEl) sizeEl.textContent = item.size || "₹--";
+      if (lotEl) lotEl.textContent = item.lotSize || "--";
+      if (subEl) subEl.textContent = item.subscription || item.demand || "--";
+      if (descEl) descEl.textContent = item.details || item.brief || item.headline || "";
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeIpoModal() {
+      const modal = document.getElementById("ipo-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function copyStoryById(storyId) {
+      const s = (stories || []).find(st => st.id === storyId);
+      if (!s) return;
+      const lines = [
+        s.headline || '',
+        '',
+        'Key Details:',
+        s.brief_details || s.brief || '',
+        '',
+        'Bullet Points:'
+      ];
+      (s.bullet_points || []).forEach(b => lines.push('- ' + b));
+      lines.push('');
+      lines.push('Source: ' + (s.page_numbers || 'FE / BS') + ' | Sentiment: ' + (s.sentiment || ''));
+      copyToClipboard(lines.join('\n'));
+    }
+
+    function renderIpoTable() {
+      renderIpoTrackerTable();
+    }
+
+    function renderCorporateDeskTable() {
+      renderFeedList();
+    }
+
+
+
+    // ================= INITIALIZATION =================
+
+
+    // ================= IPO HUB CONTROLLER FUNCTIONS (BUSINESS STANDARD STYLE) =================
+    function switchIpoViewMode(mode) {
+      activeIpoMode = mode;
+      const trackerBtn = document.getElementById("ipo-mode-tracker-btn");
+      const listedBtn = document.getElementById("ipo-mode-listed-btn");
+      const trackerWrap = document.getElementById("ipo-tracker-table-wrap");
+      const listedWrap = document.getElementById("ipo-listed-table-wrap");
+      const subfilter = document.getElementById("ipo-subfilter-container");
+
+      if (mode === 'tracker') {
+        if (trackerBtn) trackerBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        if (listedBtn) listedBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        if (trackerWrap) trackerWrap.classList.remove("hidden");
+        if (listedWrap) listedWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.remove("hidden");
+        renderIpoTrackerTable();
+      } else {
+        if (listedBtn) listedBtn.className = "px-3 py-1.5 rounded-lg bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer";
+        if (trackerBtn) trackerBtn.className = "px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center gap-1.5 cursor-pointer";
+        if (listedWrap) listedWrap.classList.remove("hidden");
+        if (trackerWrap) trackerWrap.classList.add("hidden");
+        if (subfilter) subfilter.classList.add("hidden");
+        renderAlreadyListedTable();
+      }
+    }
+
+    function setIpoFilterCategory(cat) {
+      activeIpoCategory = cat;
+      ['all', 'mb', 'sme'].forEach(c => {
+        const btn = document.getElementById(`ipo-filter-${c}`);
+        if (!btn) return;
+        if ((c === 'all' && cat === 'ALL') || (c === 'mb' && cat === 'MAINBOARD') || (c === 'sme' && cat === 'SME')) {
+          btn.className = "px-2.5 py-1 rounded-md bg-slate-900 text-white dark:bg-indigo-600 dark:text-white font-bold shadow-2xs";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800";
+        }
+      });
+      renderIpoTrackerTable();
+    }
+
+    function onIpoSearchInput(val) {
+      ipoSearchQuery = (val || '').trim().toLowerCase();
+      if (activeIpoMode === 'tracker') renderIpoTrackerTable();
+      else renderAlreadyListedTable();
+    }
+
+    function renderIpoTrackerTable() {
+      const tbody = document.getElementById("ipo-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+
+      let list = ipoList || [];
+      if (activeIpoCategory === 'MAINBOARD') {
+        list = list.filter(i => (i.exchange || '').includes("Mainboard") || !(i.exchange || '').includes("SME"));
+      } else if (activeIpoCategory === 'SME') {
+        list = list.filter(i => (i.exchange || '').includes("SME") || (i.exchange || '').includes("Emerge"));
+      }
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => {
+          const full = ((i.company || '') + " " + (i.exchange || '') + " " + (i.stage || '') + " " + (i.details || '')).toLowerCase();
+          return full.includes(ipoSearchQuery);
+        });
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      // Update KPI counters
+      const kpiTotal = document.getElementById("ipo-kpi-total");
+      const kpiBidding = document.getElementById("ipo-kpi-bidding");
+      const kpiDrhp = document.getElementById("ipo-kpi-drhp");
+      if (kpiTotal) kpiTotal.textContent = (ipoList || []).length;
+      if (kpiBidding) kpiBidding.textContent = (ipoList || []).filter(i => (i.stage || '').includes("Bidding")).length;
+      if (kpiDrhp) kpiDrhp.textContent = (ipoList || []).filter(i => (i.stage || '').includes("DRHP")).length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="py-12 text-center text-slate-400 font-mono">No active IPO issues match the selected criteria.</td></tr>`;
+        return;
+      }
+
+      list.forEach((item, idx) => {
+        const isSme = (item.exchange || '').includes("SME") || (item.exchange || '').includes("Emerge");
+        const stageColor = (item.stage || '').includes("Bidding") 
+          ? "bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300"
+          : (item.stage || '').includes("DRHP")
+          ? "bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/80 dark:text-amber-300"
+          : "bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/80 dark:text-blue-300";
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.company}</div>
+            <div class="flex items-center gap-1.5 mt-1">
+              <span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded ${isSme ? 'bg-purple-100 text-purple-950 dark:bg-purple-950 dark:text-purple-300' : 'bg-indigo-100 text-indigo-950 dark:bg-indigo-950 dark:text-indigo-300'}">${isSme ? 'SME EMERGE' : 'MAINBOARD'}</span>
+              <span class="text-[11px] font-mono text-slate-400">${item.exchange || 'NSE / BSE'}</span>
+            </div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">
+            <div>Open: <b>${item.openDate || 'Oct 2026'}</b></div>
+            <div class="text-slate-400">Close: ${item.closeDate || 'Oct 2026'}</div>
+          </td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">${item.priceBand || '₹140 - ₹148'}</td>
+          <td class="py-3 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-400">${item.size || '₹500 Cr'}</td>
+          <td class="py-3 px-3 font-mono text-slate-600 dark:text-slate-400">${item.lotSize || '100 Shares'}</td>
+          <td class="py-3 px-3 font-mono">
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 text-[12.5px]">${item.subscription || '14.5x'}</span>
+              <span class="text-[10px] text-slate-400">Total</span>
+            </div>
+            <div class="text-[10.5px] text-slate-400">QIB: 22x | NII: 15x | Retail: 6x</div>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${stageColor}">
+              ${item.stage || '📋 DRHP Filed'}
+            </span>
+          </td>
+          <td class="py-3 px-3 text-center">
+            <button onclick="openStoryModalById(${item.storyId || item.id || 1})" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+              Details ↗
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAlreadyListedTable() {
+      const tbody = document.getElementById("ipo-listed-table-body");
+      const countLabel = document.getElementById("ipo-table-visible-count");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+      let list = benchmarkListedIpos;
+
+      if (ipoSearchQuery) {
+        list = list.filter(i => (i.name + " " + i.ticker).toLowerCase().includes(ipoSearchQuery));
+      }
+
+      if (countLabel) countLabel.textContent = list.length;
+
+      list.forEach((item, idx) => {
+        const listGainPct = (((item.listPrice - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const totalGainPct = (((item.cmp - item.issuePrice) / item.issuePrice) * 100).toFixed(1);
+        const isListPos = listGainPct >= 0;
+        const isTotalPos = totalGainPct >= 0;
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-3">
+            <div class="font-bold text-[#090D16] dark:text-white leading-tight">${item.name}</div>
+            <div class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${item.ticker} • ${item.exchange}</div>
+          </td>
+          <td class="py-3 px-3 font-mono text-[12px] text-slate-600 dark:text-slate-300">${item.date}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.issuePrice}</td>
+          <td class="py-3 px-3 font-mono font-bold text-slate-900 dark:text-slate-100">₹${item.listPrice}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isListPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+            <span>${isListPos ? '+' : ''}${listGainPct}%</span>
+            <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.listPrice - item.issuePrice})</span>
+          </td>
+          <td class="py-3 px-3 font-mono font-extrabold text-indigo-600 dark:text-indigo-400">₹${item.cmp}</td>
+          <td class="py-3 px-3 font-mono font-bold ${isTotalPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
             <span>${isTotalPos ? '+' : ''}${totalGainPct}%</span>
             <span class="text-[10px] text-slate-400 block font-normal">(+₹${item.cmp - item.issuePrice})</span>
           </td>

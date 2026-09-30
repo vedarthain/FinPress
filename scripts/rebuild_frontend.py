@@ -38,7 +38,8 @@ def rebuild():
   </script>
   <style>
     html, body {
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       height: 100dvh;
       margin: 0;
       padding: 0;
@@ -54,11 +55,10 @@ def rebuild():
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      height: 100dvh;
-      max-height: 100dvh;
+      background-color: #F1F5F9;
+    }
+    .dark body {
+      background-color: #070B14;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -70,28 +70,39 @@ def rebuild():
     mark { background-color: #FEF08A; color: #854D0E; padding: 0 2px; border-radius: 2px; font-weight: 700; }
     .dark mark { background-color: #854D0E; color: #FEF08A; }
 
-    /* Guaranteed Full-Height Edge-to-Edge Terminal Layout */
-    header {
-      flex-shrink: 0;
+    /* ROCK-SOLID FIXED VIEWPORT LAYOUT: 100% EDGE-TO-EDGE NO GAPS */
+    #app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      z-index: 50;
     }
-    main {
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
-      height: calc(100dvh - 52px) !important;
-      max-height: calc(100dvh - 52px) !important;
-      display: flex !important;
-      flex-direction: column !important;
-      overflow: hidden !important;
-      padding: 6px 8px 8px 8px !important;
+    #app-main {
+      position: fixed;
+      top: 48px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: #F1F5F9;
+    }
+    .dark #app-main {
+      background-color: #070B14;
     }
     #view-feed {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
       display: grid !important;
       grid-template-columns: 320px minmax(0, 1fr) 260px !important;
-      grid-template-rows: minmax(0, 1fr) !important;
-      height: 100% !important;
-      max-height: 100% !important;
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
+      grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
     }
@@ -105,86 +116,104 @@ def rebuild():
         grid-template-columns: 380px minmax(0, 1fr) 300px !important;
       }
     }
-    #view-feed > div, #view-feed > aside {
+    #col-news-wire {
       height: 100% !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
     #feed-list-container {
       flex: 1 1 0% !important;
       min-height: 0 !important;
       overflow-y: auto !important;
     }
+    #feed-pagination {
+      flex-shrink: 0 !important;
+      margin-top: auto !important;
+    }
     #feed-detail-wrapper {
       height: 100% !important;
-      max-height: 100% !important;
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
       overflow-y: auto !important;
     }
     #view-feed-aside {
       height: 100% !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
       overflow-y: auto !important;
       flex-shrink: 0 !important;
     }
     #view-ipo {
-      height: 100% !important;
-      max-height: 100% !important;
-      min-height: 0 !important;
-      flex: 1 1 0% !important;
-      overflow: hidden !important;
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
     }
   </style>
 </head>'''
     dom_part = re.sub(head_pattern, clean_head, dom_part, flags=re.DOTALL)
 
-    # Clean body and layout containers for 100% height to bottom
+    # Clean body
     dom_part = re.sub(
         r'<body[^>]*>',
-        '<body class="h-screen h-[100dvh] max-h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col m-0 p-0 w-full">',
+        '<body class="w-full h-full overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 m-0 p-0 select-none">',
         dom_part
     )
 
-    # Adjust main container to zero wasted bottom margin
+    # Clean header ID
+    dom_part = re.sub(
+        r'<header class="[^"]*">',
+        '<header id="app-header" class="bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">',
+        dom_part
+    )
+
+    # Clean main ID
     dom_part = re.sub(
         r'<main class="[^"]*">',
-        '<main class="w-full px-2 pt-1 pb-1 flex-1 flex flex-col gap-1 min-h-0 overflow-hidden">',
+        '<main id="app-main">',
         dom_part
     )
 
-    # Ensure view-feed has 3 side-by-side columns stretching full height
+    # Clean view-feed grid
     dom_part = re.sub(
         r'<section id="view-feed" class="[^"]*">',
-        '<section id="view-feed" class="grid grid-cols-[320px_minmax(0,1fr)_260px] xl:grid-cols-[350px_minmax(0,1fr)_280px] 2xl:grid-cols-[380px_minmax(0,1fr)_300px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">',
+        '<section id="view-feed">',
         dom_part
     )
 
-    # MIDDLE COLUMN (FEED DETAIL WRAPPER): RESTORE SMOOTH SCROLLING DETAIL PANE
+    # Clean Column 1 (Left News Wire) with explicit ID
+    dom_part = re.sub(
+        r'<div class="rounded-lg bg-white dark:bg-\[#0E1322\] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-full min-h-0">',
+        '<div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs">',
+        dom_part
+    )
+
+    # Clean Column 2 (Middle Reading Pane)
     dom_part = re.sub(
         r'<div id="feed-detail-wrapper" class="[^"]*">',
-        '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col h-full min-h-0 overflow-y-auto">',
+        '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 shadow-xs">',
         dom_part
     )
 
     # Ensure feed-detail-container fills full height
     dom_part = re.sub(
         r'<div id="feed-detail-container" class="[^"]*">',
-        '<div id="feed-detail-container" class="w-full min-h-full flex flex-col">',
+        '<div id="feed-detail-container" class="w-full flex flex-col">',
         dom_part
     )
 
-    # Wrap column 3 in matching full-height rounded card
+    # Clean Column 3 (Right Sidebar)
     dom_part = re.sub(
         r'<aside id="view-feed-aside" class="[^"]*">',
-        '<aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2 shadow-xs flex flex-col h-full min-h-0 overflow-y-auto shrink-0">',
+        '<aside id="view-feed-aside" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-2.5 shadow-xs">',
         dom_part
     )
-
-    # Remove extra trailing </div> if inner div wrapper was removed
-    if '</div>\n\n  <!-- ================= STORY FULL DETAILS MODAL' in dom_part:
-        dom_part = dom_part.replace('</div>\n\n  <!-- ================= STORY FULL DETAILS MODAL', '<!-- ================= STORY FULL DETAILS MODAL')
 
     # Base script extraction from git
     script_part = after_dom.split('</script>')[0].replace('<script>', '', 1).strip()
@@ -231,7 +260,7 @@ def rebuild():
     allowed_sec_idx = base_script.find('const allowedSections = [')
     base_script = top_declarations + '\n\n    ' + base_script[allowed_sec_idx:]
 
-    # Restore previous rich view for renderActiveStoryDetail with full-width sections and collapsible cutout
+    # Rich expansive reading detail pane view
     new_render_detail = r'''
     function toggleCutoutExpanded() {
       isCutoutExpanded = !isCutoutExpanded;
@@ -284,14 +313,14 @@ def rebuild():
         ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
         : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
-      const tickerBadges = (story.tickers || []).slice(0, 4).map(t => `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const tickerBadges = (story.tickers || []).slice(0, 4).map(t => `<span class="px-2.5 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
 
       const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
       const bullets = story.bullet_points || story.detailed_points || [];
 
       container.innerHTML = `
         <!-- TOP ROW: METADATA & ACTION BUTTONS -->
-        <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
+        <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
           <div class="flex items-center gap-1.5 flex-wrap">
             <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
             ${story.isFrontPage ? `<span class="font-semibold px-2.5 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
@@ -307,12 +336,12 @@ def rebuild():
         </div>
 
         <!-- HEADLINE -->
-        <h1 class="text-[18px] sm:text-[20px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-3 shrink-0 flex items-center flex-wrap gap-2">
+        <h1 class="text-[19px] sm:text-[21px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-3 shrink-0 flex items-center flex-wrap gap-2">
           <span>${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</span>
           ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
         </h1>
 
-        <!-- MAIN CONTENT GRID (PREVIOUS VIEW WITH 2 COLUMNS) -->
+        <!-- MAIN CONTENT GRID -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start my-1">
           
           <!-- LEFT COLUMN (lg:col-span-6): EXECUTIVE GIST & TRADER CATALYST -->
@@ -415,7 +444,7 @@ def rebuild():
         </div>
 
         <!-- 🏁 END OF STORY FOOTER BAR -->
-        <div class="mt-4 pt-3 pb-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
+        <div class="mt-4 pt-3 pb-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
           <span class="flex items-center gap-1.5 font-bold text-slate-600 dark:text-slate-300">
             <span>🏁</span> <span>End of Story #${story.id} (${formatPageSource(story.page_numbers)})</span>
           </span>
@@ -428,9 +457,11 @@ def rebuild():
     }
 '''
 
-    # Replace renderActiveStoryDetail in base_script using lambda to avoid escape issue
-    detail_regex = r'function renderActiveStoryDetail\(story, queryTokens = \[\]\) \{.*?^\s*\}\s*$'
-    base_script = re.sub(detail_regex, lambda m: new_render_detail, base_script, flags=re.DOTALL | re.MULTILINE)
+    # Replace renderActiveStoryDetail cleanly using exact slicing
+    start_idx = base_script.find('function renderActiveStoryDetail')
+    end_idx = base_script.find('function renderArticleCutout')
+    if start_idx != -1 and end_idx != -1:
+        base_script = base_script[:start_idx] + new_render_detail + '\n\n    ' + base_script[end_idx:]
 
     # Clean IPO functions (matching Business Standard IPO Hub)
     ipo_functions_clean = '''
@@ -777,7 +808,7 @@ def rebuild():
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print("Rebuilt web/index.html cleanly with full-height canvas and restored previous detail view!")
+    print("Rebuilt web/index.html cleanly with fixed full-page viewport!")
 
 if __name__ == '__main__':
     rebuild()
