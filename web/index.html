@@ -2714,6 +2714,27 @@ const allowedSections = [
 
 
 
+    function openImageModal(url, caption = "Newspaper Article Cutout") {
+      if (!url) return;
+      const modal = document.getElementById("image-zoom-modal");
+      const img = document.getElementById("image-zoom-img");
+      const cap = document.getElementById("image-zoom-caption");
+      if (img) img.src = url;
+      if (cap) cap.textContent = caption || "Newspaper Article Cutout";
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById("image-zoom-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
     function showStoryModal(story) {
       if (!story) return;
       const modal = document.getElementById("story-modal");
