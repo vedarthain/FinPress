@@ -789,10 +789,13 @@
     }
 
     function parseStory(story, idx) {
-      if (isFillerHeadline(story.headline)) return null;
+      if (!story || isFillerHeadline(story.headline || "")) return null;
 
-      const fullText = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toLowerCase();
-      const pageStr = (story.page_numbers || "").toLowerCase();
+      const brief_details = story.brief_details || story.brief || "";
+      const bullet_points = Array.isArray(story.bullet_points) ? story.bullet_points : (Array.isArray(story.detailed_points) ? story.detailed_points : []);
+      const rawPage = Array.isArray(story.page_numbers) ? story.page_numbers.join(" ") : String(story.page_numbers || "");
+      const pageStr = rawPage.toLowerCase();
+      const fullText = ((story.headline || "") + " " + brief_details + " " + bullet_points.join(" ")).toLowerCase();
 
       // Strict Market Section Rule: Bank disclosures/Statutory notices belong in Corporate Events
       let category = story.category;
@@ -858,7 +861,7 @@
 
       const detectedStocks = [];
       const detectedSectors = [];
-      const upperText = (story.headline + " " + story.brief_details + " " + (story.bullet_points || []).join(" ")).toUpperCase();
+      const upperText = ((story.headline || "") + " " + brief_details + " " + bullet_points.join(" ")).toUpperCase();
 
       stockDictionary.forEach(stk => {
         if (new RegExp(`\\b${stk.replace('&', '\\&')}\\b`, 'i').test(upperText)) {
@@ -872,7 +875,7 @@
         }
       });
 
-      let catalyst = (story.bullet_points && story.bullet_points.length > 0) ? story.bullet_points[0] : story.brief_details.slice(0, 160) + "...";
+      let catalyst = (bullet_points && bullet_points.length > 0) ? bullet_points[0] : (brief_details.slice(0, 160) + "...");
 
       const uniqueStocks = [...new Set(detectedStocks)].slice(0, 3);
       const uniqueSectors = [...new Set(detectedSectors)].slice(0, 3);
@@ -881,6 +884,10 @@
       return {
         ...story,
         id: idx + 1,
+        brief_details: brief_details,
+        brief: brief_details,
+        bullet_points: bullet_points,
+        detailed_points: bullet_points,
         category: category || "Others",
         sentiment,
         sentimentReasoning,
@@ -1905,10 +1912,10 @@
 
     function formatPageSource(pageStr) {
       if (!pageStr) return "📰 FE / BS";
-      const p = pageStr.trim();
-      if (p.startsWith("FE") || p.startsWith("BS") || p.includes("FE (") || p.includes("BS (") || p.includes("FE / BS") || p.includes("FE:") || p.includes("BS:")) {
-        return `📰 ${p}`;
-      }
+      let p = Array.isArray(pageStr) ? pageStr.join(" / ") : String(pageStr);
+      p = p.trim();
+      if (!p) return "📰 FE / BS";
+      if (p.startsWith("📰")) return p;
       return `📰 ${p}`;
     }
 
