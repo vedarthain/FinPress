@@ -2030,42 +2030,68 @@
 
         </div>
 
-        <!-- 📄 SECTION 4: FULL RAW NEWSPAPER ARTICLE TEXT (EXPANDABLE ACCORDION) -->
-        <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800">
-          <details class="group bg-white dark:bg-[#0E1322] border-2 border-slate-300 dark:border-slate-800 rounded-xl p-3.5 shadow-xs transition-all">
-            <summary class="font-mono font-bold text-[13.5px] cursor-pointer select-none text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="text-indigo-600 dark:text-indigo-400 text-base">📄</span>
-                <span class="font-bold uppercase tracking-wider text-[12.5px]">4. Original Full Newspaper Article Text</span>
-                <span class="text-[10.5px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950/70 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 font-bold">Verbatim Source</span>
+        <!-- 📄 SECTION 4: FULL RAW NEWSPAPER ARTICLE TEXT (UNABRIDGED BROADSHEET) -->
+        <div class="mt-4 rounded-xl border-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0A0E1A] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+          
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5 flex-wrap gap-2">
+            <div class="flex items-center gap-2.5">
+              <span class="text-indigo-600 dark:text-amber-400 text-xl">📰</span>
+              <div>
+                <h3 class="text-[13.5px] font-mono font-extrabold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>4. Original Full Newspaper Article</span>
+                  <span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-800">Verbatim BroadSheet</span>
+                </h3>
+                <span class="text-[11.5px] font-mono text-slate-500 dark:text-slate-400">Complete unabridged reporting text from ${formatPageSource(story.page_numbers)}</span>
               </div>
-              <span class="text-[12px] font-mono text-slate-400 group-open:rotate-180 transition-transform">▼ Click to Expand</span>
-            </summary>
-            <div class="mt-3.5 pt-3.5 border-t border-slate-200 dark:border-slate-800/80 text-[16px] leading-[1.85] text-slate-800 dark:text-slate-200 font-serif whitespace-pre-line bg-slate-50/80 dark:bg-[#080C16] p-4.5 rounded-lg border border-slate-200 dark:border-slate-800 tracking-normal shadow-2xs">
-              ${renderRawArticleText(story, queryTokens)}
             </div>
-          </details>
+
+            <div class="flex items-center gap-2">
+              <button onclick="copyToClipboard('${escapeQuotes(story.raw_news_text || story.brief_details)}')" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy complete raw news text">
+                <span>📋</span> <span>Copy Full Article</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Newspaper Typesetting Body -->
+          <div class="mt-1 bg-slate-50/80 dark:bg-[#080C16] p-4 sm:p-6 rounded-lg border border-slate-200/80 dark:border-slate-800/80 shadow-2xs xl:columns-2 xl:gap-8 [column-rule:1px_solid_rgba(150,150,150,0.18)] text-[16px] leading-[1.85] text-slate-900 dark:text-slate-100 font-serif">
+            ${renderRawArticleHtml(story, queryTokens)}
+          </div>
+
         </div>
       `;
     }
 
-    function renderRawArticleText(story, queryTokens = []) {
+    function renderRawArticleHtml(story, queryTokens = []) {
       if (!story) return "";
-      if (story.raw_news_text && story.raw_news_text.trim().length > 20) {
-        return highlightSearchTokens(highlightNumbers(story.raw_news_text.trim()), queryTokens);
+      let raw = (story.raw_news_text && story.raw_news_text.trim().length > 20) ? story.raw_news_text.trim() : null;
+      
+      if (!raw) {
+        const brief = story.brief_details || story.brief || "";
+        const bullets = story.bullet_points || story.detailed_points || [];
+        const fallbackLines = [
+          `<p class="mb-4 text-[16.5px] text-slate-900 dark:text-slate-100 leading-[1.85] font-serif font-medium first-letter:text-[28px] first-letter:font-bold first-letter:font-mono first-letter:mr-1 first-letter:float-left first-letter:leading-none first-letter:text-indigo-600 dark:first-letter:text-amber-400">${highlightSearchTokens(highlightNumbers(brief), queryTokens)}</p>`,
+          `<h4 class="text-[12.5px] font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mt-5 mb-3 border-b border-slate-200 dark:border-slate-800 pb-1">Detailed Reporting & Market Facts</h4>`,
+          `<div class="space-y-3 mb-4">${bullets.map(bp => `<div class="text-[15.5px] text-slate-800 dark:text-slate-200 font-serif leading-[1.75] pl-3 border-l-2 border-indigo-400 dark:border-amber-500">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</div>`).join('')}</div>`
+        ];
+        if (story.sentimentReasoning) {
+          fallbackLines.push(`<div class="p-3.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-[14.5px] text-amber-950 dark:text-amber-200 font-sans leading-relaxed mt-4"><b>Analyst Market Thesis:</b> ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}</div>`);
+        }
+        return fallbackLines.join('\n');
       }
-      const parts = [
-        `<b>${story.headline}</b>`,
-        `<i>Source: ${story.page_numbers || 'Print Edition'} | Desk: ${story.category}</i>\n`,
-        story.brief_details,
-        "",
-        "<b>Key Details & Reporting Facts:</b>",
-        ...(story.bullet_points || []).map(bp => `• ${bp}`)
-      ];
-      if (story.sentimentReasoning) {
-        parts.push("", `<b>Analyst Thesis:</b> ${story.sentimentReasoning}`);
-      }
-      return highlightSearchTokens(highlightNumbers(parts.join('\n')), queryTokens);
+
+      // Split raw article into paragraphs
+      const paras = raw.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+      
+      const formattedParas = paras.map((p, idx) => {
+        const highlighted = highlightSearchTokens(highlightNumbers(p), queryTokens);
+        if (idx === 0 && p.length > 20) {
+          // Drop-cap for lead paragraph
+          return `<p class="mb-4 text-[16.5px] leading-[1.85] text-slate-900 dark:text-slate-100 font-serif font-normal first-letter:text-[28px] first-letter:font-bold first-letter:font-mono first-letter:mr-1.5 first-letter:float-left first-letter:leading-none first-letter:text-indigo-600 dark:first-letter:text-amber-400 text-justify">${highlighted}</p>`;
+        }
+        return `<p class="mb-4 text-[16px] leading-[1.85] text-slate-800 dark:text-slate-200 font-serif font-normal text-justify">${highlighted}</p>`;
+      });
+
+      return formattedParas.join('\n');
     }
 
     function highlightNumbers(text) {
