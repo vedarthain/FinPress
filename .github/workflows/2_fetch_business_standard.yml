@@ -8,6 +8,10 @@ on:
   repository_dispatch:
     types: [trigger-bs-pipeline, trigger-full-pipeline, sync-session]
 
+concurrency:
+  group: fetch-bs-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   fetch-bs:
     name: 📰 Download & Extract Business Standard

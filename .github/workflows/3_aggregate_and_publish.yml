@@ -10,6 +10,10 @@ on:
       - completed
   workflow_dispatch:
 
+concurrency:
+  group: aggregate-publish-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   aggregate:
     name: ⚡ Deduplicate, Merge & Publish

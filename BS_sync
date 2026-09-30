@@ -12,16 +12,12 @@ echo "===================================================================="
 
 cd "$WORKSPACE_DIR" || exit 1
 
-# 1. Run Playwright login capture with persistent profile
+# 1. Run Playwright login capture and single auto-trigger
 if [ -f "$WORKSPACE_DIR/venv/bin/python" ]; then
     "$WORKSPACE_DIR/venv/bin/python" "$WORKSPACE_DIR/bs_login_setup.py"
 else
     python3 "$WORKSPACE_DIR/bs_login_setup.py"
 fi
-
-# 2. Trigger GitHub Actions workflow
-echo "🚀 Dispatching GitHub Actions extraction workflow..."
-gh workflow run 2_fetch_business_standard.yml --repo vedarthain/FinPress 2>/dev/null || true
 
 echo "✨ All done! Track live run: https://github.com/vedarthain/FinPress/actions"
 echo "✨ Live Terminal: https://finpress.deb5045ai.workers.dev"

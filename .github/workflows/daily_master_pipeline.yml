@@ -10,6 +10,10 @@ on:
   repository_dispatch:
     types: [trigger-master-pipeline, trigger-full-pipeline, trigger-bs-pipeline, sync-session]
 
+concurrency:
+  group: master-pipeline-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-pipeline:
     name: ⚡ Daily Master Multi-Source Pipeline
