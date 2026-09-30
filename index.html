@@ -48,11 +48,11 @@
     }
   </style>
 </head>
-<body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
-  <div class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
+<body class="h-screen overflow-hidden bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150 flex flex-col">
+  <div class="h-screen max-h-screen flex flex-col overflow-hidden w-full">
 
     <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME - ENLARGED) ================= -->
-    <header class="sticky top-0 z-50 bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">
+    <header class="shrink-0 sticky top-0 z-50 bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">
       
       <!-- Left: FinPress Branding & Live Market Pulse -->
       <div class="flex items-center gap-4 shrink-0">
@@ -120,10 +120,10 @@
     </header>
 
     <!-- ================= MAIN THREE-COLUMN WORKSPACE (FULL-WIDTH 3-COLUMN LAYOUT) ================= -->
-    <main class="w-full px-2 sm:px-3 py-1.5 flex-1 flex flex-col gap-1.5 min-h-0 lg:overflow-hidden">
+    <main class="w-full px-2 sm:px-3 pt-1.5 pb-2 flex-1 flex flex-col gap-1.5 min-h-0 overflow-hidden">
       
       <!-- Diagnostic Source Health Alert Banner (Appears when any paper fails) -->
-      <div id="source-alert-banner" class="hidden px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-900 dark:text-amber-200 text-[11px] font-mono flex items-center justify-between gap-2 shadow-2xs">
+      <div id="source-alert-banner" class="hidden shrink-0 px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-900 dark:text-amber-200 text-[11px] font-mono flex items-center justify-between gap-2 shadow-2xs">
         <div class="flex items-center gap-2">
           <span class="text-sm">⚠️</span>
           <span id="source-alert-text">Business Standard session failed to authenticate.</span>
@@ -132,7 +132,7 @@
       </div>
 
       <!-- IPO Central Sub-tabs Header Banner (Appears when IPO Central Desk is active) -->
-      <div id="ipo-subtabs-banner" class="hidden rounded-xl bg-white dark:bg-[#0E1322] border border-amber-300/80 dark:border-amber-900/60 p-2 shadow-2xs items-center justify-between gap-2 flex-wrap">
+      <div id="ipo-subtabs-banner" class="hidden shrink-0 rounded-xl bg-white dark:bg-[#0E1322] border border-amber-300/80 dark:border-amber-900/60 p-2 shadow-2xs items-center justify-between gap-2 flex-wrap">
         <div class="flex items-center gap-2">
           <span class="text-[12.5px] font-bold font-mono text-amber-950 dark:text-amber-300 flex items-center gap-1.5 px-2">
             <span>🚀</span> <span>Primary Market & IPO Intelligence Desk</span>
@@ -162,7 +162,7 @@
       </div>
 
       <!-- Corporate Sub-tabs Header Banner (Appears when Corporate Desk is active) -->
-      <div id="corporate-subtabs-banner" class="hidden rounded-xl bg-white dark:bg-[#0E1322] border border-indigo-200/90 dark:border-indigo-900/60 p-2 shadow-2xs items-center justify-between gap-2 flex-wrap">
+      <div id="corporate-subtabs-banner" class="hidden shrink-0 rounded-xl bg-white dark:bg-[#0E1322] border border-indigo-200/90 dark:border-indigo-900/60 p-2 shadow-2xs items-center justify-between gap-2 flex-wrap">
         <div class="flex items-center gap-2">
           <span class="text-[12.5px] font-bold font-mono text-indigo-950 dark:text-indigo-300 flex items-center gap-1.5 px-2">
             <span>🏢</span> <span>Corporate Intelligence Desk</span>
@@ -188,10 +188,10 @@
       </div>
 
       <!-- ================= VIEW 1: NEWS STREAM (3-COLUMN SIDE-BY-SIDE EXPANDED LAYOUT) ================= -->
-      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)_250px] xl:grid-cols-[350px_minmax(0,1fr)_260px] 2xl:grid-cols-[380px_minmax(0,1fr)_275px] gap-2 items-stretch w-full flex-1 min-h-0 lg:h-[calc(100vh-72px)] lg:max-h-[calc(100vh-72px)]">
+      <section id="view-feed" class="grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)_250px] xl:grid-cols-[350px_minmax(0,1fr)_260px] 2xl:grid-cols-[380px_minmax(0,1fr)_275px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">
         
         <!-- COLUMN 1: HIGH-DENSITY TERMINAL NEWS WIRE (1-LINER STORIES, MAX 10 PER PAGE) -->
-        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-auto lg:h-[calc(100vh-72px)] lg:max-h-[calc(100vh-72px)] min-h-0">
+        <div class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col h-full min-h-0">
           <div class="px-3 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/80 flex items-center justify-between text-[12px] font-mono shrink-0">
             <span id="feed-list-count" class="font-extrabold text-slate-900 dark:text-slate-100">0 Stories</span>
             <div class="flex items-center gap-1">
@@ -215,14 +215,14 @@
         </div>
 
         <!-- COLUMN 2: ACTIVE STORY DEEP DIVE & CATALYST INTELLIGENCE (WIDE READING PANE) -->
-        <div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 pb-20 shadow-xs flex flex-col gap-2.5 h-auto lg:h-[calc(100vh-72px)] lg:max-h-[calc(100vh-72px)] min-h-0 lg:overflow-y-auto">
-          <div id="feed-detail-container" class="w-full flex-1 flex flex-col">
+        <div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col gap-2.5 h-full min-h-0 overflow-y-auto">
+          <div id="feed-detail-container" class="w-full flex-1 flex flex-col pb-4">
             <!-- Dynamically populated active story intelligence -->
           </div>
         </div>
 
         <!-- COLUMN 3: RIGHT HAND SIDE PANEL (TREE DESKS & SECTORS) -->
-        <aside id="view-feed-aside" class="w-full flex flex-col gap-1.5 h-auto lg:h-[calc(100vh-72px)] lg:max-h-[calc(100vh-72px)] min-h-0 lg:overflow-y-auto transition-all shrink-0 pr-0.5 pb-20">
+        <aside id="view-feed-aside" class="w-full flex flex-col gap-1.5 h-full min-h-0 overflow-y-auto transition-all shrink-0 pr-0.5 pb-4">
           
           <!-- Tree Container (Renders 1. Categories Card, 2. Sectors Card, 3. Clustered Stocks Card) -->
           <div id="tree-sidebar-container" class="flex flex-col gap-1.5 font-sans w-full">
