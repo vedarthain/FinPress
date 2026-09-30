@@ -1034,9 +1034,62 @@
 
         const rawIpos = stories.filter(s => s.category === "IPO");
         ipoList = rawIpos.map((s, idx) => s.ipoData || parseIpoItem(s, idx));
+        restoreNavigationState();
         initMetrics();
         applySidebarVisibility();
+        if (currentView === "ipo") {
+          renderIpoTable();
+        } else if (currentView === "corporate") {
+          renderCorporateDeskTable();
+        }
       }
+    }
+
+    function saveNavigationState() {
+      try {
+        const state = {
+          view: currentView,
+          category: selectedFeedCategory,
+          page: currentFeedPage,
+          storyIndex: selectedStoryIndex,
+          stock: activeStockFilter,
+          sector: activeSectorFilter,
+          sentiment: selectedFeedSentiment,
+          layout: currentLayoutMode,
+          date: rawReport?.edition_date
+        };
+        sessionStorage.setItem("finpress_nav_state", JSON.stringify(state));
+        
+        // Update URL search parameters without page reload (for sharing & refresh retention)
+        const url = new URL(window.location);
+        url.searchParams.set("cat", selectedFeedCategory);
+        url.searchParams.set("page", currentFeedPage);
+        url.searchParams.set("story", selectedStoryIndex);
+        if (currentView !== "feed") url.searchParams.set("view", currentView);
+        else url.searchParams.delete("view");
+        history.replaceState(state, "", url.toString());
+      } catch(e) {}
+    }
+
+    function restoreNavigationState() {
+      try {
+        const url = new URL(window.location);
+        const saved = JSON.parse(sessionStorage.getItem("finpress_nav_state") || "{}");
+        
+        const cat = url.searchParams.get("cat") || saved.category;
+        const page = parseInt(url.searchParams.get("page") || saved.page, 10);
+        const story = parseInt(url.searchParams.get("story") || saved.storyIndex, 10);
+        const view = url.searchParams.get("view") || saved.view;
+
+        if (cat) selectedFeedCategory = cat;
+        if (!isNaN(page) && page >= 1) currentFeedPage = page;
+        if (!isNaN(story) && story >= 0) selectedStoryIndex = story;
+        if (view) currentView = view;
+        if (saved.stock) activeStockFilter = saved.stock;
+        if (saved.sector) activeSectorFilter = saved.sector;
+        if (saved.sentiment) selectedFeedSentiment = saved.sentiment;
+        if (saved.layout) currentLayoutMode = saved.layout;
+      } catch(e) {}
     }
 
     function updateDropdownOptions(coreCount, ipoCount, corpCount, opCount) {
@@ -1847,6 +1900,7 @@
       });
 
       renderActiveStoryDetail(displayed[selectedStoryIndex], queryTokens);
+      saveNavigationState();
     }
 
     function formatPageSource(pageStr) {

@@ -1,0 +1,76 @@
+name: Daily Master Newspaper Pipeline (FE + BS + Aggregation)
+
+on:
+  schedule:
+    # 00:15 UTC (05:45 AM IST) - Primary daily run
+    - cron: '15 0 * * *'
+    # 00:45 UTC (06:15 AM IST) - Backup secondary run
+    - cron: '45 0 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-master-pipeline, trigger-full-pipeline, trigger-bs-pipeline, sync-session]
+
+jobs:
+  run-pipeline:
+    name: ⚡ Daily Master Multi-Source Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright Chromium
+        run: |
+          playwright install chromium --with-deps
+
+      - name: Execute Full Newspaper Extraction & Synthesis Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-2.5-flash
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+          R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
+          BS_STORAGE_STATE_BASE64: ${{ secrets.BS_STORAGE_STATE_BASE64 }}
+          BS_EMAIL: ${{ secrets.BS_EMAIL }}
+          BS_USERNAME: ${{ secrets.BS_USERNAME }}
+          BS_PASSWORD: ${{ secrets.BS_PASSWORD }}
+        run: |
+          echo "========================================================"
+          echo " STEP 1: DOWNLOADING & ANALYZING FINANCIAL EXPRESS"
+          echo "========================================================"
+          python main.py --source financial_express || echo "FE Notice: Pipeline continued."
+
+          echo "========================================================"
+          echo " STEP 2: DOWNLOADING & ANALYZING BUSINESS STANDARD"
+          echo "========================================================"
+          python main.py --source business_standard || echo "BS Notice: Pipeline continued."
+
+          echo "========================================================"
+          echo " STEP 3: UNIFYING, DEDUPLICATING & PUBLISHING MASTER"
+          echo "========================================================"
+          python main.py --source aggregate
+          python sync_to_neon.py || echo "DB Notice: Sync to Neon skipped if not configured."
+
+      - name: Upload Daily Reports Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-newspaper-reports
+          path: reports/news_report_*.json
+          if-no-files-found: warn
+          retention-days: 7

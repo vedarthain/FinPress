@@ -239,6 +239,27 @@ export default {{
         'Cache-Control': 'no-cache, no-store, must-revalidate'
       }}
     }});
+  }},
+
+  // Automatic Cloudflare Cron Trigger (Runs daily at 5:45 AM & 6:15 AM IST)
+  async scheduled(event, env, ctx) {{
+    const ghToken = env.GH_TOKEN || env.GITHUB_TOKEN;
+    if (ghToken) {{
+      try {{
+        await fetch('https://api.github.com/repos/vedarthain/FinPress/actions/workflows/daily_master_pipeline.yml/dispatches', {{
+          method: 'POST',
+          headers: {{
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `Bearer ${{ghToken}}`,
+            'User-Agent': 'FinPress-Cloudflare-Cron',
+            'Content-Type': 'application/json'
+          }},
+          body: JSON.stringify({{ ref: 'main' }})
+        }});
+      }} catch(err) {{
+        console.error('Cloudflare Cron Trigger error:', err);
+      }}
+    }}
   }}
 }};
 """

@@ -5,3 +5,6 @@ compatibility_date = "2026-09-27"
 [[r2_buckets]]
 binding = "BUCKET"
 bucket_name = "newsbucket"
+
+[triggers]
+crons = ["15 0 * * *", "45 0 * * *"]
