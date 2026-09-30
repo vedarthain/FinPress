@@ -48,7 +48,7 @@ def rebuild():
     }
     body { font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13.5px; font-weight: 400; color: #090D16; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
     .dark ::-webkit-scrollbar-thumb { background: #334155; }
@@ -77,6 +77,20 @@ def rebuild():
     dom_part = re.sub(
         r'<section id="view-feed" class="[^"]*">',
         '<section id="view-feed" class="grid grid-cols-[330px_minmax(0,1fr)_260px] xl:grid-cols-[360px_minmax(0,1fr)_280px] 2xl:grid-cols-[400px_minmax(0,1fr)_300px] gap-2 items-stretch w-full flex-1 min-h-0 h-full overflow-hidden">',
+        dom_part
+    )
+
+    # Ensure feed-detail-wrapper has full height and smooth scroll
+    dom_part = re.sub(
+        r'<div id="feed-detail-wrapper" class="[^"]*">',
+        '<div id="feed-detail-wrapper" class="w-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col gap-2.5 h-full min-h-0 overflow-y-auto overscroll-contain">',
+        dom_part
+    )
+
+    # Ensure feed-detail-container has ample bottom padding so end of page is never clipped
+    dom_part = re.sub(
+        r'<div id="feed-detail-container" class="[^"]*">',
+        '<div id="feed-detail-container" class="w-full flex-1 flex flex-col pb-20">',
         dom_part
     )
 
@@ -117,6 +131,7 @@ def rebuild():
     let activeIpoMode = "tracker"; // 'tracker' or 'listed'
     let activeIpoCategory = "ALL";  // 'ALL', 'MAINBOARD', 'SME'
     let ipoSearchQuery = "";
+    let isCutoutExpanded = false; // Collapsed by default as requested
 
     // Benchmark dataset for 'Already Listed' IPOs
     const benchmarkListedIpos = [
@@ -134,6 +149,196 @@ def rebuild():
     # Replace old declarations with top_declarations
     allowed_sec_idx = base_script.find('const allowedSections = [')
     base_script = top_declarations + '\n\n    ' + base_script[allowed_sec_idx:]
+
+    # Upgrade renderActiveStoryDetail in base_script to make cutout collapsible & add bottom reach indicator
+    new_render_detail = r'''
+    function toggleCutoutExpanded() {
+      isCutoutExpanded = !isCutoutExpanded;
+      const body = document.getElementById("cutout-content-body");
+      const btn = document.getElementById("cutout-toggle-btn");
+      if (body) {
+        if (isCutoutExpanded) {
+          body.classList.remove("hidden");
+          body.classList.add("block");
+        } else {
+          body.classList.add("hidden");
+          body.classList.remove("block");
+        }
+      }
+      if (btn) {
+        btn.innerHTML = isCutoutExpanded 
+          ? "<span>▲</span> <span>Collapse Cutout</span>" 
+          : "<span>▼</span> <span>Expand Cutout</span>";
+      }
+    }
+
+    function renderActiveStoryDetail(story, queryTokens = []) {
+      const container = document.getElementById("feed-detail-container");
+      if (!story) return;
+
+      const isBullish = story.sentiment === "BULLISH";
+      const isBearish = story.sentiment === "BEARISH";
+      
+      const sentBadge = isBullish 
+        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
+        : isBearish 
+        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
+        : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
+
+      const tickerBadges = (story.tickers || []).map(t => `<span class="px-2.5 py-0.5 text-[11.5px] font-mono font-bold rounded-md bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+
+      const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
+
+      container.innerHTML = `
+        <!-- Mobile Fast Navigation Bar -->
+        <div class="lg:hidden flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-200 dark:border-slate-800">
+          <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-[12px] font-mono font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 py-1 px-2 rounded bg-indigo-50 dark:bg-indigo-950/50">
+            <span>▲ Back to Headlines</span>
+          </button>
+          <span class="text-[11px] font-mono text-slate-400">Story #${story.id}</span>
+        </div>
+
+        <div class="flex items-center justify-between gap-2 flex-wrap pb-2 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[11.5px] font-mono font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
+            ${story.isFrontPage ? `<span class="text-[10.5px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
+            <span class="text-[11.5px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button id="feed-open-sidebar-btn" onclick="toggleSidebar()" class="hidden text-[11.5px] font-mono font-bold px-2.5 py-0.5 rounded border border-[#DFC0A5] dark:border-slate-700 bg-[#FBE8D8] dark:bg-[#1E1B4B] text-[#1C1917] dark:text-[#E0E7FF] hover:bg-[#F3DECC] shadow-2xs items-center gap-1.5 cursor-pointer transition-all" title="Open 3rd Column Filters & Desks"><span>☰</span> <span>Filters</span></button>
+            ${sentBadge}
+            <button onclick="copyStoryById(${story.id})" class="text-[11.5px] text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
+              📋 Copy
+            </button>
+          </div>
+        </div>
+
+        <h1 class="text-[20px] sm:text-[22px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight mt-1 mb-2 flex items-center flex-wrap gap-2">
+          <span>${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</span>
+          ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
+        </h1>
+
+        <!-- 2-COLUMN SIDE-BY-SIDE GRID: LEFT (GIST + CATALYST) & RIGHT (KEY ANALYST DATA POINTS) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start mt-2.5">
+          
+          <!-- LEFT COLUMN (lg:col-span-6): CORE TRADER TAKEAWAY + CATALYST DIRECTLY BELOW -->
+          <div class="lg:col-span-6 flex flex-col gap-3.5">
+            
+            <!-- ⚡ SECTION 1: EXECUTIVE GIST -->
+            <div class="rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-indigo-50/60 dark:bg-[#13182E] p-4 shadow-xs flex flex-col gap-2.5">
+              <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-900/60 pb-1.5">
+                <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
+                  <span>⚡</span> <span>1. Executive Gist</span>
+                </span>
+                <span class="text-[11.5px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Key Takeaway</span>
+              </div>
+              <div class="space-y-3">
+                ${briefSentences.map(sent => `
+                  <div class="flex items-start gap-2.5 bg-white/95 dark:bg-[#0E1322] p-3.5 rounded-lg border border-indigo-100 dark:border-slate-800 text-[16.5px] sm:text-[17px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.7] font-normal shadow-2xs font-sans tracking-tight">
+                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none mt-0.5 text-base">▸</span>
+                    <span class="leading-[1.7]">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- 💡 SECTION 2: TRADER CATALYST & IMPACT ANALYSIS -->
+            <div class="p-4 rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/70 dark:bg-[#064E3B]/30 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/70 dark:bg-[#881337]/30 dark:border-rose-600' : 'border-slate-400 bg-slate-50 dark:bg-slate-900/50 dark:border-slate-700'} shadow-xs flex flex-col gap-2.5">
+              <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-1.5">
+                <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
+                  <span>💡</span> <span>2. Catalyst & Market Impact</span>
+                </span>
+                <span class="text-[11.5px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
+              </div>
+              <div class="bg-white/95 dark:bg-[#0E1322] p-3.5 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[16.5px] sm:text-[17px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.7] font-normal shadow-2xs font-sans tracking-tight">
+                ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || ""), queryTokens)}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN (lg:col-span-6): KEY ANALYST DATA POINTS -->
+          <div class="lg:col-span-6 flex flex-col gap-2">
+            
+            <!-- 📌 SECTION 3: KEY ANALYST DATA POINTS -->
+            <div class="rounded-xl border-2 border-[#C9B7A5] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-4 shadow-xs flex flex-col gap-2.5">
+              <div class="flex items-center justify-between border-b border-[#E8DCCE] dark:border-[#382E25] pb-1.5">
+                <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
+                  <span>📌</span> <span>3. Key Analyst Data Points</span>
+                </span>
+                <span class="text-[11.5px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
+              </div>
+              <ul class="space-y-3">
+                ${(story.bullet_points || []).map(bp => `
+                  <li class="flex items-start gap-2.5 text-[16.5px] sm:text-[17px] text-[#090D16] dark:text-[#F8FAFC] leading-[1.7] bg-white/95 dark:bg-[#0E1322] p-3.5 rounded-lg border border-[#EBE2D8] dark:border-slate-800 shadow-2xs font-normal font-sans tracking-tight">
+                    <span class="text-[#8C5E3C] dark:text-[#CBB09C] font-bold select-none mt-0.5 text-base">›</span>
+                    <span class="leading-[1.7]">${highlightSearchTokens(highlightNumbers(bp), queryTokens)}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- 📰 SECTION 4: AUTHENTIC NEWSPAPER ARTICLE CUTOUT (COLLAPSIBLE) -->
+        <div class="mt-4 rounded-xl border-2 border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0A0E1A] shadow-xs overflow-hidden">
+          
+          <div onclick="toggleCutoutExpanded()" class="flex items-center justify-between p-3.5 bg-slate-50/90 dark:bg-[#11172A] hover:bg-slate-100 dark:hover:bg-slate-800/80 cursor-pointer select-none transition-colors border-b border-slate-200 dark:border-slate-800 flex-wrap gap-2">
+            <div class="flex items-center gap-2.5">
+              <span class="text-amber-600 dark:text-amber-400 text-lg">✂️</span>
+              <div>
+                <h3 class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>4. Newspaper Article Cutout</span>
+                  <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-800">
+                    ${story.cutout_url ? 'Authentic Clipping' : 'Print Layout Box'}
+                  </span>
+                </h3>
+                <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400">Authentic article box cutout from ${formatPageSource(story.page_numbers)}</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+              ${story.cutout_url ? `
+                <a href="${story.cutout_url}" target="_blank" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100 dark:hover:bg-indigo-900 shadow-2xs flex items-center gap-1.5 transition-all">
+                  <span>🔍</span> <span>Full-Res ↗</span>
+                </a>
+              ` : ''}
+              <button onclick="copyStoryById(${story.id})" class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shadow-2xs cursor-pointer flex items-center gap-1.5" title="Copy text">
+                <span>📋</span> <span>Copy</span>
+              </button>
+              <button id="cutout-toggle-btn" onclick="toggleCutoutExpanded()" class="text-[11px] font-mono font-bold px-3 py-1 rounded-md bg-[#1C1917] text-white dark:bg-indigo-600 dark:text-white hover:bg-black dark:hover:bg-indigo-500 shadow-xs cursor-pointer flex items-center gap-1.5">
+                <span>${isCutoutExpanded ? '▲' : '▼'}</span>
+                <span>${isCutoutExpanded ? 'Collapse Cutout' : 'Expand Cutout'}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cutout Render Frame (Collapsed by Default) -->
+          <div id="cutout-content-body" class="${isCutoutExpanded ? 'block' : 'hidden'} p-3 sm:p-4 bg-slate-50/50 dark:bg-[#070B14]">
+            ${renderArticleCutout(story, queryTokens)}
+          </div>
+
+        </div>
+
+        <!-- 🏁 END OF STORY FOOTER BAR -->
+        <div class="mt-8 pt-4 pb-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+          <span class="flex items-center gap-1.5 font-bold text-slate-600 dark:text-slate-300">
+            <span>🏁</span> <span>End of Story #${story.id} (${formatPageSource(story.page_numbers)})</span>
+          </span>
+          <div class="flex items-center gap-2">
+            <button onclick="navigateStory(-1)" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev Story</button>
+            <button onclick="navigateStory(1)" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">Next Story ▶</button>
+          </div>
+        </div>
+      `;
+    }
+'''
+
+    # Replace renderActiveStoryDetail in base_script using lambda to avoid escape issue
+    detail_regex = r'function renderActiveStoryDetail\(story, queryTokens = \[\]\) \{.*?^\s*\}\s*$'
+    base_script = re.sub(detail_regex, lambda m: new_render_detail, base_script, flags=re.DOTALL | re.MULTILINE)
 
     ipo_functions_clean = '''
     // ================= IPO HUB TAB & SEARCH FUNCTIONS =================
@@ -482,7 +687,7 @@ def rebuild():
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print("Rebuilt web/index.html cleanly with full-height layout!")
+    print("Rebuilt web/index.html cleanly with collapsible cutout and bottom scroll clearance!")
 
 if __name__ == '__main__':
     rebuild()
