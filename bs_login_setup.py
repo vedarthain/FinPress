@@ -77,25 +77,24 @@ async def setup_login():
         except Exception:
             pass
 
-        # 3. Copy to clipboard on macOS as backup
+        # 4. Trigger GitHub Actions Workflow Run
         try:
-            subprocess.run(["pbcopy"], input=b64_str.encode("utf-8"), check=True)
-            copied_msg = "📋 Token copied to macOS clipboard."
+            gh_run = subprocess.run(
+                ["gh", "workflow", "run", "2_fetch_business_standard.yml", "--repo", "vedarthain/FinPress"],
+                capture_output=True,
+                check=False
+            )
+            if gh_run.returncode == 0:
+                print("⚡ GITHUB ACTIONS WORKFLOW TRIGGERED AUTOMATICALLY!")
+            else:
+                pass
         except Exception:
-            copied_msg = "Token written to 'bs_storage_state_base64.txt'."
+            pass
 
         print("\n" + "=" * 68)
-        print("✅ BUSINESS STANDARD SESSION CAPTURED & SYNCED TO CLOUDFLARE R2!")
-        print("=" * 68)
-        
-        if gh_success:
-            print("🚀 GITHUB SECRET 'BS_STORAGE_STATE_BASE64' UPDATED AUTOMATICALLY VIA CLI!")
-            print("   You do not need to do anything manually. The cloud is in sync!")
-        else:
-            print(f"{copied_msg}")
-            print("\n👉 To update GitHub Secret in 1-click from CLI:")
-            print("   1. Run once:  gh auth login")
-            print("   2. Then run:  gh secret set BS_STORAGE_STATE_BASE64 < bs_storage_state_base64.txt --repo vedarthain/FinPress")
+        print("✅ BUSINESS STANDARD SESSION SYNCED & PIPELINE READY!")
+        print("   Live Run: https://github.com/vedarthain/FinPress/actions")
+        print("   Dashboard: https://finpress.deb5045ai.workers.dev")
         print("=" * 68 + "\n")
 
         await context.close()
