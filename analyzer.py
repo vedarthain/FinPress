@@ -119,41 +119,52 @@ Assign every story to EXACTLY ONE of:
 - Others
 """
 
-            # Try each candidate model in order. A model that errors is skipped immediately.
-            # A model that returns ZERO stories is treated as a soft failure too (dense/complex
-            # layouts like front pages can cause the lite model to give up silently) and we
-            # fall through to the next, stronger model rather than accepting an empty result.
+            # Try each candidate model in order. A model that returns ZERO stories is treated
+            # as a soft failure too (dense/complex layouts like front pages can cause the lite
+            # model to give up silently) and we fall through to the next, stronger model rather
+            # than accepting an empty result. Transient errors (503 overload, rate limits) get
+            # a few retries with backoff on the SAME model before moving on, since those are
+            # not a quality problem - a bare exception just means we never even got a result.
             candidate_models = ["gemini-flash-lite-latest", self.model_name]
-            best_stories: List[NewsStory] = []
+            max_retries_per_model = 3
             best_model_tried = False
 
             for m in candidate_models:
-                try:
-                    response = self.client.models.generate_content(
-                        model=m,
-                        contents=[uploaded_file, prompt],
-                        config=types.GenerateContentConfig(
-                            response_mime_type="application/json",
-                            response_schema=ChunkNewsReport,
-                            temperature=0.1,
+                for attempt in range(1, max_retries_per_model + 1):
+                    try:
+                        response = self.client.models.generate_content(
+                            model=m,
+                            contents=[uploaded_file, prompt],
+                            config=types.GenerateContentConfig(
+                                response_mime_type="application/json",
+                                response_schema=ChunkNewsReport,
+                                temperature=0.1,
+                            )
                         )
-                    )
-                    data = json.loads(response.text)
-                    chunk_rep = ChunkNewsReport.model_validate(data)
-                    best_model_tried = True
-                    if chunk_rep.chunk_stories:
-                        logger.info(f"✅ Chunk {page_range_str}: extracted {len(chunk_rep.chunk_stories)} stories (model: {m}).")
-                        return chunk_rep.chunk_stories
-                    logger.warning(f"Chunk {page_range_str}: model '{m}' returned 0 stories, trying next model...")
-                except Exception as e:
-                    logger.warning(f"Chunk analysis with '{m}' note: {e}")
-                    time.sleep(2)
+                        data = json.loads(response.text)
+                        chunk_rep = ChunkNewsReport.model_validate(data)
+                        best_model_tried = True
+                        if chunk_rep.chunk_stories:
+                            logger.info(f"✅ Chunk {page_range_str}: extracted {len(chunk_rep.chunk_stories)} stories (model: {m}).")
+                            return chunk_rep.chunk_stories
+                        logger.warning(f"Chunk {page_range_str}: model '{m}' returned 0 stories, trying next model...")
+                        break  # 0 stories is a valid response, not worth retrying on the same model
+                    except Exception as e:
+                        is_transient = any(code in str(e) for code in ("503", "429", "UNAVAILABLE", "RESOURCE_EXHAUSTED"))
+                        if is_transient and attempt < max_retries_per_model:
+                            backoff = 3 * attempt
+                            logger.warning(f"Chunk {page_range_str} model '{m}' attempt {attempt} transient error, retrying in {backoff}s: {e}")
+                            time.sleep(backoff)
+                            continue
+                        logger.warning(f"Chunk analysis with '{m}' note: {e}")
+                        time.sleep(2)
+                        break
 
             if not best_model_tried:
                 logger.warning(f"Could not extract stories from chunk {page_range_str}")
 
             logger.warning(f"Chunk {page_range_str}: all models returned 0 stories.")
-            return best_stories
+            return []
 
         finally:
             try:
