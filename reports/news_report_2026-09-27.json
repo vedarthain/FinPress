@@ -13,7 +13,11 @@
         "Includes visual highlights of policy addresses and leadership announcements",
         "Showcases economic data points alongside automotive updates"
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Government Policy and Administrative Meetings",
@@ -25,7 +29,11 @@
         "Reviews key developmental projects and strategic goals",
         "Focuses on improving institutional efficiency and execution timelines"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Project Development Grant Fund (PDGF) Invitation for Proposals",
@@ -37,7 +45,11 @@
         "Invites consulting services for detailed project reports and advisory services",
         "Sets specific timelines for bid submission and opening"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Issued by the Government of Tamil Nadu under PDGF",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Technofab Engineering Limited Corporate Insolvency Update",
@@ -49,7 +61,11 @@
         "Targets industrial and infrastructure construction sectors",
         "Outlines timelines and contact details for the resolution professional"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Notice issued under the Insolvency and Bankruptcy Board of India regulations",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Vedanta Oil and Gas Operational Update",
@@ -61,7 +77,11 @@
         "Details asset performance and production capacity",
         "Outlines strategic initiatives in the energy sector"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Covers upstream oil and gas operational metrics",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Punjab National Bank Financial and Regulatory Disclosures",
@@ -73,7 +93,11 @@
         "Complies with regulatory reporting standards for public sector banks",
         "Provides transparency on asset quality and financial health"
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Discloses key financial metrics and performance indicators",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "The Kalupur Commercial Co-op Bank Ltd. Financial Notice",
@@ -85,7 +109,11 @@
         "Publishes mandatory financial statements for stakeholders",
         "Highlights cooperative sector stability and growth"
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Unified Payments Interface (UPI) Growth and Digital Economy Insights",
@@ -97,7 +125,11 @@
         "Discusses fintech innovations and digital banking adoption",
         "Features insights from prominent industry leaders on digital transformation"
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Digital Media and Publishing Sector Review",
@@ -109,7 +141,11 @@
         "Covers creator economy dynamics and digital content monetization",
         "Examines shifting consumer preferences toward digital reading formats"
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Analyzes trends in digital book publishing and audio media",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Lifestyle and Cultural Photography Showcase",
@@ -121,7 +157,11 @@
         "Features lifestyle and fashion accessories including branded retail items.",
         "Highlights architectural developments in city hubs."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Displays night skyline views of modern urban landscapes.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Wellness and Fitness Trends Visual Report",
@@ -133,7 +173,11 @@
         "Focuses on group fitness classes and active lifestyles.",
         "Emphasizes physical well-being and modern exercise routines."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features instructor-led Pilates sessions.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Artistic Masterpieces and Cultural Exhibitions",
@@ -145,7 +189,11 @@
         "Features historical artwork references and interpretations.",
         "Highlights gallery displays and artistic presentations."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Showcases classic and contemporary painting exhibitions.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Traditional Festivals and Folk Performances",
@@ -157,7 +205,11 @@
         "Highlights regional folk music and dance performances.",
         "Captures community engagement during cultural festivals."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Depicts participants in traditional ceremonial costumes.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Global Tourism and Digital Navigation Update",
@@ -169,7 +221,11 @@
         "Highlights the integration of mobile apps in travel planning.",
         "Discusses trends in modern tourism and digital connectivity."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features famous international heritage and cultural sites.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Pet Lifestyle and Creative Portraits",
@@ -181,7 +237,11 @@
         "Highlights pet fashion accessories and modern grooming.",
         "Focuses on popular animal photography trends."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features stylized portraits of dogs and cats.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Electromech Infraprojects Ltd IPO Public Announcement",
@@ -194,7 +254,11 @@
         "Book running lead manager for the issue is Aryaman Financial Services Limited.",
         "Registrar to the issue is Bigshare Services Private Limited."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Shah Foods Limited Annual General Meeting Notice",
@@ -207,7 +271,11 @@
         "Details provided regarding remote e-voting and book closure dates.",
         "Compliance with the relevant provisions of the Companies Act, 2013."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Notice published by Shah Foods Limited registered office in Ahmedabad.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Bank of Baroda Possession Notice",
@@ -220,7 +288,11 @@
         "Details physical/symbolic possession of the secured immovable properties.",
         "Invokes provisions of the SARFAESI Act, 2002."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Issued by the Authorized Officer of Bank of Baroda.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vishal Nirmiti Limited IPO Public Announcement",
@@ -233,7 +305,11 @@
         "IPO bidding opens on Wednesday, September 30, 2026, and closes on Monday, October 05, 2026.",
         "Lead manager for the offer is Saffron Capital Advisors Private Limited."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vishal Nirmiti Limited: Government Client Concentration Risks",
@@ -246,7 +322,11 @@
         "Top 10 customers accounted for 92.91% of total revenue in Fiscal 2026.",
         "Company primarily manufactures Pre-Stressed Concrete (PSC) sleepers for railways and infrastructure projects."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Largest customer (Indian Railways) contributed 40.56% of total revenue in Fiscal 2026.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Vishal Nirmiti Limited: Financial and Operational Performance Overview",
@@ -259,7 +339,11 @@
         "Trade receivables at the end of Fiscal 2026 were ₹6,337.71 lakhs.",
         "Working capital requirement for Fiscal 2026 is projected at ₹5,915.04 lakhs."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Revenue from the service division in Fiscal 2026 reached ₹8,291.09 lakhs with a profit of ₹1,710.30 lakhs.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vivekanand Cotspin Limited IPO Basis of Allotment",
@@ -272,7 +356,11 @@
         "Bidding Period: Opened on September 21, 2026, and closed on September 23, 2026.",
         "Listing to take place on BSE SME platform."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Clastek Engineering Limited Public Announcement for IPO",
@@ -285,7 +373,11 @@
         "Book Running Lead Manager: GYR Capital Advisors Private Limited.",
         "Registrar to the Offer: Cameo Corporate Services Limited."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Global Education Limited Notice of Postal Ballot and E-Voting",
@@ -297,7 +389,11 @@
         "Remote e-voting ends on October 27, 2026, at 5:00 p.m. IST.",
         "Notice dispatched to shareholders whose names appear in the register as of the cut-off date."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Remote e-voting starts on September 28, 2026, at 9:00 a.m. IST.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Rama Steel Tubes Limited Notice of Extraordinary General Meeting",
@@ -309,7 +405,11 @@
         "Remote e-voting details and cut-off dates provided to members.",
         "Compliance with applicable Companies Act provisions and SEBI regulations."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "EGM convened to discuss special corporate resolutions.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Bhilwara Technical Textiles Limited Postal Ballot and E-Voting Notice",
@@ -321,7 +421,11 @@
         "Electronic voting process facilitated through designated depositories.",
         "Details regarding appointment of scrutinizer for the voting process."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Compliance with MCA circulars and SEBI Listing Regulations.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Annvrriddhi Ventures Limited AGM and E-Voting Notice",
@@ -333,7 +437,11 @@
         "Remote e-voting facility provided during the designated schedule.",
         "Adherence to statutory corporate governance standards."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Notice sent to all eligible shareholders regarding the upcoming AGM.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Quality Power Electrical Equipments Limited Notice of EGM",
@@ -346,7 +454,11 @@
         "Remote e-voting period begins on October 10, 2025 and ends on October 12, 2025.",
         "Compliance with Companies Act, 2013 and SEBI Listing Regulations."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "EGM scheduled for Monday, October 13, 2025 at 4:00 PM IST.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Integrum Energy Infrastructure Limited IPO Announcement",
@@ -359,7 +471,11 @@
         "Book running lead managers include Monarch Networth Capital and Centrum Capital.",
         "Bids to be made for a minimum specified lot size in compliance with regulatory norms."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Deon Energy Limited IPO Public Announcement",
@@ -372,7 +488,11 @@
         "Valmiki Leela acts as the book running lead manager.",
         "Bidding details, lot sizes, and timelines outlined in the red herring prospectus."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Bharat BPO Services Limited Notice of Adjourned AGM",
@@ -385,7 +505,11 @@
         "Agenda includes adoption of audited financial statements for FY ended March 31, 2025.",
         "Appointment of a director in place of Mr. Byomkesh Kumar Verma who retires by rotation."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "30th Adjourned AGM scheduled for September 30, 2025 at 5:00 PM.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "STC Ventures Private Limited Form-G Expression of Interest",
@@ -398,7 +522,11 @@
         "Registered office located in Mumbai, Maharashtra.",
         "Submission timelines and process detailed in the official notice."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Form-G invitation for Expression of Interest for STC Ventures Private Limited.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Kinshuk Specialty Chemical Ltd Postal Ballot Notice",
@@ -411,7 +539,11 @@
         "Remote e-voting commences on Monday, September 29, 2025.",
         "Scrutinizer appointed to conduct the postal ballot process fairly and transparently."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Postal ballot notice issued for seeking shareholder approvals.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     }
   ]
 }

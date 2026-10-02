@@ -143,6 +143,10 @@ class UnifiedNewsAggregator:
                         seen_bullets.append(bp_clean)
                 combined_bullets = seen_bullets[:6]
                 raw_txt = fe_s.get("raw_news_text") or bs_s.get("raw_news_text") or ""
+                chosen_sent = fe_s.get("sentiment") if fe_s.get("sentiment") and fe_s.get("sentiment") != "NEUTRAL" else (bs_s.get("sentiment") or "NEUTRAL")
+                chosen_cat = fe_s.get("catalyst") or bs_s.get("catalyst") or ""
+                chosen_impact = fe_s.get("market_impact") or bs_s.get("market_impact") or ""
+                chosen_reason = fe_s.get("sentiment_reasoning") or bs_s.get("sentiment_reasoning") or ""
 
                 results.append(NewsStory(
                     headline=chosen_hl,
@@ -150,6 +154,10 @@ class UnifiedNewsAggregator:
                     page_numbers=combined_pages,
                     brief_details=combined_brief,
                     bullet_points=combined_bullets,
+                    sentiment=chosen_sent,
+                    catalyst=chosen_cat,
+                    market_impact=chosen_impact,
+                    sentiment_reasoning=chosen_reason,
                     raw_news_text=raw_txt,
                     importance="HIGH" if ("HIGH" in (fe_s.get("importance"), bs_s.get("importance"))) else "MEDIUM"
                 ))
@@ -165,6 +173,10 @@ class UnifiedNewsAggregator:
                     page_numbers=formatted_p,
                     brief_details=fe_s["brief_details"],
                     bullet_points=fe_s.get("bullet_points", []),
+                    sentiment=fe_s.get("sentiment", "NEUTRAL"),
+                    catalyst=fe_s.get("catalyst", ""),
+                    market_impact=fe_s.get("market_impact", ""),
+                    sentiment_reasoning=fe_s.get("sentiment_reasoning", ""),
                     raw_news_text=fe_s.get("raw_news_text", ""),
                     importance=fe_s.get("importance", "MEDIUM")
                 ))
@@ -180,6 +192,10 @@ class UnifiedNewsAggregator:
                     page_numbers=formatted_p,
                     brief_details=bs_s["brief_details"],
                     bullet_points=bs_s.get("bullet_points", []),
+                    sentiment=bs_s.get("sentiment", "NEUTRAL"),
+                    catalyst=bs_s.get("catalyst", ""),
+                    market_impact=bs_s.get("market_impact", ""),
+                    sentiment_reasoning=bs_s.get("sentiment_reasoning", ""),
                     raw_news_text=bs_s.get("raw_news_text", ""),
                     importance=bs_s.get("importance", "MEDIUM")
                 ))
@@ -192,6 +208,10 @@ class UnifiedNewsAggregator:
                 page_numbers=s.get("page_numbers", "Print/Web"),
                 brief_details=s["brief_details"],
                 bullet_points=s.get("bullet_points", []),
+                sentiment=s.get("sentiment", "NEUTRAL"),
+                catalyst=s.get("catalyst", ""),
+                market_impact=s.get("market_impact", ""),
+                sentiment_reasoning=s.get("sentiment_reasoning", ""),
                 raw_news_text=s.get("raw_news_text", ""),
                 importance=s.get("importance", "MEDIUM")
             ))
@@ -258,6 +278,10 @@ class UnifiedNewsAggregator:
                     "page_numbers": s.page_numbers,
                     "raw_news_text": getattr(s, "raw_news_text", "") or "",
                     "importance": s.importance,
+                    "sentiment": getattr(s, "sentiment", "NEUTRAL") or "NEUTRAL",
+                    "catalyst": getattr(s, "catalyst", "") or "",
+                    "market_impact": getattr(s, "market_impact", "") or "",
+                    "sentiment_reasoning": getattr(s, "sentiment_reasoning", "") or "",
                 })
 
         logger.info(f"Aggregating {total_raw_count} total raw stories across {len(category_map)} sections...")

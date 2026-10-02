@@ -45,7 +45,11 @@
         "proposed_organon_acquisition": "$12 Billion"
       },
       "raw_news_text": "The outlook for Sun Pharma is expected to improve on the back of multiple positive triggers. These include scaling up of its US portfolio, expanding innovative portfolio and tariff deal/specialty drug tariff waiver. The in-licensing deal with LIB Therapeutics to commercialise and manufacture cholesterol-lowering medication Lerodalcibep is also expected to strengthen its innovative medicines portfolio.\n\nWhile the stock has underperformed its peers sharply over the last six months, there could be some gains given the triggers and target prices. At the current price of ₹1,860, the stock is trading at 27 times its FY28 earnings estimates.\n\nThe immediate trigger for the stock is the licensing deal for Lerodalcibep, which belongs to the PCSK9 class of drugs. The exclusive agreement for markets worldwide (excluding the US and China) will open up a $3.7 billion market for the company, growing at an annual rate of 38 per cent.\n\nThe global PCSK9 market is expected to be about $7 billion in 2026. LIB will receive upfront and future milestone payments, together with royalties based on net sales in licensed territories. And, Sun Pharma will be responsible for pursuing regulatory approvals in licensed territories where approval has not yet been obtained. 360 ONE Capital Research says that the deal builds on Sun's track record of strengthening its innovative portfolio through in-licensing and acquisitions.\n\nSun's FY26 innovative medicines grew by 16.8 per cent to $1.42 billion. Plaque psoriasis drug Ilumya, which is the largest product, reported sales of $796 million in FY26 and grew 17 per cent year-on-year (Y-o-Y).\n\nNear-term catalysts, according to Rohit Bhat and Hrishikesh Patole of the brokerage, include the potential USFDA approval of Ilumya for psoriatic arthritis alongside continued ramp up of hairfall (alopecia areata) drug Leqselvi and skin cancer formulation, Unloxyt.\n\nCombined with the proposed $12 billion Organon acquisition, which adds scale across innovative medicines, women's health and biosimilars, the company, according to the brokerage, is building a broader platform for sustained growth. It has a 'buy' rating with a target price of ₹2,250.\n\nThe other trigger is the tariff deal with the US which extended the most favoured nation drug pricing to state Medicaid programmes. In a positive, the arrangement, Kotak Research said, excludes Medicare which, along with the commercial channel accounts for the vast majority of Sun Pharma's innovative medicine sales. The deal also provides tariff protection for Sun's US branded portfolio until January 20, 2029.\n\nThe company's proposed acquisition (expected to be completed by early 2027), Organon, is outside the scope of the deal and it would need to negotiate a separate agreement. While lower Medicaid pricing is likely to weigh on earnings, the exclusion of Medicare and the tariff reprieve make the overall outcome marginally positive for Sun Pharma, says the brokerage. It has an 'add' rating with a target price of ₹2,150. The specialty drug tariff waiver will also help eliminate and lift the overhang of tariffs.\n\nGeojit Research is also positive on the outlook for Sun Pharma. The approval of semaglutide in multiple markets, steady performance of its flagship brands, such as Ilumya, and progress in the commercialisation of new specialty products highlight its focus on innovation-led growth, it says. The proposed Organon acquisition is expected to broaden its therapeutic presence through the women's health and biosimilars portfolios while further enhancing its global reach. It has retained a 'buy' rating on the stock with a revised target price of ₹2,070.",
-      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/sun_pharma_page22.png"
+      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/sun_pharma_page22.png",
+      "sentiment": "BULLISH",
+      "catalyst": "In-licensing deal with LIB Therapeutics for PCSK9 drug Lerodalcibep opens a $3.7B market growing at 38% annually.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Tata Trusts Proposes Restructuring of Tata Sons to Avert Public Listing",
@@ -62,7 +66,11 @@
       ],
       "kpis": [],
       "importance": "MEDIUM",
-      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/3_noel_tata_rbi.png"
+      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/3_noel_tata_rbi.png",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Tata Trusts proposes a comprehensive rejig of the holding company Tata Sons.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "ITC Emerged Much Stronger After Every Difficulty: Sanjiv Puri",
@@ -74,7 +82,11 @@
         "Reflects steady operational performance across ITC's diverse operating segments."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Ola Electric Board Approves Rs 1,000-Crore Rights Issue to Bolster Finances",
@@ -88,7 +100,11 @@
         "June quarter revenue dropped **45 per cent** year-on-year to **Rs 455 crore**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Festive retail inventory build-up and tax rationalization boosting domestic automotive demand.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Arovia Consumer Secures Rs 100 Crore from Fireside Ventures to Scale Regional Food Brands",
@@ -101,7 +117,11 @@
         "Capital will be deployed to expand market reach, distribution networks, and product categories."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Raised Rs 100 crore from Fireside Ventures' fourth fund, which closed in late 2025.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Larry Ellison Pledges $9.2 Bn More Oracle Shares for Personal Loans",
@@ -115,7 +135,11 @@
         "**Transaction Support:** Ellison is helping son David's firm acquire Paramount in a **$111 billion** transaction."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Share Pledge: Pledged 67 million more Oracle shares for personal loans.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Four Adani Group Firms and Chairman Settle MPS Norms Matter with SEBI for ₹1.48 Cr",
@@ -128,7 +152,11 @@
         "Adani Ports and SEZ Managing Director Karan Adani separately settled PMC Projects related-party matters for **₹13.65 lakh**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "The settlement amount of ₹1.48 crore was remitted following terms approved by SEBI's high-powered advisory committee in June.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Alkem Laboratories and Adroit Biomed Announce Amalgamation Scheme",
@@ -141,7 +169,11 @@
         "Objections or notices of support must reach the petitioner's advocates at least 7 days before the hearing date."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "The joint petition was presented on August 27, 2026, and admitted by the NCLT Mumbai Bench on September 3, 2026.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "High Energy Batteries Opens Special Window for Physical Shares Dematerialisation",
@@ -157,7 +189,11 @@
         "Shareholders can submit documents to registrar MUFG Intime India Private Limited."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "The special window is open for a period of one year from February 5, 2026, to February 4, 2027.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Metal Closures Private Limited Announces Liquidation E-Auction Sale",
@@ -170,7 +206,11 @@
         "The e-auction is scheduled to take place on October 19, 2026, between 10:00 AM and 12:00 PM."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Option A offers a slump sale of the factory located in Himachal Pradesh with a reserve price of ₹12.10 Cr.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Zelio E-Mobility Schedules Extra-Ordinary General Meeting for October 2026",
@@ -183,7 +223,11 @@
         "The cut-off date for determining shareholder eligibility for voting is Tuesday, October 13, 2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Alchemist ARC Issues SARFAESI Demand Notice for ₹11.10 Lakh Recovery",
@@ -197,7 +241,11 @@
         "Borrowers cautioned against dealing with or disposing of the secured property."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Dues default amount stands at ₹11,10,049 as of September 1, 2026.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Property Acquisition Notice Issued for Ajmera Zeon Luxury Apartment in Wadala",
@@ -210,7 +258,11 @@
         "Failure to respond will result in the transaction proceeding without further reference."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Property is Flat No. A-2103, measuring approximately 2,238 sq. ft. carpet area on the 21st floor of 'Ajmera Zeon'.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Mack Soft Tech Proposes Capital Reduction to Wipe Out Accumulated Losses",
@@ -225,7 +277,11 @@
         "Hearing fixed for January 08, 2027; creditors can submit objections within three months of notice."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Petition filed under Section 66 of the Companies Act, 2013 before NCLT Mumbai on September 23, 2026.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Bharat Co-op Bank Initiates Recovery Proceedings Against Defaulting Borrowers",
@@ -239,7 +295,11 @@
         "Appearance date before the Arbitrator is set for October 14, 2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Arbitration claim filed under Section 84 of the Multi-State Co-operative Societies Act, 2002.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "SBI Funds Management Corrigendum Issued for PR Agency RFP",
@@ -252,7 +312,11 @@
         "All other terms and conditions of the RFP remain unchanged."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Bid submission end date extended to October 7, 2026, up to 4:00 PM.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Government Considers Easing Technical Requirements to Provide Greater Design Freedom for Carmakers",
@@ -266,7 +330,11 @@
         "Requests for deregulation of six other systems like bumpers and brake hoses were deemed unlikely to be accepted."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "CBDT Extends Income-Tax Return Filing Deadline for Audit Cases to Nov 21",
@@ -279,7 +347,11 @@
         "**Compliance Relief:** Provides extra time for businesses and professionals to complete audits and reconciliations."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Government Looks to Build School-to-Job Pathway, Integrates APAAR with e-Shram",
@@ -292,7 +364,11 @@
         "**Policy Focus:** Addressing the disconnect between educational qualifications and workplace requirements."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Insurers Seek Softening on Irdai Commission Cuts",
@@ -307,7 +383,11 @@
       ],
       "kpis": [],
       "importance": "MEDIUM",
-      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/4_irdai_chief_interview.png"
+      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/4_irdai_chief_interview.png",
+      "sentiment": "BEARISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "New FEMA Trade Rules Offer Greater Commercial Flexibility and Bank Oversight",
@@ -321,7 +401,11 @@
         "The nine-month completion limit for merchanting trade has been removed, capping outward and inward remittance gaps at **six months**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Supreme Court Refuses Stay on Proposed UPI Merchant Discount Rate",
@@ -334,7 +418,11 @@
         "SC issued notices to Centre, RBI, NPCI, and UPI Steering Committee, with next hearing pending."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Supreme Court Reserves Order on Fssai Front-of-Package Labelling Timeline",
@@ -346,7 +434,11 @@
         "FoPL provides a nutritional information graphic on food packaging to protect consumer health."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Supreme Court Takes Suo Motu Cognizance of Crimes Against Minor Girls and Women in Delhi-NCR",
@@ -358,7 +450,11 @@
         "Appropriate patrolling and security arrangements to be deployed in identified public parks at all times."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Supreme Court Bench Highlights Futility of State-Imposed Alcohol Bans",
@@ -371,7 +467,11 @@
         "The Supreme Court advocated focusing on **de-addiction centres** and worker wage reforms rather than counterproductive prohibitions."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "SEBI Rules No Proof Vinod Adani Controlled FPIs; SAT Disposes Appeals",
@@ -385,7 +485,11 @@
       ],
       "kpis": [],
       "importance": "MEDIUM",
-      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/5_fpis_bonds_brief.png"
+      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/5_fpis_bonds_brief.png",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "SEBI Slaps Over ₹25 Cr Fine on Growpital and 28 Entities for Unregistered CIS",
@@ -397,7 +501,11 @@
         "Entities mobilised **₹192.88 crore** from **5,208 unique investors** through limited liability partnerships (LLPs)."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "NABARD Chairman and Rajasthan Chief Secretary Discuss Rural Transformation",
@@ -410,7 +518,11 @@
         "Reaffirmed the strong partnership between NABARD and the Government of Rajasthan."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "RIICO Eases Rules for Multi-Storey Non-Industrial Plots, Expands Levy Payment",
@@ -423,7 +535,11 @@
         "Remaining betterment levy is payable in six half-yearly installments of 15 percent each and a final 9 percent installment."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "District Deputy Registrar Schedules Deemed Conveyance Hearings for Mumbai Housing Societies",
@@ -435,7 +551,11 @@
         "Proceedings conducted under Section 11 of the Maharashtra Ownership Flats Act, 1963."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Rajasthan Agriculture Department Integrates AI to Boost Farm Productivity",
@@ -449,7 +569,11 @@
         "Initiative will assist farmers in optimising irrigation, fertiliser management, and pest control."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Half of Government Ad Spend on Ten Schemes Went to GST Bachat Utsav",
@@ -463,7 +587,11 @@
         "The PM Internship Scheme recorded the second-highest spend at **₹12.6 crore** from October 2024 to March 2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Air India CEO-Designate Tewolde Gebremariam Stresses Safety, Disruption Recovery, and Profitability",
@@ -477,7 +605,11 @@
         "Aimed at minimizing the impact of unavoidable disruptions through adherence to global service recovery standards."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Consolidated net loss for the group widened sharply to Rs 22,238 crore in FY26.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "V-Guard Appoints Mithun K Chittilappilly as Chairperson and Managing Director",
@@ -490,7 +622,11 @@
         "Transition follows the end of independent director Radha Unni's tenure."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Mithun K Chittilappilly has served as Managing Director since 2012.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Meta Appoints MongoDB CEO Chirantan Desai to Lead New Enterprise AI Platform",
@@ -504,7 +640,11 @@
         "**New Offerings:** Meta Enterprise Platform to bring AI models, agents, and tools to businesses."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Leadership Shift: MongoDB CEO Chirantan Desai moves to Meta to spearhead Enterprise AI.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Research Analyst Harnish Mahesh Shukla Surrenders SEBI Registration",
@@ -517,7 +657,11 @@
         "Grievances can be lodged at scores.sebi.gov.in within 30 days of the notice."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "SEBI Registration Number: INH000006642.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "SC Collegium Recommends Three High Court Chief Justices as Apex Court Judges",
@@ -531,7 +675,11 @@
         "Recommendations will be processed in accordance with established appointment procedures."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Justice Sunita Agarwal currently serves as Chief Justice of the Gujarat High Court.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Real Estate Capital Inflows Surge to Record $9.5 Billion in Q3 2026 Driven by Data Centres",
@@ -545,7 +693,11 @@
         "Data centres, built-up office assets, and land sites accounted for **91 per cent** of total deployed capital in Q3 2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Total nine-month capital inflows reached $18.6 billion, surpassing the full-year 2025 total of $14.2 billion.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Residential Housing Sales Rise 3% YoY in Q3 2026 While Office Leasing Grows 9%",
@@ -559,7 +711,11 @@
         "Office leasing increased **9 per cent** year-on-year to reach **18.7 million square feet**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Housing sales volume across top seven cities rose 3 per cent year-on-year to 100,220 units.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Reliance Jio Leads Subscriber Additions in August with 2.4 Million Users: Trai Data",
@@ -571,7 +727,11 @@
         "Vodafone Idea added about **506,000** subscribers, while BSNL gained nearly **493,000** users."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Reliance Jio added 2.40 million users, taking its subscriber base to 508.43 million.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "NX Group Targets $380 Mn Revenue in India Within Two Years",
@@ -585,7 +745,11 @@
         "**Staff Training:** Planning to train **900 Indian staff** and deploy **5 leaders** in major cities."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Target Revenue: Aiming for $380 million in India over the next two years.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Lord's Mark Industries Secures MHRA Registration for AI-Powered Dialysis Ecosystem",
@@ -599,7 +763,11 @@
         "**Advanced Tech:** Combines smart haemodialysis with RenalOS AI-powered clinical intelligence platform."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Regulatory Milestone: Secured UK MHRA registration for Renalyx haemodialysis system.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "IFC to Invest $70 Mn in Shore Power Project at JNPA Terminals",
@@ -612,7 +780,11 @@
         "**Technology Rollout:** Shore power technology is new to major Indian ports at commercial scale."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Investment Outlay: IFC to invest $70 million in shore power supply infrastructure.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Renewable Energy Sector Set for Battery Surge with 50 GWh Capacity: Crisil",
@@ -625,7 +797,11 @@
         "**Drivers:** Growth attributed to strong project pipeline under implementation and continued policy support."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Jio-bp and Nayara Cap Diesel Sales as Bulk Consumers Switch to Retail Outlets",
@@ -638,7 +814,11 @@
         "**PSU Warning:** State retailers IOC, BPCL, and HPCL likely to follow suit with quantity restrictions."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Purchase Limits: Jio-bp capped diesel at 50 litres/customer/day; Nayara limits range from 70 to 200 litres.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Visa's Pismo Platform Expands Footprint to Drive India's Financial Tech",
@@ -651,7 +831,11 @@
         "Microservices architecture enables institutions to configure products faster compared to legacy infrastructure."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Nvidia Unveils Platform to Prevent AI Systems from Going Rogue",
@@ -664,7 +848,11 @@
         "Nvidia boosted its share buyback authorization by $150 billion to a total capacity of $235 billion."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "OpenShell runs on Vera central processing units to set and enforce access rules.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Automakers Seek Lifeline from Defence Spending Amid Slower Commercial Demand",
@@ -677,7 +865,11 @@
         "Traditional automakers are losing market share in China to domestic rivals like BYD and Geely."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "GM's defence division expects revenue of $700 million this year, growing to about $1.5 billion by 2029.",
+      "market_impact": "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers. Higher volume dispatch bolsters dealer channel liquidity ahead of the festive inventory cycle.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Starbucks Signs MoU with Tamil Nadu Government for First Chennai GCC",
@@ -691,7 +883,11 @@
         "PwC India estimates that **72 per cent** of GCCs need to reskill over **40 per cent** of their workforce due to AI transformations."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "800 tech jobs are expected to be created in the first phase of the Chennai GCC.",
+      "market_impact": "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers. Higher volume dispatch bolsters dealer channel liquidity ahead of the festive inventory cycle.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Datta: Petronet LNG Positioned for Strong Growth Amid Geopolitical Headwinds",
@@ -704,7 +900,11 @@
         "Analysts report an average one-year target price of **₹324** compared to a closing price of **₹289.50**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Paint Sector Faces Margin Pressure Amid Weak Demand and Rising Costs",
@@ -718,7 +918,11 @@
         "Birla Opus targets a revenue of ~10,000 crore by 2027-28, aiming for over 50% growth in FY27."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "KRIBHCO Reports Strong FY26 Performance with Pre-Tax Profit of ₹824.68 Cr",
@@ -731,7 +935,11 @@
         "Urea production stood at 21.34 lakh MT with 97.26% capacity utilization."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Reported a pre-tax profit of ₹824.68 crore for financial year 2025-26.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "South Eastern Railway Crosses 100 Million Tonnes in Freight Loading",
@@ -744,7 +952,11 @@
         "Steel and Iron Ore cumulative loading increased by 15.98% and 7.55% respectively."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume.",
+      "market_impact": "Strong domestic volume growth helps insulate miners from volatile global benchmark pricing swings. Ensures uninterrupted raw material feed for downstream infrastructure and construction fabrication.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "NTPC Green Energy Group Crosses 11 GW Installed Capacity Milestone",
@@ -757,7 +969,11 @@
         "Commercial operation of the project began effectively from 00:00 hrs on 26.09.2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Total installed capacity reached 11,058.57 MW.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Jharkhand Flying Institute Invites Bids for Training Aircraft Procurement",
@@ -770,7 +986,11 @@
         "Detailed Request for Proposal (RFP) available on the Jharkhand procurement portal."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Tender invited under the Two-Bid System for training aircraft procurement.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "ITC Envisions Growth Driven by Innovation and Core Institutional Strengths",
@@ -784,7 +1004,11 @@
         "Focus remains on maintaining quality first while building entrepreneurial talent and innovation."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "UP Ethanol Supply Chain Attracts Robust Investments from Top Distilleries",
@@ -798,7 +1022,11 @@
         "Distillers supplied 16.4 million additional bottles to other states between April and July 2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "UP private investment pipeline exceeds ₹1,000 crore from leading distillers.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Physical AI Firm SiMa.ai Raises $150 Mn in Series-C Funding",
@@ -812,7 +1040,11 @@
         "**Key Backers:** New investors include AllianceBernstein, Baron Capital, and JP Morgan."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "IEX Subsidiary Indian Coal Exchange Applies for Licences to Launch Coal Trading",
@@ -825,7 +1057,11 @@
         "**Market Shift:** Moves trading from traditional 'one-to-many' model to a competitive 'many-to-many' platform."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Subsidiary Setup: Indian Coal Exchange Limited incorporated by IEX with an authorized capital of ₹100 crore.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Nifty Plunges 1.56% as Brent Nears $108 and FPI Sell-Off Deepens",
@@ -840,7 +1076,11 @@
       ],
       "kpis": [],
       "importance": "MEDIUM",
-      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/5_fpis_bonds_brief.png"
+      "cutout_url": "https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/cutouts/5_fpis_bonds_brief.png",
+      "sentiment": "BEARISH",
+      "catalyst": "The Nifty 50 dropped 1.56 per cent to close at 22,780.25, while the Sensex fell 1.52 per cent to 72,771.72.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "ICICI Prudential MF and WhiteOak Capital Launch New Mutual Fund Schemes",
@@ -852,7 +1092,11 @@
         "WhiteOak Capital's new FOF will diversify across active small-cap schemes and varying investment styles."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "ICICI Pru Contra Fund is managed by CIO Sankaran Naren, targeting long-term investors seeking out-of-favour stocks.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Oil Concerns and Heavy OMO Demand Push 10-Year Bond Yields to 2.5-Year Peak",
@@ -866,7 +1110,11 @@
         "Liquidity surplus dropped significantly from a record ₹11.16 trillion earlier this month to ₹4.31 trillion."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Spike in US Treasury yields and FPI capital outflows breaching psychological currency support.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "China May Allow Alibaba and ByteDance to Buy Nvidia's RTX Chips",
@@ -879,7 +1127,11 @@
         "**Graphics Processors:** High-end graphics processors released earlier this month."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Regulatory Signal: Beijing may permit Alibaba and ByteDance to acquire Nvidia RTX Pro 5500 chips.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Indian Delegation Reaches Islamabad for Three-Day SCO Coordinators' Meet",
@@ -892,7 +1144,11 @@
         "India plans to host the India-Central Asia Summit in 2027."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Pakistan took over as SCO chair from Kyrgyzstan on September 1, 2026.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "OpenAI Models Accessed US Government Websites During Training and Evaluation",
@@ -905,7 +1161,11 @@
         "Incidents were discovered while expanding a probe into an inadvertent hack on Hugging Face."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "OpenAI notified dozens of organizations whose websites may have been hampered by visits from its AI models.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "China Expands Travel Restrictions for Families of Top AI Professionals",
@@ -917,7 +1177,11 @@
         "Direct relatives of certain AI and chip executives must obtain approval from Beijing before going abroad."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Restrictions apply to prominent startup founders and heads of strategically important companies.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Netanyahu Secretly Visited UAE to Discuss Hamas Threat Before October 7 Attack",
@@ -929,7 +1193,11 @@
         "The revelations have sparked a domestic political storm in Israel, with opposition figures calling the PM unfit for office."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Emirati President Sheikh Mohamed bin Zayed Al Nahyan allegedly warned Netanyahu about Yahya Sinwar's planned operation.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Oil Rises 3% and Gold Hits 7-Week Low as US Rejects Iran Peace Deal",
@@ -942,7 +1210,11 @@
         "Spot gold dropped **3.3 per cent** to **$4,146.51 per ounce**, while domestic gold in New Delhi tumbled to **₹1.5 lakh per 10 grams**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Brent futures rose $2.98 (2.86 per cent) to $107.30 a barrel following the diplomatic stalemate.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Indian Executives Gain Clout in US Corporate Boards Amid Surging Representation",
@@ -956,7 +1228,11 @@
         "Indian/South Asian men hold **4.3%** of new S&P 500 director shares according to ISS-Corporate data."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "A record 16 Indian men joined S&P 500 boards this year, taking directorships at major firms like Walmart and Southwest Airlines.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Proposed US Green Card Bill Set to Reshape Employment-Based Immigration for Indians",
@@ -970,7 +1246,11 @@
         "Applicants would generally need a US job offer, minimum points threshold, and specific age and English proficiency requirements."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "The Americans First Immigration Act was introduced on September 23, 2026, by Senator Tommy Tuberville.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India's Crude Oil Imports Fall to 5.25 Mb/d in September; Russia Remains Top Supplier",
@@ -983,7 +1263,11 @@
         "**Brent Surge:** Brent crude surged over **2% to $107 per barrel** following US rejection of Iran peace deal."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Total Crude Imports: Reached 5.251 million barrels per day in September up to September 27.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Coal Minister G Kishan Reddy Denies Coal Shortage; Critical Thermal Plants Rise to 82",
@@ -996,7 +1280,11 @@
         "**Demand Rise:** Power demand rose ranging from **12% to 50%**, though overall production remains stable."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Critical Plants: Thermal plants with critical coal stocks rose to 82 on Sunday, September 27.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India Has Successfully Insulated Itself from West Asia Energy Crisis: Hardeep Singh Puri",
@@ -1009,7 +1297,11 @@
         "**LPG Expansion:** Domestic LPG connections rose sharply from **140 million in 2014 to 335 million**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Global Availability: Around 104 million barrels of crude available daily against global consumption of 94 million barrels.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India's Industrial Output Accelerates to 8% in August on Strong Manufacturing",
@@ -1023,7 +1315,11 @@
         "Mining and quarrying contracted by **5.6%**, while water supply and waste management moderated to **6.3%**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India's Carbon Paradox: High Global Emissions, Low Per-Capita Footprint",
@@ -1037,7 +1333,11 @@
         "The power sector accounts for the largest share of Indian GHG emissions at **34.86%** in 2025, overtaking agriculture."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "El Niño Threat Raises Concerns Over Rabi Crop Production and Rainfed Areas",
@@ -1050,7 +1350,11 @@
         "International Research Institute indicates El Niño could become very strong in late 2026 and early 2027."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Maharashtra declared drought in nearly 74% of its 358 talukas due to acute rainfall shortages.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Sinha & Bhende: Generating Productive Employment Vital to Sustain India's High Growth",
@@ -1064,7 +1368,11 @@
         "India's Labor Force Participation Rate (LFPR) improved to **59.3 per cent** in 2025, up from **49.8 per cent** in 2018."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Bijapurkar: Corporate India Must Tap Mass Markets at the Base of the Pyramid",
@@ -1077,7 +1385,11 @@
         "Discretionary income growth for mass consumers has remained slow over the past decade, demanding targeted policy frameworks."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Tamil Nadu SLBC Reviews Banking Sector Performance and Government Schemes",
@@ -1090,7 +1402,11 @@
         "Attended by senior officials from the State Finance Department, Indian Overseas Bank, RBI, and NABARD."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Meeting held in Chennai on 24.09.2026 to review banking performance up to June 2026.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "A Power Warning India Needs to Heed: Systemic Vulnerabilities and Shocks",
@@ -1104,7 +1420,11 @@
         "Official figures put evening power shortfalls at more than **four times** last year's levels."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Between April 1 and September 20, 2026, average daily electricity supplied increased by 10.5% over 2025.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Sagarmala Finance Withdraws Rs 600 Crore Blue Bond Issue",
@@ -1118,7 +1438,11 @@
         "Small Industries Development Bank of India (Sidbi) similarly called off its **₹6,000 crore** bond issuance last week."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Nifty IPO Index Rises 19.5% in 2026 While SME Emerge Outshines Mainboard",
@@ -1132,7 +1456,11 @@
         "SME IPOs between January and August raised **₹5,810 crore**, with **94 per cent** comprising fresh capital."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Natraj Energy Launches SME IPO to Raise Capital on NSE Emerge",
@@ -1146,7 +1474,11 @@
         "Registrar to the issue is Maashitla Securities Private Limited."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Edelweiss Financial Services Launches ₹1,500 Crore Non-Convertible Debentures Issue",
@@ -1160,7 +1492,11 @@
         "Issue closes for subscription on Tuesday, September 29, 2026."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India-Qatar Bilateral Investment Treaty Negotiations Get Fresh Push",
@@ -1174,7 +1510,11 @@
         "Net FDI inflows into India declined to $6.95 billion in 2025-26 from annual average of $40 billion in 2019-22."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Sitharaman leading delegation including DEA Secretary Anuradha Thakur to Doha.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "UAE Pledges Another $25 Billion Investment in India: Piyush Goyal",
@@ -1187,7 +1527,11 @@
         "India and UAE identified six areas for cooperation in the shipping sector."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "Bilateral trade between India and the UAE reached $100 billion, targeting $200 billion by 2032.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Piyush Goyal to Visit US for G20 Trade Ministerial and Interim Trade Deal Talks",
@@ -1200,7 +1544,11 @@
         "US passed a law authorizing President Trump to impose up to a 100% tariff on India for energy purchases from Russia."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "G20 Trade Ministerial scheduled in Milwaukee, Wisconsin, on Wednesday and Thursday.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "US and China Agree to Cut Tariffs on Goods Worth $60 Billion",
@@ -1213,7 +1561,11 @@
         "United States implemented reciprocal tariff cuts for Chinese small appliances, toys, and holiday decorations."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Both countries recommended $30 billion of trade in non-sensitive goods for more favourable tariff treatment.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Bhattacharya Reviews 'The Indian Economy: Navigating a Global Turning Point'",
@@ -1226,7 +1578,11 @@
         "Published by **Simon & Schuster India** across **298 pages** priced at **₹899**."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BEARISH",
+      "catalyst": "Editors include prominent economists like Kaushik Basu, Sonalde Desai, Ashwini Deshpande, and Nirvikar Singh.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Mitigating Cardiac Risks: Financial Planning for Rising Healthcare Costs",
@@ -1240,7 +1596,11 @@
         "Critical illness policies provide a lump sum payout to cover lost income, travel, and long-term medication."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "BULLISH",
+      "catalyst": "India recorded an estimated 31.65 lakh cardiovascular deaths in 2024 according to the World Heart Federation.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Public Notice Issued for Acquisition of Ashok Gardens Residential Property in Mumbai",
@@ -1253,7 +1613,11 @@
         "Any claims, liens, charges, or mortgages must be notified with supporting documents within 14 days of the notice."
       ],
       "kpis": [],
-      "importance": "MEDIUM"
+      "importance": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Property under acquisition is Flat No. 1301, 13th Floor, F Wing, Ashok Gardens Tower 2, T.J. Road, Shivdi, Mumbai.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     }
   ],
   "source_statuses": {

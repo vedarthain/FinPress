@@ -50,6 +50,22 @@ class NewsStory(BaseModel):
     page_numbers: str = Field(description="Page number(s) where this story appears (e.g., 'Page 1', 'Page 4').")
     brief_details: str = Field(description="Ultra-crisp 1-2 sentence core Gist / Zyst: What happened & Why it matters to markets/investors.")
     bullet_points: List[str] = Field(description="3 to 5 punchy, short data bullets with bold numbers, financial metrics, or key regulatory moves. No paragraph text.")
+    sentiment: Optional[Literal["BULLISH", "BEARISH", "NEUTRAL"]] = Field(
+        default="NEUTRAL",
+        description="Institutional market stance: 'BULLISH', 'BEARISH', or 'NEUTRAL'."
+    )
+    catalyst: Optional[str] = Field(
+        default="",
+        description="Immediate trigger / event catalyst (e.g. quarterly earnings beat, tariff hike, RBI policy stance, capex expansion, major contract win, promoter stake sale)."
+    )
+    market_impact: Optional[str] = Field(
+        default="",
+        description="Meaningful, institutional-grade market analysis: How this development specifically impacts revenue models, sector valuation multiples, earnings margins, liquidity, bond yields/FX, or equity price trajectories. DO NOT repeat the brief details."
+    )
+    sentiment_reasoning: Optional[str] = Field(
+        default="",
+        description="Crisp 1-2 sentence rationale explaining why this is Bullish/Bearish/Neutral from a portfolio manager or trader perspective."
+    )
     raw_news_text: Optional[str] = Field(default="", description="The complete, unabridged verbatim raw newspaper article text and body paragraphs extracted from the page.")
     kpis: Optional[List[KPIMetric]] = Field(default_factory=list, description="Key numerical metrics, financial figures, outlays, or percentages mentioned in the story or charts/tables.")
     importance: str = Field(description="Importance level: High, Medium, or Low.")
@@ -90,9 +106,14 @@ You are an elite financial news intelligence editor extracting news from newspap
 CRITICAL INSTRUCTIONS FOR ULTRA-HIGH QUALITY OUTPUT:
 1. LOSSLESS NEWS EXTRACTION: Extract EVERY SINGLE distinct news article, report, column, IPO announcement, corporate filing, market briefing, graphic/infographic ('Scale of Impact', tables), or regulatory update present on these pages. Skip ONLY commercial ads.
 2. CRISP & CATCHY "ZYST": Every story MUST have an ultra-crisp, catchy 1-2 sentence core Gist ("Zyst") highlighting the fundamental event and its direct market/industry impact. Avoid vague filler or academic prose.
-3. QUICK READ / NO PARAGRAPH WALLS: Provide short, high-density data chunks. Bullet points MUST be snappy 1-line facts with explicit numbers, currency values (₹ Cr, $ Bn), percentages (%), and deadlines.
-4. FULL RAW ARTICLE TEXT: In the 'raw_news_text' field, extract and preserve the complete unabridged verbatim body paragraphs and sentences of the article as written on the newspaper page.
-5. INFOGRAPHIC KPIS: Extract prominent quantitative indicators into the 'kpis' array with label, value, and context (e.g. Outlays, Payouts, Exports, Capacity, Jobs).
+3. DISTINCT CATALYST & MARKET IMPACT (DO NOT DUPLICATE):
+   - 'catalyst': Extract the exact trigger/driver (e.g., Q2 volume surge, tariff revision, RBI liquidity injection, order win, management churn).
+   - 'market_impact': Provide substantive institutional-grade financial analysis. Detail the transmission mechanism: revenue runway, gross/EBITDA margins, valuation multiple re-rating/de-rating, sectoral peers impacted, liquidity, or bond yield/FX implications. NEVER repeat or copy the 'brief_details' here.
+   - 'sentiment': Classify as 'BULLISH', 'BEARISH', or 'NEUTRAL'.
+   - 'sentiment_reasoning': State the clear institutional thesis.
+4. QUICK READ / NO PARAGRAPH WALLS: Provide short, high-density data chunks. Bullet points MUST be snappy 1-line facts with explicit numbers, currency values (₹ Cr, $ Bn), percentages (%), and deadlines.
+5. FULL RAW ARTICLE TEXT: In the 'raw_news_text' field, extract and preserve the complete unabridged verbatim body paragraphs and sentences of the article as written on the newspaper page.
+6. INFOGRAPHIC KPIS: Extract prominent quantitative indicators into the 'kpis' array with label, value, and context (e.g. Outlays, Payouts, Exports, Capacity, Jobs).
 
 STRICT 10 SECTION CATEGORIES:
 Assign every story to EXACTLY ONE of:

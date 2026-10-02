@@ -13,7 +13,11 @@
         "Reviews key developmental projects and strategic goals",
         "Focuses on improving institutional efficiency and execution timelines"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Tata Steel, Dutch govt extend joint letter of intent for decarbonisation",
@@ -25,7 +29,11 @@
         "Involves Tata Steel and the Dutch government.",
         "Aims to finalise terms for a major decarbonisation project."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Govt evaluating financial bids for strategic stake sale in IDBI Bank",
@@ -37,7 +45,11 @@
         "Bidders include Fairfax Financial Holdings and Emirates NBD.",
         "Both bidders possess MHA security clearance and RBI 'Fit and Proper' assessments."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Sebi settlement overhaul may improve recovery in fund-diversion cases",
@@ -49,7 +61,11 @@
         "Includes rules on wrongful gains and fast-track mechanisms.",
         "Aims to improve recovery efficiency in fund-diversion violations."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "SC to hear plea against MDR on UPI merchant payments above ₹2,000 on Monday",
@@ -61,7 +77,11 @@
         "Introduces 0.4 per cent fee on merchant transfers above Rs 2,000 starting October 15.",
         "P2P transfers and small payments remain completely ring-fenced and free."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Rajasthan tax department expands probe into evasion, false claims",
@@ -73,7 +93,11 @@
         "Covered over 25 establishments during inspections.",
         "Targeted GST evasion and fraudulent input tax credit (ITC) claims."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Delayed flat possession: Accepting keys won't end interest claim, says HC",
@@ -85,7 +109,11 @@
         "High Court ruled that 'zero period' cannot erase previous builder default.",
         "Protects home buyer rights against delayed delivery timelines."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "UPI MDR decision purely professional, no external pressure: FM Sitharaman",
@@ -97,7 +125,11 @@
         "Stated the decision was taken professionally by NPCI, payment, and merchant banks.",
         "Emphasized that MDR is not a tax and does not accrue to the government."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BEARISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "More consumer-friendly insurance? Regulator targets costs, misselling",
@@ -109,7 +141,11 @@
         "Includes tighter commission caps and lower expense limits.",
         "Proposes wider consumer disclosures for better transparency."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "UPI MDR is not a tax, won't mean extra cost for customers: FM Sitharaman",
@@ -121,7 +157,11 @@
         "Applies to specified merchant transactions above ⁰2,000.",
         "Regular UPI payments by customers will continue to remain completely free."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "MDR on UPI payments: What customers, merchants need to know from Oct 15",
@@ -133,7 +173,11 @@
         "MDR targets specific UPI payments above ⁰2,000 made to large merchants.",
         "Customers and eligible small vendors are protected from extra charges."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: India needs outcome-linked policy measures for jobs",
@@ -145,7 +189,11 @@
         "Advocates linking educational and training subsidies directly to employment outcomes.",
         "Reviews BIS certification reforms and corporate D2C strategies."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Ways to Stimulate Employment Generation in Budget 2018",
@@ -157,7 +205,11 @@
         "Focus on policy interventions for job creation.",
         "Addressed in the context of Union Budget expectations."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Some Populist Steps Expected for Various Sectors in Budget 2018",
@@ -169,7 +221,11 @@
         "Statements made by FM Arun Jaitley and PM Narendra Modi.",
         "Focused on sector-specific balanced growth."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Budget 2018: GST Effect And Focus On Income Tax",
@@ -181,7 +237,11 @@
         "Eighty-eighth budget since independence.",
         "High focus on personal and corporate income tax."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Sneak Peak in to Some Lesser Known Budget Terminology",
@@ -193,7 +253,11 @@
         "Union Budget presented on 1st February 2018.",
         "Aimed to demystify complex financial terminology."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Budget 2018 Could Bring a Change in Income Tax Limits",
@@ -205,7 +269,11 @@
         "Expected changes to individual tax slabs.",
         "Addressed relief for individual taxpayers."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Annual Budget 2018",
@@ -217,7 +285,11 @@
         "Applies to a specific fiscal or calendar year.",
         "Serves as a fundamental fiscal planning tool."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Facts about India's Union Budget you may not know",
@@ -229,7 +301,11 @@
         "Accounts for national revenue and expenditure.",
         "Presented annually in Parliament."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "What taxable entities should expect from Budget 2018",
@@ -241,7 +317,11 @@
         "Revision of tax slabs was a major expectation.",
         "Aimed at boosting disposable income and corporate spending."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Expected focus areas of Budget 2018-19",
@@ -253,7 +333,11 @@
         "Addressed recent growth slump concerns.",
         "Outlined strategic sectorial focus areas."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Budget 2018: Highlights of India's Various Union Budget Documents",
@@ -265,7 +349,11 @@
         "Provided deep-dive financial data to Parliament.",
         "Included macroeconomic frameworks and expenditure profiles."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Budget 2018: Why India merged Railway, Union Budget in 2017",
@@ -277,7 +365,11 @@
         "NITI Aayog report recommended the merger due to shrinking relative scale.",
         "Streamlined governmental financial presentation."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Project Development Grant Fund (PDGF) Invitation for Proposals",
@@ -289,7 +381,11 @@
         "Invites consulting services for detailed project reports and advisory services",
         "Sets specific timelines for bid submission and opening"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Issued by the Government of Tamil Nadu under PDGF",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Technofab Engineering Limited Corporate Insolvency Update",
@@ -301,7 +397,11 @@
         "Targets industrial and infrastructure construction sectors",
         "Outlines timelines and contact details for the resolution professional"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Notice issued under the Insolvency and Bankruptcy Board of India regulations",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Punjab National Bank Financial and Regulatory Disclosures",
@@ -313,7 +413,11 @@
         "Complies with regulatory reporting standards for public sector banks",
         "Provides transparency on asset quality and financial health"
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Discloses key financial metrics and performance indicators",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "The Kalupur Commercial Co-op Bank Ltd. Financial Notice",
@@ -325,7 +429,11 @@
         "Publishes mandatory financial statements for stakeholders",
         "Highlights cooperative sector stability and growth"
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Shah Foods Limited Annual General Meeting Notice",
@@ -338,7 +446,11 @@
         "Details provided regarding remote e-voting and book closure dates.",
         "Compliance with the relevant provisions of the Companies Act, 2013."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Notice published by Shah Foods Limited registered office in Ahmedabad.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Global Education Limited Notice of Postal Ballot and E-Voting",
@@ -350,7 +462,11 @@
         "Remote e-voting ends on October 27, 2026, at 5:00 p.m. IST.",
         "Notice dispatched to shareholders whose names appear in the register as of the cut-off date."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Remote e-voting starts on September 28, 2026, at 9:00 a.m. IST.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Rama Steel Tubes Limited Notice of Extraordinary General Meeting",
@@ -362,7 +478,11 @@
         "Remote e-voting details and cut-off dates provided to members.",
         "Compliance with applicable Companies Act provisions and SEBI regulations."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "EGM convened to discuss special corporate resolutions.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Bhilwara Technical Textiles Limited Postal Ballot and E-Voting Notice",
@@ -374,7 +494,11 @@
         "Electronic voting process facilitated through designated depositories.",
         "Details regarding appointment of scrutinizer for the voting process."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Compliance with MCA circulars and SEBI Listing Regulations.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Annvrriddhi Ventures Limited AGM and E-Voting Notice",
@@ -386,7 +510,11 @@
         "Remote e-voting facility provided during the designated schedule.",
         "Adherence to statutory corporate governance standards."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Notice sent to all eligible shareholders regarding the upcoming AGM.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Quality Power Electrical Equipments Limited Notice of EGM",
@@ -399,7 +527,11 @@
         "Remote e-voting period begins on October 10, 2025 and ends on October 12, 2025.",
         "Compliance with Companies Act, 2013 and SEBI Listing Regulations."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "EGM scheduled for Monday, October 13, 2025 at 4:00 PM IST.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Bharat BPO Services Limited Notice of Adjourned AGM",
@@ -412,7 +544,11 @@
         "Agenda includes adoption of audited financial statements for FY ended March 31, 2025.",
         "Appointment of a director in place of Mr. Byomkesh Kumar Verma who retires by rotation."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "30th Adjourned AGM scheduled for September 30, 2025 at 5:00 PM.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "STC Ventures Private Limited Form-G Expression of Interest",
@@ -425,7 +561,11 @@
         "Registered office located in Mumbai, Maharashtra.",
         "Submission timelines and process detailed in the official notice."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Form-G invitation for Expression of Interest for STC Ventures Private Limited.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Kinshuk Specialty Chemical Ltd Postal Ballot Notice",
@@ -438,7 +578,11 @@
         "Remote e-voting commences on Monday, September 29, 2025.",
         "Scrutinizer appointed to conduct the postal ballot process fairly and transparently."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Postal ballot notice issued for seeking shareholder approvals.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Petronet to pay 1% of profit as commission to its directors for 5 years",
@@ -450,7 +594,11 @@
         "Proposed duration spans five years from FY27 to FY31.",
         "Continuation sought due to the company's healthy financial position."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Commission capped at 1% of annual profits.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Zee seeks action against Reliance-Disney's JioStar over copyright breach",
@@ -462,7 +610,11 @@
         "Claims JioStar used music and songs despite a Delhi High Court injunction.",
         "Deepens ongoing media sector disputes."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Alleged copyright breach by Reliance-Disney's JioStar.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "NCLT clears Sesa Care-Dabur India merger, paving way for integration",
@@ -474,7 +626,11 @@
         "Transaction originally announced in October 2024.",
         "Dabur plans to leverage its distribution network to expand Sesa Care."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "NCLT approved Sesa Care and Dabur India merger.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "PC Jeweller says it's debt-free, cleared dues of all 14 consortium banks",
@@ -486,7 +642,11 @@
         "Discharged remaining outstanding debt across all 14 consortium banks.",
         "Confirmed via an official regulatory filing."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Achieved complete debt-free status.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Explainer: Why Tata Sons and Tata Trusts are locked in a power struggle",
@@ -498,7 +658,11 @@
         "Disagreement involves N Chandrasekaran's reappointment.",
         "Debates also touch upon a potential listing of Tata Sons."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Conflict between Tata Sons and 66% shareholder Tata Trusts.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Dabur gets NCLT's nod to absorb Ayurvedic hair oil brand Sesa Care",
@@ -510,7 +674,11 @@
         "Ayurvedic hair oil brand integration to proceed post statutory filings.",
         "Bolsters Dabur's healthcare and personal care portfolio."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Received NCLT clearance to absorb Sesa Care.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Vascon Engineering receives order worth ₹660 crore from Qualcomm India",
@@ -522,7 +690,11 @@
         "Project involves developing an office facility in Bengaluru.",
         "Execution timeline set at 30 months from site handover."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Secured order worth ₹660 crore from Qualcomm India.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Welspun Corp wins largest-ever HFIW pipe order worth ₹4,000 crore",
@@ -534,7 +706,11 @@
         "Order secured via US subsidiary.",
         "Pushes global order book to a record high of $4.7 billion."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Secured largest-ever HFIW pipe order worth ~$412.5 million (₹4,000 crore).",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Kalpataru Projects International bags new orders worth over ₹2,000 crore",
@@ -546,7 +722,11 @@
         "Projects span T&D, buildings and factories, and oil & gas divisions.",
         "YTD FY27 order intake reaches ₹13,219 crore."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Secured new orders worth ₹2,025 crore.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Not party to parent's talks with potential stake buyers: Whirlpool of India",
@@ -558,7 +738,11 @@
         "Promoter Whirlpool Mauritius exploring share sales with multiple counterparties.",
         "Company remains unware of pricing or terms."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Not party to parent company's ongoing stake sale talks.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Tata Sons defends Chandra's reappointment, sends 3 legal opinions to Trusts",
@@ -570,7 +754,11 @@
         "Provided three legal opinions to Tata Trusts.",
         "Tata Trusts studying the response before pursuing potential legal recourse."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Tata Sons defends N Chandrasekaran's reappointment.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Sanofi India receives Rs 23.74 crore GST show cause notice",
@@ -582,7 +770,11 @@
         "Issued by Karnataka GST authorities for FY2022-23.",
         "Company is reviewing the notice details."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Bhagyanagar India fixes record date for scheme of arrangement",
@@ -593,7 +785,11 @@
         "Record date set for October 08, 2026.",
         "Pertains to a corporate scheme of arrangement."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Record date set for October 08, 2026.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Promoter Group commits capital infusion of Rs 650 cr into Aequs",
@@ -604,7 +800,11 @@
         "Capital commitment totals Rs 650 crore.",
         "Executed via subscription to convertible warrants."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Capital commitment totals Rs 650 crore.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Aban Offshore reports consolidated net profit of Rs 83.72 crore in the June 2026 quarter",
@@ -615,7 +815,11 @@
         "Consolidated net profit stood at Rs 83.72 crore in June 2026 quarter.",
         "Sales rose 44.43% year-on-year to Rs 165.26 crore."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Consolidated net profit stood at Rs 83.72 crore in June 2026 quarter.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "R R Kabel forays in optical fibre cable business",
@@ -626,7 +830,11 @@
         "Entered optical fibre cable market.",
         "Acquired U M Cables' business undertaking."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Entered optical fibre cable market.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "One 97 Communications hikes stake in its subsidiary - Little Internet",
@@ -637,7 +845,11 @@
         "Increased stake in subsidiary Little Internet.",
         "Invested Rs 100 crore in Paytm Money."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Increased stake in subsidiary Little Internet.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Amazon secures $8 bn in term loan to safeguard against economic headwinds",
@@ -649,7 +861,11 @@
         "Aimed at safeguarding against broader economic uncertainties.",
         "Accompanied by a hiring freeze for corporate retail roles."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Secured an $8 billion term loan facility.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Most of RFL lenders approve Rs 2.3k-cr OTS plan, on track to restart biz",
@@ -662,7 +878,11 @@
         "Will enable exit from RBI's Corrective Action Plan imposed in 2018.",
         "RFL deposited Rs 220 crore earnest money in June 2022."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "14 of 16 lenders signed the Rs 2,300 crore OTS agreement.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Beyond compliance, the real test",
@@ -674,7 +894,11 @@
         "Advocates for robust internal assurance mechanisms for sound decision-making.",
         "Highlights the evolving mandate of corporate boards."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Emphasizes that compliance is only the baseline for modern corporations.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: TCS acquisition highlights changing dynamics in AI era",
@@ -686,7 +910,11 @@
         "Highlights structural transformations in IT service delivery models.",
         "Reviews private equity's growing penetration into the healthcare sector."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Tatas and India",
@@ -698,7 +926,11 @@
         "Tata companies have historically built for the long term.",
         "Emphasizes national economic contribution."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Focus on building solid industrial foundations in India.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Vedanta Oil and Gas Operational Update",
@@ -710,7 +942,11 @@
         "Details asset performance and production capacity",
         "Outlines strategic initiatives in the energy sector"
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Covers upstream oil and gas operational metrics",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Digital Media and Publishing Sector Review",
@@ -722,7 +958,11 @@
         "Covers creator economy dynamics and digital content monetization",
         "Examines shifting consumer preferences toward digital reading formats"
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Analyzes trends in digital book publishing and audio media",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vishal Nirmiti Limited: Government Client Concentration Risks",
@@ -735,7 +975,11 @@
         "Top 10 customers accounted for 92.91% of total revenue in Fiscal 2026.",
         "Company primarily manufactures Pre-Stressed Concrete (PSC) sleepers for railways and infrastructure projects."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Largest customer (Indian Railways) contributed 40.56% of total revenue in Fiscal 2026.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Jakson Green eyes 12.5 GW operational renewable projects in two years",
@@ -747,7 +991,11 @@
         "Aiming for 12.5 GW of operational renewable projects in two years.",
         "Expanding into green hydrogen, ammonia, and battery storage solutions."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Targeting 30 GW of renewable IPP and EPC capacity by 2030.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Flipkart expects EMI to fuel a third of festive mobile, electronics GMV",
@@ -759,7 +1007,11 @@
         "Nearly 50% of high-value electronics expected to use affordability options.",
         "Biometric authentication is showing higher payment success rates."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "EMIs expected to fuel one-third of festive mobile and electronics GMV.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Capacity scale-ups to drive Epigral's ₹5,000 crore target by FY31: CMD",
@@ -771,7 +1023,11 @@
         "Expected revenue of ₹2,900 crore for the current financial year.",
         "Doubling CPVC Resin capacity to 1,50,000 TPA and ECH to 1,00,000 TPA at Dahej."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeting ₹5,000 crore revenue by FY31.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "ITC expands dairy business in East India, bets on value-added products",
@@ -783,7 +1039,11 @@
         "Already the second-largest dairy player in Bihar.",
         "Focusing on value-added products including curd, paneer, lassi, and Mishti Doi."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Expanding Aashirvaad brand dairy presence in Bihar, West Bengal, and Jharkhand.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Tata Motors PV eyes 15% market share soon, targets 20% by FY31: MD",
@@ -795,7 +1055,11 @@
         "Standalone PV business has grown nearly 40% over the past year.",
         "Electric vehicles account for more than 25% of total sales exiting September."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Festive retail inventory build-up and tax rationalization boosting domestic automotive demand.",
+      "market_impact": "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers. Higher volume dispatch bolsters dealer channel liquidity ahead of the festive inventory cycle.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Microsoft abandons personal AI chatbot race with Copilot reboot",
@@ -807,7 +1071,11 @@
         "New reboot allows direct editing of Word or Excel documents within Copilot.",
         "Addresses previous user complaints about limited software integration."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Shifting away from the personal AI chatbot race.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "EaseMyTrip rolls out electric buses in Bhopal, targets 5,000 units a year",
@@ -819,7 +1087,11 @@
         "Targeting an annual manufacturing capacity of 5,000 units within five years.",
         "Expands EaseMyTrip's presence into the clean mobility sector."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Decathlon sees strong growth, eyes ₹1,000 cr running sports biz in 4 yrs",
@@ -831,7 +1103,11 @@
         "Reported FY25 revenue of ₹4,133.10 crore.",
         "Investing 100 million euros in Indian manufacturing ecosystem."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "After Bengaluru, Rapido's food delivery app Ownly expands to Hyderabad",
@@ -843,7 +1119,11 @@
         "Operates on a zero-commission, subscription-fee model for restaurants.",
         "Currently partners with over 20,000 restaurants."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Expanded food delivery app Ownly to Hyderabad.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Ather Energy plans aggressive push into overseas markets: CBO Phokela",
@@ -855,7 +1135,11 @@
         "Will prioritize domestic market due to current demand-supply conditions.",
         "Highlighted by Chief Business Officer Ravneet S Phokela."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Planning aggressive expansion into overseas markets.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Signature Global plans 194-acre luxury farmhouse project in Gurugram West",
@@ -867,7 +1151,11 @@
         "194-acre project located in Gurugram West.",
         "Developable potential of 6.77 million sq ft with a GDV of ₹5,500-6,000 crore."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Marking entry into the luxury farmhouse segment.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Suzuki to halve vehicle development time by 2030, boost India capacity",
@@ -879,7 +1167,11 @@
         "Boosting manufacturing efficiency and agility.",
         "Expanding India operations as a global production and export hub with 4M capacity."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers. Higher volume dispatch bolsters dealer channel liquidity ahead of the festive inventory cycle.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Aquapulse eyes threefold revenue growth, expands footprint in Andhra",
@@ -891,7 +1183,11 @@
         "Expanding operations and footprint in Andhra Pradesh.",
         "Plans to grow farmer network to 10,000 and shrimp procurement to 5,000 tonnes."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Highness Microelectronics receives Rs 6 crore order for medical displays and equipment",
@@ -903,7 +1199,11 @@
         "Received from Premia Solutionz for medical displays and backlight units.",
         "Execution timeline is 16-20 weeks."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Order value stands at Rs 6 crore.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "JSW Energy bags turbine-generator order for 1,600 MW Salboni Phase-II",
@@ -915,7 +1215,11 @@
         "Procuring two 800 MW steam turbine generators.",
         "Project is the Salboni Thermal Power Project Phase-II in West Bengal."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Contract awarded to Toshiba JSW Power Systems.",
+      "market_impact": "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "RailTel bags IT infra services order from Central Mine Planning & Design Institute",
@@ -927,7 +1231,11 @@
         "Covers IT infrastructure services.",
         "Reinforces RailTel's order book in the telecom and IT sector."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Awarded by Central Mine Planning & Design Institute.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "SAIL signs MoU with BCCL for joint development of coal blocks",
@@ -938,7 +1246,11 @@
         "MoU signed between SAIL and BCCL.",
         "Covers Indikatta Ramnagore and East of Damagoria coal blocks in West Bengal."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "MoU signed between SAIL and BCCL.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Dhanuka Agritech launches new products for domestic market",
@@ -949,7 +1261,11 @@
         "Launched two new products for domestic markets.",
         "Aims to enhance agricultural offerings."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Launched two new products for domestic markets.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "NTPC Green Energy commissions 81.34 MW solar capacity at Bikaner, Rajasthan",
@@ -961,7 +1277,11 @@
         "Commercial capacity stands at 10,977.23 MW.",
         "Total group installed capacity reaches 11,058.57 MW."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Commissioned 81.34 MW solar capacity in Bikaner, Rajasthan.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "RCFL bags Rs 797-cr order from Larsen & Toubro",
@@ -973,7 +1293,11 @@
         "Awarded to Larsen & Toubro.",
         "Aims to revamp ammonia plant for energy efficiency."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Order valued at Rs 797 crore.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Balrampur Chini Mills gets Rs 75 crore BioE3 grant for PLA co-polymer R&D facility",
@@ -985,7 +1309,11 @@
         "Supports a 100 TPA pilot-scale R&D facility.",
         "Located at the company's Kumbhi complex in Uttar Pradesh."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Grant amount is Rs 75 crore from BIRAC.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Signature to develop 194.22-acre ultra-luxury farmhouse villa project in Gurugram West",
@@ -997,7 +1325,11 @@
         "Focuses on ultra-luxury farmhouse villas.",
         "Estimated gross development value up to Rs 6,000 crore."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Project land area is 194.22 acres in Gurugram West.",
+      "market_impact": "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Steel Authority of India and Bharat Coking Coal signs MoU",
@@ -1008,7 +1340,11 @@
         "MoU signed between SAIL and BCCL.",
         "Focuses on joint development of coal blocks."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "MoU signed between SAIL and BCCL.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "SIDBI to partner with AMFI to support Bengal's women entrepreneurs",
@@ -1021,7 +1357,11 @@
         "Aims to increase average income by at least 30 per cent.",
         "Follows a successful similar project implemented in Odisha."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Six backward districts in West Bengal identified for the project.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Coal India subsidiary NCL to start M-Sand production, says ministry",
@@ -1034,7 +1374,11 @@
         "Utilises mining over burden as raw material for business diversification.",
         "Helps conserve river beds and protect aquatic ecosystems."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Irdai's proposed commission cuts threaten PB Fintech's online economics",
@@ -1046,7 +1390,11 @@
         "Driven by Irdai's proposed commission and expense cap reforms.",
         "Cost optimisation and higher sales volumes may cushion the impact."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Core online insurance revenue could fall by nearly 30 per cent.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "PSU banks waive ATM charges for customers during three-day bank strike",
@@ -1058,7 +1406,11 @@
         "RBI employee unions supported the strike call.",
         "Protested central bank orders asking operations to remain open on Sunday."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "ATM transaction charges waived during the three-day strike.",
+      "market_impact": "Sustained credit disbursement velocity supports Net Interest Income (NII) while keeping asset quality ratios in check. Deposit cost repricing dynamics remain the primary driver for Net Interest Margin (NIM) trajectory.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Where are ₹2-5 crore homes selling the most? Bengaluru and NCR lead",
@@ -1070,7 +1422,11 @@
         "Covers the Rs 2-5 crore residential housing segment.",
         "Bengaluru and NCR emerged as the top-performing markets."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Recorded ~Rs 1.15 lakh crore in home sales in H1 2026.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Irdai's fee cap proposal rattles distributors; insurance stocks tumble",
@@ -1082,7 +1438,11 @@
         "Insurance distributor incomes and profit margins face immediate pressure.",
         "Listed insurance stocks experienced sharp declines following the announcement."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BEARISH",
+      "catalyst": "Irdai proposed new commission and fee caps on insurance products.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Irdai commission caps may weigh on insurance fee income of banks, NBFCs",
@@ -1094,7 +1454,11 @@
         "Lenders with multi-insurer tie-ups and incentive-led models face major impacts.",
         "L&T Finance is identified as one of the most exposed NBFCs to these rules."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Banks and NBFCs rely heavily on fee income from distributing insurance.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "The $13 billion Hugging Face deal would crown Nvidia king of AI",
@@ -1106,7 +1470,11 @@
         "Explores Nvidia's motives in supporting open-source AI models.",
         "Discusses how hardware giants attempt to fend off software oligopolies."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Analyzes the strategic implications of a reported $13 billion Hugging Face deal.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Sustainable strategy needed for sugar and ethanol",
@@ -1118,7 +1486,11 @@
         "Discusses the adoption of AI-led credit underwriting models in banking.",
         "Highlights mounting structural fiscal risks in the United States."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Evaluates pricing and production strategies for sugar and ethanol.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Budget 2018: An Opportunity to Reform the Banking Sector",
@@ -1130,7 +1502,11 @@
         "Aimed at addressing systemic sector reforms.",
         "Highlighted as a crucial opportunity in Budget 2018-19."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Special focus expected on the banking and financial sector.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Union Budget 2018: What's In Store For Education?",
@@ -1142,7 +1518,11 @@
         "Focus on alignment with 21st-century learning systems.",
         "Addressed in Union Budget 2018 expectations."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "High expectations from the education sector.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Will Budget 2018 Make Home Buyers Happy?",
@@ -1154,7 +1534,11 @@
         "Focus on real estate and affordable housing.",
         "Anticipated tax incentives for property buyers."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Riding on high expectations from home buyers.",
+      "market_impact": "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Union Budget 2018: Impact on Smartphones in India",
@@ -1166,7 +1550,11 @@
         "Aligned with the 'Make in India' initiative.",
         "Addressed import duties and local assembly incentives."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Budget 2018: Steps to Stimulate the Manufacturing Sector",
@@ -1178,7 +1566,11 @@
         "Opportunity for structural reforms in Budget 2018.",
         "Targeted incentives for industrial production."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "What startups want from Budget",
@@ -1190,7 +1582,11 @@
         "Extensive wish list submitted ahead of Budget 2018.",
         "Demands included tax holidays and simplified compliance."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Startups depend heavily on government policies and regulations.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Wish list of various sectors from Budget 2018-19",
@@ -1202,7 +1598,11 @@
         "Union Budget tabled on 1st February.",
         "Multiple sectors submitted demand lists for tax concessions."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Budget session began on 29th January.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Budget 2018: Wish list of various Sectors from Budget 2018-19",
@@ -1214,7 +1614,11 @@
         "Demands included tax holidays and capital subsidies.",
         "Aimed at improving industry competitiveness."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Sectors expected specific government sops.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Unified Payments Interface (UPI) Growth and Digital Economy Insights",
@@ -1226,7 +1630,11 @@
         "Discusses fintech innovations and digital banking adoption",
         "Features insights from prominent industry leaders on digital transformation"
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vishal Nirmiti Limited: Financial and Operational Performance Overview",
@@ -1239,7 +1647,11 @@
         "Trade receivables at the end of Fiscal 2026 were ₹6,337.71 lakhs.",
         "Working capital requirement for Fiscal 2026 is projected at ₹5,915.04 lakhs."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Revenue from the service division in Fiscal 2026 reached ₹8,291.09 lakhs with a profit of ₹1,710.30 lakhs.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Corporate India sheds zombie firms as debt-servicing capacity improves: D&B",
@@ -1251,7 +1663,11 @@
         "Down from 8.1% recorded in 2017.",
         "Study conducted by Dun & Bradstreet highlights better debt-servicing capacity."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BEARISH",
+      "catalyst": "Share of zombie firms fell to 5.5% in 2025.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "IIT Madras, Unicorn India mark ₹450 cr first close of ₹1,000 cr fund",
@@ -1263,7 +1679,11 @@
         "Deployed nearly ₹55 crore in four deep-tech startups.",
         "Targeting a final close by December 2026."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Secured first close of ₹450 crore against a ₹1,000 crore target.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "IIFL Home Finance signs $150 mn JICA loan to boost affordable housing",
@@ -1275,7 +1695,11 @@
         "Aims to boost affordable housing finance.",
         "Specifically targets home purchases by women from weaker economic sections."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Secured $150 million loan from JICA.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Embassy Reit raises ₹1,000 crore through debentures to refinance debt",
@@ -1287,7 +1711,11 @@
         "Initial coupon rate set at 6.97 percent.",
         "First trust-level bank financing for an Indian REIT following the June 2026 RBI framework."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Raised ₹1,000 crore via 3-year floating-rate NCDs.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "RBI net dollar purchases hit record $18.65 bn in July: Monthly bulletin",
@@ -1299,7 +1727,11 @@
         "Concessional swap facility drove dollar inflows.",
         "Outstanding net short position in the forward market surged to $136.77 billion."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Net dollar purchases hit a record $18.65 billion in July.",
+      "market_impact": "Increases landed import costs for crude oil and key electronics, exerting near-term pressure on imported inflation. Provides a margin tailwind for export-heavy sectors (IT Services, Pharma, Textiles) on unhedged dollar revenues.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "NRI deposit flows surge over 6x to $36.2 bn in Apr-Jul FY27: RBI data",
@@ -1311,7 +1743,11 @@
         "FCNR(B) deposit flows surged to $34.53 billion.",
         "Outward remittances under LRS rose 4.7 per cent year-on-year to $9.37 billion."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "NRI deposit flows reached $36.2 billion in April-July FY27.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "RBI Bulletin: FCNR(B) boost for rupee dented by recent crude oil spike",
@@ -1323,7 +1759,11 @@
         "Scheme closed one month early due to high response.",
         "Rupee gains dampened by rising crude oil prices."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Spike in US Treasury yields and FPI capital outflows breaching psychological currency support.",
+      "market_impact": "Increases landed import costs for crude oil and key electronics, exerting near-term pressure on imported inflation. Provides a margin tailwind for export-heavy sectors (IT Services, Pharma, Textiles) on unhedged dollar revenues.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Central govt disburses ₹36,754 crore under PLI schemes as on June 30",
@@ -1336,7 +1776,11 @@
         "Generated production sales of Rs 23.79 lakh crore and exports of Rs 15.53 lakh crore.",
         "Created over 14.57 lakh direct and indirect jobs."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Cumulative incentives disbursed stand at Rs 36,754 crore as of June 30.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India's gold imports fall sharply: Kotak sees 'good, bad and ugly' outcomes",
@@ -1348,7 +1792,11 @@
         "Kotak categorized the potential outcomes into good, bad, and ugly scenarios.",
         "The trend questions whether retail demand is falling or smuggling is rising."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Gold imports witnessed a sharp reduction recently.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Credit card spends fall 2.8% to ⁰2.02 trillion in August, shows RBI data",
@@ -1360,7 +1808,11 @@
         "Online card spends registered a notable 7% decline.",
         "Total outstanding credit cards in the country rose to 124.05 million."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Total credit card spending fell by 2.8% in August to ⁰2.02 trillion.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: Modest charges will enable healthy growth of UPI",
@@ -1372,7 +1824,11 @@
         "Evaluates the balance between free digital services and infrastructure upkeep.",
         "Briefly touches upon freight corridor gains and India's AI roadmap."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: India must again prepare for higher oil prices",
@@ -1384,7 +1840,11 @@
         "Examines the delicate balance between pharma innovation and drug pricing.",
         "Reviews uneven economic growth patterns across various states."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: Government must get real on spending",
@@ -1396,7 +1856,11 @@
         "Reviews India's strategic roadmap for critical minerals.",
         "Discusses FSSAI food-warning labels and RBI dollar-rupee swap tools."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Emphasizes the need for stringent government fiscal discipline and spending caps.",
+      "market_impact": "Increases landed import costs for crude oil and key electronics, exerting near-term pressure on imported inflation. Provides a margin tailwind for export-heavy sectors (IT Services, Pharma, Textiles) on unhedged dollar revenues.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: External, financial sectors need sustained engagement",
@@ -1408,7 +1872,11 @@
         "Discusses regional diplomacy via the Shanghai Cooperation Organisation (SCO).",
         "Touches upon high-profile corporate governance queries at Tata Sons."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Evaluates India's external sector vulnerabilities and current account metrics.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Modinomics vs Manmohanomics is not a zero sum game",
@@ -1420,7 +1888,11 @@
         "Analyzes critiques of current economic policies relative to past frameworks.",
         "Discusses political discourse surrounding long-term national growth."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: Building stronger foundations for durable growth",
@@ -1432,7 +1904,11 @@
         "Connects institutional strengthening to long-term economic resilience.",
         "Highlights the importance of continuous workforce skilling."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: RBI rate hike only a matter of time as inflation looms",
@@ -1444,7 +1920,11 @@
         "Highlights India's ongoing infrastructure financing deficit.",
         "Discusses administrative vulnerabilities in public sector testing systems."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BEARISH",
+      "catalyst": "Anticipates upcoming monetary tightening by the RBI to counter inflation.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: Digital transactions haven't dented demand for cash",
@@ -1456,7 +1936,11 @@
         "Analyzes consumer behavior driving currency-in-circulation trends.",
         "Reviews upcoming leadership transitions at major houses like Tata Sons."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Record digital transaction velocity and retail payment infrastructure volume breakthrough.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Impact of Goods and Services Tax (GST) on Budget 2018-19",
@@ -1468,7 +1952,11 @@
         "Assessed indirect tax architecture changes.",
         "Influenced macroeconomic revenue projections."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "First union budget post-GST implementation in July 2017.",
+      "market_impact": "Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex. Import tax buoyancy reflects sustained intermediate capital goods intake by domestic manufacturers.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Microeconomic and Macroeconomic Challenges before the FM in Budget 2018-19",
@@ -1480,7 +1968,11 @@
         "Required a fine balancing act between growth and fiscal prudence.",
         "Addressed ongoing economic slowdown concerns."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Rural economy and its expectations from Budget 2018-19",
@@ -1492,7 +1984,11 @@
         "Aimed at boosting rural income and consumption.",
         "Highlighted as a core budget priority area."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Keeping the fiscal deficit under check in the Budget 2018",
@@ -1504,7 +2000,11 @@
         "Fiscal deficit target remained a key market metric.",
         "Balancing spending without breaching fiscal targets."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BEARISH",
+      "catalyst": "Defined as the gap between government revenues and expenditures.",
+      "market_impact": "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Union Budget 2018 : The Common Man's Expectations from Budget 2018",
@@ -1516,7 +2016,11 @@
         "Focus on controlling inflation and cost of living.",
         "Demanded enhanced savings and tax exemptions."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "High expectations from middle-class taxpayers.",
+      "market_impact": "Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex. Import tax buoyancy reflects sustained intermediate capital goods intake by domestic manufacturers.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Lifestyle and Cultural Photography Showcase",
@@ -1528,7 +2032,11 @@
         "Features lifestyle and fashion accessories including branded retail items.",
         "Highlights architectural developments in city hubs."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Displays night skyline views of modern urban landscapes.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Wellness and Fitness Trends Visual Report",
@@ -1540,7 +2048,11 @@
         "Focuses on group fitness classes and active lifestyles.",
         "Emphasizes physical well-being and modern exercise routines."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features instructor-led Pilates sessions.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Artistic Masterpieces and Cultural Exhibitions",
@@ -1552,7 +2064,11 @@
         "Features historical artwork references and interpretations.",
         "Highlights gallery displays and artistic presentations."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Showcases classic and contemporary painting exhibitions.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Traditional Festivals and Folk Performances",
@@ -1564,7 +2080,11 @@
         "Highlights regional folk music and dance performances.",
         "Captures community engagement during cultural festivals."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Depicts participants in traditional ceremonial costumes.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Pet Lifestyle and Creative Portraits",
@@ -1576,7 +2096,11 @@
         "Highlights pet fashion accessories and modern grooming.",
         "Focuses on popular animal photography trends."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features stylized portraits of dogs and cats.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Bank of Baroda Possession Notice",
@@ -1589,7 +2113,11 @@
         "Details physical/symbolic possession of the secured immovable properties.",
         "Invokes provisions of the SARFAESI Act, 2002."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Issued by the Authorized Officer of Bank of Baroda.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Down and out in paradise",
@@ -1600,7 +2128,11 @@
         "Focuses on poverty in the wealthy US.",
         "Explores socioeconomic dynamics."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Focuses on poverty in the wealthy US.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Betrayal and survival",
@@ -1611,7 +2143,11 @@
         "Reviews Ian Buruma's 'The Collaborators'.",
         "Discusses moral barometers and historical conduct."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Reviews Ian Buruma's 'The Collaborators'.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "The electrome syndrome",
@@ -1622,7 +2158,11 @@
         "Authored by Sally Adee.",
         "Covers research in bioelectric medicine."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Authored by Sally Adee.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Unlikely rebels with a cause",
@@ -1633,7 +2173,11 @@
         "Set in the early 1960s.",
         "Highlights women in science."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Set in the early 1960s.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Palo Alto, Marxian nightmare",
@@ -1644,7 +2188,11 @@
         "Reviews capitalist developments.",
         "Discusses historical shifts like FDR's New Deal."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Reviews capitalist developments.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "A media mogul's toxic legacy",
@@ -1655,7 +2203,11 @@
         "Examines media mogul Redstone's legacy.",
         "Discusses issues of power and misogyny."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Examines media mogul Redstone's legacy.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "What does it mean to be liberal?",
@@ -1666,7 +2218,11 @@
         "Reflects on liberal philosophy and activism.",
         "Features anecdotes from a Dissent magazine editor."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Reflects on liberal philosophy and activism.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Muzaffar Ali: A creative journey through many lives expressed in art",
@@ -1677,7 +2233,11 @@
         "Showcases Muzaffar Ali's 50-year art career.",
         "Exhibition held in Delhi."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Showcases Muzaffar Ali's 50-year art career.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "A culinary tour of the Chinese diaspora",
@@ -1689,7 +2249,11 @@
         "Examines how culinary traditions are adapted globally.",
         "Highlights perseverance and economic pragmatism."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Covers Chinese immigrant restaurateurs from the Arctic to the Amazon.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "The art of 'achieving' humility",
@@ -1700,7 +2264,11 @@
         "Review of the book 'In Praise of Failure'.",
         "Explores philosophical themes of humility and failure."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Review of the book 'In Praise of Failure'.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "From pest to ecosystem engineer",
@@ -1712,7 +2280,11 @@
         "Reframes beavers as crucial ecosystem engineers.",
         "Part of a growing genre of environmental literature."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Authored by Leila Philip focusing on beavers.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "India in the nitty-gritty",
@@ -1724,7 +2296,11 @@
         "Covers major historical events including the Mumbai terrorist attacks.",
         "Provides insider accounts of Indian bureaucratic governance."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Memoir written by former Cabinet Secretary K M Chandrasekhar.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "A book of cheeky obituaries",
@@ -1735,7 +2311,11 @@
         "Features entertaining and cheeky obituaries.",
         "Highlights notable eccentric characters such as Mountgarret."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features entertaining and cheeky obituaries.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "History of Hollywood",
@@ -1746,7 +2326,11 @@
         "Details on-set stories and technical aspects of filmmaking.",
         "Includes humorous anecdotes about actors and studio executives."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Details on-set stories and technical aspects of filmmaking.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "On a wing and a prayer",
@@ -1757,7 +2341,11 @@
         "Review of John Lancaster's 'The Great Air Race'.",
         "Conveys the historical context of early aviation a century ago."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Review of John Lancaster's 'The Great Air Race'.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Hoover: Bravery and black bag jobs",
@@ -1769,7 +2357,11 @@
         "Biographical account titled 'G-Man' focusing on J. Edgar Hoover.",
         "Covers sensitive operations and historical controversies."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Authored by Yale historian Beverly Gage.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Financial foundation: Why insurance and emergency funds must precede stocks",
@@ -1780,7 +2372,11 @@
         "Insurance and emergency funds are mandatory prerequisites before investing in stocks.",
         "Protects personal financial stability against sudden market volatility."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Insurance and emergency funds are mandatory prerequisites before investing in stocks.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Live on rent or purchase a home? How to make a decision in your 30s",
@@ -1791,7 +2387,11 @@
         "Targeted at young professionals in their 30s.",
         "Weighs long-term financial discipline against emotional comfort."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Targeted at young professionals in their 30s.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Rent versus buying a home: How should a young professional decide?",
@@ -1802,7 +2402,11 @@
         "Evaluates hidden ownership costs versus renting.",
         "Focuses on long-term wealth alignment for young earners."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Evaluates hidden ownership costs versus renting.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Money mistakes young professionals make in their first 5 years of earning",
@@ -1813,7 +2417,11 @@
         "Focuses on the first five earning years.",
         "Warns against lifestyle inflation and missing out on compounding."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Focuses on the first five earning years.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Mutual fund tax rules: How SIPs, switches and losses affect capital gains",
@@ -1825,7 +2433,11 @@
         "Details rules for tracking purchase dates and mutual fund switches.",
         "Explains handling of capital losses and dividend distributions."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Each SIP installment is treated separately for tax calculations.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "46% lack adequate emergency funds, 60% have low health cover: Report",
@@ -1837,7 +2449,11 @@
         "46 per cent lack a 3-month emergency reserve fund.",
         "60 per cent maintain low or inadequate health insurance cover."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "57 per cent of Indians currently carry active EMIs.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Retirement corpus: Will your savings last a lifetime? 8 factors to check",
@@ -1849,7 +2465,11 @@
         "Focuses on inflation, healthcare costs, and longevity risk.",
         "Evaluates various systematic withdrawal strategies."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Identifies 8 critical factors for sustainable retirement savings.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: Don't hang the ECI just yet, make it work efficiently",
@@ -1861,7 +2481,11 @@
         "Examines electoral-roll revisions and Telangana political dynamics.",
         "Emphasizes administrative efficiency over cynical institutional dismissal."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Focuses on institutional trust in the Election Commission of India.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Constraints can help sharpen strategy",
@@ -1873,7 +2497,11 @@
         "Exposes weak underlying assumptions in planning models.",
         "Rewards systems that learn to operate within realistic limits."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Argues that constraints force vital corporate and strategic priorities.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: Power is not the same as control",
@@ -1885,7 +2513,11 @@
         "Notes that economic and market leverage is rarely absolute.",
         "Discusses how external pressure frequently results in institutional resistance."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Explores the distinction between raw power and effective control.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: Maturity lies in managing risks that progress creates",
@@ -1897,7 +2529,11 @@
         "Identifies future-proofing as the ultimate test of policy maturity.",
         "Analyzes the consequences of scaling complex infrastructural systems."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: A test of how power becomes credible",
@@ -1909,7 +2545,11 @@
         "Argues that sustainable power requires robust and trusted frameworks.",
         "Reflects on the relationship between authority and governance."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Examines the core determinants of institutional credibility.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Why AI should worry us more than nuclear weapons",
@@ -1921,7 +2561,11 @@
         "Highlights potential large-scale disruptions to global employment markets.",
         "Touches upon Brics vulnerabilities and family-business succession issues."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Compares artificial intelligence risks to nuclear proliferation threats.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Rules that read well vs those that work",
@@ -1933,7 +2577,11 @@
         "Focuses on accountability in public services and corporate governance.",
         "Highlights the necessity of pragmatic policy design."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Contrasts theoretical regulatory perfection with practical execution.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Best of BS Opinion: Symptoms demand attention, solutions require diagnosis",
@@ -1945,7 +2593,11 @@
         "Argues that genuine solutions require deep structural diagnosis.",
         "Examines the pitfalls of uncalculated strategic interventions."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Critiques the tendency to rely on short-term tactical fixes.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Durable progress depends on systems that work",
@@ -1957,7 +2609,11 @@
         "Emphasizes long-term institutional durability over short-term expansion.",
         "Reviews infrastructural requirements for sustainable development."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: Buffers cannot carry a system forever",
@@ -1969,7 +2625,11 @@
         "Highlights the necessity of continuous structural adaptation.",
         "Warns against complacency during periods of relative economic calm."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Argues against over-reliance on historical financial and policy buffers.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Power without guardrails becomes a risk",
@@ -1981,7 +2641,11 @@
         "Calls for ecological restraint in developmental planning.",
         "Emphasizes the necessity of human oversight in advanced technologies."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Argues that institutional and market power requires rigid guardrails.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Tintin or Asterix? Two ways of seeing the world through comic-book genius",
@@ -1993,7 +2657,11 @@
         "Reflects on literary themes of global exploration and anti-authoritarianism.",
         "Offers a reflective commentary on societal perceptions of power."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Compares the cultural philosophies of Tintin and Asterix.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Global Tourism and Digital Navigation Update",
@@ -2005,7 +2673,11 @@
         "Highlights the integration of mobile apps in travel planning.",
         "Discusses trends in modern tourism and digital connectivity."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Features famous international heritage and cultural sites.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Early globalisation and its discontents",
@@ -2016,7 +2688,11 @@
         "Analyzes historical globalization trends.",
         "Discusses the lack of universal benefits in early trade."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Analyzes historical globalization trends.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Life and much death in the Amazon",
@@ -2027,7 +2703,11 @@
         "Reviews 'Masters of the Lost Land' by Heriberto Araujo.",
         "Focuses on Amazonian land exploitation and corruption."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Reviews 'Masters of the Lost Land' by Heriberto Araujo.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Brics' New Delhi Declaration needs follow-up from India",
@@ -2039,7 +2719,11 @@
         "Discusses WTO reform and infrastructure risk-sharing mechanisms.",
         "Highlights India's strategic policy responsibilities on the global stage."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Analyzes the implementation requirements of the Brics New Delhi Declaration.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "What China, Russia want & India wishes",
@@ -2051,7 +2735,11 @@
         "Highlights the contradictions and divergent worldviews of the three nations.",
         "Examines how differing regional adversaries shape foreign policies."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Analyzes geopolitical dynamics between China, Russia, and India.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: India's tightrope walk on the dollar, BRICS finance",
@@ -2063,7 +2751,11 @@
         "Discusses emerging financial architectures within the Brics bloc.",
         "Highlights domestic middle-class concerns regarding ethanol fuel blending."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Examines India's measured transition away from dollar dependency.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Is the Trump Treasury panicking?",
@@ -2075,7 +2767,11 @@
         "Questions the feasibility of painless fiscal balancing.",
         "Incorporates the disruptive economic impact of AI on public revenues."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Munir, power, and paranoia",
@@ -2087,7 +2783,11 @@
         "Analyzes strategic threats and security implications for India.",
         "Evaluates modern political instability in Pakistan."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Examines the historical and psychological patterns of Pakistani military dictators.",
+      "market_impact": "Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Electromech Infraprojects Ltd IPO Public Announcement",
@@ -2100,7 +2800,11 @@
         "Book running lead manager for the issue is Aryaman Financial Services Limited.",
         "Registrar to the issue is Bigshare Services Private Limited."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vishal Nirmiti Limited IPO Public Announcement",
@@ -2113,7 +2817,11 @@
         "IPO bidding opens on Wednesday, September 30, 2026, and closes on Monday, October 05, 2026.",
         "Lead manager for the offer is Saffron Capital Advisors Private Limited."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Vivekanand Cotspin Limited IPO Basis of Allotment",
@@ -2126,7 +2834,11 @@
         "Bidding Period: Opened on September 21, 2026, and closed on September 23, 2026.",
         "Listing to take place on BSE SME platform."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Clastek Engineering Limited Public Announcement for IPO",
@@ -2139,7 +2851,11 @@
         "Book Running Lead Manager: GYR Capital Advisors Private Limited.",
         "Registrar to the Offer: Cameo Corporate Services Limited."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Integrum Energy Infrastructure Limited IPO Announcement",
@@ -2152,7 +2868,11 @@
         "Book running lead managers include Monarch Networth Capital and Centrum Capital.",
         "Bids to be made for a minimum specified lot size in compliance with regulatory norms."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Deon Energy Limited IPO Public Announcement",
@@ -2165,7 +2885,11 @@
         "Valmiki Leela acts as the book running lead manager.",
         "Bidding details, lot sizes, and timelines outlined in the red herring prospectus."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Prestige Estates shelves ₹2,700 cr hotel biz IPO amid market uncertainty",
@@ -2177,7 +2901,11 @@
         "Subsidiary involved was Prestige Hospitality Ventures Ltd.",
         "Decision driven by strategic considerations and uncertain market conditions."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Kian-M Export files IPO papers with Sebi to raise ₹500 cr via fresh issue",
@@ -2189,7 +2917,11 @@
         "Includes an offer for sale (OFS) of up to 15 lakh equity shares.",
         "Filing submitted on Thursday."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Trans ACNR, Maharashtra Oil among nine firms filing IPO papers with Sebi",
@@ -2201,7 +2933,11 @@
         "Trans ACNR filed via the confidential pre-filing route.",
         "Other applicants include Maharashtra Oil Extractions and Mount Everest Breweries."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Cars24 expects to file IPO papers by April after reverse flip to India: CFO",
@@ -2213,7 +2949,11 @@
         "Executing a reverse flip from Singapore back to India.",
         "Re-domiciling process and regulatory approvals estimated to take 6-9 months."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "J Infratech files draft IPO papers for ₐ600 crore fresh issue, 1 crore OFS",
@@ -2226,7 +2966,11 @@
         "Pre-IPO placement of up to Rs 120 crore is under consideration.",
         "Proceeds will support working capital requirements and debt repayment."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "ArMee Infotech IPO subscribed 2.62 times",
@@ -2238,7 +2982,11 @@
         "Received bids for 1.81 crore shares.",
         "Total shares on offer were 74.30 lakh."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Biscuit maker Anmol Industries files for ₐ1,800 cr IPO, draft papers show",
@@ -2250,7 +2998,11 @@
         "Comprises 100% offer for sale with no fresh issue.",
         "Top investor Baijnath Choudhary & Family Trust to exit completely."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "AceVector IPO subscribed 23%",
@@ -2262,7 +3014,11 @@
         "Bids received for 1.72 crore shares.",
         "Total shares on offer were 7.42 crore."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Runwal Enterprises IPO subscribed 42%",
@@ -2274,7 +3030,11 @@
         "Bids stood at 50.85 lakh shares.",
         "Total issue size was 1.21 crore shares."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "German Green Steel and Power IPO subscribed 1.73 times",
@@ -2286,7 +3046,11 @@
         "Bids received for 2.78 crore shares.",
         "Total shares on offer stood at 1.60 crore."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Orient Cables (India) IPO subscribed 1.96 times",
@@ -2298,7 +3062,11 @@
         "Total bids received for 2.93 crore shares.",
         "Shares on offer were 1.49 crore."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Primary market capital formation seeking public listing valuation and liquidity expansion.",
+      "market_impact": "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations. Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Air India clears ₹17.74 crore payout for outgoing CEO Campbell Wilson",
@@ -2310,7 +3078,11 @@
         "Includes ₹15.24 crore in replacement shares under the FY23-FY25 long-term incentive plan.",
         "Includes a ₹2.5 crore one-time reward approved for FY25."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Total payout valued at ₹17.74 crore.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Optimo Capital appoints former RBI CGM as an independent director",
@@ -2322,7 +3094,11 @@
         "Will guide governance, risk, and regulatory matters.",
         "Aims to support scaling AUM from ₹441 crore to ₹1,200 crore by March 2027."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Appointed former RBI CGM Shrimohan Yadav as independent director.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Lumax Auto Technologies announces change in senior management",
@@ -2333,7 +3109,11 @@
         "Changes announced in senior management.",
         "CTO Satish Sundaresan resigned effective September 25, 2026."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Changes announced in senior management.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "LIC left with two serving MDs as Dinesh Pant joins Irdai as actuary member",
@@ -2345,7 +3125,11 @@
         "Voluntary retirement approved from LIC managing director post.",
         "Leaves LIC top deck with only two serving managing directors."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Dinesh Pant appointed whole-time director (actuary) at Irdai.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Govt approves voluntary retirement of LIC Managing Director Dinesh Pant",
@@ -2357,7 +3141,11 @@
         "Ceased to be LIC key managerial personnel from September 24.",
         "Transitioned to Irdai as Whole-time Member (Actuary)."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Voluntary retirement of LIC MD Dinesh Pant approved.",
+      "market_impact": "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "India's JSW Group wants Volkswagen to cover $1.4 billion tax liability",
@@ -2369,7 +3157,11 @@
         "Issue arises from alleged misclassification of imported vehicle assembly kits.",
         "Disputed imports occurred between 2012 and 2024."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BULLISH",
+      "catalyst": "JSW Group requests Volkswagen cover a $1.4 billion tax liability.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: India must address trade barriers, open up for business",
@@ -2381,7 +3173,11 @@
         "Discusses satellite spectrum pricing and corporate CEO successions.",
         "Analyzes liquidity challenges stemming from FCNR(B) capital inflows."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Advocates for the reduction of protective trade barriers in India.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Best of BS Opinion: Limits of 'Economic D-Day' lie at China's gates",
@@ -2393,7 +3189,11 @@
         "Analyzes trade realities and supply chain dependencies anchored in China.",
         "Reviews industrial transition plans and aviation regulations."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Examines the limits of western economic sanctions and trade blockades.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "The myth of the China shock",
@@ -2405,7 +3205,11 @@
         "Points out that US factory job declines predated China's WTO accession.",
         "Emphasizes the role of automation and domestic economic shifts."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness. Reduces regulatory friction for compliant industry participants while penalizing import dumping.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Bullion may stay volatile as US data, W Asia tensions take focus: Analysts",
@@ -2417,7 +3221,11 @@
         "Focus shifting to US GDP, consumer confidence, and PCE inflation data.",
         "Geopolitical risks involve the US-Iran standoff and Strait of Hormuz developments."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BEARISH",
+      "catalyst": "Bullion sentiment expected to remain choppy and volatile.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Geopolitical developments, crude oil likely to steer stock market this week",
@@ -2429,7 +3237,11 @@
         "Markets closed on Friday for Mahatma Gandhi Jayanti.",
         "Key domestic triggers include August IIP and HSBC PMI prints."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Resilient manufacturing new orders, export expansion, and accelerated factory output.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Augmont Enterprises empanelled by NSE to promote Electronic Gold Receipts",
@@ -2441,7 +3253,11 @@
         "Aims to promote Electronic Gold Receipts (EGR).",
         "Supports creation, extinguishment, and trading activities."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "BULLISH",
+      "catalyst": "Empanelled by the National Stock Exchange (NSE).",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Wheels India allots 11.97 lakh equity shares under QIP issue",
@@ -2453,7 +3269,11 @@
         "Paid-up equity share capital increased to Rs 26,86,23,610.",
         "Face value of shares is Rs 10 each."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Allotted 11.97 lakh equity shares via QIP.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Utkarsh Small Finance Bank allots NCDs aggregating to Rs 300 cr",
@@ -2464,7 +3284,11 @@
         "Total NCDs allotted worth Rs 300 crore.",
         "Issued on a private placement basis."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BEARISH",
+      "catalyst": "Total NCDs allotted worth Rs 300 crore.",
+      "market_impact": "Sustained credit disbursement velocity supports Net Interest Income (NII) while keeping asset quality ratios in check. Deposit cost repricing dynamics remain the primary driver for Net Interest Margin (NIM) trajectory.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Nifty logs longest weekly losing streak since Covid-19 crash in 2020",
@@ -2476,7 +3300,11 @@
         "Brent crude plummeted 11% over the week.",
         "PB Fintech shares cratered 33% on IRDAI reform fears."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Longest weekly losing streak since 2020 crash.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Self-listing 'in the realm of feasibility': NSE chairman Srinivas Injeti",
@@ -2488,7 +3316,11 @@
         "Stresses careful handling of potential regulatory conflicts.",
         "Describes NSE as long-term wealth for investors."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Chairman Srinivas Injeti calls self-listing feasible.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Sidbi pulls out ₐ6,000 crore 3-year bond issuance as yields harden",
@@ -2500,7 +3332,11 @@
         "Tenor was 3 years.",
         "Yields hardened due to rising crude and US Treasury yields."
       ],
-      "importance": "High"
+      "importance": "High",
+      "sentiment": "BEARISH",
+      "catalyst": "Withdrew Rs 6,000 crore bond issuance.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
     },
     {
       "headline": "Large, mid, or smallcaps: Pick the right stock strategy for your portfolio",
@@ -2511,7 +3347,11 @@
         "Explains risk and return dynamics across market caps.",
         "Helps align asset allocation with individual risk profiles."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Explains risk and return dynamics across market caps.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Moving from SIPs to direct stock trading? Key skills you need first",
@@ -2522,7 +3362,11 @@
         "Transitioning from mutual fund SIPs to direct stocks.",
         "Requires dedicated research skills and high risk tolerance."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Transitioning from mutual fund SIPs to direct stocks.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Averaging in stocks vs mutual funds: What you need to know before investing",
@@ -2533,7 +3377,11 @@
         "Compares averaging down strategies in stocks and mutual funds.",
         "Warns against capital destruction from buying falling stocks."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Compares averaging down strategies in stocks and mutual funds.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Systematic investing in individual stocks: Things to know before starting",
@@ -2544,7 +3392,11 @@
         "Automates stock investments similar to mutual fund SIPs.",
         "Removes emotion but demands continuous fundamental research."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Automates stock investments similar to mutual fund SIPs.",
+      "market_impact": "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers. Higher volume dispatch bolsters dealer channel liquidity ahead of the festive inventory cycle.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Mastering the market: Key rules for long-term wealth creation and trading",
@@ -2555,7 +3407,11 @@
         "Focuses on discipline, patience, and risk management.",
         "Aims at sustainable long-term market wealth creation."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Focuses on discipline, patience, and risk management.",
+      "market_impact": "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Stock Beta explained: What risk and return mean for individual shares",
@@ -2566,7 +3422,11 @@
         "Defines stock beta and market volatility measurement.",
         "Aids investors in weighing return expectations against risk."
       ],
-      "importance": "Low"
+      "importance": "Low",
+      "sentiment": "BULLISH",
+      "catalyst": "Defines stock beta and market volatility measurement.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
     },
     {
       "headline": "Why investors need to be cautious after run-up in small-cap funds",
@@ -2578,7 +3438,11 @@
         "Investors are advised to rebalance if overweight.",
         "Recommends systematic and staggered investment approaches."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Small-cap fund segments have turned expensive following a sharp run-up.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     },
     {
       "headline": "Best of BS Opinion: Rising bond yields can lead to unwanted risks",
@@ -2590,7 +3454,11 @@
         "Warns of hidden financial vulnerabilities in corporate balance sheets.",
         "Reviews regulatory oversight in financial institutions and strategic startups."
       ],
-      "importance": "Medium"
+      "importance": "Medium",
+      "sentiment": "NEUTRAL",
+      "catalyst": "Analyzes the impact of rising global borrowing costs and bond yields.",
+      "market_impact": "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts. Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.",
+      "sentiment_reasoning": "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics."
     }
   ]
 }

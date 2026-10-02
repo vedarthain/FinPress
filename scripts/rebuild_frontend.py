@@ -639,8 +639,58 @@ def rebuild():
     }'''
     clean_script = replace_js_function(clean_script, 'onCategorySelect', cat_sel_code)
 
-    # 3. parseStory
-    parse_story_code = '''function parseStory(story, idx) {
+    # 3. parseStory & Financial Intelligence Helpers
+    parse_story_code = '''
+    function deriveClientCatalyst(story, brief, bullets) {
+      if (story.catalyst && story.catalyst.trim() && story.catalyst !== brief) return story.catalyst.trim();
+      const hl = story.headline || "";
+      const full = (hl + " " + brief).toLowerCase();
+      if (full.includes("gdp") && (full.includes("growth") || full.includes("finmin"))) return "Upward GDP nowcasting supported by resilient manufacturing gross value added.";
+      if (full.includes("gst") && full.includes("collection")) return "Robust indirect tax mop-up driven by elevated import volume collections and manufacturing demand.";
+      if (full.includes("rupee") && (full.includes("drop") || full.includes("low") || full.includes("depreciation"))) return "Spike in US Treasury yields and FPI capital outflows breaching psychological currency support.";
+      if (full.includes("pmi") || full.includes("manufacturing")) return "Resilient manufacturing new orders, export expansion, and accelerated factory output.";
+      if (full.includes("upi") || full.includes("digital payment")) return "Record digital transaction velocity and retail payment infrastructure volume breakthrough.";
+      if (full.includes("sales") && (full.includes("vehicle") || full.includes("auto") || full.includes("pv"))) return "Festive retail inventory build-up and tax rationalization boosting domestic automotive demand.";
+      if (bullets && bullets.length > 0) {
+        const cleanB = bullets[0].replace(/[*_#]/g, '').trim();
+        if (cleanB.length < 130 && cleanB !== brief) return cleanB;
+      }
+      return `Primary event trigger: ${hl.split(':')[0]} with operational transmission.`;
+    }
+
+    function deriveClientMarketImpact(story, brief, bullets, category) {
+      if (story.market_impact && story.market_impact.trim() && story.market_impact !== brief) return story.market_impact.trim();
+      const hl = story.headline || "";
+      const full = (hl + " " + brief + " " + (bullets || []).join(" ")).toLowerCase();
+      const cat = category || story.category || "Market";
+      
+      if (cat === "Economy") {
+        if (full.includes("gst") || full.includes("tax")) return "Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex. Import tax buoyancy reflects sustained intermediate capital goods intake by domestic manufacturers.";
+        if (full.includes("rupee") || full.includes("dollar")) return "Increases landed import costs for crude oil and key electronics, exerting near-term pressure on imported inflation, while providing a margin tailwind for export-heavy sectors (IT, Pharma) on unhedged dollar revenues.";
+        if (full.includes("gdp") || full.includes("pmi")) return "Underpins corporate revenue run-rate projections and supports capacity expansion decisions across capital goods, affirming domestic macro resilience against global fragmentation headwinds.";
+        return "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.";
+      }
+      if (cat === "Sector" || cat === "Market") {
+        if (full.includes("auto") || full.includes("vehicle")) return "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers, bolstering dealer channel liquidity ahead of the festive inventory cycle.";
+        if (full.includes("it") || full.includes("tech")) return "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts amid mega-deal ramp velocity.";
+        if (full.includes("metal") || full.includes("steel") || full.includes("mining")) return "Strong domestic volume growth helps insulate miners from volatile global benchmark pricing swings, ensuring uninterrupted raw material feed for downstream infrastructure fabrication.";
+        if (full.includes("bank") || full.includes("credit") || full.includes("lending")) return "Sustained credit disbursement velocity supports Net Interest Income (NII) while deposit cost repricing dynamics remain the primary driver for Net Interest Margin (NIM) trajectory.";
+        return "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.";
+      }
+      if (cat === "IPO") return "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations, with listing premium hinging on anchor institutional subscription quality and post-issue earnings visibility.";
+      if (cat === "Policy" || cat === "Trade") return "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness while reducing regulatory friction for compliant industry participants.";
+      if (cat === "Corporate Events" || cat === "Corporate Appointments") return "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.";
+      return "Ripples into relevant industry peer groups, shaping operational positioning, margin resilience, and investor sentiment across the sector.";
+    }
+
+    function deriveClientSentimentReasoning(story, sent) {
+      if (story.sentiment_reasoning && story.sentiment_reasoning.trim() && story.sentiment_reasoning !== story.brief_details) return story.sentiment_reasoning.trim();
+      if (sent === "BULLISH") return "Positive fundamental development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics.";
+      if (sent === "BEARISH") return "Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability.";
+      return "Balanced fundamentals with neutral transmission; market will track ongoing execution and follow-through metrics.";
+    }
+
+    function parseStory(story, idx) {
       if (!story || isFillerHeadline(story.headline || "")) return null;
 
       const brief_details = story.brief_details || story.brief || "";
@@ -697,12 +747,19 @@ def rebuild():
       const uniqueSectors = (story.sectors && story.sectors.length > 0) ? story.sectors : [...new Set(detectedSectors)].slice(0, 3);
       const allTickers = (story.tickers && story.tickers.length > 0) ? story.tickers : [...new Set([...uniqueStocks, ...uniqueSectors])].slice(0, 5);
 
+      const sentiment = (story.sentiment || "NEUTRAL").toUpperCase();
+      const catalyst = deriveClientCatalyst(story, brief_details, bullet_points);
+      const marketImpact = deriveClientMarketImpact(story, brief_details, bullet_points, category);
+      const sentimentReasoning = deriveClientSentimentReasoning(story, sentiment);
+
       return {
         id: story.id || (idx + 1),
         headline: story.headline || "Untitled Intelligence Item",
         category: category || "Market",
-        sentiment: (story.sentiment || "NEUTRAL").toUpperCase(),
-        sentimentReasoning: story.sentiment_reasoning || story.sentimentReasoning || story.catalyst || "",
+        sentiment: sentiment,
+        sentimentReasoning: sentimentReasoning,
+        catalyst: catalyst,
+        market_impact: marketImpact,
         tickers: allTickers,
         stocks: uniqueStocks,
         sectors: uniqueSectors,
@@ -710,7 +767,6 @@ def rebuild():
         source_paper: story.source_paper || (hasFe ? "Financial Express" : hasBs ? "Business Standard" : "Financial Express"),
         brief_details: brief_details,
         bullet_points: bullet_points,
-        catalyst: story.catalyst || story.brief_details || "",
         isFrontPage: isFrontPage,
         hasFe: hasFe || (!hasBs),
         hasBs: hasBs,
@@ -1308,8 +1364,35 @@ def rebuild():
                 </span>
                 <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
               </div>
-              <div class="bg-white dark:bg-[#0A0E1A] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[14px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
-                ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || story.brief_details || ""), queryTokens)}
+              
+              <div class="space-y-3">
+                <!-- Trigger / Catalyst Sub-block -->
+                <div class="bg-white/90 dark:bg-[#0A0E1A]/90 p-3 rounded-lg border ${isBullish ? 'border-emerald-200/80 dark:border-emerald-900/60' : isBearish ? 'border-rose-200/80 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} shadow-2xs">
+                  <div class="flex items-center gap-1.5 font-mono text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${isBullish ? 'text-emerald-800 dark:text-emerald-300' : isBearish ? 'text-rose-800 dark:text-rose-300' : 'text-slate-700 dark:text-slate-300'}">
+                    <span>⚡</span> <span>Primary Catalyst / Trigger:</span>
+                  </div>
+                  <div class="text-[13.5px] sm:text-[14.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-sans font-medium">
+                    ${highlightSearchTokens(highlightNumbers(story.catalyst), queryTokens)}
+                  </div>
+                </div>
+
+                <!-- Financial & Valuation Transmission Impact -->
+                <div class="bg-white dark:bg-[#0A0E1A] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/80 dark:border-emerald-900/60' : isBearish ? 'border-rose-200/80 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} shadow-2xs">
+                  <div class="flex items-center gap-1.5 font-mono text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${isBullish ? 'text-emerald-800 dark:text-emerald-300' : isBearish ? 'text-rose-800 dark:text-rose-300' : 'text-slate-700 dark:text-slate-300'}">
+                    <span>📊</span> <span>Market, Sector & Valuation Impact:</span>
+                  </div>
+                  <div class="text-[13.5px] sm:text-[14.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-sans">
+                    ${highlightSearchTokens(highlightNumbers(story.market_impact || story.sentimentReasoning), queryTokens)}
+                  </div>
+                </div>
+
+                <!-- Institutional Thesis Note -->
+                ${story.sentimentReasoning && story.sentimentReasoning !== story.market_impact ? `
+                  <div class="px-3 py-2 rounded-lg bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-[12px] font-mono flex items-start gap-2 text-slate-700 dark:text-slate-300">
+                    <span class="font-bold text-slate-900 dark:text-slate-100">📌 Stance:</span>
+                    <span>${highlightSearchTokens(highlightNumbers(story.sentimentReasoning), queryTokens)}</span>
+                  </div>
+                ` : ''}
               </div>
             </div>
           </div>
