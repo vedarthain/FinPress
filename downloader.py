@@ -49,7 +49,10 @@ class NewspaperDownloader:
             raise RuntimeError(f"Could not extract issue ID from URL: {final_url}")
 
     def fetch_page_images(self, issue_id: str) -> List[bytes]:
-        """Downloads all high-resolution page images using public API endpoint."""
+        """Downloads and stitches all high-resolution page image tiles using public API endpoint."""
+        import io
+        from PIL import Image
+
         meta_url = f"https://epaper.financialexpress.com/pagemeta/get/{issue_id}/1-100"
         logger.info(f"Fetching page metadata from: {meta_url}")
 
@@ -71,20 +74,39 @@ class NewspaperDownloader:
             page_info = meta_data[pnum]
             levels = page_info.get("levels", {})
 
-            # Select high-resolution chunk URL
-            img_url = None
-            for level in ["leveldefault", "level1", "level0"]:
-                if level in levels and "chunks" in levels[level] and len(levels[level]["chunks"]) > 0:
-                    img_url = levels[level]["chunks"][0]["url"]
+            # Prefer level1 (1400x2225) or level2 (1600x2543) for high readability
+            selected_lvl = None
+            for candidate in ["level1", "level2", "leveldefault", "level0"]:
+                if candidate in levels and "chunks" in levels[candidate] and len(levels[candidate]["chunks"]) > 0:
+                    selected_lvl = levels[candidate]
                     break
 
-            if not img_url:
+            if not selected_lvl:
                 continue
 
-            logger.info(f"Downloading Page {pnum}/{len(page_numbers)}...")
-            img_resp = requests.get(img_url, headers=headers)
-            if img_resp.status_code == 200:
-                image_bytes_list.append(img_resp.content)
+            chunks = selected_lvl.get("chunks", [])
+            w = selected_lvl.get("width", 1400)
+            h = selected_lvl.get("height", 2225)
+
+            if len(chunks) == 1 and chunks[0].get("tx", 0) == 0 and chunks[0].get("ty", 0) == 0:
+                img_resp = requests.get(chunks[0]["url"], headers=headers)
+                if img_resp.status_code == 200:
+                    image_bytes_list.append(img_resp.content)
+            else:
+                full_img = Image.new("RGB", (w, h), (255, 255, 255))
+                for chunk in chunks:
+                    cx = chunk.get("tx", 0)
+                    cy = chunk.get("ty", 0)
+                    c_resp = requests.get(chunk["url"], headers=headers)
+                    if c_resp.status_code == 200:
+                        c_img = Image.open(io.BytesIO(c_resp.content))
+                        full_img.paste(c_img, (cx, cy))
+
+                buf = io.BytesIO()
+                full_img.save(buf, format="JPEG", quality=85)
+                image_bytes_list.append(buf.getvalue())
+
+            logger.info(f"Stitched Page {pnum}/{len(page_numbers)} ({len(image_bytes_list[-1]) / 1024:.1f} KB)")
 
         return image_bytes_list
 

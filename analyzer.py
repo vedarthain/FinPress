@@ -81,21 +81,10 @@ class GeminiNewsAnalyzer:
         self.client = genai.Client(api_key=self.api_key)
 
     def _analyze_single_chunk(self, chunk_pdf_path: Path, page_range_str: str) -> List[NewsStory]:
-        """Analyzes a specific 2-page chunk and returns all extracted articles."""
-        uploaded_file = self.client.files.upload(
-            file=str(chunk_pdf_path),
-            config=types.UploadFileConfig(display_name=chunk_pdf_path.name)
-        )
+        """Analyzes a specific 2-page chunk by sending high-resolution page images directly to Gemini."""
+        import pypdf
 
-        try:
-            # Wait for processing state if needed
-            file_state = getattr(uploaded_file, "state", None)
-            while file_state and getattr(file_state, "name", "") == "PROCESSING":
-                time.sleep(1)
-                uploaded_file = self.client.files.get(name=uploaded_file.name)
-                file_state = getattr(uploaded_file, "state", None)
-
-            prompt = f"""
+        prompt = f"""
 You are an elite financial news intelligence editor extracting news from newspaper pages ({page_range_str}).
 
 CRITICAL INSTRUCTIONS FOR ULTRA-HIGH QUALITY OUTPUT:
@@ -119,58 +108,64 @@ Assign every story to EXACTLY ONE of:
 - Others
 """
 
-            # Try each candidate model in order. A model that returns ZERO stories is treated
-            # as a soft failure too (dense/complex layouts like front pages can cause the lite
-            # model to give up silently) and we fall through to the next, stronger model rather
-            # than accepting an empty result. Transient errors (503 overload, rate limits) get
-            # a few retries with backoff on the SAME model before moving on, since those are
-            # not a quality problem - a bare exception just means we never even got a result.
-            candidate_models = ["gemini-flash-lite-latest", self.model_name]
-            max_retries_per_model = 3
-            best_model_tried = False
+        content_parts = []
+        try:
+            reader = pypdf.PdfReader(str(chunk_pdf_path))
+            for page in reader.pages:
+                for img in page.images:
+                    content_parts.append(types.Part.from_bytes(data=img.data, mime_type="image/jpeg"))
+        except Exception as e:
+            logger.warning(f"Could not extract images directly from chunk {chunk_pdf_path.name}: {e}")
 
-            for m in candidate_models:
-                for attempt in range(1, max_retries_per_model + 1):
-                    try:
-                        response = self.client.models.generate_content(
-                            model=m,
-                            contents=[uploaded_file, prompt],
-                            config=types.GenerateContentConfig(
-                                response_mime_type="application/json",
-                                response_schema=ChunkNewsReport,
-                                temperature=0.1,
-                            )
+        uploaded_file = None
+        if not content_parts:
+            uploaded_file = self.client.files.upload(
+                file=str(chunk_pdf_path),
+                config=types.UploadFileConfig(display_name=chunk_pdf_path.name)
+            )
+            content_parts = [uploaded_file]
+
+        content_parts.append(prompt)
+
+        try:
+            m = "gemini-flash-lite-latest"
+            max_retries = 3
+
+            for attempt in range(1, max_retries + 1):
+                try:
+                    response = self.client.models.generate_content(
+                        model=m,
+                        contents=content_parts,
+                        config=types.GenerateContentConfig(
+                            response_mime_type="application/json",
+                            response_schema=ChunkNewsReport,
+                            temperature=0.1,
                         )
-                        data = json.loads(response.text)
-                        chunk_rep = ChunkNewsReport.model_validate(data)
-                        best_model_tried = True
-                        if chunk_rep.chunk_stories:
-                            logger.info(f"✅ Chunk {page_range_str}: extracted {len(chunk_rep.chunk_stories)} stories (model: {m}).")
-                            return chunk_rep.chunk_stories
-                        logger.warning(f"Chunk {page_range_str}: model '{m}' returned 0 stories, trying next model...")
-                        break  # 0 stories is a valid response, not worth retrying on the same model
-                    except Exception as e:
-                        is_transient = any(code in str(e) for code in ("503", "429", "UNAVAILABLE", "RESOURCE_EXHAUSTED"))
-                        if is_transient and attempt < max_retries_per_model:
-                            backoff = 3 * attempt
-                            logger.warning(f"Chunk {page_range_str} model '{m}' attempt {attempt} transient error, retrying in {backoff}s: {e}")
-                            time.sleep(backoff)
-                            continue
-                        logger.warning(f"Chunk analysis with '{m}' note: {e}")
-                        time.sleep(2)
-                        break
+                    )
+                    data = json.loads(response.text)
+                    chunk_rep = ChunkNewsReport.model_validate(data)
+                    stories_count = len(chunk_rep.chunk_stories) if chunk_rep.chunk_stories else 0
+                    logger.info(f"✅ Chunk {page_range_str}: extracted {stories_count} stories.")
+                    return chunk_rep.chunk_stories or []
+                except Exception as e:
+                    is_transient = any(code in str(e) for code in ("503", "429", "UNAVAILABLE", "RESOURCE_EXHAUSTED"))
+                    if is_transient and attempt < max_retries:
+                        backoff = 2 * attempt
+                        logger.warning(f"Chunk {page_range_str} attempt {attempt} transient error, retrying in {backoff}s: {e}")
+                        time.sleep(backoff)
+                        continue
+                    logger.warning(f"Chunk analysis note on {page_range_str}: {e}")
+                    time.sleep(1)
+                    break
 
-            if not best_model_tried:
-                logger.warning(f"Could not extract stories from chunk {page_range_str}")
-
-            logger.warning(f"Chunk {page_range_str}: all models returned 0 stories.")
             return []
 
         finally:
-            try:
-                self.client.files.delete(name=uploaded_file.name)
-            except Exception:
-                pass
+            if uploaded_file:
+                try:
+                    self.client.files.delete(name=uploaded_file.name)
+                except Exception:
+                    pass
 
     @staticmethod
     def _remap_chunk_local_pages(page_numbers: str, absolute_start: int, absolute_end: int) -> str:
