@@ -154,6 +154,24 @@ Assign every story to EXACTLY ONE of:
             except Exception:
                 pass
 
+    @staticmethod
+    def _remap_chunk_local_pages(page_numbers: str, absolute_start: int, absolute_end: int) -> str:
+        """
+        Gemini only ever sees an isolated N-page chunk PDF, so it labels stories
+        'Page 1' / 'Page 2' relative to that chunk instead of the full edition.
+        Remap those local page numbers back to their absolute position
+        (e.g. chunk pages 35-36 -> local 'Page 1' becomes 'Page 35').
+        """
+        import re
+
+        def _remap(match: "re.Match") -> str:
+            local_page = int(match.group(1))
+            absolute_page = absolute_start + local_page - 1
+            absolute_page = max(absolute_start, min(absolute_page, absolute_end))
+            return f"Page {absolute_page}"
+
+        return re.sub(r"\bPage\s+(\d+)\b", _remap, page_numbers, flags=re.IGNORECASE)
+
     def analyze_pdf(self, pdf_path: Path, output_dir: Optional[Path] = None) -> NewspaperEditionReport:
         """
         Splits PDF into page chunks to extract EVERY SINGLE news story across all pages
@@ -188,8 +206,12 @@ Assign every story to EXACTLY ONE of:
 
                     page_range_str = f"Page {start_idx+1} to Page {end_idx}"
                     logger.info(f"Analyzing {page_range_str} ({chunk_file.name})...")
-                    
+
                     chunk_stories = self._analyze_single_chunk(chunk_file, page_range_str)
+                    for story in chunk_stories:
+                        story.page_numbers = self._remap_chunk_local_pages(
+                            story.page_numbers, start_idx + 1, end_idx
+                        )
                     all_stories.extend(chunk_stories)
 
                     # Clean up temporary chunk file
