@@ -15,7 +15,7 @@ def rebuild():
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover"/>
   <title>FinPress Institutional Workspace — Trader Terminal</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -295,8 +295,15 @@ def rebuild():
     aside_end = dom_part.find('</aside>', aside_start) + len('</aside>')
     clean_aside = dom_part[aside_start:aside_end]
 
+    # Clean aside classes to ensure 100% height and responsive width
+    clean_aside = re.sub(r'class="[^"]*"', 'class="w-full h-full flex flex-col gap-1.5 min-h-0 overflow-y-auto select-none"', clean_aside, count=1)
+
     # Remove the aside from inside view-feed
     dom_part = dom_part[:aside_start] + dom_part[aside_end:]
+
+    # Clean Column 1 (News Wire) and Column 2 (Detail Pane)
+    dom_part = re.sub(r'<div class="rounded-lg bg-white dark:bg-\[#0E1322\] border[^>]*flex flex-col h-auto[^>]*>', '<div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col w-full h-full min-h-0">', dom_part, count=1)
+    dom_part = re.sub(r'<div id="feed-detail-wrapper"[^>]*>', '<div id="feed-detail-wrapper" class="w-full h-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col gap-2.5 min-h-0 overflow-y-auto">', dom_part, count=1)
 
     # Clean up view-feed and view-matrix
     dom_part = re.sub(r'<section id="view-feed"[^>]*>', '<section id="view-feed">', dom_part)
