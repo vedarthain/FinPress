@@ -304,7 +304,7 @@ class UnifiedNewsAggregator:
         if not final_statuses:
             final_statuses = {
                 "financial_express": "✅ Active" if "Financial Express" in sources_present else "⚠️ Not Included",
-                "business_standard": "✅ Active" if "Business Standard" in sources_present else "❌ Failed / Session Expired"
+                "business_standard": "✅ Active" if "Business Standard" in sources_present else "⚠️ English (Mumbai) version not available"
             }
 
         report = NewspaperEditionReport(

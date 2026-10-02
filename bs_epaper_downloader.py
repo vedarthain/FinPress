@@ -25,7 +25,16 @@ logger = logging.getLogger("NewsAPI.BSEpaperDownloader")
 
 
 class BusinessStandardSessionError(Exception):
-    """Raised when Business Standard subscriber authentication or ePaper download fails."""
+    """Raised when Business Standard subscriber authentication fails."""
+    pass
+
+
+class BusinessStandardEditionNotAvailable(Exception):
+    """
+    Raised when Business Standard English-Mumbai edition is not available,
+    while subscriber authentication / session token was successfully verified.
+    Ensures Hindi editions are strictly skipped.
+    """
     pass
 
 
@@ -37,8 +46,110 @@ class BusinessStandardEpaperDownloader:
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.date_str = datetime.now().strftime("%Y-%m-%d")
 
+    def _ensure_english_mumbai_edition(self, page) -> bool:
+        """
+        Verifies and selects the Business Standard English-Mumbai edition.
+        Strictly refuses to download Hindi editions.
+        Raises BusinessStandardEditionNotAvailable if English-Mumbai is not available while token is authenticated.
+        """
+        logger.info("Verifying Business Standard edition (Strict requirement: English - Mumbai, strictly no Hindi)...")
+        
+        # 1. Inspect current page edition text and URL
+        edition_status = page.evaluate('''() => {
+            const url = window.location.href;
+            const title = document.title || '';
+            const edEl = document.querySelector('.editionname, .current-edition, #current_edition, .edition-title, .ed-title, .edition-select, .ed-list .active, a.edition-active, .selected-edition');
+            const edText = edEl ? (edEl.innerText || edEl.textContent || '').trim() : '';
+            const bodyText = document.body.innerText || '';
+            
+            const isHindi = /hindi|हिंदी|bs_hindi/i.test(url) || /hindi|हिंदी/i.test(title) || /hindi|हिंदी/i.test(edText);
+            const isMumbai = /mumbai/i.test(url) || /mumbai/i.test(title) || /mumbai/i.test(edText);
+            const isEnglish = !isHindi && (/english/i.test(url) || /english/i.test(title) || /english/i.test(edText) || isMumbai);
+            
+            return { url, title, edText, isHindi, isMumbai, isEnglish };
+        }''')
+        logger.info(f"Current ePaper page status: URL='{edition_status.get('url')}', Edition='{edition_status.get('edText')}', isHindi={edition_status.get('isHindi')}, isMumbai={edition_status.get('isMumbai')}")
+        
+        if edition_status.get('isMumbai') and not edition_status.get('isHindi'):
+            logger.info("✅ Confirmed: Business Standard English - Mumbai edition is actively loaded.")
+            return True
+            
+        # 2. Attempt to open edition selector and select Mumbai
+        logger.info("Searching for Business Standard edition selector to choose English - Mumbai...")
+        selected = page.evaluate('''() => {
+            const dropdowns = document.querySelectorAll('.edition-select, .editionSelect, .change-edition, #edition_dropdown, .ed-toggle, a[title*="Edition" i], .editionname, .dropdown-toggle');
+            dropdowns.forEach(d => { try { d.click(); } catch(e) {} });
+            
+            const options = Array.from(document.querySelectorAll('a, option, .edition-item, .dropdown-menu li a, .ed-list li a, .ed-list a'));
+            const mumbaiOpt = options.find(el => {
+                const txt = (el.innerText || el.textContent || el.value || '').trim();
+                return /mumbai/i.test(txt) && !/hindi|हिंदी/i.test(txt);
+            });
+            
+            if (mumbaiOpt) {
+                if (mumbaiOpt.tagName.toLowerCase() === 'option') {
+                    const select = mumbaiOpt.closest('select');
+                    if (select) {
+                        select.value = mumbaiOpt.value;
+                        select.dispatchEvent(new Event('change', { bubbles: true }));
+                        return true;
+                    }
+                } else {
+                    mumbaiOpt.click();
+                    return true;
+                }
+            }
+            return false;
+        }''')
+        
+        if selected:
+            page.wait_for_timeout(4000)
+            recheck = page.evaluate('''() => {
+                const url = window.location.href;
+                const title = document.title || '';
+                const edEl = document.querySelector('.editionname, .current-edition, #current_edition, .edition-title, .ed-list .active');
+                const edText = edEl ? (edEl.innerText || '').trim() : '';
+                const isHindi = /hindi|हिंदी/i.test(url) || /hindi|हिंदी/i.test(title) || /hindi|हिंदी/i.test(edText);
+                const isMumbai = /mumbai/i.test(url) || /mumbai/i.test(title) || /mumbai/i.test(edText);
+                return { isHindi, isMumbai };
+            }''')
+            if recheck.get('isMumbai') and not recheck.get('isHindi'):
+                logger.info("✅ Successfully switched to Business Standard English - Mumbai edition.")
+                return True
+                
+        # 3. Direct navigation to Mumbai edition URL if standard URL pattern exists
+        try:
+            logger.info("Attempting direct navigation to English - Mumbai ePaper edition URL...")
+            page.goto("https://epaper.business-standard.com/bs_new/index.php?rt=main/mainpage&edition=mumbai#1", timeout=30000, wait_until="domcontentloaded")
+            page.wait_for_timeout(4000)
+            direct_check = page.evaluate('''() => {
+                const url = window.location.href;
+                const title = document.title || '';
+                const isHindi = /hindi|हिंदी/i.test(url) || /hindi|हिंदी/i.test(title);
+                const isMumbai = /mumbai/i.test(url) || /mumbai/i.test(title);
+                return { isHindi, isMumbai, url, title };
+            }''')
+            if direct_check.get('isMumbai') and not direct_check.get('isHindi'):
+                logger.info("✅ Successfully navigated to English - Mumbai edition URL.")
+                return True
+        except Exception as e:
+            logger.warning(f"Direct Mumbai navigation notice: {e}")
+
+        # Check if Hindi edition was loaded
+        if edition_status.get('isHindi'):
+            logger.warning("🚫 Detected Hindi edition of Business Standard. Strictly skipping Hindi edition as requested.")
+            raise BusinessStandardEditionNotAvailable("Business Standard English (Mumbai) edition is not available today. Skipped Hindi edition. Token is authenticated.")
+
+        logger.warning("⚠️ Business Standard English - Mumbai edition was not found on the ePaper platform.")
+        raise BusinessStandardEditionNotAvailable("Business Standard English (Mumbai) edition not available on platform. Token is authenticated.")
+
     def download_from_zip(self, zip_path_or_url: str) -> Path:
         """Extracts and merges all page PDFs from a Business Standard single zipped PDF edition."""
+        # Strictly reject Hindi zip archives
+        if "hindi" in zip_path_or_url.lower():
+            logger.warning("🚫 Rejected Hindi zip edition. Token authenticated, but English-Mumbai required.")
+            raise BusinessStandardEditionNotAvailable("Business Standard zip archive is for Hindi edition. Skipped Hindi edition. Token is authenticated.")
+
         target_pdf = self.download_dir / f"business_standard_{self.date_str}.pdf"
         logger.info(f"Processing Business Standard zipped edition: {zip_path_or_url}")
 
@@ -202,7 +313,10 @@ class BusinessStandardEpaperDownloader:
                     logger.error(error_msg)
                     raise BusinessStandardSessionError(error_msg)
 
-                # 1. Trigger Read Offline Modal
+                # 1. Verify and Select English - Mumbai Edition (Strict requirement)
+                self._ensure_english_mumbai_edition(page)
+
+                # 2. Trigger Read Offline Modal
                 logger.info("Opening Business Standard Read Offline edition download modal...")
                 try:
                     readoff_btn = page.wait_for_selector('.readoffline, button[title="Read offline"], img[src*="read-off"]', timeout=15000)
@@ -212,7 +326,7 @@ class BusinessStandardEpaperDownloader:
                     page.evaluate('() => { const b = document.querySelector(".readoffline, button[title=\'Read offline\'], img[src*=\'read-off\']"); if (b) b.click(); }')
                 page.wait_for_timeout(3000)
 
-                # 2. Select Full Edition Download
+                # 3. Select Full Edition Download
                 logger.info("Triggering full edition download action...")
                 try:
                     full_down = page.wait_for_selector('a.editionall, .fulleditiondown a, .fulleditiondown, .sectiondownlink', timeout=10000)
@@ -222,7 +336,7 @@ class BusinessStandardEpaperDownloader:
                     page.evaluate('() => { const b = document.querySelector("a.editionall, .fulleditiondown a, .fulleditiondown, .sectiondownlink"); if (b) b.click(); }')
                 page.wait_for_timeout(2000)
 
-                # 3. Confirm Download in Modal & Intercept Download
+                # 4. Confirm Download in Modal & Intercept Download
                 confirm_btn = None
                 try:
                     confirm_btn = page.wait_for_selector('.readoffeditdownload, #readofffulleditiondownload button.btn-primary', timeout=10000)
@@ -239,9 +353,15 @@ class BusinessStandardEpaperDownloader:
                         logger.info("Clicked confirmation button. Receiving full edition download stream...")
 
                     download = download_info.value
+                    if "hindi" in download.suggested_filename.lower():
+                        logger.warning("🚫 Download stream returned Hindi edition. Aborting and skipping Hindi edition.")
+                        raise BusinessStandardEditionNotAvailable("Business Standard download archive is Hindi edition. Skipped Hindi edition. English (Mumbai) version not available (Token authenticated).")
+
                     download_path = self.download_dir / download.suggested_filename
                     download.save_as(str(download_path))
                     logger.info(f"Downloaded full edition archive: {download_path} ({download_path.stat().st_size / (1024*1024):.2f} MB)")
+                except BusinessStandardEditionNotAvailable:
+                    raise
                 except Exception as zip_err:
                     logger.warning(f"Full edition zip download attempt: {zip_err}. Attempting Page-by-Page download fallback...")
 
@@ -255,7 +375,7 @@ class BusinessStandardEpaperDownloader:
                         upload_to_r2(target_pdf, target_pdf.name)
                         return target_pdf
 
-                # 4. Fallback: Page-by-Page Single Page Download & Compilation
+                # 5. Fallback: Page-by-Page Single Page Download & Compilation
                 logger.info("Executing Page-by-Page single PDF download strategy (Pages 1 to 36)...")
                 page_links = page.evaluate('''() => {
                     return Array.from(document.querySelectorAll('a.off-downld, [href*=\"singlepage\"], .tmb-lst a')).map(a => a.href).filter(h => h && h.includes('singlepage'));

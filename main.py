@@ -65,12 +65,18 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
                 logger.error(f"[SOURCE FAILURE] Financial Express: {err_fe}")
                 source_statuses["financial_express"] = err_fe
 
-            logger.info("Step 2: Fetching & analyzing Business Standard edition (36-page ePaper & Desks)...")
+            logger.info("Step 2: Fetching & analyzing Business Standard edition (36-page ePaper - English Mumbai)...")
             bs_report = None
             try:
-                from bs_epaper_downloader import run_bs_full_edition_pipeline
+                from bs_epaper_downloader import run_bs_full_edition_pipeline, BusinessStandardEditionNotAvailable
                 bs_report = run_bs_full_edition_pipeline()
-                source_statuses["business_standard"] = f"✅ Success ({len(bs_report.major_stories)} stories extracted)"
+                if bs_report:
+                    source_statuses["business_standard"] = f"✅ Success ({len(bs_report.major_stories)} stories extracted)"
+                else:
+                    source_statuses["business_standard"] = "⚠️ English (Mumbai) version not available (Token authenticated)"
+            except BusinessStandardEditionNotAvailable as ed_err:
+                logger.warning(f"[SOURCE NOTICE] Business Standard: {ed_err}")
+                source_statuses["business_standard"] = "⚠️ English (Mumbai) version not available (Token authenticated)"
             except Exception as e:
                 err_bs = f"❌ FAILED: {e}"
                 logger.error(f"[SOURCE FAILURE] Business Standard: {err_bs}")
@@ -96,14 +102,23 @@ def run_pipeline(custom_url: str = None, pdf_file: str = None, source: str = "al
             from aggregator import run_unified_aggregation
             report = run_unified_aggregation()
         elif source == "business_standard" or (custom_url and "business-standard" in custom_url):
-            logger.info("Step 1: Fetching Business Standard daily 36-page ePaper edition...")
-            from bs_epaper_downloader import run_bs_full_edition_pipeline
-            report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
+            logger.info("Step 1: Fetching Business Standard daily 36-page ePaper edition (English - Mumbai)...")
+            from bs_epaper_downloader import run_bs_full_edition_pipeline, BusinessStandardEditionNotAvailable
+            try:
+                report = run_bs_full_edition_pipeline(custom_pdf_or_zip=pdf_file)
+            except BusinessStandardEditionNotAvailable as ed_err:
+                logger.warning(f"Business Standard: {ed_err}")
+                print(f"\n⚠️ NOTICE: Business Standard English (Mumbai) version not available today (Token authenticated). Skipped Hindi edition as requested.")
+                return None
         else:
             logger.info("Step 1: Downloading Financial Express ePaper edition...")
             pdf_path = run_downloader(url=custom_url)
             logger.info("Step 2: Sending PDF to Google Gemini Flash API for analysis...")
             report = analyze_newspaper_pdf(pdf_path)
+
+        if not report:
+            logger.info("Pipeline execution completed (No report generated for this source).")
+            return
 
         logger.info("==================================================")
         logger.info("Pipeline Execution Finished! Executive Summary:")
