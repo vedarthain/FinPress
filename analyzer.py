@@ -119,8 +119,13 @@ Assign every story to EXACTLY ONE of:
 - Others
 """
 
+            # Try each candidate model in order. A model that errors is skipped immediately.
+            # A model that returns ZERO stories is treated as a soft failure too (dense/complex
+            # layouts like front pages can cause the lite model to give up silently) and we
+            # fall through to the next, stronger model rather than accepting an empty result.
             candidate_models = ["gemini-flash-lite-latest", self.model_name]
-            response_text = None
+            best_stories: List[NewsStory] = []
+            best_model_tried = False
 
             for m in candidate_models:
                 try:
@@ -133,20 +138,22 @@ Assign every story to EXACTLY ONE of:
                             temperature=0.1,
                         )
                     )
-                    response_text = response.text
-                    break
+                    data = json.loads(response.text)
+                    chunk_rep = ChunkNewsReport.model_validate(data)
+                    best_model_tried = True
+                    if chunk_rep.chunk_stories:
+                        logger.info(f"✅ Chunk {page_range_str}: extracted {len(chunk_rep.chunk_stories)} stories (model: {m}).")
+                        return chunk_rep.chunk_stories
+                    logger.warning(f"Chunk {page_range_str}: model '{m}' returned 0 stories, trying next model...")
                 except Exception as e:
                     logger.warning(f"Chunk analysis with '{m}' note: {e}")
                     time.sleep(2)
 
-            if not response_text:
+            if not best_model_tried:
                 logger.warning(f"Could not extract stories from chunk {page_range_str}")
-                return []
 
-            data = json.loads(response_text)
-            chunk_rep = ChunkNewsReport.model_validate(data)
-            logger.info(f"✅ Chunk {page_range_str}: extracted {len(chunk_rep.chunk_stories)} stories.")
-            return chunk_rep.chunk_stories
+            logger.warning(f"Chunk {page_range_str}: all models returned 0 stories.")
+            return best_stories
 
         finally:
             try:

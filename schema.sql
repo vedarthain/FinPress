@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS articles (
     headline TEXT NOT NULL,
     brief_details TEXT,
     bullet_points JSONB DEFAULT '[]'::jsonb,
-    page_numbers VARCHAR(50),
+    page_numbers VARCHAR(500),
     importance VARCHAR(20) DEFAULT 'MEDIUM',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
