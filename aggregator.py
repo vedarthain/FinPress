@@ -35,7 +35,21 @@ class UnifiedNewsAggregator:
 
         def clean_text(t: str) -> set:
             words = re.findall(r'\b[a-zA-Z0-9]{4,}\b', t.lower())
-            stop_words = {"india", "indian", "says", "said", "will", "year", "month", "report", "first", "last", "over", "under", "after", "before", "financial", "standard", "express", "crore", "lakh", "worth", "plan", "plans", "govt", "government"}
+            stop_words = {
+                "india", "indian", "says", "said", "will", "year", "month", "report", "first", "last", "over",
+                "under", "after", "before", "financial", "standard", "express", "crore", "lakh", "worth", "plan",
+                "plans", "govt", "government",
+                # Generic IPO / corporate-notice boilerplate: near-identical across completely
+                # unrelated companies, so these must NOT count as a "shared topic" signal.
+                "launches", "launch", "launched", "announces", "announce", "announced", "announcement",
+                "initial", "public", "offering", "offerings", "offer", "offers", "equity", "shares", "share",
+                "limited", "files", "filed", "file", "filing", "draft", "herring", "prospectus", "drhp",
+                "corporate", "events", "event", "notice", "notices", "extra", "ordinary", "general", "meeting",
+                "meetings", "shareholders", "shareholder", "scheduled", "schedules", "issues", "issue",
+                "issuance", "subscription", "allotment", "payment", "reminder", "surrender", "certificate",
+                "authorisation", "authorization", "exchange", "listing", "listed", "platform", "emerge",
+                "window", "class",
+            }
             return {w for w in words if w not in stop_words}
 
         raw_fe_items = [s for s in stories if "Financial Express" in s.get("source", "")]
@@ -52,7 +66,7 @@ class UnifiedNewsAggregator:
                     ex_words = clean_text(existing["headline"] + " " + existing.get("brief_details", "")[:100])
                     overlap = len(item_words & ex_words)
                     
-                    if ratio > 0.60 or (overlap >= 4 and ratio > 0.40):
+                    if ratio > 0.85 or (overlap >= 3 and ratio > 0.55):
                         is_dup = True
                         p1 = existing.get("page_numbers", "")
                         p2 = item.get("page_numbers", "")
@@ -90,7 +104,7 @@ class UnifiedNewsAggregator:
                 bs_words = clean_text(bs_s["headline"] + " " + bs_s["brief_details"][:100])
                 overlap = len(fe_words & bs_words)
                 
-                if ratio > 0.60 or (overlap >= 4 and ratio > 0.40):
+                if ratio > 0.85 or (overlap >= 3 and ratio > 0.55):
                     if ratio > best_score:
                         best_score = ratio
                         best_match_idx = bs_i
