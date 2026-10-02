@@ -2136,7 +2136,7 @@ const allowedSections = [
         const inactiveStyle = "bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-900/60 hover:bg-[#FAF5FF]/50 dark:hover:bg-slate-800/50 text-slate-900 dark:text-slate-100";
 
         const btn = document.createElement("button");
-        btn.className = `w-full text-left px-3 py-2.5 rounded-lg transition-all flex flex-col gap-1 mb-1.5 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
+        btn.className = `w-full text-left px-3 py-2 rounded-lg transition-all flex items-center justify-between gap-2 mb-1 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
         btn.onclick = () => {
           selectedStoryIndex = globalIdx;
           renderFeedList();
@@ -2149,19 +2149,17 @@ const allowedSections = [
         };
 
         btn.innerHTML = `
-          <div class="flex items-center justify-between gap-1.5 w-full">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[11.5px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums">${numStr}</span>
-              <span class="w-2 h-2 rounded-full ${dot}"></span>
-              ${feBadge}
-              ${bsBadge}
-              ${s.isFrontPage ? `<span class="text-[9.5px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">P1</span>` : ''}
-            </div>
-            <span class="text-[10.5px] font-mono text-slate-400 dark:text-slate-500">${formatPageSource(s.page_numbers)}</span>
+          <div class="flex items-center gap-2 min-w-0 flex-1">
+            <span class="text-[11.5px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums shrink-0">${numStr}</span>
+            <span class="w-2 h-2 rounded-full ${dot} shrink-0"></span>
+            ${feBadge}
+            ${bsBadge}
+            ${s.isFrontPage ? `<span class="text-[9.5px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 shrink-0">P1</span>` : ''}
+            <span class="text-[13px] font-sans font-medium truncate ${isSelected ? 'text-[#581C87] dark:text-[#E9D5FF]' : 'text-[#090D16] dark:text-[#F8FAFC]'}" title="${escapeQuotes(s.headline)}">
+              ${highlightSearchTokens(s.headline, queryTokens)}
+            </span>
           </div>
-          <h4 class="text-[13.5px] sm:text-[14px] font-sans font-medium ${isSelected ? 'text-[#581C87] dark:text-[#E9D5FF]' : 'text-[#090D16] dark:text-[#F8FAFC]'} leading-snug line-clamp-2 tracking-tight" title="${escapeQuotes(s.headline)}">
-            ${highlightSearchTokens(s.headline, queryTokens)}
-          </h4>
+          <span class="text-[10px] font-mono text-slate-400 dark:text-slate-500 shrink-0">${formatPageSource(s.page_numbers)}</span>
         `;
         listContainer.appendChild(btn);
       });
@@ -2197,9 +2195,9 @@ const allowedSections = [
       const isBearish = (story.sentiment || '').includes('BEARISH');
       
       const sentBadge = isBullish 
-        ? `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH THESIS</span>`
+        ? `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
         : isBearish 
-        ? `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH THESIS</span>`
+        ? `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
         : `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
       const tickerBadges = (story.tickers || []).map(t => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-bold rounded bg-indigo-100 text-indigo-950 border border-indigo-300 dark:bg-indigo-950/80 dark:text-indigo-200">${t}</span>`).join('');
@@ -2231,71 +2229,77 @@ const allowedSections = [
           ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
         </h1>
 
-        <!-- EXPANSIVE EXECUTIVE CONTENT STACK -->
-        <div class="flex flex-col gap-4 flex-1">
+        <!-- EXPANSIVE EXECUTIVE CONTENT STACK (2-COLUMN GRID ON XL SCREENS) -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 flex-1">
           
-          <!-- ⚡ 1. EXECUTIVE GIST & STRATEGIC TAKEAWAYS -->
-          <div class="rounded-xl border-2 border-indigo-200 dark:border-indigo-900/80 bg-indigo-50/40 dark:bg-[#12172E] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
-            <div class="flex items-center justify-between border-b border-indigo-200/80 dark:border-indigo-900/60 pb-2">
-              <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-2">
-                <span>⚡</span> <span>1. Executive Gist & Strategic Takeaway</span>
-              </span>
-              <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-indigo-100 text-indigo-950 dark:bg-indigo-900 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700">Lead Thesis</span>
+          <!-- LEFT COLUMN: GIST & CATALYST -->
+          <div class="flex flex-col gap-4">
+            <!-- ⚡ 1. EXECUTIVE GIST -->
+            <div class="rounded-xl border-2 border-indigo-200 dark:border-indigo-900/80 bg-indigo-50/40 dark:bg-[#12172E] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+              <div class="flex items-center justify-between border-b border-indigo-200/80 dark:border-indigo-900/60 pb-2">
+                <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-2">
+                  <span>⚡</span> <span>1. EXECUTIVE GIST</span>
+                </span>
+                <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-indigo-100 text-indigo-950 dark:bg-indigo-900 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700">Key Takeaway</span>
+              </div>
+              <div class="space-y-2.5">
+                ${briefSentences.map(sent => `
+                  <div class="flex items-start gap-3 bg-white dark:bg-[#0A0E1A] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[14px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
+                    <span class="text-indigo-600 dark:text-indigo-400 font-extrabold select-none text-sm">▸</span>
+                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+                  </div>
+                `).join('')}
+              </div>
             </div>
-            <div class="space-y-2.5">
-              ${briefSentences.map(sent => `
-                <div class="flex items-start gap-3 bg-white dark:bg-[#0A0E1A] p-3.5 rounded-lg border border-indigo-100 dark:border-slate-800 text-[15px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-extrabold select-none text-base">▸</span>
-                  <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
-                </div>
-              `).join('')}
+
+            <!-- 💡 2. CATALYST & MARKET IMPACT -->
+            <div class="rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/50 dark:bg-[#064E3B]/25 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/50 dark:bg-[#881337]/25 dark:border-rose-600' : 'border-slate-300 bg-slate-50/80 dark:bg-slate-900/50 dark:border-slate-700'} p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+              <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-2">
+                <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-2">
+                  <span>💡</span> <span>2. CATALYST & MARKET IMPACT</span>
+                </span>
+                <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
+              </div>
+              <div class="bg-white dark:bg-[#0A0E1A] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[14px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
+                ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || story.brief_details || ""), queryTokens)}
+              </div>
             </div>
           </div>
 
-          <!-- 💡 2. CATALYST & MARKET IMPACT THESIS -->
-          <div class="rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/50 dark:bg-[#064E3B]/25 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/50 dark:bg-[#881337]/25 dark:border-rose-600' : 'border-slate-300 bg-slate-50/80 dark:bg-slate-900/50 dark:border-slate-700'} p-4 sm:p-5 shadow-xs flex flex-col gap-3">
-            <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-2">
-              <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-2">
-                <span>💡</span> <span>2. Catalyst & Market Impact Thesis</span>
-              </span>
-              <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
-            </div>
-            <div class="bg-white dark:bg-[#0A0E1A] p-3.5 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[15px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
-              ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || story.brief_details || ""), queryTokens)}
+          <!-- RIGHT COLUMN: KEY ANALYST DATA POINTS -->
+          <div class="flex flex-col gap-4">
+            <!-- 📌 3. KEY ANALYST DATA POINTS -->
+            <div class="h-full rounded-xl border-2 border-amber-300/80 dark:border-amber-900/60 bg-[#FDFBF7] dark:bg-[#161311] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+              <div class="flex items-center justify-between border-b border-amber-200 dark:border-amber-950 pb-2">
+                <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-amber-950 dark:text-amber-200 flex items-center gap-2">
+                  <span>📌</span> <span>3. KEY ANALYST DATA POINTS</span>
+                </span>
+                <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700">Metrics & Facts</span>
+              </div>
+              <ul class="space-y-2.5 flex-1">
+                ${bullets.map(b => `
+                  <li class="flex items-start gap-3 bg-white dark:bg-[#0E0C0A] p-3 rounded-lg border border-amber-100 dark:border-[#2D2319] text-[14px] sm:text-[15px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs">
+                    <span class="text-amber-700 dark:text-amber-400 shrink-0 font-bold mt-0.5 text-sm">•</span>
+                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
+                  </li>
+                `).join('')}
+              </ul>
             </div>
           </div>
-
-          <!-- 📌 3. KEY ANALYST DATA POINTS & FINANCIAL METRICS -->
-          <div class="rounded-xl border-2 border-amber-300/80 dark:border-amber-900/60 bg-[#FDFBF7] dark:bg-[#161311] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
-            <div class="flex items-center justify-between border-b border-amber-200 dark:border-amber-950 pb-2">
-              <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-amber-950 dark:text-amber-200 flex items-center gap-2">
-                <span>📌</span> <span>3. Key Analyst Data Points & Metrics</span>
-              </span>
-              <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700">${bullets.length} Fact Points</span>
-            </div>
-            <ul class="space-y-2.5">
-              ${bullets.map(b => `
-                <li class="flex items-start gap-3 bg-white dark:bg-[#0E0C0A] p-3.5 rounded-lg border border-amber-100 dark:border-[#2D2319] text-[15px] sm:text-[16px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs">
-                  <span class="text-amber-700 dark:text-amber-400 shrink-0 font-bold mt-0.5 text-base">•</span>
-                  <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-
-          <!-- 🏢 4. IMPACTED TICKERS & SECTOR EXPOSURE STRIP -->
-          ${((story.tickers && story.tickers.length > 0) || (story.sectors && story.sectors.length > 0)) ? `
-          <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3.5 flex items-center justify-between gap-3 flex-wrap shrink-0">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="text-[11px] font-mono font-bold uppercase text-slate-500 dark:text-slate-400">Market Exposure:</span>
-              ${(story.tickers || []).map(t => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-bold rounded bg-indigo-100 text-indigo-950 border border-indigo-300 dark:bg-indigo-950 dark:text-indigo-200">${t}</span>`).join('')}
-              ${(story.sectors || []).map(sec => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-medium rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200">${sec}</span>`).join('')}
-            </div>
-            <span class="text-[11.5px] font-mono text-slate-400 dark:text-slate-500">${formatPageSource(story.page_numbers)} • ${story.source_paper || 'FE / BS'}</span>
-          </div>
-          ` : ''}
 
         </div>
+
+        <!-- 🏢 4. IMPACTED TICKERS & SECTOR EXPOSURE STRIP -->
+        ${((story.tickers && story.tickers.length > 0) || (story.sectors && story.sectors.length > 0)) ? `
+        <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3.5 flex items-center justify-between gap-3 flex-wrap shrink-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[11px] font-mono font-bold uppercase text-slate-500 dark:text-slate-400">Market Exposure:</span>
+            ${(story.tickers || []).map(t => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-bold rounded bg-indigo-100 text-indigo-950 border border-indigo-300 dark:bg-indigo-950 dark:text-indigo-200">${t}</span>`).join('')}
+            ${(story.sectors || []).map(sec => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-medium rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200">${sec}</span>`).join('')}
+          </div>
+          <span class="text-[11.5px] font-mono text-slate-400 dark:text-slate-500">${formatPageSource(story.page_numbers)} • ${story.source_paper || 'FE / BS'}</span>
+        </div>
+        ` : ''}
 
         <!-- 🏁 END OF STORY FOOTER BAR -->
         <div class="mt-5 pt-3 pb-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
