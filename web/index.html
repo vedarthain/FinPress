@@ -29,10 +29,11 @@
       box-sizing: border-box !important;
     }
     html, body {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
       margin: 0 !important;
       padding: 0 !important;
       overflow: hidden !important;
@@ -70,11 +71,11 @@
 
     /* Fixed Viewport Edge-to-Edge Layout */
     #app-root {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      min-width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
@@ -267,7 +268,7 @@
   </style>
 </head>
 <body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
-  <div id="app-root" class="w-screen h-screen flex flex-col overflow-hidden m-0 p-0 bg-[#F1F5F9] dark:bg-[#070B14]">
+  <div id="app-root" class="w-full h-full min-w-full min-h-full flex flex-col overflow-hidden m-0 p-0 bg-[#F1F5F9] dark:bg-[#070B14]">
 
     <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME - ENLARGED) ================= -->
     <header id="app-header" class="shrink-0 w-full bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-3 sm:px-4 py-2 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[13px] font-mono z-50">

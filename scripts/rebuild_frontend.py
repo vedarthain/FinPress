@@ -40,10 +40,11 @@ def rebuild():
       box-sizing: border-box !important;
     }
     html, body {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
       margin: 0 !important;
       padding: 0 !important;
       overflow: hidden !important;
@@ -81,11 +82,11 @@ def rebuild():
 
     /* Fixed Viewport Edge-to-Edge Layout */
     #app-root {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      min-width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
@@ -280,7 +281,7 @@ def rebuild():
     dom_part = re.sub(head_pattern, clean_head, dom_part, flags=re.DOTALL)
 
     # 1.1 Replace body wrapper, header and main elements with explicit fixed-viewport classes and IDs
-    dom_part = re.sub(r'<div class="min-h-screen[^"]*">', '<div id="app-root" class="w-screen h-screen flex flex-col overflow-hidden m-0 p-0 bg-[#F1F5F9] dark:bg-[#070B14]">', dom_part, count=1)
+    dom_part = re.sub(r'<div class="min-h-screen[^"]*">', '<div id="app-root" class="w-full h-full min-w-full min-h-full flex flex-col overflow-hidden m-0 p-0 bg-[#F1F5F9] dark:bg-[#070B14]">', dom_part, count=1)
     dom_part = re.sub(r'<header[^>]*>', '<header id="app-header" class="shrink-0 w-full bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-3 sm:px-4 py-2 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[13px] font-mono z-50">', dom_part, count=1)
     dom_part = re.sub(r'<main[^>]*>', '<main id="app-main" class="flex-1 w-full flex flex-col overflow-hidden min-h-0 bg-[#F1F5F9] dark:bg-[#070B14] p-1.5 sm:p-2">', dom_part, count=1)
 
