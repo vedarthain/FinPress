@@ -719,6 +719,18 @@ def rebuild():
         const fullContent = (s.headline + " " + (s.brief_details || "") + " " + (s.bullet_points || []).join(" ") + " " + (s.tickers || []).join(" ") + " " + (s.sectors || []).join(" ") + " " + s.category).toLowerCase();
         const matchQuery = terms.length === 0 || terms.every(t => fullContent.includes(t));
 
+        // When Sector filter is selected: show ONLY news in that selected sector
+        if (activeSectorFilter) {
+          const matchSector = (s.sectors && s.sectors.includes(activeSectorFilter)) || (s.category && s.category.toUpperCase().includes(activeSectorFilter.toUpperCase())) || ((s.headline + " " + (s.brief_details || "")).toUpperCase().includes(activeSectorFilter.toUpperCase()));
+          return matchSector && matchQuery;
+        }
+
+        // When Stock filter is selected: show ONLY news in that selected stock
+        if (activeStockFilter) {
+          const matchStock = (s.stocks && s.stocks.includes(activeStockFilter)) || (s.tickers && s.tickers.includes(activeStockFilter)) || ((s.headline + " " + (s.brief_details || "")).toUpperCase().includes(activeStockFilter.toUpperCase()));
+          return matchStock && matchQuery;
+        }
+
         let matchSec = true;
         if (selectedFeedCategory === "ALL") {
           matchSec = true;
@@ -745,10 +757,8 @@ def rebuild():
         }
 
         const matchSent = selectedFeedSentiment === "ALL" || s.sentiment === selectedFeedSentiment;
-        const matchStock = !activeStockFilter || (s.stocks && s.stocks.includes(activeStockFilter)) || (s.tickers && s.tickers.includes(activeStockFilter)) || ((s.headline + " " + (s.brief_details || "")).toUpperCase().includes(activeStockFilter));
-        const matchSector = !activeSectorFilter || (s.sectors && s.sectors.includes(activeSectorFilter)) || (s.category && s.category.toUpperCase().includes(activeSectorFilter)) || ((s.headline + " " + (s.brief_details || "")).toUpperCase().includes(activeSectorFilter));
 
-        return matchSec && matchSent && matchStock && matchSector && matchQuery;
+        return matchSec && matchSent && matchQuery;
       });
     }'''
     clean_script = replace_js_function(clean_script, 'getFilteredStories', filtered_stories_code)
@@ -841,9 +851,16 @@ def rebuild():
             { id: "Others", label: "📑 Features", count: stories.filter(s => s.category === "Others").length }
           ];
 
+          const totalCoreDesksCount = coreNewsItems.reduce((acc, item) => acc + item.count, 0);
+
           const coreDiv = document.createElement("div");
           coreDiv.className = "flex flex-col gap-0.5";
-          coreDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-slate-400 dark:text-slate-500 px-1 mb-0.5 tracking-wider">📰 Core Desks</span>`;
+          coreDiv.innerHTML = `
+            <div class="flex items-center justify-between px-1 mb-0.5">
+              <span class="text-[10.5px] font-bold uppercase text-slate-500 dark:text-slate-400 tracking-wider">📰 Core Desks</span>
+              <span class="text-[11px] font-mono font-bold text-indigo-600 dark:text-indigo-400">(${totalCoreDesksCount})</span>
+            </div>
+          `;
 
           coreNewsItems.forEach(item => {
             const isSelected = selectedFeedCategory === item.id;
@@ -873,9 +890,16 @@ def rebuild():
             { id: "OPINIONS", label: "✍️ Opinions Desk", count: opinionsCount }
           ];
 
+          const totalSpecializedCount = deskItems.reduce((acc, item) => acc + item.count, 0);
+
           const deskDiv = document.createElement("div");
           deskDiv.className = "flex flex-col gap-0.5 pt-1.5 border-t border-slate-100 dark:border-slate-800";
-          deskDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-amber-700 dark:text-amber-400 px-1 mb-0.5 tracking-wider">🏛️ Specialized Desks</span>`;
+          deskDiv.innerHTML = `
+            <div class="flex items-center justify-between px-1 mb-0.5">
+              <span class="text-[10.5px] font-bold uppercase text-amber-700 dark:text-amber-400 tracking-wider">🏛️ Specialized Desks</span>
+              <span class="text-[11px] font-mono font-bold text-amber-700 dark:text-amber-400">(${totalSpecializedCount})</span>
+            </div>
+          `;
 
           deskItems.forEach(item => {
             const isSelected = selectedFeedCategory === item.id || (item.id === 'IPO_ALL' && currentView === 'ipo') || (item.id === 'CORPORATE_ALL' && currentView === 'corporate');
@@ -943,7 +967,26 @@ def rebuild():
               <span class="text-[11.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white/90' : 'text-slate-400 dark:text-slate-500'}">(${secCounts[sec]})</span>
             `;
             btn.onclick = () => {
-              activeSectorFilter = activeSectorFilter === sec ? null : sec;
+              if (activeSectorFilter === sec) {
+                activeSectorFilter = null;
+              } else {
+                activeSectorFilter = sec;
+                activeStockFilter = null;
+                selectedFeedCategory = 'ALL';
+                selectedFeedSentiment = 'ALL';
+                currentSearchQuery = '';
+                const searchInput = document.getElementById("global-search");
+                if (searchInput) searchInput.value = '';
+                const clearBtn = document.getElementById("clear-search-btn");
+                if (clearBtn) clearBtn.classList.add("hidden");
+                if (currentView !== 'feed') {
+                  currentView = 'feed';
+                  const vIpo = document.getElementById("view-ipo");
+                  if (vIpo) vIpo.classList.add("hidden");
+                  const vFeed = document.getElementById("view-feed");
+                  if (vFeed) vFeed.classList.remove("hidden");
+                }
+              }
               selectedStoryIndex = 0;
               currentFeedPage = 1;
               renderCategoriesAndStocksSidebar();
@@ -1021,7 +1064,26 @@ def rebuild():
               btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all cursor-pointer ${isSelected ? 'bg-purple-600 text-white shadow-xs ring-1 ring-purple-400' : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 hover:bg-purple-100 dark:hover:bg-purple-950/60 border border-slate-200 dark:border-slate-700'}`;
               btn.innerHTML = `${stk.ticker} <span class="opacity-70 text-[10px]">(${stk.count})</span>`;
               btn.onclick = () => {
-                activeStockFilter = activeStockFilter === stk.ticker ? null : stk.ticker;
+                if (activeStockFilter === stk.ticker) {
+                  activeStockFilter = null;
+                } else {
+                  activeStockFilter = stk.ticker;
+                  activeSectorFilter = null;
+                  selectedFeedCategory = 'ALL';
+                  selectedFeedSentiment = 'ALL';
+                  currentSearchQuery = '';
+                  const searchInput = document.getElementById("global-search");
+                  if (searchInput) searchInput.value = '';
+                  const clearBtn = document.getElementById("clear-search-btn");
+                  if (clearBtn) clearBtn.classList.add("hidden");
+                  if (currentView !== 'feed') {
+                    currentView = 'feed';
+                    const vIpo = document.getElementById("view-ipo");
+                    if (vIpo) vIpo.classList.add("hidden");
+                    const vFeed = document.getElementById("view-feed");
+                    if (vFeed) vFeed.classList.remove("hidden");
+                  }
+                }
                 selectedStoryIndex = 0;
                 currentFeedPage = 1;
                 renderCategoriesAndStocksSidebar();
