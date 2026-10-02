@@ -288,14 +288,8 @@ def rebuild():
     dom_part = re.sub(r'<header[^>]*>', '<header id="app-header" class="shrink-0 w-full bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-3 sm:px-4 py-2 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[13px] font-mono z-50">', dom_part, count=1)
     dom_part = re.sub(r'<main[^>]*>', '<main id="app-main" class="flex-1 w-full flex flex-col overflow-hidden min-h-0 bg-[#F1F5F9] dark:bg-[#070B14] p-1.5 sm:p-2">', dom_part, count=1)
 
-    # 2. Update Header: Add dedicated Quick IPO Hub Launch Button right before Run Pipeline Button
-    header_find = '<button onclick="triggerGitHubPipeline()"'
-    header_replace = '''<button id="top-ipo-hub-btn" onclick="switchView(currentView === 'ipo' ? 'feed' : 'ipo')" class="px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Launch Specialized IPO Intelligence Hub">
-          <span>🚀</span> <span>IPO Hub</span>
-        </button>
-        <button onclick="triggerGitHubPipeline()"'''
-    if header_find in dom_part and 'id="top-ipo-hub-btn"' not in dom_part:
-        dom_part = dom_part.replace(header_find, header_replace, 1)
+    # 2. Update Header: Remove IPO Hub Button if present
+    dom_part = re.sub(r'<button id="top-ipo-hub-btn"[^>]*>.*?</button>\s*', '', dom_part, flags=re.DOTALL)
 
     # 3. Clean and isolate 3rd Column Sidebar (#view-feed-aside)
     aside_start = dom_part.find('<aside id="view-feed-aside"')
