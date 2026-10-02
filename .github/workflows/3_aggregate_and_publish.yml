@@ -49,3 +49,4 @@ jobs:
         run: |
           python main.py --source aggregate
           python sync_to_neon.py
+          python scripts/r2_housekeeping.py --max-gb 3.0 --target-gb 2.2 || echo "Housekeeping completed."

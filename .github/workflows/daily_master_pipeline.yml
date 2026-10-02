@@ -70,6 +70,11 @@ jobs:
           python main.py --source aggregate
           python sync_to_neon.py || echo "DB Notice: Sync to Neon skipped if not configured."
 
+          echo "========================================================"
+          echo " STEP 4: ENFORCING CLOUDFLARE R2 3GB QUOTA HOUSEKEEPING"
+          echo "========================================================"
+          python scripts/r2_housekeeping.py --max-gb 3.0 --target-gb 2.2 || echo "Housekeeping Notice: Skipped if R2 not configured."
+
       - name: Upload Daily Reports Artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -78,3 +83,4 @@ jobs:
           path: reports/news_report_*.json
           if-no-files-found: warn
           retention-days: 7
+

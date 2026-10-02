@@ -284,6 +284,104 @@ export default {{
       }});
     }}
 
+    // API: R2 Storage Housekeeping & 3GB Quota Management
+    if (url.pathname === '/api/housekeeping/r2') {{
+      try {{
+        if (!env.BUCKET) {{
+          return new Response(JSON.stringify({{ error: 'R2 BUCKET binding not found' }}), {{ status: 500 }});
+        }}
+
+        const maxLimitBytes = 3 * 1024 * 1024 * 1024; // 3.0 GB Hard Threshold
+        const targetBytes = Math.floor(2.2 * 1024 * 1024 * 1024); // 2.2 GB Target
+
+        let objects = [];
+        let cursor = undefined;
+        do {{
+          const listed = await env.BUCKET.list({{ cursor, limit: 1000 }});
+          objects = objects.concat(listed.objects);
+          cursor = listed.truncated ? listed.cursor : undefined;
+        }} while (cursor);
+
+        let totalBytes = objects.reduce((acc, o) => acc + o.size, 0);
+        let categories = {{ pdfs: 0, reports: 0, cutouts: 0, sessions: 0, other: 0 }};
+        
+        objects.forEach(o => {{
+          const k = o.key.toLowerCase();
+          if (k.startsWith('pdfs/') || k.endsWith('.pdf')) categories.pdfs += o.size;
+          else if (k.startsWith('reports/') || k.endsWith('.json') || k.endsWith('.md')) categories.reports += o.size;
+          else if (k.startsWith('cutouts/') || k.endsWith('.png') || k.endsWith('.jpg')) categories.cutouts += o.size;
+          else if (k.startsWith('sessions/')) categories.sessions += o.size;
+          else categories.other += o.size;
+        }});
+
+        const shouldPrune = url.searchParams.get('prune') === 'true' || totalBytes > maxLimitBytes;
+        let deletedKeys = [];
+        let freedBytes = 0;
+
+        if (shouldPrune) {{
+          const allKeySet = new Set(objects.map(o => o.key));
+          
+          // 1. Root duplicate PDFs
+          for (const o of objects) {{
+            if (!o.key.startsWith('pdfs/') && o.key.endsWith('.pdf') && allKeySet.has('pdfs/' + o.key)) {{
+              deletedKeys.push(o.key);
+              freedBytes += o.size;
+            }}
+          }}
+
+          // 2. Oldest PDFs if still over target
+          let projectedBytes = totalBytes - freedBytes;
+          if (projectedBytes > targetBytes) {{
+            const candidatePdfs = objects
+              .filter(o => (o.key.startsWith('pdfs/') || o.key.endsWith('.pdf')) && !deletedKeys.includes(o.key))
+              .sort((a, b) => new Date(a.uploaded).getTime() - new Date(b.uploaded).getTime());
+
+            for (const o of candidatePdfs) {{
+              if (projectedBytes <= targetBytes) break;
+              deletedKeys.push(o.key);
+              freedBytes += o.size;
+              projectedBytes -= o.size;
+            }}
+          }}
+
+          if (deletedKeys.length > 0) {{
+            await Promise.all(deletedKeys.map(k => env.BUCKET.delete(k)));
+          }}
+        }}
+
+        const finalTotalBytes = totalBytes - freedBytes;
+
+        return new Response(JSON.stringify({{
+          success: true,
+          status: finalTotalBytes > maxLimitBytes ? 'EXCEEDED' : 'HEALTHY',
+          limit_gb: 3.0,
+          current_total_mb: Math.round((finalTotalBytes / (1024 * 1024)) * 100) / 100,
+          current_total_gb: Math.round((finalTotalBytes / (1024 * 1024 * 1024)) * 10000) / 10000,
+          headroom_gb: Math.round(((maxLimitBytes - finalTotalBytes) / (1024 * 1024 * 1024)) * 100) / 100,
+          categories_mb: {{
+            pdfs: Math.round((categories.pdfs / (1024 * 1024)) * 100) / 100,
+            reports: Math.round((categories.reports / (1024 * 1024)) * 100) / 100,
+            cutouts: Math.round((categories.cutouts / (1024 * 1024)) * 100) / 100,
+            sessions: Math.round((categories.sessions / (1024 * 1024)) * 100) / 100,
+            other: Math.round((categories.other / (1024 * 1024)) * 100) / 100
+          }},
+          pruned_count: deletedKeys.length,
+          freed_mb: Math.round((freedBytes / (1024 * 1024)) * 100) / 100
+        }}, null, 2), {{
+          headers: {{
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
+          }}
+        }});
+      }} catch (err) {{
+        return new Response(JSON.stringify({{ success: false, error: err.message }}), {{
+          status: 500,
+          headers: {{ 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }}
+        }});
+      }}
+    }}
+
     // Default: Serve Trader Terminal UI
     return new Response(HTML, {{
       headers: {{
@@ -295,8 +393,46 @@ export default {{
     }});
   }},
 
-  // Automatic Cloudflare Cron Trigger (Runs daily at 5:45 AM & 6:15 AM IST)
+  // Automatic Cloudflare Cron Trigger (Runs daily at 5:45 AM & 6:15 AM IST + R2 Housekeeping)
   async scheduled(event, env, ctx) {{
+    // 1. Enforce R2 3GB Quota Housekeeping
+    if (env.BUCKET) {{
+      try {{
+        let objects = [];
+        let cursor = undefined;
+        do {{
+          const listed = await env.BUCKET.list({{ cursor, limit: 1000 }});
+          objects = objects.concat(listed.objects);
+          cursor = listed.truncated ? listed.cursor : undefined;
+        }} while (cursor);
+
+        const maxLimitBytes = 3 * 1024 * 1024 * 1024;
+        const targetBytes = Math.floor(2.2 * 1024 * 1024 * 1024);
+        let totalBytes = objects.reduce((acc, o) => acc + o.size, 0);
+
+        if (totalBytes > targetBytes) {{
+          const candidatePdfs = objects
+            .filter(o => o.key.startsWith('pdfs/') || o.key.endsWith('.pdf'))
+            .sort((a, b) => new Date(a.uploaded).getTime() - new Date(b.uploaded).getTime());
+
+          let keysToDelete = [];
+          let freed = 0;
+          for (const o of candidatePdfs) {{
+            if (totalBytes - freed <= targetBytes) break;
+            keysToDelete.push(o.key);
+            freed += o.size;
+          }}
+          if (keysToDelete.length > 0) {{
+            await Promise.all(keysToDelete.map(k => env.BUCKET.delete(k)));
+            console.log(`Cloudflare Cron R2 Housekeeping: Pruned ${{keysToDelete.length}} items, freed ${{Math.round(freed/1024/1024)}} MB.`);
+          }}
+        }}
+      }} catch (e) {{
+        console.error('Cloudflare Cron R2 Housekeeping error:', e);
+      }}
+    }}
+
+    // 2. Trigger Daily Master Pipeline
     const ghToken = env.GH_TOKEN || env.GITHUB_TOKEN;
     if (ghToken) {{
       try {{
