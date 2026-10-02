@@ -36,15 +36,20 @@ def rebuild():
     };
   </script>
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box !important;
+    }
     html, body {
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
       touch-action: manipulation;
       -webkit-text-size-adjust: 100%;
+      background-color: #F1F5F9;
     }
     body {
       font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -75,24 +80,33 @@ def rebuild():
     }
 
     /* Fixed Viewport Edge-to-Edge Layout */
+    #app-root {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
     #app-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 48px;
-      z-index: 50;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 48px !important;
+      min-height: 48px !important;
+      flex-shrink: 0 !important;
     }
     #app-main {
-      position: fixed;
-      top: 48px;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      flex: 1 1 0% !important;
+      padding: 6px 8px 8px 8px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
       background-color: #F1F5F9;
     }
     .dark #app-main {
@@ -101,10 +115,11 @@ def rebuild():
 
     /* Main Workspace Grid (Views Container + Permanent 3rd Column Sidebar) */
     #workspace-grid {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: grid !important;
-      grid-template-columns: minmax(0, 1fr) 260px !important;
+      grid-template-columns: minmax(0, 1fr) 280px !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
@@ -113,60 +128,94 @@ def rebuild():
     }
     @media (min-width: 1280px) {
       #workspace-grid {
-        grid-template-columns: minmax(0, 1fr) 280px !important;
+        grid-template-columns: minmax(0, 1fr) 300px !important;
       }
     }
     @media (min-width: 1536px) {
       #workspace-grid {
-        grid-template-columns: minmax(0, 1fr) 300px !important;
+        grid-template-columns: minmax(0, 1fr) 340px !important;
       }
+    }
+    @media (min-width: 1920px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 380px !important;
+      }
+    }
+    @media (min-width: 2560px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 420px !important;
+      }
+    }
+    #workspace-grid.sidebar-collapsed {
+      grid-template-columns: minmax(0, 1fr) !important;
     }
 
     #workspace-views {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       min-width: 0 !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
+      flex: 1 1 0% !important;
     }
 
     #view-feed:not(.hidden) {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: grid !important;
-      grid-template-columns: 320px minmax(0, 1fr) !important;
+      grid-template-columns: 340px minmax(0, 1fr) !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
     }
     @media (min-width: 1280px) {
-      #view-feed:not(.hidden) {
-        grid-template-columns: 350px minmax(0, 1fr) !important;
-      }
-    }
-    @media (min-width: 1536px) {
       #view-feed:not(.hidden) {
         grid-template-columns: 380px minmax(0, 1fr) !important;
       }
     }
+    @media (min-width: 1536px) {
+      #view-feed:not(.hidden) {
+        grid-template-columns: 420px minmax(0, 1fr) !important;
+      }
+    }
+    @media (min-width: 1920px) {
+      #view-feed:not(.hidden) {
+        grid-template-columns: 460px minmax(0, 1fr) !important;
+      }
+    }
+    @media (min-width: 2560px) {
+      #view-feed:not(.hidden) {
+        grid-template-columns: 520px minmax(0, 1fr) !important;
+      }
+    }
 
     #view-ipo:not(.hidden) {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: flex !important;
       flex-direction: column !important;
       gap: 8px !important;
       overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
     }
 
     #view-matrix:not(.hidden) {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: flex !important;
       flex-direction: column !important;
       gap: 8px !important;
       overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
     }
 
     #col-news-wire {
@@ -174,6 +223,7 @@ def rebuild():
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
+      min-height: 0 !important;
     }
     #feed-list-container {
       flex: 1 1 0% !important;
@@ -225,6 +275,11 @@ def rebuild():
   </style>
 </head>'''
     dom_part = re.sub(head_pattern, clean_head, dom_part, flags=re.DOTALL)
+
+    # 1.1 Replace body wrapper, header and main elements with explicit fixed-viewport classes and IDs
+    dom_part = re.sub(r'<div class="min-h-screen[^"]*">', '<div id="app-root" class="w-screen h-screen flex flex-col overflow-hidden m-0 p-0 bg-[#F1F5F9] dark:bg-[#070B14]">', dom_part, count=1)
+    dom_part = re.sub(r'<header[^>]*>', '<header id="app-header" class="shrink-0 w-full bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-3 sm:px-4 py-2 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[13px] font-mono z-50">', dom_part, count=1)
+    dom_part = re.sub(r'<main[^>]*>', '<main id="app-main" class="flex-1 w-full flex flex-col overflow-hidden min-h-0 bg-[#F1F5F9] dark:bg-[#070B14] p-1.5 sm:p-2">', dom_part, count=1)
 
     # 2. Update Header: Add dedicated Quick IPO Hub Launch Button
     header_find = '<div class="flex items-center gap-2">'
@@ -1554,6 +1609,44 @@ def rebuild():
 '''
     if 'function renderIpoTrackerTable' not in clean_script:
         clean_script += '\n\n' + ipo_hub_functions
+
+    # Override toggleSidebar and applySidebarVisibility to keep CSS Grid clean
+    sidebar_toggle_code = '''    function toggleSidebar() {
+      isSidebarVisible = !isSidebarVisible;
+      localStorage.setItem('finpress_sidebar_visible', isSidebarVisible);
+      applySidebarVisibility();
+    }
+
+    function applySidebarVisibility() {
+      const aside = document.getElementById("view-feed-aside");
+      const grid = document.getElementById("workspace-grid");
+      const pill = document.getElementById("sidebar-vertical-pill");
+      const openBtn = document.getElementById("feed-open-sidebar-btn");
+      if (!aside) return;
+
+      if (isSidebarVisible) {
+        aside.classList.remove("hidden");
+        if (grid) grid.classList.remove("sidebar-collapsed");
+        if (pill) pill.classList.add("hidden");
+        if (openBtn) {
+          openBtn.classList.add("hidden");
+          openBtn.classList.remove("flex");
+        }
+      } else {
+        aside.classList.add("hidden");
+        if (grid) grid.classList.add("sidebar-collapsed");
+        if (pill) pill.classList.remove("hidden");
+        if (openBtn) {
+          openBtn.classList.remove("hidden");
+          openBtn.classList.add("flex");
+        }
+      }
+    }'''
+
+    start_side = clean_script.find('function toggleSidebar()')
+    end_side = clean_script.find('function initTheme()', start_side)
+    if start_side != -1 and end_side != -1:
+        clean_script = clean_script[:start_side] + sidebar_toggle_code + '\n\n    ' + clean_script[end_side:]
 
     # Story & IPO modals
     modals_code = '''

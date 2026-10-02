@@ -25,15 +25,20 @@
     };
   </script>
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box !important;
+    }
     html, body {
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
       touch-action: manipulation;
       -webkit-text-size-adjust: 100%;
+      background-color: #F1F5F9;
     }
     body {
       font-family: 'DM Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -64,24 +69,33 @@
     }
 
     /* Fixed Viewport Edge-to-Edge Layout */
+    #app-root {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
     #app-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 48px;
-      z-index: 50;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 48px !important;
+      min-height: 48px !important;
+      flex-shrink: 0 !important;
     }
     #app-main {
-      position: fixed;
-      top: 48px;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      flex: 1 1 0% !important;
+      padding: 6px 8px 8px 8px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
       background-color: #F1F5F9;
     }
     .dark #app-main {
@@ -90,10 +104,11 @@
 
     /* Main Workspace Grid (Views Container + Permanent 3rd Column Sidebar) */
     #workspace-grid {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: grid !important;
-      grid-template-columns: minmax(0, 1fr) 260px !important;
+      grid-template-columns: minmax(0, 1fr) 280px !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
@@ -102,60 +117,94 @@
     }
     @media (min-width: 1280px) {
       #workspace-grid {
-        grid-template-columns: minmax(0, 1fr) 280px !important;
+        grid-template-columns: minmax(0, 1fr) 300px !important;
       }
     }
     @media (min-width: 1536px) {
       #workspace-grid {
-        grid-template-columns: minmax(0, 1fr) 300px !important;
+        grid-template-columns: minmax(0, 1fr) 340px !important;
       }
+    }
+    @media (min-width: 1920px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 380px !important;
+      }
+    }
+    @media (min-width: 2560px) {
+      #workspace-grid {
+        grid-template-columns: minmax(0, 1fr) 420px !important;
+      }
+    }
+    #workspace-grid.sidebar-collapsed {
+      grid-template-columns: minmax(0, 1fr) !important;
     }
 
     #workspace-views {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       min-width: 0 !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
+      flex: 1 1 0% !important;
     }
 
     #view-feed:not(.hidden) {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: grid !important;
-      grid-template-columns: 320px minmax(0, 1fr) !important;
+      grid-template-columns: 340px minmax(0, 1fr) !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
     }
     @media (min-width: 1280px) {
-      #view-feed:not(.hidden) {
-        grid-template-columns: 350px minmax(0, 1fr) !important;
-      }
-    }
-    @media (min-width: 1536px) {
       #view-feed:not(.hidden) {
         grid-template-columns: 380px minmax(0, 1fr) !important;
       }
     }
+    @media (min-width: 1536px) {
+      #view-feed:not(.hidden) {
+        grid-template-columns: 420px minmax(0, 1fr) !important;
+      }
+    }
+    @media (min-width: 1920px) {
+      #view-feed:not(.hidden) {
+        grid-template-columns: 460px minmax(0, 1fr) !important;
+      }
+    }
+    @media (min-width: 2560px) {
+      #view-feed:not(.hidden) {
+        grid-template-columns: 520px minmax(0, 1fr) !important;
+      }
+    }
 
     #view-ipo:not(.hidden) {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: flex !important;
       flex-direction: column !important;
       gap: 8px !important;
       overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
     }
 
     #view-matrix:not(.hidden) {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
       display: flex !important;
       flex-direction: column !important;
       gap: 8px !important;
       overflow: hidden !important;
+      min-height: 0 !important;
+      flex: 1 1 0% !important;
     }
 
     #col-news-wire {
@@ -163,6 +212,7 @@
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
+      min-height: 0 !important;
     }
     #feed-list-container {
       flex: 1 1 0% !important;
@@ -214,10 +264,10 @@
   </style>
 </head>
 <body class="min-h-full bg-[#F1F5F9] text-slate-900 dark:bg-[#070B14] dark:text-slate-100 transition-colors duration-150">
-  <div class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
+  <div id="app-root" class="w-screen h-screen flex flex-col overflow-hidden m-0 p-0 bg-[#F1F5F9] dark:bg-[#070B14]">
 
     <!-- ================= 1. UNIFIED TOP NAVIGATION & CONTROLS RIBBON (DARK THEME - ENLARGED) ================= -->
-    <header class="sticky top-0 z-50 bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap text-[13px] font-mono">
+    <header id="app-header" class="shrink-0 w-full bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-3 sm:px-4 py-2 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[13px] font-mono z-50">
       
       <!-- Left: FinPress Branding & Live Market Pulse -->
       <div class="flex items-center gap-4 shrink-0">
@@ -285,7 +335,7 @@
     </header>
 
     <!-- ================= MAIN THREE-COLUMN WORKSPACE (FULL-WIDTH 3-COLUMN LAYOUT) ================= -->
-    <main class="w-full px-2 sm:px-3 py-1.5 flex-1 flex flex-col gap-1.5 min-h-0 lg:overflow-hidden">
+    <main id="app-main" class="flex-1 w-full flex flex-col overflow-hidden min-h-0 bg-[#F1F5F9] dark:bg-[#070B14] p-1.5 sm:p-2">
       
       <!-- Diagnostic Source Health Alert Banner (Appears when any paper fails) -->
       <div id="source-alert-banner" class="hidden px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-900 dark:text-amber-200 text-[11px] font-mono flex items-center justify-between gap-2 shadow-2xs">
@@ -717,7 +767,7 @@ const allowedSections = [
     
     let isSidebarVisible = localStorage.getItem('finpress_sidebar_visible') !== 'false';
 
-    function toggleSidebar() {
+        function toggleSidebar() {
       isSidebarVisible = !isSidebarVisible;
       localStorage.setItem('finpress_sidebar_visible', isSidebarVisible);
       applySidebarVisibility();
@@ -725,27 +775,26 @@ const allowedSections = [
 
     function applySidebarVisibility() {
       const aside = document.getElementById("view-feed-aside");
+      const grid = document.getElementById("workspace-grid");
       const pill = document.getElementById("sidebar-vertical-pill");
-      const viewFeed = document.getElementById("view-feed");
       const openBtn = document.getElementById("feed-open-sidebar-btn");
+      if (!aside) return;
 
-      if (aside && viewFeed) {
-        if (isSidebarVisible) {
-          aside.classList.remove("hidden");
-          if (pill) pill.classList.add("hidden");
-          viewFeed.className = "grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)] xl:grid-cols-[350px_minmax(0,1fr)] 2xl:grid-cols-[380px_minmax(0,1fr)] gap-2 items-stretch w-full flex-1 min-h-0 lg:h-[calc(100vh-54px)] lg:max-h-[calc(100vh-54px)]";
-          if (openBtn) {
-            openBtn.classList.add("hidden");
-            openBtn.classList.remove("flex");
-          }
-        } else {
-          aside.classList.add("hidden");
-          if (pill) pill.classList.remove("hidden");
-          viewFeed.className = "grid grid-cols-1 lg:grid-cols-[330px_minmax(0,1fr)] xl:grid-cols-[350px_minmax(0,1fr)] 2xl:grid-cols-[380px_minmax(0,1fr)] gap-2 items-stretch w-full flex-1 min-h-0 lg:h-[calc(100vh-54px)] lg:max-h-[calc(100vh-54px)]";
-          if (openBtn) {
-            openBtn.classList.remove("hidden");
-            openBtn.classList.add("flex");
-          }
+      if (isSidebarVisible) {
+        aside.classList.remove("hidden");
+        if (grid) grid.classList.remove("sidebar-collapsed");
+        if (pill) pill.classList.add("hidden");
+        if (openBtn) {
+          openBtn.classList.add("hidden");
+          openBtn.classList.remove("flex");
+        }
+      } else {
+        aside.classList.add("hidden");
+        if (grid) grid.classList.add("sidebar-collapsed");
+        if (pill) pill.classList.remove("hidden");
+        if (openBtn) {
+          openBtn.classList.remove("hidden");
+          openBtn.classList.add("flex");
         }
       }
     }
