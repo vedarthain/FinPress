@@ -177,30 +177,33 @@ def rebuild():
       height: 100% !important;
       min-height: 0 !important;
       display: grid !important;
-      grid-template-columns: 340px minmax(0, 1fr) !important;
+      grid-template-columns: 290px minmax(0, 1fr) !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
     }
     @media (min-width: 1280px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 380px minmax(0, 1fr) !important;
+        grid-template-columns: 320px minmax(0, 1fr) !important;
       }
     }
     @media (min-width: 1536px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 420px minmax(0, 1fr) !important;
+        grid-template-columns: 350px minmax(0, 1fr) !important;
       }
     }
     @media (min-width: 1920px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 460px minmax(0, 1fr) !important;
+        grid-template-columns: 380px minmax(0, 1fr) !important;
       }
     }
     @media (min-width: 2560px) {
       #view-feed:not(.hidden) {
-        grid-template-columns: 520px minmax(0, 1fr) !important;
+        grid-template-columns: 420px minmax(0, 1fr) !important;
       }
+    }
+    #view-feed.feed-col1-collapsed {
+      grid-template-columns: minmax(0, 1fr) !important;
     }
 
     #view-ipo:not(.hidden) {
@@ -308,6 +311,14 @@ def rebuild():
     # Clean Column 1 (News Wire) and Column 2 (Detail Pane)
     dom_part = re.sub(r'<div class="rounded-lg bg-white dark:bg-\[#0E1322\] border[^>]*flex flex-col h-auto[^>]*>', '<div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col w-full h-full min-h-0">', dom_part, count=1)
     dom_part = re.sub(r'<div id="feed-detail-wrapper"[^>]*>', '<div id="feed-detail-wrapper" class="w-full h-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs flex flex-col gap-3 min-h-0 overflow-y-auto">', dom_part, count=1)
+    
+    # Add collapse button to col-news-wire header
+    dom_part = re.sub(
+        r'<button onclick="navigateStory\(1\)"[^>]*>Next ▶</button>\s*</div>',
+        '<button onclick="navigateStory(1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-indigo-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700" title="Next Story (Right / Down Arrow or J)">Next ▶</button>\n              <button onclick="toggleCol1()" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-amber-100 hover:text-amber-800 text-[11px] font-bold text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 cursor-pointer" title="Collapse Column 1 (News Wire)">«</button>\n            </div>',
+        dom_part,
+        count=1
+    )
 
     # Clean up view-feed and view-matrix
     dom_part = re.sub(r'<section id="view-feed"[^>]*>', '<section id="view-feed">', dom_part)
@@ -1243,6 +1254,9 @@ def rebuild():
         <!-- TOP ROW: METADATA & ACTION BUTTONS -->
         <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
           <div class="flex items-center gap-2 flex-wrap">
+            <button id="feed-open-col1-btn" onclick="toggleCol1()" class="${isCol1Collapsed ? 'flex' : 'hidden'} items-center gap-1 font-mono text-[11px] font-bold px-2.5 py-1 rounded border border-indigo-300 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 shadow-2xs cursor-pointer" title="Expand Column 1 (News Wire)">
+              <span>📰 Wire »</span>
+            </button>
             <span class="font-bold px-2.5 py-1 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
             ${story.isFrontPage ? `<span class="font-bold px-2.5 py-1 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
             ${story.hasFe ? `<span class="font-extrabold px-2.5 py-1 rounded bg-blue-100 text-blue-950 border border-blue-300 dark:bg-blue-950 dark:text-blue-200">Financial Express</span>` : ''}
@@ -1383,6 +1397,7 @@ def rebuild():
         restoreNavigationState();
         initMetrics();
         applySidebarVisibility();
+        applyCol1Visibility();
         if (currentView === "ipo") {
           renderIpoTable();
         } else if (currentView === "corporate") {
@@ -1425,6 +1440,36 @@ def rebuild():
         if (openBtn) {
           openBtn.classList.remove("hidden");
           openBtn.classList.add("flex");
+        }
+      }
+    }
+
+    let isCol1Collapsed = localStorage.getItem('finpress_col1_collapsed') === 'true';
+
+    function toggleCol1() {
+      isCol1Collapsed = !isCol1Collapsed;
+      localStorage.setItem('finpress_col1_collapsed', isCol1Collapsed);
+      applyCol1Visibility();
+    }
+
+    function applyCol1Visibility() {
+      const col1 = document.getElementById("col-news-wire");
+      const viewFeed = document.getElementById("view-feed");
+      const openBtn = document.getElementById("feed-open-col1-btn");
+      
+      if (isCol1Collapsed) {
+        if (col1) col1.classList.add("hidden");
+        if (viewFeed) viewFeed.classList.add("feed-col1-collapsed");
+        if (openBtn) {
+          openBtn.classList.remove("hidden");
+          openBtn.classList.add("flex");
+        }
+      } else {
+        if (col1) col1.classList.remove("hidden");
+        if (viewFeed) viewFeed.classList.remove("feed-col1-collapsed");
+        if (openBtn) {
+          openBtn.classList.add("hidden");
+          openBtn.classList.remove("flex");
         }
       }
     }'''
