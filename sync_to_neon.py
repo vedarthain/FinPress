@@ -17,6 +17,23 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger("NewsAPI.NeonSync")
 
 
+_REQUIRED_STORY_FIELDS = ("category", "page_numbers", "brief_details", "bullet_points", "importance")
+
+
+def _drop_malformed_stories(stories: list, filename: str) -> list:
+    """Drops story entries missing required fields instead of failing the whole edition's sync."""
+    clean = []
+    for s in stories:
+        missing = [field for field in _REQUIRED_STORY_FIELDS if field not in s]
+        if missing:
+            logger.warning(f"Dropping malformed story in {filename} (missing {missing}): {s.get('headline', '<no headline>')}")
+            continue
+        if not isinstance(s["page_numbers"], str):
+            s["page_numbers"] = " / ".join(str(p) for p in s["page_numbers"]) if isinstance(s["page_numbers"], list) else str(s["page_numbers"])
+        clean.append(s)
+    return clean
+
+
 def sync_all_reports_to_neon(database_url: str = None):
     db_url = database_url or os.getenv("DATABASE_URL")
     if not db_url:
@@ -46,6 +63,7 @@ def sync_all_reports_to_neon(database_url: str = None):
         try:
             with open(f, "r", encoding="utf-8") as fp:
                 data = json.load(fp)
+                data["major_stories"] = _drop_malformed_stories(data.get("major_stories", []), f.name)
                 report = NewspaperEditionReport.model_validate(data)
                 success = neon_db.save_report(report, source="unified")
                 if success:

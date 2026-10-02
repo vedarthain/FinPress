@@ -263,7 +263,18 @@ export default {{
     }}
 
     if (url.pathname === '/api/dates') {{
-      const dates = ['2026-09-29', '2026-09-28', '2026-09-27'];
+      let dates = [];
+      try {{
+        const listed = await env.BUCKET.list({{ prefix: 'reports/news_report_unified_' }});
+        dates = listed.objects
+          .map(o => o.key.match(/news_report_unified_(\\d{{4}}-\\d{{2}}-\\d{{2}})\\.json$/))
+          .filter(Boolean)
+          .map(m => m[1])
+          .sort()
+          .reverse();
+      }} catch (e) {{
+        console.error('Failed to list R2 dates:', e);
+      }}
       return new Response(JSON.stringify(dates), {{
         headers: {{
           'Content-Type': 'application/json; charset=utf-8',
