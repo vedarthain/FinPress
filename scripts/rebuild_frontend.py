@@ -65,7 +65,7 @@ def rebuild():
       background-color: #070B14;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
     .dark ::-webkit-scrollbar-thumb { background: #334155; }
@@ -83,6 +83,7 @@ def rebuild():
     #app-root {
       width: 100vw !important;
       max-width: 100vw !important;
+      min-width: 100vw !important;
       height: 100vh !important;
       height: 100dvh !important;
       display: flex !important;
@@ -92,15 +93,18 @@ def rebuild():
       padding: 0 !important;
     }
     #app-header {
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 100% !important;
       height: 48px !important;
       min-height: 48px !important;
       flex-shrink: 0 !important;
+      z-index: 50 !important;
     }
     #app-main {
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 100% !important;
       flex: 1 1 0% !important;
       padding: 6px 8px 8px 8px !important;
       display: flex !important;
@@ -108,6 +112,7 @@ def rebuild():
       overflow: hidden !important;
       min-height: 0 !important;
       background-color: #F1F5F9;
+      gap: 6px !important;
     }
     .dark #app-main {
       background-color: #070B14;
@@ -117,23 +122,24 @@ def rebuild():
     #workspace-grid {
       width: 100% !important;
       max-width: 100% !important;
+      min-width: 100% !important;
+      flex: 1 1 0% !important;
       height: 100% !important;
+      min-height: 0 !important;
       display: grid !important;
       grid-template-columns: minmax(0, 1fr) 280px !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
-      min-height: 0 !important;
-      flex: 1 1 0% !important;
     }
     @media (min-width: 1280px) {
       #workspace-grid {
-        grid-template-columns: minmax(0, 1fr) 300px !important;
+        grid-template-columns: minmax(0, 1fr) 320px !important;
       }
     }
     @media (min-width: 1536px) {
       #workspace-grid {
-        grid-template-columns: minmax(0, 1fr) 340px !important;
+        grid-template-columns: minmax(0, 1fr) 360px !important;
       }
     }
     @media (min-width: 1920px) {
@@ -153,25 +159,27 @@ def rebuild():
     #workspace-views {
       width: 100% !important;
       max-width: 100% !important;
-      height: 100% !important;
       min-width: 0 !important;
+      flex: 1 1 0% !important;
+      height: 100% !important;
+      min-height: 0 !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
-      flex: 1 1 0% !important;
     }
 
     #view-feed:not(.hidden) {
       width: 100% !important;
       max-width: 100% !important;
+      min-width: 100% !important;
+      flex: 1 1 0% !important;
       height: 100% !important;
+      min-height: 0 !important;
       display: grid !important;
       grid-template-columns: 340px minmax(0, 1fr) !important;
       grid-template-rows: 100% !important;
       gap: 8px !important;
       overflow: hidden !important;
-      min-height: 0 !important;
-      flex: 1 1 0% !important;
     }
     @media (min-width: 1280px) {
       #view-feed:not(.hidden) {
@@ -197,33 +205,23 @@ def rebuild():
     #view-ipo:not(.hidden) {
       width: 100% !important;
       max-width: 100% !important;
+      min-width: 100% !important;
+      flex: 1 1 0% !important;
       height: 100% !important;
+      min-height: 0 !important;
       display: flex !important;
       flex-direction: column !important;
       gap: 8px !important;
       overflow: hidden !important;
-      min-height: 0 !important;
-      flex: 1 1 0% !important;
-    }
-
-    #view-matrix:not(.hidden) {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 8px !important;
-      overflow: hidden !important;
-      min-height: 0 !important;
-      flex: 1 1 0% !important;
     }
 
     #col-news-wire {
+      width: 100% !important;
       height: 100% !important;
+      min-height: 0 !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
-      min-height: 0 !important;
     }
     #feed-list-container {
       flex: 1 1 0% !important;
@@ -232,29 +230,34 @@ def rebuild():
     }
 
     #feed-detail-wrapper {
+      width: 100% !important;
       height: 100% !important;
+      min-height: 0 !important;
       display: flex !important;
       flex-direction: column !important;
-      overflow: hidden !important;
-      min-height: 0 !important;
+      overflow-y: auto !important;
     }
     #feed-detail-container {
+      width: 100% !important;
       flex: 1 1 0% !important;
       min-height: 0 !important;
-      overflow-y: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
 
     #view-feed-aside {
+      width: 100% !important;
       height: 100% !important;
+      min-height: 0 !important;
       display: flex !important;
       flex-direction: column !important;
-      overflow: hidden !important;
-      min-height: 0 !important;
+      overflow-y: auto !important;
     }
     #tree-sidebar-container {
-      flex: 1 1 0% !important;
-      min-height: 0 !important;
-      overflow-y: auto !important;
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 6px !important;
     }
 
     @media (max-width: 1023px) {
@@ -281,12 +284,12 @@ def rebuild():
     dom_part = re.sub(r'<header[^>]*>', '<header id="app-header" class="shrink-0 w-full bg-[#070B14] border-b border-slate-800 text-slate-100 shadow-lg px-3 sm:px-4 py-2 flex items-center justify-between gap-3 overflow-x-auto whitespace-nowrap text-[13px] font-mono z-50">', dom_part, count=1)
     dom_part = re.sub(r'<main[^>]*>', '<main id="app-main" class="flex-1 w-full flex flex-col overflow-hidden min-h-0 bg-[#F1F5F9] dark:bg-[#070B14] p-1.5 sm:p-2">', dom_part, count=1)
 
-    # 2. Update Header: Add dedicated Quick IPO Hub Launch Button
-    header_find = '<div class="flex items-center gap-2">'
-    header_replace = '''<div class="flex items-center gap-2">
-        <button id="top-ipo-hub-btn" onclick="switchView(currentView === 'ipo' ? 'feed' : 'ipo')" class="px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Launch Specialized IPO Intelligence Hub">
+    # 2. Update Header: Add dedicated Quick IPO Hub Launch Button right before Run Pipeline Button
+    header_find = '<button onclick="triggerGitHubPipeline()"'
+    header_replace = '''<button id="top-ipo-hub-btn" onclick="switchView(currentView === 'ipo' ? 'feed' : 'ipo')" class="px-3 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-mono text-[12px] font-bold flex items-center gap-1.5 shadow-md transition-transform active:scale-95 cursor-pointer" title="Launch Specialized IPO Intelligence Hub">
           <span>🚀</span> <span>IPO Hub</span>
-        </button>'''
+        </button>
+        <button onclick="triggerGitHubPipeline()"'''
     if header_find in dom_part and 'id="top-ipo-hub-btn"' not in dom_part:
         dom_part = dom_part.replace(header_find, header_replace, 1)
 
@@ -303,15 +306,18 @@ def rebuild():
 
     # Clean Column 1 (News Wire) and Column 2 (Detail Pane)
     dom_part = re.sub(r'<div class="rounded-lg bg-white dark:bg-\[#0E1322\] border[^>]*flex flex-col h-auto[^>]*>', '<div id="col-news-wire" class="rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col w-full h-full min-h-0">', dom_part, count=1)
-    dom_part = re.sub(r'<div id="feed-detail-wrapper"[^>]*>', '<div id="feed-detail-wrapper" class="w-full h-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-3 sm:p-4 shadow-xs flex flex-col gap-2.5 min-h-0 overflow-y-auto">', dom_part, count=1)
+    dom_part = re.sub(r'<div id="feed-detail-wrapper"[^>]*>', '<div id="feed-detail-wrapper" class="w-full h-full rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs flex flex-col gap-3 min-h-0 overflow-y-auto">', dom_part, count=1)
 
     # Clean up view-feed and view-matrix
     dom_part = re.sub(r'<section id="view-feed"[^>]*>', '<section id="view-feed">', dom_part)
-    dom_part = re.sub(r'<section id="view-matrix"[^>]*>', '<section id="view-matrix" class="hidden">', dom_part)
+    
+    # Remove old view-ipo if present
+    dom_part = re.sub(r'<section id="view-ipo"[^>]*>.*?</section>', '', dom_part, flags=re.DOTALL)
+    dom_part = re.sub(r'<section id="view-matrix"[^>]*>.*?</section>', '', dom_part, flags=re.DOTALL)
 
     # 4. Create Dedicated Full-Page IPO Hub Section (#view-ipo)
     view_ipo_html = '''      <!-- DEDICATED IPO INTELLIGENCE HUB SECTION -->
-      <section id="view-ipo" class="hidden rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0E1322] shadow-xs p-3">
+      <section id="view-ipo" class="hidden rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0E1322] shadow-xs p-3 flex-1 flex flex-col min-h-0 overflow-hidden">
         
         <!-- IPO Header Bar & Filters -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800 shrink-0">
@@ -448,11 +454,11 @@ def rebuild():
 
     dom_part = dom_part[:vf_idx] + workspace_html + '\n\n    ' + dom_part[main_end_idx:]
 
-    # 5. Clean script_part
+    # 5. Clean script_part - replace specific function blocks cleanly
     clean_script = script_part.split('</script>')[0].replace('<script>', '', 1).strip()
 
-    # Add top global variables (Defaulting to News Front Page)
-    clean_script = '''    let rawReport = null;
+    # Prepend global benchmark dataset
+    top_globals = '''    let rawReport = null;
     let stories = [];
     let ipoList = [];
     let currentView = "feed";
@@ -483,15 +489,38 @@ def rebuild():
       { id: 7, name: "Arkade Developers Ltd", ticker: "ARKADE", date: "20 Sep 2026", issuePrice: 128, listPrice: 175, cmp: 168, exchange: "NSE / BSE Mainboard" },
       { id: 8, name: "Western Carriers India Ltd", ticker: "WESTERN", date: "21 Sep 2026", issuePrice: 172, listPrice: 170, cmp: 158, exchange: "NSE / BSE Mainboard" },
       { id: 9, name: "Northern Arc Capital Ltd", ticker: "NORTHARC", date: "19 Sep 2026", issuePrice: 263, listPrice: 351, cmp: 325, exchange: "NSE / BSE Mainboard" }
-    ];\n\n''' + clean_script[clean_script.find('const allowedSections = ['):]
+    ];\n\n'''
 
-    # Update switchView in clean_script
-    switch_view_code = '''    function switchView(viewName) {
+    clean_script = top_globals + clean_script[clean_script.find('const allowedSections = ['):]
+
+    # Helper function to replace function definitions using regex
+    def replace_js_function(script, fn_name, new_fn_code):
+        # Match 'async function fn_name(' or 'function fn_name('
+        match = re.search(rf'(?:async\s+)?function\s+{fn_name}\s*\(', script)
+        if not match:
+            return script + '\n\n' + new_fn_code
+        idx = match.start()
+        # Count braces from match.end()
+        brace_count = 0
+        started = False
+        end_idx = idx
+        for i in range(match.end() - 1, len(script)):
+            if script[i] == '{':
+                brace_count += 1
+                started = True
+            elif script[i] == '}':
+                brace_count -= 1
+                if started and brace_count == 0:
+                    end_idx = i + 1
+                    break
+        return script[:idx] + new_fn_code.strip() + script[end_idx:]
+
+    # 1. switchView
+    switch_view_code = '''function switchView(viewName) {
       currentView = viewName;
       const tabAnchor = document.getElementById("tab-btn-anchor");
       const viewFeed = document.getElementById("view-feed");
       const viewIpo = document.getElementById("view-ipo");
-      const viewMatrix = document.getElementById("view-matrix");
       const corpBanner = document.getElementById("corporate-subtabs-banner");
       const ipoBanner = document.getElementById("ipo-subtabs-banner");
       const deskSelect = document.getElementById("desk-select");
@@ -507,7 +536,6 @@ def rebuild():
           topIpoBtn.innerHTML = "<span>📰</span> <span>Back to News</span>";
         }
         if (viewFeed) viewFeed.classList.add("hidden");
-        if (viewMatrix) viewMatrix.classList.add("hidden");
         if (viewIpo) viewIpo.classList.remove("hidden");
         setIpoViewMode(activeIpoMode || 'tracker');
         renderCategoriesAndStocksSidebar();
@@ -520,7 +548,6 @@ def rebuild():
       }
 
       if (viewIpo) viewIpo.classList.add("hidden");
-      if (viewMatrix) viewMatrix.classList.add("hidden");
       if (viewFeed) viewFeed.classList.remove("hidden");
 
       if (viewName === "feed") {
@@ -554,14 +581,10 @@ def rebuild():
       renderCategoriesAndStocksSidebar();
       renderFeedList();
     }'''
+    clean_script = replace_js_function(clean_script, 'switchView', switch_view_code)
 
-    start_sw = clean_script.find('function switchView(')
-    end_sw = clean_script.find('function onDeskSelect(')
-    if start_sw != -1 and end_sw != -1:
-        clean_script = clean_script[:start_sw] + switch_view_code + '\n\n    ' + clean_script[end_sw:]
-
-    # Update onCategorySelect
-    cat_sel_code = '''    function onCategorySelect(val) {
+    # 2. onCategorySelect
+    cat_sel_code = '''function onCategorySelect(val) {
       if (currentView === "ipo") {
         currentView = "feed";
         const topIpoBtn = document.getElementById("top-ipo-hub-btn");
@@ -602,14 +625,10 @@ def rebuild():
       renderCategoriesAndStocksSidebar();
       renderFeedList();
     }'''
+    clean_script = replace_js_function(clean_script, 'onCategorySelect', cat_sel_code)
 
-    start_cat = clean_script.find('function onCategorySelect(')
-    end_cat = clean_script.find('function isFillerHeadline(', start_cat)
-    if start_cat != -1 and end_cat != -1:
-        clean_script = clean_script[:start_cat] + cat_sel_code + '\n\n    ' + clean_script[end_cat:]
-
-    # Enhanced parseStory with FE and BS publication detection
-    parse_story_code = '''    function parseStory(story, idx) {
+    # 3. parseStory
+    parse_story_code = '''function parseStory(story, idx) {
       if (!story || isFillerHeadline(story.headline || "")) return null;
 
       const brief_details = story.brief_details || story.brief || "";
@@ -633,202 +652,83 @@ def rebuild():
       }
 
       // Detect Opinions / Editorial
-      const isOpinion = pageStr.includes("opinion") || pageStr.includes("edit") || pageStr.includes("column") || pageStr.includes("commentary") || fullText.includes("op-ed") || fullText.includes("editorial view");
+      const isOpinion = category === "Opinions" || category === "Opinion" || category === "Editorial" || fullText.includes("opinion:") || fullText.includes("editorial:");
+      const isFrontPage = pageStr.includes("page 1") || pageStr.includes("p1") || pageStr.includes("page1") || pageStr.includes("anchor") || story.is_front_page;
 
-      // Strict Front Page Anchors: Must be Page 1 and strictly genuine NEWS
-      const isPage1Location = pageStr.includes("page 1") || pageStr.includes("page 01") || pageStr.includes("p.1") || pageStr.includes("front") || pageStr.includes("lead");
-      const isAnnouncementOrIpo = category === "IPO" || category === "Corporate Events" || category === "Corporate Appointments" || isOpinion || fullText.includes("drhp") || fullText.includes("statutory notice") || fullText.includes("public notice") || fullText.includes("disclosure");
-      const isFrontPage = (isPage1Location || idx < 4) && !isAnnouncementOrIpo;
+      // Dynamic Stock & Sector Detection
+      const detectedStocks = [];
+      const detectedSectors = [];
+      const upperText = ((story.headline || "") + " " + brief_details + " " + bullet_points.join(" ")).toUpperCase();
+
+      if (typeof stockDictionary !== "undefined") {
+        stockDictionary.forEach(stk => {
+          if (new RegExp(`\\\\b${stk.replace('&', '\\\\&')}\\\\b`, 'i').test(upperText)) {
+            detectedStocks.push(stk);
+          }
+        });
+      }
+
+      if (typeof sectorDictionary !== "undefined") {
+        sectorDictionary.forEach(sec => {
+          if (new RegExp(`\\\\b${sec.replace('&', '\\\\&')}\\\\b`, 'i').test(upperText)) {
+            detectedSectors.push(sec);
+          }
+        });
+      }
 
       let ipoData = null;
       if (category === "IPO") {
         ipoData = parseIpoItem(story, idx);
       }
 
-      const bullishTriggers = [
-        { k: "order win", r: "Contract / Order Inflow expands near-term revenue visibility." },
-        { k: "mou", r: "Strategic MoU / Partnership accelerates joint development and market reach." },
-        { k: "expansion", r: "Capacity Expansion / New facility enhances long-term operational throughput." },
-        { k: "profit up", r: "Strong bottom-line growth signals healthy operational leverage." },
-        { k: "revenue up", r: "Topline growth indicates robust market demand and pricing power." },
-        { k: "approval", r: "Key regulatory/government clearance removes project bottleneck." },
-        { k: "dividend", r: "Shareholder payout / capital return signals healthy balance-sheet liquidity." },
-        { k: "exemption", r: "Policy duty waiver / tax exemption improves gross margins." },
-        { k: "surge", r: "Sharp positive volume/demand breakout across core business segments." }
-      ];
-
-      const bearishRisks = [
-        { k: "penalty", r: "Regulatory penalty / Show-cause notice creates near-term compliance headwind." },
-        { k: "fine", r: "Monetary penalty imposes financial liability and compliance friction." },
-        { k: "probe", r: "Regulatory/tax scrutiny introduces headline risk and governance scrutiny." },
-        { k: "loss", r: "Widening losses or margin compression weigh on fundamental valuation." },
-        { k: "slump", r: "Demand deceleration or volume contraction creates earnings drag." },
-        { k: "falls", r: "Topline or net margin contraction signals weakening operating leverage." },
-        { k: "tax hike", r: "Increased duty/tax burdens directly compress profit spreads." },
-        { k: "curb", r: "Export/import curbs or policy restrictions limit addressable business." }
-      ];
-
-      let matchedBullish = [];
-      bullishTriggers.forEach(t => { if (fullText.includes(t.k)) matchedBullish.push(t.r); });
-
-      let matchedBearish = [];
-      bearishRisks.forEach(t => { if (fullText.includes(t.k)) matchedBearish.push(t.r); });
-
-      let sentiment = "NEUTRAL";
-      let sentimentReasoning = "Baseline monitoring trigger: Ongoing operational development, sector-wide baseline trend, or corporate filing to track for subsequent quarterly performance.";
-
-      if (matchedBullish.length > matchedBearish.length) {
-        sentiment = "BULLISH";
-        sentimentReasoning = matchedBullish.slice(0, 2).join(" Additionally, ");
-      } else if (matchedBearish.length > matchedBullish.length) {
-        sentiment = "BEARISH";
-        sentimentReasoning = matchedBearish.slice(0, 2).join(" Additionally, ");
-      }
-
-      const detectedStocks = [];
-      const detectedSectors = [];
-      const upperText = ((story.headline || "") + " " + brief_details + " " + bullet_points.join(" ")).toUpperCase();
-
-      stockDictionary.forEach(stk => {
-        if (new RegExp(`\\\\b${stk.replace('&', '\\\\&')}\\\\b`, 'i').test(upperText)) {
-          detectedStocks.push(stk);
-        }
-      });
-
-      sectorDictionary.forEach(sec => {
-        if (new RegExp(`\\\\b${sec.replace('&', '\\\\&')}\\\\b`, 'i').test(upperText)) {
-          detectedSectors.push(sec);
-        }
-      });
-
-      let catalyst = (bullet_points && bullet_points.length > 0) ? bullet_points[0] : (brief_details.slice(0, 160) + "...");
-
-      const uniqueStocks = [...new Set(detectedStocks)].slice(0, 3);
-      const uniqueSectors = [...new Set(detectedSectors)].slice(0, 3);
-      const allTickers = [...new Set([...uniqueStocks, ...uniqueSectors])].slice(0, 4);
+      const uniqueStocks = (story.stocks && story.stocks.length > 0) ? story.stocks : [...new Set(detectedStocks)].slice(0, 4);
+      const uniqueSectors = (story.sectors && story.sectors.length > 0) ? story.sectors : [...new Set(detectedSectors)].slice(0, 3);
+      const allTickers = (story.tickers && story.tickers.length > 0) ? story.tickers : [...new Set([...uniqueStocks, ...uniqueSectors])].slice(0, 5);
 
       return {
-        ...story,
-        id: idx + 1,
-        brief_details: brief_details,
-        brief: brief_details,
-        bullet_points: bullet_points,
-        detailed_points: bullet_points,
-        category: category || "Others",
-        sentiment,
-        sentimentReasoning,
+        id: story.id || (idx + 1),
+        headline: story.headline || "Untitled Intelligence Item",
+        category: category || "Market",
+        sentiment: (story.sentiment || "NEUTRAL").toUpperCase(),
+        sentimentReasoning: story.sentiment_reasoning || story.sentimentReasoning || story.catalyst || "",
+        tickers: allTickers,
         stocks: uniqueStocks,
         sectors: uniqueSectors,
-        tickers: allTickers,
-        catalyst,
-        isFrontPage,
-        isOpinion,
-        hasFe,
-        hasBs,
-        source_paper: sourcePaper,
+        page_numbers: story.page_numbers || (hasFe ? "FE (Page 1)" : "BS (Page 1)"),
+        source_paper: story.source_paper || (hasFe ? "Financial Express" : hasBs ? "Business Standard" : "Financial Express"),
+        brief_details: brief_details,
+        bullet_points: bullet_points,
+        catalyst: story.catalyst || story.brief_details || "",
+        isFrontPage: isFrontPage,
+        hasFe: hasFe || (!hasBs),
+        hasBs: hasBs,
+        isOpinion: isOpinion,
         ipoTag: ipoData ? ipoData.filterTag : null,
         ipoData: ipoData
       };
     }'''
+    clean_script = replace_js_function(clean_script, 'parseStory', parse_story_code)
 
-    start_ps = clean_script.find('function parseStory(')
-    end_ps = clean_script.find('function parseIpoItem(')
-    if start_ps != -1 and end_ps != -1:
-        clean_script = clean_script[:start_ps] + parse_story_code + '\n\n    ' + clean_script[end_ps:]
+    # 4. getFilteredStories
+    filtered_stories_code = '''function getFilteredStories() {
+      const q = currentSearchQuery.toLowerCase().trim();
+      const terms = q.split(" ").filter(Boolean);
 
-    # Enhanced updateDropdownOptions with Publication filters
-    dropdown_code = '''    function updateDropdownOptions(coreCount, ipoCount, corpCount, opCount) {
-      const feCount = stories.filter(s => s.hasFe).length;
-      const bsCount = stories.filter(s => s.hasBs).length;
-
-      const catSelect = document.getElementById("category-select");
-      if (catSelect) {
-        const counts = {
-          Sector: stories.filter(s => s.category === "Sector" && !s.isOpinion).length,
-          Economy: stories.filter(s => s.category === "Economy" && !s.isOpinion).length,
-          Policy: stories.filter(s => s.category === "Policy" && !s.isOpinion).length,
-          Market: stories.filter(s => s.category === "Market" && !s.isOpinion).length,
-          Trade: stories.filter(s => s.category === "Trade" && !s.isOpinion).length,
-          "International News": stories.filter(s => s.category === "International News" && !s.isOpinion).length,
-          Others: stories.filter(s => s.category === "Others" && !s.isOpinion).length
-        };
-        catSelect.innerHTML = `
-          <option value="ANCHOR">📰 News (Front Page) (${stories.filter(s => s.isFrontPage).length})</option>
-          <option value="SOURCE_FE">📰 Financial Express (${feCount})</option>
-          <option value="SOURCE_BS">📰 Business Standard (${bsCount})</option>
-          <option value="ALL">📑 All Unified Stories (${stories.length})</option>
-          <option value="Sector">Sector (${counts.Sector})</option>
-          <option value="Economy">Economy (${counts.Economy})</option>
-          <option value="Policy">Policy (${counts.Policy})</option>
-          <option value="Market">Market (${counts.Market})</option>
-          <option value="Trade">Trade & FX (${counts.Trade})</option>
-          <option value="International News">International (${counts["International News"]})</option>
-          <option value="Others">General Features (${counts.Others})</option>
-        `;
-        if (selectedFeedCategory !== "ANCHOR" && !selectedFeedCategory.startsWith("CORPORATE") && !selectedFeedCategory.startsWith("IPO") && selectedFeedCategory !== "OPINIONS") {
-          catSelect.value = selectedFeedCategory;
-        } else {
-          catSelect.value = "ALL";
-        }
-      }
-
-      const deskSelect = document.getElementById("desk-select");
-      if (deskSelect) {
-        deskSelect.innerHTML = `
-          <option value="" disabled ${currentView === 'feed' && selectedFeedCategory !== 'OPINIONS' && !selectedFeedCategory.startsWith('CORPORATE') && !selectedFeedCategory.startsWith('IPO') ? 'selected' : ''}>🏛️ Specialized Desks ▾</option>
-          <option value="ipo" ${currentView === 'ipo' || selectedFeedCategory.startsWith('IPO') ? 'selected' : ''}>🚀 IPO Central (${ipoCount})</option>
-          <option value="corporate" ${currentView === 'corporate' || selectedFeedCategory.startsWith('CORPORATE') ? 'selected' : ''}>🏢 Corporate (${corpCount})</option>
-          <option value="opinions" ${selectedFeedCategory === 'OPINIONS' ? 'selected' : ''}>✍️ Opinions (${opCount})</option>
-        `;
-      }
-    }'''
-
-    start_dd = clean_script.find('function updateDropdownOptions(')
-    end_dd = clean_script.find('function initMetrics(')
-    if start_dd != -1 and end_dd != -1:
-        clean_script = clean_script[:start_dd] + dropdown_code + '\n\n    ' + clean_script[end_dd:]
-
-    # Enhanced getFilteredStories with SOURCE_FE and SOURCE_BS support
-    filtered_stories_code = '''    function getFilteredStories() {
-      const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
-      const queryTokens = rawQuery ? rawQuery.split(/\\s+/).filter(Boolean) : [];
-      
       return stories.filter(s => {
-        const searchableText = (
-          s.headline + " " + 
-          s.brief_details + " " + 
-          (s.bullet_points || []).join(" ") + " " + 
-          s.category + " " + 
-          (s.page_numbers || "") + " " + 
-          (s.source_paper || "") + " " +
-          (s.hasFe ? "fe financial express " : "") +
-          (s.hasBs ? "bs business standard " : "") +
-          (s.tickers || []).join(" ")
-        ).toLowerCase();
+        const fullContent = (s.headline + " " + (s.brief_details || "") + " " + (s.bullet_points || []).join(" ") + " " + (s.tickers || []).join(" ") + " " + (s.sectors || []).join(" ") + " " + s.category).toLowerCase();
+        const matchQuery = terms.length === 0 || terms.every(t => fullContent.includes(t));
 
-        const matchQuery = queryTokens.length === 0 || queryTokens.every(tok => searchableText.includes(tok));
-        
         let matchSec = true;
-        if (activeStockFilter || activeSectorFilter || queryTokens.length > 0) {
-          matchSec = true; // When filtering by stock, sector, or search, search across ALL stories!
-        } else if (selectedFeedCategory === "ALL") {
-          matchSec = true; // Complete 100% Unabridged Multi-Source News Feed (zero stories omitted)
+        if (selectedFeedCategory === "ALL") {
+          matchSec = true;
         } else if (selectedFeedCategory === "SOURCE_FE") {
           matchSec = s.hasFe;
         } else if (selectedFeedCategory === "SOURCE_BS") {
           matchSec = s.hasBs;
-        } else if (selectedFeedCategory === "CORE") {
-          matchSec = s.category !== "IPO" && s.category !== "Corporate Events" && s.category !== "Corporate Appointments" && !s.isOpinion;
         } else if (selectedFeedCategory === "ANCHOR") {
           matchSec = s.isFrontPage;
         } else if (selectedFeedCategory === "IPO_ALL") {
           matchSec = s.category === "IPO";
-        } else if (selectedFeedCategory === "IPO_DRHP") {
-          matchSec = s.category === "IPO" && (s.ipoTag === "DRHP" || !s.ipoTag);
-        } else if (selectedFeedCategory === "IPO_BIDDING") {
-          matchSec = s.category === "IPO" && s.ipoTag === "BIDDING";
-        } else if (selectedFeedCategory === "IPO_NOTICES") {
-          matchSec = s.category === "IPO" && s.ipoTag === "NOTICES";
         } else if (selectedFeedCategory === "CORPORATE_ALL") {
           matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
         } else if (selectedFeedCategory === "EVENTS") {
@@ -850,14 +750,10 @@ def rebuild():
         return matchSec && matchSent && matchStock && matchSector && matchQuery;
       });
     }'''
+    clean_script = replace_js_function(clean_script, 'getFilteredStories', filtered_stories_code)
 
-    start_gfs = clean_script.find('function getFilteredStories(')
-    end_gfs = clean_script.find('function navigateStory(')
-    if start_gfs != -1 and end_gfs != -1:
-        clean_script = clean_script[:start_gfs] + filtered_stories_code + '\n\n    ' + clean_script[end_gfs:]
-
-    # Enhanced renderCategoriesAndStocksSidebar with Publication Source filter
-    sidebar_code = '''    function renderCategoriesAndStocksSidebar() {
+    # 5. renderCategoriesAndStocksSidebar
+    sidebar_code = '''function renderCategoriesAndStocksSidebar() {
       const container = document.getElementById("tree-sidebar-container");
       if (!container) return;
 
@@ -1050,8 +946,7 @@ def rebuild():
               selectedStoryIndex = 0;
               currentFeedPage = 1;
               renderCategoriesAndStocksSidebar();
-              if (currentLayoutMode === "split") renderFeedList();
-              else renderMatrixTable();
+              renderFeedList();
             };
             secBody.appendChild(btn);
           });
@@ -1083,105 +978,73 @@ def rebuild():
           return totalB - totalA;
         });
 
-        const stockCard = document.createElement("div");
-        stockCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
+        const stkCard = document.createElement("div");
+        stkCard.className = "rounded-lg bg-white dark:bg-[#0E1322] border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden";
         
-        const isStockOpen = treeState.stocks;
-        stockCard.innerHTML = `
+        const isStkOpen = treeState.stocks;
+        stkCard.innerHTML = `
           <div class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer select-none" onclick="toggleTreeNode('stocks')">
             <div class="flex items-center gap-1.5 text-[13px] font-sans font-bold text-slate-900 dark:text-slate-100">
-              <span class="text-amber-600 dark:text-amber-400 text-[11px]">${isStockOpen ? '▼' : '▶'}</span>
+              <span class="text-purple-600 dark:text-purple-400 text-[11px]">${isStkOpen ? '▼' : '▶'}</span>
               <span>🏢 Company Stocks</span>
               <span class="text-[11.5px] text-slate-500 dark:text-slate-400 font-mono">(${activeStockKeys.length})</span>
             </div>
-            ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10.5px] font-mono text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Clear (✕)</button>` : ''}
+            ${activeStockFilter ? `<button onclick="event.stopPropagation(); activeStockFilter = null; renderCategoriesAndStocksSidebar(); renderFeedList();" class="text-[10.5px] font-mono text-purple-600 dark:text-purple-400 font-bold hover:underline">Clear (✕)</button>` : ''}
           </div>
         `;
 
-        if (isStockOpen) {
-          const stockBody = document.createElement("div");
-          stockBody.className = "p-1.5 flex flex-col gap-1.5 text-[12.5px] font-sans";
+        if (isStkOpen) {
+          const stkBody = document.createElement("div");
+          stkBody.className = "p-1.5 flex flex-col gap-1.5";
 
+          // Stock search input
           const searchDiv = document.createElement("div");
-          searchDiv.className = "px-0.5 pb-1 border-b border-slate-100 dark:border-slate-800 flex items-center gap-1";
+          searchDiv.className = "relative mb-1";
           searchDiv.innerHTML = `
-            <input type="text" id="sidebar-stock-search" value="${stockSearchFilterText}" oninput="onStockSearchInput(this.value)" placeholder="🔍 Search stock..." class="w-full text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono shadow-2xs"/>
-            ${stockSearchFilterText ? `<button onclick="onStockSearchInput('')" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-[11px] font-bold px-1">✕</button>` : ''}
+            <input type="text" value="${stockSearchFilterText}" oninput="stockSearchFilterText = this.value.toUpperCase(); renderCategoriesAndStocksSidebar();" placeholder="Filter tickers (e.g. RELIANCE)..." class="w-full text-xs px-2 py-1 rounded bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 font-mono">
+            ${stockSearchFilterText ? `<button onclick="stockSearchFilterText = ''; renderCategoriesAndStocksSidebar();" class="absolute right-2 top-1 text-slate-400 hover:text-white text-xs">✕</button>` : ''}
           `;
-          stockBody.appendChild(searchDiv);
+          stkBody.appendChild(searchDiv);
 
-          const colorStyles = {
-            blue: "bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800",
-            amber: "bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800",
-            purple: "bg-purple-50 text-purple-900 border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800",
-            emerald: "bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800",
-            sky: "bg-sky-50 text-sky-900 border-sky-200 dark:bg-sky-950/40 dark:text-sky-300 dark:border-sky-800",
-            slate: "bg-slate-100 text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700",
-            teal: "bg-teal-50 text-teal-900 border-teal-200 dark:bg-teal-950/40 dark:text-teal-300 dark:border-teal-800",
-            rose: "bg-rose-50 text-rose-900 border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800",
-            indigo: "bg-indigo-50 text-indigo-900 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-300 dark:border-indigo-800"
-          };
-
-          if (clusterEntries.length === 0) {
-            const noMatch = document.createElement("div");
-            noMatch.className = "p-2 text-[11px] text-slate-400 font-mono text-center";
-            noMatch.textContent = "No stocks matching search";
-            stockBody.appendChild(noMatch);
-          }
-
-          clusterEntries.forEach(([gName, gData]) => {
+          clusterEntries.forEach(([groupName, groupData]) => {
             const gDiv = document.createElement("div");
             gDiv.className = "flex flex-col gap-0.5";
-            
-            const activeColor = colorStyles[gData.color] || colorStyles.slate;
+            gDiv.innerHTML = `<span class="text-[10.5px] font-bold uppercase text-slate-500 dark:text-slate-400 px-1 tracking-wider">${groupName}</span>`;
 
-            gDiv.innerHTML = `<span class="text-[10px] font-bold uppercase px-1 text-slate-500 dark:text-slate-400 tracking-wider mb-0.5">${gName}</span>`;
+            const pillWrap = document.createElement("div");
+            pillWrap.className = "flex flex-wrap gap-1 px-1 py-0.5";
 
-            gData.stocks.sort((a, b) => b.count - a.count).forEach(stkItem => {
-              const isSelected = activeStockFilter === stkItem.ticker;
+            groupData.stocks.forEach(stk => {
+              const isSelected = activeStockFilter === stk.ticker;
               const btn = document.createElement("button");
-              
-              const btnStyle = isSelected
-                ? "bg-amber-600 text-white font-bold shadow-xs border border-amber-600"
-                : `hover:opacity-90 border font-medium ${activeColor}`;
-
-              btn.className = `w-full text-left px-2 py-0.5 rounded text-[12px] flex items-center justify-between transition-colors cursor-pointer mb-0.5 ${btnStyle}`;
-              btn.innerHTML = `
-                <span class="flex items-center gap-1 min-w-0 truncate">
-                  <span class="truncate font-mono font-bold">${stkItem.ticker}</span>
-                </span>
-                <span class="text-[10.5px] font-mono shrink-0 ml-1 ${isSelected ? 'text-white' : 'opacity-80'}">(${stkItem.count})</span>
-              `;
+              btn.className = `px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all cursor-pointer ${isSelected ? 'bg-purple-600 text-white shadow-xs ring-1 ring-purple-400' : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 hover:bg-purple-100 dark:hover:bg-purple-950/60 border border-slate-200 dark:border-slate-700'}`;
+              btn.innerHTML = `${stk.ticker} <span class="opacity-70 text-[10px]">(${stk.count})</span>`;
               btn.onclick = () => {
-                activeStockFilter = activeStockFilter === stkItem.ticker ? null : stkItem.ticker;
+                activeStockFilter = activeStockFilter === stk.ticker ? null : stk.ticker;
                 selectedStoryIndex = 0;
                 currentFeedPage = 1;
                 renderCategoriesAndStocksSidebar();
-                if (currentLayoutMode === "split") renderFeedList();
-                else renderMatrixTable();
+                renderFeedList();
               };
-              gDiv.appendChild(btn);
+              pillWrap.appendChild(btn);
             });
 
-            stockBody.appendChild(gDiv);
+            gDiv.appendChild(pillWrap);
+            stkBody.appendChild(gDiv);
           });
 
-          stockCard.appendChild(stockBody);
+          stkCard.appendChild(stkBody);
         }
-        container.appendChild(stockCard);
+        container.appendChild(stkCard);
       }
     }'''
+    clean_script = replace_js_function(clean_script, 'renderCategoriesAndStocksSidebar', sidebar_code)
 
-    start_sb = clean_script.find('function renderCategoriesAndStocksSidebar(')
-    end_sb = clean_script.find('function clearAllStockAndSectorFilters(')
-    if start_sb != -1 and end_sb != -1:
-        clean_script = clean_script[:start_sb] + sidebar_code + '\n\n    ' + clean_script[end_sb:]
+    # 6. renderFeedList
+    feed_list_code = '''function renderFeedList() {
+      const rawQuery = (document.getElementById("global-search")?.value || "").toLowerCase().trim();
+      const queryTokens = rawQuery ? rawQuery.split(" ").filter(Boolean) : [];
 
-    # Enhanced renderFeedList with FE and BS badges
-    feed_list_code = '''    function renderFeedList() {
-      const rawQuery = document.getElementById("global-search").value.trim().toLowerCase();
-      const queryTokens = rawQuery ? rawQuery.split(/\\s+/).filter(Boolean) : [];
-      
       const displayed = getFilteredStories();
       const totalStories = displayed.length;
       const totalPages = Math.ceil(totalStories / FEED_PAGE_SIZE) || 1;
@@ -1251,7 +1114,7 @@ def rebuild():
         const inactiveStyle = "bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-900/60 hover:bg-[#FAF5FF]/50 dark:hover:bg-slate-800/50 text-slate-900 dark:text-slate-100";
 
         const btn = document.createElement("button");
-        btn.className = `w-full text-left px-3 py-2.5 rounded-lg transition-all flex items-center gap-2.5 mb-1.5 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
+        btn.className = `w-full text-left px-3 py-2.5 rounded-lg transition-all flex flex-col gap-1 mb-1.5 last:mb-0 cursor-pointer ${isSelected ? activeStyle : inactiveStyle}`;
         btn.onclick = () => {
           selectedStoryIndex = globalIdx;
           renderFeedList();
@@ -1264,13 +1127,17 @@ def rebuild():
         };
 
         btn.innerHTML = `
-          <div class="flex items-center gap-1.5 shrink-0">
-            <span class="text-[12.5px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums w-5">${numStr}</span>
-            <span class="w-2.5 h-2.5 rounded-full ${dot}"></span>
-            ${feBadge}
-            ${bsBadge}
+          <div class="flex items-center justify-between gap-1.5 w-full">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11.5px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400'} tabular-nums">${numStr}</span>
+              <span class="w-2 h-2 rounded-full ${dot}"></span>
+              ${feBadge}
+              ${bsBadge}
+              ${s.isFrontPage ? `<span class="text-[9.5px] font-mono font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">P1</span>` : ''}
+            </div>
+            <span class="text-[10.5px] font-mono text-slate-400 dark:text-slate-500">${formatPageSource(s.page_numbers)}</span>
           </div>
-          <h4 class="text-[14.5px] sm:text-[15px] font-sans font-medium ${isSelected ? 'text-[#581C87] dark:text-[#E9D5FF]' : 'text-[#090D16] dark:text-[#F8FAFC]'} tracking-tight truncate flex-1 min-w-0 leading-snug" title="${escapeQuotes(s.headline)}">
+          <h4 class="text-[13.5px] sm:text-[14px] font-sans font-medium ${isSelected ? 'text-[#581C87] dark:text-[#E9D5FF]' : 'text-[#090D16] dark:text-[#F8FAFC]'} leading-snug line-clamp-2 tracking-tight" title="${escapeQuotes(s.headline)}">
             ${highlightSearchTokens(s.headline, queryTokens)}
           </h4>
         `;
@@ -1280,15 +1147,10 @@ def rebuild():
       renderActiveStoryDetail(displayed[selectedStoryIndex], queryTokens);
       saveNavigationState();
     }'''
+    clean_script = replace_js_function(clean_script, 'renderFeedList', feed_list_code)
 
-    start_fl = clean_script.find('function renderFeedList(')
-    end_fl = clean_script.find('function formatPageSource(')
-    if start_fl != -1 and end_fl != -1:
-        clean_script = clean_script[:start_fl] + feed_list_code + '\n\n    ' + clean_script[end_fl:]
-
-    # Update renderActiveStoryDetail in clean_script (Clean layout with explicit FE & BS badges)
-    detail_fn_code = r'''
-    function renderActiveStoryDetail(story, queryTokens = []) {
+    # 7. renderActiveStoryDetail
+    detail_fn_code = r'''function renderActiveStoryDetail(story, queryTokens = []) {
       const container = document.getElementById("feed-detail-container");
       if (!container) return;
 
@@ -1306,125 +1168,202 @@ def rebuild():
       const isBearish = (story.sentiment || '').includes('BEARISH');
       
       const sentBadge = isBullish 
-        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH</span>`
+        ? `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-emerald-100 text-emerald-950 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-200">🟢 BULLISH THESIS</span>`
         : isBearish 
-        ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH</span>`
-        : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
+        ? `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-300 dark:bg-rose-950/70 dark:text-rose-200">🔴 BEARISH THESIS</span>`
+        : `<span class="px-3 py-1 rounded text-[11.5px] font-mono font-bold bg-slate-200 text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-slate-200">⚪ NEUTRAL</span>`;
 
-      const tickerBadges = (story.tickers || []).slice(0, 4).map(t => `<span class="px-2.5 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-50 text-indigo-900 border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200">${t}</span>`).join('');
+      const tickerBadges = (story.tickers || []).map(t => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-bold rounded bg-indigo-100 text-indigo-950 border border-indigo-300 dark:bg-indigo-950/80 dark:text-indigo-200">${t}</span>`).join('');
 
       const briefSentences = (story.brief_details || "").split(/(?<=[.?!])\s+/).filter(Boolean);
       const bullets = story.bullet_points || story.detailed_points || [];
 
       container.innerHTML = `
         <!-- TOP ROW: METADATA & ACTION BUTTONS -->
-        <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
-            ${story.isFrontPage ? `<span class="font-semibold px-2.5 py-0.5 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
-            ${story.hasFe ? `<span class="font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-900 border border-blue-300 dark:bg-blue-950 dark:text-blue-200">Financial Express</span>` : ''}
-            ${story.hasBs ? `<span class="font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950 dark:text-amber-200">Business Standard</span>` : ''}
-            <span class="font-semibold px-2.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
+        <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800 shrink-0 text-[12px] font-mono">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-bold px-2.5 py-1 rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white">${story.category}</span>
+            ${story.isFrontPage ? `<span class="font-bold px-2.5 py-1 rounded bg-amber-200 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200">📰 PAGE 1 ANCHOR</span>` : ''}
+            ${story.hasFe ? `<span class="font-extrabold px-2.5 py-1 rounded bg-blue-100 text-blue-950 border border-blue-300 dark:bg-blue-950 dark:text-blue-200">Financial Express</span>` : ''}
+            ${story.hasBs ? `<span class="font-extrabold px-2.5 py-1 rounded bg-amber-100 text-amber-950 border border-amber-300 dark:bg-amber-950 dark:text-amber-200">Business Standard</span>` : ''}
+            <span class="font-semibold px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">${formatPageSource(story.page_numbers)}</span>
           </div>
           <div class="flex items-center gap-2">
             ${sentBadge}
-            <button onclick="copyStoryById(${story.id})" class="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
+            <button onclick="copyStoryById(${story.id})" class="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white font-mono flex items-center gap-1 font-bold px-3 py-1 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#141A2E] shadow-2xs cursor-pointer" title="Copy story summary">
               📋 Copy
             </button>
           </div>
         </div>
 
         <!-- HEADLINE -->
-        <h1 class="text-[19px] sm:text-[21px] font-bold text-[#05080F] dark:text-white leading-snug tracking-tight my-3 shrink-0 flex items-center flex-wrap gap-2">
+        <h1 class="text-[21px] sm:text-[23px] font-extrabold text-[#05080F] dark:text-white leading-tight tracking-tight mt-3 mb-4 shrink-0 flex items-center flex-wrap gap-2">
           <span>${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</span>
           ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
         </h1>
 
-        <!-- MAIN CONTENT GRID -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start my-1">
+        <!-- EXPANSIVE EXECUTIVE CONTENT STACK -->
+        <div class="flex flex-col gap-4 flex-1">
           
-          <!-- LEFT COLUMN (lg:col-span-6): EXECUTIVE GIST & TRADER CATALYST -->
-          <div class="lg:col-span-6 flex flex-col gap-3.5">
-            
-            <!-- ⚡ SECTION 1: EXECUTIVE GIST -->
-            <div class="rounded-xl border-2 border-indigo-300 dark:border-indigo-800 bg-indigo-50/60 dark:bg-[#13182E] p-3.5 sm:p-4 shadow-xs flex flex-col gap-2.5">
-              <div class="flex items-center justify-between border-b border-indigo-200/90 dark:border-indigo-900/60 pb-1.5">
-                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
-                  <span>⚡</span> <span>1. Executive Gist</span>
-                </span>
-                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-200/80 text-indigo-950 dark:bg-indigo-900/80 dark:text-indigo-200">Key Takeaway</span>
-              </div>
-              <div class="space-y-2.5">
-                ${briefSentences.map(sent => `
-                  <div class="flex items-start gap-2.5 bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans tracking-tight">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold select-none mt-0.5 text-sm">▸</span>
-                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
-                  </div>
-                `).join('')}
-              </div>
+          <!-- ⚡ 1. EXECUTIVE GIST & STRATEGIC TAKEAWAYS -->
+          <div class="rounded-xl border-2 border-indigo-200 dark:border-indigo-900/80 bg-indigo-50/40 dark:bg-[#12172E] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+            <div class="flex items-center justify-between border-b border-indigo-200/80 dark:border-indigo-900/60 pb-2">
+              <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-indigo-950 dark:text-indigo-200 flex items-center gap-2">
+                <span>⚡</span> <span>1. Executive Gist & Strategic Takeaway</span>
+              </span>
+              <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-indigo-100 text-indigo-950 dark:bg-indigo-900 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-700">Lead Thesis</span>
             </div>
-
-            <!-- 💡 SECTION 2: TRADER CATALYST & IMPACT ANALYSIS -->
-            <div class="p-3.5 sm:p-4 rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/70 dark:bg-[#064E3B]/30 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/70 dark:bg-[#881337]/30 dark:border-rose-600' : 'border-slate-400 bg-slate-50 dark:bg-slate-900/50 dark:border-slate-700'} shadow-xs flex flex-col gap-2.5">
-              <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-1.5">
-                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-1.5">
-                  <span>💡</span> <span>2. Catalyst & Market Impact</span>
-                </span>
-                <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
-              </div>
-              <div class="bg-white/95 dark:bg-[#0E1322] p-3 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[15px] sm:text-[15.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans tracking-tight">
-                ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || ""), queryTokens)}
-              </div>
+            <div class="space-y-2.5">
+              ${briefSentences.map(sent => `
+                <div class="flex items-start gap-3 bg-white dark:bg-[#0A0E1A] p-3.5 rounded-lg border border-indigo-100 dark:border-slate-800 text-[15px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
+                  <span class="text-indigo-600 dark:text-indigo-400 font-extrabold select-none text-base">▸</span>
+                  <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
+                </div>
+              `).join('')}
             </div>
-
           </div>
 
-          <!-- RIGHT COLUMN (lg:col-span-6): KEY ANALYST DATA POINTS -->
-          <div class="lg:col-span-6 flex flex-col gap-2">
-            
-            <!-- 📌 SECTION 3: KEY ANALYST DATA POINTS -->
-            <div class="rounded-xl border-2 border-[#C9B7A5] dark:border-[#524434] bg-[#FDFBF7] dark:bg-[#191512] p-3.5 sm:p-4 shadow-xs flex flex-col gap-2.5">
-              <div class="flex items-center justify-between border-b border-[#E8DCCE] dark:border-[#382E25] pb-1.5">
-                <span class="text-[12.5px] font-mono font-extrabold uppercase tracking-wider text-[#2E1F14] dark:text-[#F3ECE4] flex items-center gap-1.5">
-                  <span>📌</span> <span>3. Key Analyst Data Points</span>
-                </span>
-                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-[#EFE5D9] text-[#291B10] dark:bg-[#32261C] dark:text-[#E8DCCF] border border-[#CCAFA0]/50">Metrics & Facts</span>
-              </div>
-              <ul class="space-y-2.5">
-                ${bullets.map(b => `
-                  <li class="flex items-start gap-2.5 bg-white/90 dark:bg-[#13100D] p-3 rounded-lg border border-[#E3D5C5] dark:border-[#3D3228] text-[15px] sm:text-[15.5px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs tracking-tight">
-                    <span class="text-[#8C6239] dark:text-[#C59B6D] shrink-0 font-bold mt-0.5 text-base">•</span>
-                    <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
-                  </li>
-                `).join('')}
-              </ul>
+          <!-- 💡 2. CATALYST & MARKET IMPACT THESIS -->
+          <div class="rounded-xl border-2 ${isBullish ? 'border-emerald-500 bg-emerald-50/50 dark:bg-[#064E3B]/25 dark:border-emerald-600' : isBearish ? 'border-rose-500 bg-rose-50/50 dark:bg-[#881337]/25 dark:border-rose-600' : 'border-slate-300 bg-slate-50/80 dark:bg-slate-900/50 dark:border-slate-700'} p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+            <div class="flex items-center justify-between border-b ${isBullish ? 'border-emerald-200 dark:border-emerald-900/60' : isBearish ? 'border-rose-200 dark:border-rose-900/60' : 'border-slate-200 dark:border-slate-800'} pb-2">
+              <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider ${isBullish ? 'text-emerald-950 dark:text-emerald-300' : isBearish ? 'text-rose-950 dark:text-rose-300' : 'text-slate-900 dark:text-slate-200'} flex items-center gap-2">
+                <span>💡</span> <span>2. Catalyst & Market Impact Thesis</span>
+              </span>
+              <span class="text-[11px] font-mono font-extrabold uppercase px-2.5 py-0.5 rounded ${isBullish ? 'bg-emerald-200 text-emerald-950 dark:bg-emerald-900 dark:text-emerald-200' : isBearish ? 'bg-rose-200 text-rose-950 dark:bg-rose-900 dark:text-rose-200' : 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200'}">${story.sentiment} THESIS</span>
             </div>
-
+            <div class="bg-white dark:bg-[#0A0E1A] p-3.5 rounded-lg border ${isBullish ? 'border-emerald-200/60 dark:border-slate-800' : isBearish ? 'border-rose-200/60 dark:border-slate-800' : 'border-slate-200 dark:border-slate-800'} text-[15px] sm:text-[16px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
+              ${highlightSearchTokens(highlightNumbers(story.sentimentReasoning || story.catalyst || story.brief_details || ""), queryTokens)}
+            </div>
           </div>
+
+          <!-- 📌 3. KEY ANALYST DATA POINTS & FINANCIAL METRICS -->
+          <div class="rounded-xl border-2 border-amber-300/80 dark:border-amber-900/60 bg-[#FDFBF7] dark:bg-[#161311] p-4 sm:p-5 shadow-xs flex flex-col gap-3">
+            <div class="flex items-center justify-between border-b border-amber-200 dark:border-amber-950 pb-2">
+              <span class="text-[13px] font-mono font-extrabold uppercase tracking-wider text-amber-950 dark:text-amber-200 flex items-center gap-2">
+                <span>📌</span> <span>3. Key Analyst Data Points & Metrics</span>
+              </span>
+              <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-amber-100 text-amber-950 dark:bg-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700">${bullets.length} Fact Points</span>
+            </div>
+            <ul class="space-y-2.5">
+              ${bullets.map(b => `
+                <li class="flex items-start gap-3 bg-white dark:bg-[#0E0C0A] p-3.5 rounded-lg border border-amber-100 dark:border-[#2D2319] text-[15px] sm:text-[16px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs">
+                  <span class="text-amber-700 dark:text-amber-400 shrink-0 font-bold mt-0.5 text-base">•</span>
+                  <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <!-- 🏢 4. IMPACTED TICKERS & SECTOR EXPOSURE STRIP -->
+          ${((story.tickers && story.tickers.length > 0) || (story.sectors && story.sectors.length > 0)) ? `
+          <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3.5 flex items-center justify-between gap-3 flex-wrap shrink-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[11px] font-mono font-bold uppercase text-slate-500 dark:text-slate-400">Market Exposure:</span>
+              ${(story.tickers || []).map(t => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-bold rounded bg-indigo-100 text-indigo-950 border border-indigo-300 dark:bg-indigo-950 dark:text-indigo-200">${t}</span>`).join('')}
+              ${(story.sectors || []).map(sec => `<span class="px-2.5 py-1 text-[11.5px] font-mono font-medium rounded bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-slate-200">${sec}</span>`).join('')}
+            </div>
+            <span class="text-[11.5px] font-mono text-slate-400 dark:text-slate-500">${formatPageSource(story.page_numbers)} • ${story.source_paper || 'FE / BS'}</span>
+          </div>
+          ` : ''}
 
         </div>
 
         <!-- 🏁 END OF STORY FOOTER BAR -->
-        <div class="mt-4 pt-3 pb-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
-          <span class="flex items-center gap-1.5 font-bold text-slate-600 dark:text-slate-300">
+        <div class="mt-5 pt-3 pb-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400 shrink-0">
+          <span class="flex items-center gap-2 font-bold text-slate-600 dark:text-slate-300">
             <span>🏁</span> <span>End of Story #${story.id} (${formatPageSource(story.page_numbers)})</span>
           </span>
           <div class="flex items-center gap-2">
-            <button onclick="navigateStory(-1)" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev Story (K)</button>
-            <button onclick="navigateStory(1)" class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">Next Story (J) ▶</button>
+            <button onclick="navigateStory(-1)" class="px-3 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev Story (K)</button>
+            <button onclick="navigateStory(1)" class="px-3 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 shadow-2xs">Next Story (J) ▶</button>
           </div>
         </div>
       `;
     }'''
+    clean_script = replace_js_function(clean_script, 'renderActiveStoryDetail', detail_fn_code)
 
-    start_det = clean_script.find('function renderActiveStoryDetail')
-    end_det = clean_script.find('function renderRawArticleText')
-    if end_det == -1:
-        end_det = clean_script.find('function highlightNumbers')
-    if start_det != -1 and end_det != -1:
-        clean_script = clean_script[:start_det] + detail_fn_code + '\n\n    ' + clean_script[end_det:]
+    # 8. loadData
+    load_data_code = '''async function loadData(targetDate = null) {
+      try {
+        const endpoint = targetDate ? `/api/report?date=${targetDate}&t=${Date.now()}` : `/api/report?t=${Date.now()}`;
+        const res = await fetch(endpoint);
+        if (!res.ok) throw new Error("Failed");
+        rawReport = await res.json();
+      } catch (e) {
+        try {
+          const fallbackUrl = targetDate 
+            ? `https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/news_report_unified_${targetDate}.json?t=${Date.now()}`
+            : `https://pub-c81167dd545d49d0a2cd964a8bd6a1cd.r2.dev/reports/news_report_unified_latest.json?t=${Date.now()}`;
+          const res = await fetch(fallbackUrl);
+          rawReport = await res.json();
+        } catch (err) {}
+      }
 
-    # IPO Hub functions
+      if (rawReport && rawReport.major_stories) {
+        const edDate = rawReport.edition_date;
+        const dateInput = document.getElementById("calendar-picker");
+        if (dateInput && edDate) dateInput.value = edDate;
+        if (availableDates.includes(edDate)) {
+          currentDateIndex = availableDates.indexOf(edDate);
+        }
+
+        stories = rawReport.major_stories
+          .map((s, idx) => parseStory(s, idx))
+          .filter(Boolean);
+
+        const rawIpos = stories.filter(s => s.category === "IPO");
+        ipoList = rawIpos.map((s, idx) => s.ipoData || parseIpoItem(s, idx));
+        restoreNavigationState();
+        initMetrics();
+        applySidebarVisibility();
+        if (currentView === "ipo") {
+          renderIpoTable();
+        } else if (currentView === "corporate") {
+          renderCorporateDeskTable();
+        } else {
+          renderFeedList();
+        }
+      }
+    }'''
+    clean_script = replace_js_function(clean_script, 'loadData', load_data_code)
+
+    # 9. toggleSidebar
+    sidebar_toggle_code = '''function toggleSidebar() {
+      isSidebarVisible = !isSidebarVisible;
+      localStorage.setItem('finpress_sidebar_visible', isSidebarVisible);
+      applySidebarVisibility();
+    }'''
+    clean_script = replace_js_function(clean_script, 'toggleSidebar', sidebar_toggle_code)
+
+    # 10. applySidebarVisibility
+    sidebar_vis_code = '''function applySidebarVisibility() {
+      const aside = document.getElementById("view-feed-aside");
+      const grid = document.getElementById("workspace-grid");
+      const pill = document.getElementById("sidebar-vertical-pill");
+      const openBtn = document.getElementById("feed-open-sidebar-btn");
+      if (!aside) return;
+
+      if (isSidebarVisible) {
+        aside.classList.remove("hidden");
+        if (grid) grid.classList.remove("sidebar-collapsed");
+        if (pill) pill.classList.add("hidden");
+        if (openBtn) {
+          openBtn.classList.add("hidden");
+          openBtn.classList.remove("flex");
+        }
+      } else {
+        aside.classList.add("hidden");
+        if (grid) grid.classList.add("sidebar-collapsed");
+        if (pill) pill.classList.remove("hidden");
+        if (openBtn) {
+          openBtn.classList.remove("hidden");
+          openBtn.classList.add("flex");
+        }
+      }
+    }'''
+    clean_script = replace_js_function(clean_script, 'applySidebarVisibility', sidebar_vis_code)
+
+    # 11. IPO hub controller functions & modal functions
     ipo_hub_functions = '''
     // ================= IPO HUB CONTROLLER FUNCTIONS =================
     function setIpoViewMode(mode) {
@@ -1617,44 +1556,6 @@ def rebuild():
     if 'function renderIpoTrackerTable' not in clean_script:
         clean_script += '\n\n' + ipo_hub_functions
 
-    # Override toggleSidebar and applySidebarVisibility to keep CSS Grid clean
-    sidebar_toggle_code = '''    function toggleSidebar() {
-      isSidebarVisible = !isSidebarVisible;
-      localStorage.setItem('finpress_sidebar_visible', isSidebarVisible);
-      applySidebarVisibility();
-    }
-
-    function applySidebarVisibility() {
-      const aside = document.getElementById("view-feed-aside");
-      const grid = document.getElementById("workspace-grid");
-      const pill = document.getElementById("sidebar-vertical-pill");
-      const openBtn = document.getElementById("feed-open-sidebar-btn");
-      if (!aside) return;
-
-      if (isSidebarVisible) {
-        aside.classList.remove("hidden");
-        if (grid) grid.classList.remove("sidebar-collapsed");
-        if (pill) pill.classList.add("hidden");
-        if (openBtn) {
-          openBtn.classList.add("hidden");
-          openBtn.classList.remove("flex");
-        }
-      } else {
-        aside.classList.add("hidden");
-        if (grid) grid.classList.add("sidebar-collapsed");
-        if (pill) pill.classList.remove("hidden");
-        if (openBtn) {
-          openBtn.classList.remove("hidden");
-          openBtn.classList.add("flex");
-        }
-      }
-    }'''
-
-    start_side = clean_script.find('function toggleSidebar()')
-    end_side = clean_script.find('function initTheme()', start_side)
-    if start_side != -1 and end_side != -1:
-        clean_script = clean_script[:start_side] + sidebar_toggle_code + '\n\n    ' + clean_script[end_side:]
-
     # Story & IPO modals
     modals_code = '''
     function showStoryModal(story) {
@@ -1784,7 +1685,10 @@ def rebuild():
     with open('web/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print("Rebuilt web/index.html cleanly!")
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(final_html)
+
+    print("Rebuilt web/index.html and index.html cleanly!")
 
 if __name__ == '__main__':
     rebuild()
