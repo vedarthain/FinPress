@@ -79,10 +79,10 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* 3-Column Workspace Grid Layout - Compact */
+    /* 3-Column Workspace Grid Layout - Compact with wider news wire */
     .workspace {
       display: grid !important;
-      grid-template-columns: 200px 310px minmax(0, 1fr) !important;
+      grid-template-columns: 210px 380px minmax(0, 1fr) !important;
       height: calc(100vh - 52px) !important;
       width: 100% !important;
       overflow: hidden !important;
@@ -107,6 +107,56 @@
       background: #0E1322;
       border-right-color: #1e293b;
     }
+
+    /* Clean Segmented Nav Tabs Header */
+    .nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: #e2e8f0;
+      padding: 2.5px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+    }
+    .dark .nav-tabs {
+      background: #0f172a;
+      border-color: #1e293b;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 0;
+      padding: 3.5px 2px;
+      border-radius: 4px;
+      color: #475569;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 10.5px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .dark .tab-btn {
+      color: #94a3b8;
+    }
+    .tab-btn:hover {
+      color: #0f172a;
+      background: rgba(255,255,255,0.7);
+    }
+    .dark .tab-btn:hover {
+      color: #f8fafc;
+      background: #1e293b;
+    }
+    .tab-btn.active {
+      background: #2860ed !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
     .group-label {
       margin: 8px 6px 2px;
       font-size: 9.5px;
@@ -147,20 +197,73 @@
       color: #ffffff !important;
       font-weight: 700 !important;
     }
+    .desk-btn.active-fe {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+    .desk-btn.active-bs {
+      background: #c2410c !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
     .desk-btn .count {
       margin-left: auto;
       font-size: 10px;
       font-family: 'JetBrains Mono', monospace;
       color: #7e8a99;
     }
-    .desk-btn.active .count {
-      color: #e7efff !important;
+    .desk-btn.active .count, .desk-btn.active-fe .count, .desk-btn.active-bs .count {
+      color: #ffffff !important;
     }
     .dark .desk-btn {
       color: #cbd5e1;
     }
     .dark .desk-btn:hover {
       background: #1e293b;
+    }
+
+    /* Publication Color Badges */
+    .paper-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 1.5px 5px;
+      border-radius: 3px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .paper-badge.bs {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .dark .paper-badge.bs {
+      background: #451a03;
+      color: #fde68a;
+      border-color: #78350f;
+    }
+    .paper-badge.fe {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .dark .paper-badge.fe {
+      background: #082f49;
+      color: #7dd3fc;
+      border-color: #0284c7;
+    }
+    .paper-badge.dual {
+      background: #ede9fe;
+      color: #5b21b6;
+      border: 1px solid #ddd6fe;
+    }
+    .dark .paper-badge.dual {
+      background: #2e1065;
+      color: #c4b5fd;
+      border-color: #6d28d9;
     }
 
     /* Column 2: News Headlines Wire - Compact continuous scroll */
@@ -427,12 +530,12 @@
     }
 
     @media (min-width: 1600px) {
-      .workspace { grid-template-columns: 220px 340px minmax(0, 1fr) !important; }
-      .reader-pane { padding: 22px 32px; }
-      .reader-pane h2 { font-size: 25px; }
+      .workspace { grid-template-columns: 220px 420px minmax(0, 1fr) !important; }
+      .reader-pane { padding: 22px 36px; }
+      .reader-pane h2 { font-size: 26px; }
     }
-    @media (max-width: 1050px) {
-      .workspace { grid-template-columns: 175px 265px minmax(0, 1fr) !important; }
+    @media (max-width: 1100px) {
+      .workspace { grid-template-columns: 185px 330px minmax(0, 1fr) !important; }
       .reader-pane { padding: 14px 16px; }
       .reader-pane h2 { font-size: 20px; }
       .desk-btn { font-size: 11px; }
@@ -503,11 +606,11 @@
       <aside class="desks-col" id="col-desks-sources" aria-label="Desks and publication filters">
         
         <!-- Top Quick View Filter Tabs -->
-        <div class="flex items-center justify-between gap-1 p-0.5 bg-slate-100 dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 text-[11px] font-mono mb-1 shrink-0">
-          <button onclick="setRightPanelView('ALL')" id="tab-btn-all" class="flex-1 py-1 rounded text-center transition-all bg-[#2860ed] text-white font-bold shadow-xs">All</button>
-          <button onclick="setRightPanelView('CATEGORIES')" id="tab-btn-desks" class="flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium">📁 Desks</button>
-          <button onclick="setRightPanelView('SECTORS')" id="tab-btn-sectors" class="flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium">📈 Sectors</button>
-          <button onclick="setRightPanelView('STOCKS')" id="tab-btn-stocks" class="flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium">🏢 Stocks</button>
+        <div class="nav-tabs" role="tablist" aria-label="Sidebar view filter">
+          <button onclick="setRightPanelView('ALL')" id="tab-btn-all" class="tab-btn active">All</button>
+          <button onclick="setRightPanelView('CATEGORIES')" id="tab-btn-desks" class="tab-btn">Desks</button>
+          <button onclick="setRightPanelView('SECTORS')" id="tab-btn-sectors" class="tab-btn">Sectors</button>
+          <button onclick="setRightPanelView('STOCKS')" id="tab-btn-stocks" class="tab-btn">Stocks</button>
         </div>
 
         <div id="tree-sidebar-container" class="flex flex-col gap-1 w-full">
@@ -601,6 +704,7 @@
     let availableDates = [];
     let currentDateIndex = 0;
     
+    let selectedPublication = "ALL";
     let selectedFeedCategory = "ALL";
     let selectedFeedSentiment = "ALL";
     let activeStockFilter = null;
@@ -897,11 +1001,18 @@
         const btn = document.getElementById(`tab-btn-${v}`);
         if (!btn) return;
         const isActive = (v === 'all' && view === 'ALL') || (v === 'desks' && view === 'CATEGORIES') || (v === 'sectors' && view === 'SECTORS') || (v === 'stocks' && view === 'STOCKS');
-        btn.className = isActive 
-          ? "flex-1 py-1 rounded text-center transition-all bg-[#2860ed] text-white font-bold shadow-xs" 
-          : "flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium";
+        btn.className = `tab-btn ${isActive ? 'active' : ''}`;
       });
       renderCategoriesAndStocksSidebar();
+    }
+
+    function onPublicationSelect(pub) {
+      selectedPublication = pub;
+      activeStockFilter = null;
+      activeSectorFilter = null;
+      selectedStoryIndex = 0;
+      renderCategoriesAndStocksSidebar();
+      renderHeadlinesList();
     }
 
     function onCategorySelect(cat) {
@@ -924,7 +1035,16 @@
       const q = currentSearchQuery.toLowerCase().trim();
       const terms = q.split(" ").filter(Boolean);
 
-      return stories.filter(s => {
+      // 1. Filter by Selected Publication
+      let pool = stories;
+      if (selectedPublication === "FE") {
+        pool = stories.filter(s => s.hasFe);
+      } else if (selectedPublication === "BS") {
+        pool = stories.filter(s => s.hasBs);
+      }
+
+      // 2. Filter by Category / Sector / Stock / Search Query
+      return pool.filter(s => {
         const fullContent = (s.headline + " " + (s.brief_details || "") + " " + (s.bullet_points || []).join(" ") + " " + (s.tickers || []).join(" ") + " " + (s.sectors || []).join(" ") + " " + s.category).toLowerCase();
         const matchQuery = terms.length === 0 || terms.every(t => fullContent.includes(t));
 
@@ -940,8 +1060,6 @@
 
         let matchSec = true;
         if (selectedFeedCategory === "ALL") matchSec = true;
-        else if (selectedFeedCategory === "SOURCE_FE") matchSec = s.hasFe;
-        else if (selectedFeedCategory === "SOURCE_BS") matchSec = s.hasBs;
         else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
         else if (selectedFeedCategory === "IPO_ALL") matchSec = s.category === "IPO";
         else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
@@ -961,59 +1079,69 @@
 
       container.innerHTML = "";
 
-      const feCount = stories.filter(s => s.hasFe).length;
-      const bsCount = stories.filter(s => s.hasBs).length;
+      // The base publication pool for calculating Core & Specialized Desk Counts
+      const pubPool = stories.filter(s => {
+        if (selectedPublication === "FE") return s.hasFe;
+        if (selectedPublication === "BS") return s.hasBs;
+        return true;
+      });
+
+      const feTotal = stories.filter(s => s.hasFe).length;
+      const bsTotal = stories.filter(s => s.hasBs).length;
 
       // SECTION 1: DESKS & SOURCES
       if (activeRightPanelView === 'ALL' || activeRightPanelView === 'CATEGORIES') {
+        
+        // 1. Filter by Publication
         const pubGroup = document.createElement("div");
         pubGroup.className = "flex flex-col gap-0.5 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800";
         pubGroup.innerHTML = `<div class="group-label blue">Filter by publication</div>`;
 
         const pubItems = [
-          { id: "SOURCE_FE", label: "Financial Express Only", count: feCount, icon: "📰" },
-          { id: "SOURCE_BS", label: "Business Standard Only", count: bsCount, icon: "📰" },
-          { id: "ALL", label: "All Unified Stories", count: stories.length, icon: "📑" }
+          { id: "ALL", label: "All Unified Stories", count: stories.length, icon: "📑", colorClass: "active" },
+          { id: "FE", label: "Financial Express Only", count: feTotal, icon: "📰", colorClass: "active-fe" },
+          { id: "BS", label: "Business Standard Only", count: bsTotal, icon: "📰", colorClass: "active-bs" }
         ];
 
         pubItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
+          const isSelected = selectedPublication === item.id;
           const btn = document.createElement("button");
-          btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
+          btn.className = `desk-btn ${isSelected ? item.colorClass : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
+            <span class="opacity-50 select-none text-[10px]">├</span>
             <span>${item.icon}</span>
             <span class="truncate">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
-          btn.onclick = () => onCategorySelect(item.id);
+          btn.onclick = () => onPublicationSelect(item.id);
           pubGroup.appendChild(btn);
         });
         container.appendChild(pubGroup);
 
-        // Core Desks
+        // 2. Core Desks (Dynamic counts updating with selected publication!)
         const coreGroup = document.createElement("div");
         coreGroup.className = "flex flex-col gap-0.5 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800";
-        coreGroup.innerHTML = `<div class="group-label">Core Desks</div>`;
+        const pubLabel = selectedPublication === 'FE' ? ' (FE)' : selectedPublication === 'BS' ? ' (BS)' : '';
+        coreGroup.innerHTML = `<div class="group-label">Core Desks${pubLabel}</div>`;
 
         const coreItems = [
-          { id: "ALL", label: "All desks", count: stories.length, icon: "📑" },
-          { id: "ANCHOR", label: "News (Front Page)", count: stories.filter(s => s.isFrontPage).length, icon: "📰" },
-          { id: "Sector", label: "Sector News", count: stories.filter(s => s.category === "Sector").length, icon: "🏢" },
-          { id: "Economy", label: "Economy", count: stories.filter(s => s.category === "Economy").length, icon: "📈" },
-          { id: "Policy", label: "Policy & Rules", count: stories.filter(s => s.category === "Policy").length, icon: "🏛️" },
-          { id: "Market", label: "Market Pulse", count: stories.filter(s => s.category === "Market").length, icon: "📊" },
-          { id: "Trade", label: "Trade & FX", count: stories.filter(s => s.category === "Trade").length, icon: "🚢" },
-          { id: "International News", label: "International", count: stories.filter(s => s.category === "International News").length, icon: "🌐" },
-          { id: "Others", label: "Features", count: stories.filter(s => s.category === "Others").length, icon: "📄" }
+          { id: "ALL", label: "All desks", count: pubPool.length, icon: "📑" },
+          { id: "ANCHOR", label: "News (Front Page)", count: pubPool.filter(s => s.isFrontPage).length, icon: "📰" },
+          { id: "Sector", label: "Sector News", count: pubPool.filter(s => s.category === "Sector").length, icon: "🏢" },
+          { id: "Economy", label: "Economy", count: pubPool.filter(s => s.category === "Economy").length, icon: "📈" },
+          { id: "Policy", label: "Policy & Rules", count: pubPool.filter(s => s.category === "Policy").length, icon: "🏛️" },
+          { id: "Market", label: "Market Pulse", count: pubPool.filter(s => s.category === "Market").length, icon: "📊" },
+          { id: "Trade", label: "Trade & FX", count: pubPool.filter(s => s.category === "Trade").length, icon: "🚢" },
+          { id: "International News", label: "International", count: pubPool.filter(s => s.category === "International News").length, icon: "🌐" },
+          { id: "Others", label: "Features", count: pubPool.filter(s => s.category === "Others").length, icon: "📄" }
         ];
 
         coreItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
+          const isSelected = selectedFeedCategory === item.id && !activeSectorFilter && !activeStockFilter;
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
+            <span class="opacity-50 select-none text-[10px]">├</span>
             <span>${item.icon}</span>
             <span class="truncate">${item.label}</span>
             <span class="count">${item.count}</span>
@@ -1023,25 +1151,25 @@
         });
         container.appendChild(coreGroup);
 
-        // Specialized Desks
+        // 3. Specialized Desks (Dynamic counts updating with selected publication!)
         const specGroup = document.createElement("div");
         specGroup.className = "flex flex-col gap-0.5";
-        specGroup.innerHTML = `<div class="group-label orange">Specialized Desks</div>`;
+        specGroup.innerHTML = `<div class="group-label orange">Specialized Desks${pubLabel}</div>`;
 
         const specItems = [
-          { id: "IPO_ALL", label: "IPO Central", count: stories.filter(s => s.category === "IPO").length, icon: "🚀" },
-          { id: "CORPORATE_ALL", label: "Corporate Desk", count: stories.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length, icon: "🏢" },
-          { id: "EVENTS", label: "Corp Events", count: stories.filter(s => s.category === "Corporate Events").length, icon: "📢" },
-          { id: "APPOINTMENTS", label: "Appointments", count: stories.filter(s => s.category === "Corporate Appointments").length, icon: "👔" },
-          { id: "OPINIONS", label: "Opinions Desk", count: stories.filter(s => s.isOpinion).length, icon: "✍️" }
+          { id: "IPO_ALL", label: "IPO Central", count: pubPool.filter(s => s.category === "IPO").length, icon: "🚀" },
+          { id: "CORPORATE_ALL", label: "Corporate Desk", count: pubPool.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length, icon: "🏢" },
+          { id: "EVENTS", label: "Corp Events", count: pubPool.filter(s => s.category === "Corporate Events").length, icon: "📢" },
+          { id: "APPOINTMENTS", label: "Appointments", count: pubPool.filter(s => s.category === "Corporate Appointments").length, icon: "👔" },
+          { id: "OPINIONS", label: "Opinions Desk", count: pubPool.filter(s => s.isOpinion).length, icon: "✍️" }
         ];
 
         specItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
+          const isSelected = selectedFeedCategory === item.id && !activeSectorFilter && !activeStockFilter;
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
+            <span class="opacity-50 select-none text-[10px]">├</span>
             <span>${item.icon}</span>
             <span class="truncate">${item.label}</span>
             <span class="count">${item.count}</span>
@@ -1052,13 +1180,13 @@
         container.appendChild(specGroup);
       }
 
-      // SECTION 2: INDUSTRY SECTORS
+      // SECTION 2: INDUSTRY SECTORS (Dynamic counts updating with selected publication!)
       if (activeRightPanelView === 'ALL' || activeRightPanelView === 'SECTORS') {
         const secCounts = {};
-        stories.forEach(s => {
+        pubPool.forEach(s => {
           (s.sectors || []).forEach(sec => secCounts[sec] = (secCounts[sec] || 0) + 1);
         });
-        const sortedSecs = Object.keys(secCounts).sort((a,b) => secCounts[b] - secCounts[a]);
+        const sortedSecs = Object.keys(secCounts).filter(sec => secCounts[sec] > 0).sort((a,b) => secCounts[b] - secCounts[a]);
 
         const secGroup = document.createElement("div");
         secGroup.className = "flex flex-col gap-0.5 pt-2 mt-2 border-t border-slate-200 dark:border-slate-800";
@@ -1069,7 +1197,7 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
+            <span class="opacity-50 select-none text-[10px]">├</span>
             <span>📈</span>
             <span class="truncate">${sec}</span>
             <span class="count">${secCounts[sec]}</span>
@@ -1087,13 +1215,13 @@
         container.appendChild(secGroup);
       }
 
-      // SECTION 3: COMPANY STOCKS
+      // SECTION 3: COMPANY STOCKS (Dynamic counts updating with selected publication!)
       if (activeRightPanelView === 'ALL' || activeRightPanelView === 'STOCKS') {
         const stockCounts = {};
-        stories.forEach(s => {
+        pubPool.forEach(s => {
           (s.stocks || []).forEach(stk => stockCounts[stk] = (stockCounts[stk] || 0) + 1);
         });
-        const activeStockKeys = Object.keys(stockCounts).sort((a,b) => stockCounts[b] - stockCounts[a]);
+        const activeStockKeys = Object.keys(stockCounts).filter(stk => stockCounts[stk] > 0).sort((a,b) => stockCounts[b] - stockCounts[a]);
 
         const stkGroup = document.createElement("div");
         stkGroup.className = "flex flex-col gap-0.5 pt-2 mt-2 border-t border-slate-200 dark:border-slate-800";
@@ -1104,7 +1232,7 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
+            <span class="opacity-50 select-none text-[10px]">├</span>
             <span>🏢</span>
             <span class="truncate font-mono font-bold">${stk}</span>
             <span class="count">${stockCounts[stk]}</span>
@@ -1130,13 +1258,19 @@
       // Title & Count updates
       const listTitle = document.getElementById("list-title");
       if (listTitle) {
-        let titleText = "All Desks";
-        if (selectedFeedCategory === "SOURCE_FE") titleText = "Financial Express Only";
-        else if (selectedFeedCategory === "SOURCE_BS") titleText = "Business Standard Only";
-        else if (activeSectorFilter) titleText = `Sector: ${activeSectorFilter}`;
-        else if (activeStockFilter) titleText = `Stock: ${activeStockFilter}`;
-        else if (selectedFeedCategory !== "ALL") titleText = selectedFeedCategory;
-        listTitle.textContent = titleText;
+        let pubPrefix = selectedPublication === "FE" ? "Financial Express" : selectedPublication === "BS" ? "Business Standard" : "";
+        let deskText = "All Desks";
+        if (activeSectorFilter) deskText = `Sector: ${activeSectorFilter}`;
+        else if (activeStockFilter) deskText = `Stock: ${activeStockFilter}`;
+        else if (selectedFeedCategory === "ANCHOR") deskText = "News (Front Page)";
+        else if (selectedFeedCategory === "IPO_ALL") deskText = "IPO Central";
+        else if (selectedFeedCategory === "CORPORATE_ALL") deskText = "Corporate Desk";
+        else if (selectedFeedCategory === "EVENTS") deskText = "Corp Events";
+        else if (selectedFeedCategory === "APPOINTMENTS") deskText = "Appointments";
+        else if (selectedFeedCategory === "OPINIONS") deskText = "Opinions Desk";
+        else if (selectedFeedCategory !== "ALL") deskText = selectedFeedCategory;
+
+        listTitle.textContent = pubPrefix ? `${pubPrefix} · ${deskText}` : deskText;
       }
 
       const listCount = document.getElementById("list-count");
@@ -1176,15 +1310,21 @@
           renderActiveStoryDetail(displayed[selectedStoryIndex]);
         };
 
-        const paperTag = s.hasFe && s.hasBs ? "BS + FE" : s.hasBs ? "Business Standard" : "Financial Express";
+        const isDual = s.hasFe && s.hasBs;
+        const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
+        const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
         const priorityTag = s.isFrontPage ? "Must read" : "Worth knowing";
 
         card.innerHTML = `
-          <div class="eyebrow ${s.isFrontPage ? 'priority' : ''}">
-            ${numStr} · ${priorityTag} · ${s.category}
+          <div class="flex items-center justify-between gap-1 mb-1">
+            <span class="eyebrow ${s.isFrontPage ? 'priority' : ''}">${numStr} · ${priorityTag} · ${s.category}</span>
+            <span class="paper-badge ${badgeType}">${badgeLabel}</span>
           </div>
           <h3>${s.headline}</h3>
-          <div class="paper-tag">${paperTag} · ${s.page_numbers}</div>
+          <div class="paper-tag flex items-center justify-between text-[9.5px] text-slate-500 mt-1">
+            <span>${s.page_numbers}</span>
+            ${s.stocks && s.stocks.length > 0 ? `<span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">${s.stocks.slice(0, 3).join(' · ')}</span>` : ''}
+          </div>
         `;
         container.appendChild(card);
       });
@@ -1247,9 +1387,12 @@
         <h2>${story.headline}</h2>
 
         <!-- Sources Attribution Strip -->
-        <div class="sources-strip">
-          ${story.source_paper || (story.hasBs ? 'Business Standard' : 'Financial Express')} · ${story.page_numbers}
-          ${story.hasFe && story.hasBs ? '<br><span class="text-blue-600 dark:text-blue-400 font-bold">Shared story: both newspapers covered this intelligence item.</span>' : ''}
+        <div class="sources-strip flex items-center gap-2 flex-wrap mb-3">
+          <span class="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Publication:</span>
+          ${story.hasBs ? '<span class="paper-badge bs">Business Standard</span>' : ''}
+          ${story.hasFe ? '<span class="paper-badge fe">Financial Express</span>' : ''}
+          <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400">· ${story.page_numbers}</span>
+          ${story.hasFe && story.hasBs ? '<span class="paper-badge dual">Shared Coverage</span>' : ''}
         </div>
 
         <!-- 1. Executive Brief -->
