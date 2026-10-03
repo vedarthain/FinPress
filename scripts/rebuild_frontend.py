@@ -636,45 +636,129 @@ def rebuild():
     # 3. parseStory & Financial Intelligence Helpers
     parse_story_code = '''
     function deriveClientCatalyst(story, brief, bullets) {
-      if (story.catalyst && story.catalyst.trim() && story.catalyst !== brief) return story.catalyst.trim();
+      if (story.catalyst && story.catalyst.trim() && story.catalyst !== brief && !story.catalyst.startsWith("Operational and market development triggered by")) return story.catalyst.trim();
       const hl = story.headline || "";
-      const full = (hl + " " + brief).toLowerCase();
+      const full = (hl + " " + brief + " " + (bullets || []).join(" ")).toLowerCase();
+      
       if (full.includes("gdp") && (full.includes("growth") || full.includes("finmin"))) return "Upward GDP nowcasting supported by resilient manufacturing gross value added.";
       if (full.includes("gst") && full.includes("collection")) return "Robust indirect tax mop-up driven by elevated import volume collections and manufacturing demand.";
       if (full.includes("rupee") && (full.includes("drop") || full.includes("low") || full.includes("depreciation"))) return "Spike in US Treasury yields and FPI capital outflows breaching psychological currency support.";
       if (full.includes("pmi") || full.includes("manufacturing")) return "Resilient manufacturing new orders, export expansion, and accelerated factory output.";
       if (full.includes("upi") || full.includes("digital payment")) return "Record digital transaction velocity and retail payment infrastructure volume breakthrough.";
       if (full.includes("sales") && (full.includes("vehicle") || full.includes("auto") || full.includes("pv"))) return "Festive retail inventory build-up and tax rationalization boosting domestic automotive demand.";
+      if (full.includes("iron ore") || full.includes("mining")) return "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume.";
+      if (full.includes("it") && (full.includes("growth") || full.includes("hcl") || full.includes("tcs") || full.includes("infosys"))) return "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution.";
+
       if (bullets && bullets.length > 0) {
         const cleanB = bullets[0].replace(/[*_#]/g, '').trim();
-        if (cleanB.length < 130 && cleanB !== brief) return cleanB;
+        if (cleanB.length > 15 && cleanB.length < 140 && cleanB !== brief) return cleanB;
       }
-      return `Primary event trigger: ${hl.split(':')[0]} with operational transmission.`;
+      const cleanHl = hl.split(':')[0].trim();
+      if (cleanHl.length > 10) return `Event trigger: ${cleanHl}.`;
+      return "Operational development driving sector transmission.";
     }
 
     function deriveClientMarketImpact(story, brief, bullets, category) {
-      if (story.market_impact && story.market_impact.trim() && story.market_impact !== brief) return story.market_impact.trim();
+      const isGeneric = !story.market_impact || !story.market_impact.trim() || story.market_impact === brief || story.market_impact === story.catalyst || story.market_impact.includes("Clarifies management execution roadmap") || story.market_impact.includes("Ripples into relevant industry peer groups") || story.market_impact === "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.";
+      
+      if (!isGeneric) return story.market_impact.trim();
+
       const hl = story.headline || "";
       const full = (hl + " " + brief + " " + (bullets || []).join(" ")).toLowerCase();
       const cat = category || story.category || "Market";
       
-      if (cat === "Economy") {
-        if (full.includes("gst") || full.includes("tax")) return "Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex. Import tax buoyancy reflects sustained intermediate capital goods intake by domestic manufacturers.";
-        if (full.includes("rupee") || full.includes("dollar")) return "Increases landed import costs for crude oil and key electronics, exerting near-term pressure on imported inflation, while providing a margin tailwind for export-heavy sectors (IT, Pharma) on unhedged dollar revenues.";
-        if (full.includes("gdp") || full.includes("pmi")) return "Underpins corporate revenue run-rate projections and supports capacity expansion decisions across capital goods, affirming domestic macro resilience against global fragmentation headwinds.";
-        return "Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.";
+      // 1. Executive Appointments & Management Changes
+      if (["appoint", "named as", "steps down", "resigns", "resignation", "appointed as", "ceo", "cfo", "chief executive", "managing director", "chairman", "board of directors", "leadership"].some(k => full.includes(k))) {
+        return "Leadership transition establishes executive accountability; institutional investors will monitor strategic roadmap execution, capital discipline, and operational stability.";
       }
-      if (cat === "Sector" || cat === "Market") {
-        if (full.includes("auto") || full.includes("vehicle")) return "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers, bolstering dealer channel liquidity ahead of the festive inventory cycle.";
-        if (full.includes("it") || full.includes("tech")) return "Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts amid mega-deal ramp velocity.";
-        if (full.includes("metal") || full.includes("steel") || full.includes("mining")) return "Strong domestic volume growth helps insulate miners from volatile global benchmark pricing swings, ensuring uninterrupted raw material feed for downstream infrastructure fabrication.";
-        if (full.includes("bank") || full.includes("credit") || full.includes("lending")) return "Sustained credit disbursement velocity supports Net Interest Income (NII) while deposit cost repricing dynamics remain the primary driver for Net Interest Margin (NIM) trajectory.";
-        return "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.";
+
+      // 2. Order Wins, Contracts & Execution Runway
+      if (["order win", "contract win", "bags order", "bagged", "secures order", "awarded contract", "procurement deal", "wins contract", "deal win"].some(k => full.includes(k))) {
+        return "Bolsters forward order-book execution runway and revenue predictability, providing sustained gross margin support and fixed-cost absorption.";
       }
-      if (cat === "IPO") return "Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations, with listing premium hinging on anchor institutional subscription quality and post-issue earnings visibility.";
-      if (cat === "Policy" || cat === "Trade") return "Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness while reducing regulatory friction for compliant industry participants.";
-      if (cat === "Corporate Events" || cat === "Corporate Appointments") return "Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.";
-      return "Ripples into relevant industry peer groups, shaping operational positioning, margin resilience, and investor sentiment across the sector.";
+
+      // 3. CapEx, Capacity & Infrastructure Expansion
+      if (["capex", "capacity expansion", "new plant", "new facility", "manufacturing unit", "factory expansion", "greenfield", "brownfield", "invests rs", "investment of rs"].some(k => full.includes(k))) {
+        return "Expands operational and manufacturing capacity to capture rising end-market demand; key valuation metric will be ROCE progression and asset turnover.";
+      }
+
+      // 4. Mergers, Acquisitions & Buyouts
+      if (["acquisition", "acquires", "buyout", "takeover", "merger", "stake sale", "buys stake", "joint venture", "jv with"].some(k => full.includes(k))) {
+        return "Expands market share and distribution scale; investor focus shifts to balance sheet leverage impact, integration costs, and EPS accretion timeline.";
+      }
+
+      // 5. Earnings, Profits & Financial Margins
+      if (["net profit", "q1 profit", "q2 profit", "q3 profit", "q4 profit", "revenue up", "revenue down", "ebitda", "operating margin", "pat jumps", "pat falls"].some(k => full.includes(k))) {
+        return "Directly drives forward EPS consensus revisions; institutional focus centers on operating margin trajectory, realization pricing, and working capital cycles.";
+      }
+
+      // 6. Legal, NCLT, Insolvency & Regulatory Penalties
+      if (["nclt", "insolvency", "penalty", "penalised", "sebi fine", "rbi penalty", "tribunal", "court", "probe", "fraud", "default", "scam", "stay order"].some(k => full.includes(k))) {
+        return "Introduces near-term legal overhang and contingent liabilities; markets price in risk premium pending regulatory clarity and resolution.";
+      }
+
+      // 7. Fundraising, Debt & Refinancing
+      if (["fundraise", "raise funds", "qip", "rights issue", "bonds", "ncd", "refinancing", "debt reduction", "credit facility"].some(k => full.includes(k))) {
+        return "Strengthens liquidity buffer and balance sheet solvency metrics while altering equity dilution dynamics or interest coverage ratios.";
+      }
+
+      // 8. Dividends & Buybacks
+      if (["dividend", "interim dividend", "special dividend", "share buyback", "bonus issue"].some(k => full.includes(k))) {
+        return "Enhances direct cash returns to shareholders and underscores management confidence in sustained operating cash flow generation.";
+      }
+
+      // 9. Macro: GST, Taxes & Fiscal Policy
+      if (cat === "Economy" || ["gst collection", "tax mop-up", "direct tax", "fiscal deficit", "sovereign"].some(k => full.includes(k))) {
+        return "Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex.";
+      }
+
+      // 10. Macro: Rupee, FX & Inflation
+      if (["rupee", "forex", "depreciation", "cpi inflation", "wpi inflation", "repo rate", "rbi policy"].some(k => full.includes(k))) {
+        return "Influences sovereign yield spreads, imported raw material cost pressures, and export currency realization for IT and Pharma.";
+      }
+
+      // 11. Specific Sector Transmissions
+      if (["auto", "vehicle", "passenger vehicle", "two-wheeler", "ev "].some(k => full.includes(k))) {
+        return "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillaries amid channel inventory restocking.";
+      }
+
+      if (["it services", "tech", "software", "ai platform", "cloud", "tcs", "infosys", "hcl tech", "wipro"].some(k => full.includes(k))) {
+        return "Large-deal ramp velocity and pricing realization dictate constant-currency revenue growth and operating margin resilience.";
+      }
+
+      if (["bank", "credit growth", "lending", "deposit", "npa", "nim", "nii"].some(k => full.includes(k))) {
+        return "Sustained credit disbursement velocity supports Net Interest Income (NII) while deposit cost repricing governs Net Interest Margin (NIM).";
+      }
+
+      if (["steel", "metal", "mining", "iron ore", "copper", "aluminum"].some(k => full.includes(k))) {
+        return "Strong domestic volume consumption helps insulate producers from volatile global benchmark pricing swings.";
+      }
+
+      if (["pharma", "drug", "usfda", "formulation", "clinical trial", "generic"].some(k => full.includes(k))) {
+        return "Specialty product pipeline execution and USFDA inspection clearance remain key drivers for earnings stability and export growth.";
+      }
+
+      if (["power", "solar", "renewable", "green energy", "tariff", "grid"].some(k => full.includes(k))) {
+        return "Long-term power purchase agreements (PPAs) and grid integration capacity secure visibility for capital expenditure returns.";
+      }
+
+      if (["telecom", "5g", "tariff hike", "arpu", "spectrum"].some(k => full.includes(k))) {
+        return "Industry ARPU expansion improves operating cash flows and interest coverage needed to service ongoing 5G network capex.";
+      }
+
+      if (["real estate", "housing", "realty", "pre-sales"].some(k => full.includes(k))) {
+        return "Strong residential pre-sales collections accelerate project completion cycles and reduce developer debt leverage.";
+      }
+
+      if (cat === "IPO") {
+        return "Expands institutional free-float and establishes benchmark price discovery for peer group enterprise valuations.";
+      }
+
+      if (cat === "Policy" || cat === "Trade") {
+        return "Alters regulatory compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness.";
+      }
+
+      return "Influences operational positioning and peer-group competitive dynamics; institutional focus remains on execution runway and margin defensibility.";
     }
 
     function deriveClientSentimentReasoning(story, sent) {

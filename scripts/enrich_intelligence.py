@@ -33,6 +33,112 @@ BEARISH_KEYWORDS = [
     "sliding", "warning", "warns", "stalled", "contracted", "contraction", "muted", "caution", "wariness"
 ]
 
+def compute_dynamic_catalyst(headline: str, brief: str, bullets: List[str], full_text: str) -> str:
+    # 1. Macro specific triggers
+    if "gdp" in full_text and ("growth" in full_text or "finmin" in full_text):
+        return "Upward GDP nowcasting supported by resilient manufacturing gross value added."
+    if "gst" in full_text and "collection" in full_text:
+        return "Robust indirect tax mop-up driven by elevated import volume collections and manufacturing demand."
+    if "rupee" in full_text and ("drop" in full_text or "low" in full_text or "depreciation" in full_text):
+        return "Spike in US Treasury yields and FPI capital outflows breaching psychological currency support."
+    if "pmi" in full_text or "manufacturing" in full_text:
+        return "Resilient manufacturing new orders, export expansion, and accelerated factory output."
+    if "upi" in full_text or "digital payment" in full_text:
+        return "Record digital transaction velocity and retail payment infrastructure volume breakthrough."
+    if "sales" in full_text and ("vehicle" in full_text or "auto" in full_text or "pv" in full_text):
+        return "Festive retail inventory build-up and tax rationalization boosting domestic automotive demand."
+    if "iron ore" in full_text or "mining" in full_text:
+        return "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume."
+    if "it" in full_text and ("growth" in full_text or "hcl" in full_text or "tcs" in full_text or "infosys" in full_text):
+        return "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution."
+
+    # 2. Extract from first bullet if quantitative & crisp
+    if bullets and len(bullets) > 0:
+        first_b = re.sub(r'[*_#]', '', bullets[0]).strip()
+        if len(first_b) > 15 and len(first_b) < 140 and first_b != brief:
+            return first_b
+
+    # 3. Clean headline trigger
+    clean_hl = headline.split(":")[0].strip()
+    if len(clean_hl) > 10:
+        return f"Event trigger: {clean_hl}."
+    return "Operational development driving sector transmission."
+
+def compute_dynamic_market_impact(headline: str, brief: str, bullets: List[str], category: str, full_text: str) -> str:
+    # 1. Executive Appointments & Management Changes
+    if any(k in full_text for k in ["appoint", "named as", "steps down", "resigns", "resignation", "appointed as", "ceo", "cfo", "chief executive", "managing director", "chairman", "board of directors", "leadership"]):
+        return "Leadership transition establishes executive accountability; institutional investors will monitor strategic roadmap execution, capital discipline, and operational stability."
+
+    # 2. Order Wins, Contracts & Execution Runway
+    if any(k in full_text for k in ["order win", "contract win", "bags order", "bagged", "secures order", "awarded contract", "procurement deal", "wins contract", "deal win"]):
+        return "Bolsters forward order-book execution runway and revenue predictability, providing sustained gross margin support and fixed-cost absorption."
+
+    # 3. CapEx, Capacity & Infrastructure Expansion
+    if any(k in full_text for k in ["capex", "capacity expansion", "new plant", "new facility", "manufacturing unit", "factory expansion", "greenfield", "brownfield", "invests rs", "investment of rs"]):
+        return "Expands operational and manufacturing capacity to capture rising end-market demand; key valuation metric will be ROCE progression and asset turnover."
+
+    # 4. Mergers, Acquisitions & Buyouts
+    if any(k in full_text for k in ["acquisition", "acquires", "buyout", "takeover", "merger", "stake sale", "buys stake", "joint venture", "jv with"]):
+        return "Expands market share and distribution scale; investor focus shifts to balance sheet leverage impact, integration costs, and EPS accretion timeline."
+
+    # 5. Earnings, Profits & Financial Margins
+    if any(k in full_text for k in ["net profit", "q1 profit", "q2 profit", "q3 profit", "q4 profit", "revenue up", "revenue down", "ebitda", "operating margin", "pat jumps", "pat falls"]):
+        return "Directly drives forward EPS consensus revisions; institutional focus centers on operating margin trajectory, realization pricing, and working capital cycles."
+
+    # 6. Legal, NCLT, Insolvency & Regulatory Penalties
+    if any(k in full_text for k in ["nclt", "insolvency", "penalty", "penalised", "sebi fine", "rbi penalty", "tribunal", "court", "probe", "fraud", "default", "scam", "stay order"]):
+        return "Introduces near-term legal overhang and contingent liabilities; markets price in risk premium pending regulatory clarity and resolution."
+
+    # 7. Fundraising, Debt & Refinancing
+    if any(k in full_text for k in ["fundraise", "raise funds", "qip", "rights issue", "bonds", "ncd", "refinancing", "debt reduction", "credit facility"]):
+        return "Strengthens liquidity buffer and balance sheet solvency metrics while altering equity dilution dynamics or interest coverage ratios."
+
+    # 8. Dividends & Buybacks
+    if any(k in full_text for k in ["dividend", "interim dividend", "special dividend", "share buyback", "bonus issue"]):
+        return "Enhances direct cash returns to shareholders and underscores management confidence in sustained operating cash flow generation."
+
+    # 9. Macro: GST, Taxes & Fiscal Policy
+    if category == "Economy" or any(k in full_text for k in ["gst collection", "tax mop-up", "direct tax", "fiscal deficit", "sovereign"]):
+        return "Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex."
+
+    # 10. Macro: Rupee, FX & Inflation
+    if any(k in full_text for k in ["rupee", "forex", "depreciation", "cpi inflation", "wpi inflation", "repo rate", "rbi policy"]):
+        return "Influences sovereign yield spreads, imported raw material cost pressures, and export currency realization for IT and Pharma."
+
+    # 11. Specific Sector Transmissions
+    if any(k in full_text for k in ["auto", "vehicle", "passenger vehicle", "two-wheeler", "ev "]):
+        return "Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillaries amid channel inventory restocking."
+
+    if any(k in full_text for k in ["it services", "tech", "software", "ai platform", "cloud", "tcs", "infosys", "hcl tech", "wipro"]):
+        return "Large-deal ramp velocity and pricing realization dictate constant-currency revenue growth and operating margin resilience."
+
+    if any(k in full_text for k in ["bank", "credit growth", "lending", "deposit", "npa", "nim", "nii"]):
+        return "Sustained credit disbursement velocity supports Net Interest Income (NII) while deposit cost repricing governs Net Interest Margin (NIM)."
+
+    if any(k in full_text for k in ["steel", "metal", "mining", "iron ore", "copper", "aluminum"]):
+        return "Strong domestic volume consumption helps insulate producers from volatile global benchmark pricing swings."
+
+    if any(k in full_text for k in ["pharma", "drug", "usfda", "formulation", "clinical trial", "generic"]):
+        return "Specialty product pipeline execution and USFDA inspection clearance remain key drivers for earnings stability and export growth."
+
+    if any(k in full_text for k in ["power", "solar", "renewable", "green energy", "tariff", "grid"]):
+        return "Long-term power purchase agreements (PPAs) and grid integration capacity secure visibility for capital expenditure returns."
+
+    if any(k in full_text for k in ["telecom", "5g", "tariff hike", "arpu", "spectrum"]):
+        return "Industry ARPU expansion improves operating cash flows and interest coverage needed to service ongoing 5G network capex."
+
+    if any(k in full_text for k in ["real estate", "housing", "realty", "pre-sales"]):
+        return "Strong residential pre-sales collections accelerate project completion cycles and reduce developer debt leverage."
+
+    if category == "IPO":
+        return "Expands institutional free-float and establishes benchmark price discovery for peer group enterprise valuations."
+
+    if category in ["Policy", "Trade"]:
+        return "Alters regulatory compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness."
+
+    # 12. Default Contextual Analysis
+    return "Influences operational positioning and peer-group competitive dynamics; institutional focus remains on execution runway and margin defensibility."
+
 def analyze_story_intelligence(story: Dict[str, Any]) -> Dict[str, Any]:
     headline = story.get("headline", "")
     category = story.get("category", "Market")
@@ -40,7 +146,7 @@ def analyze_story_intelligence(story: Dict[str, Any]) -> Dict[str, Any]:
     bullets = story.get("bullet_points", []) or story.get("detailed_points", [])
     raw_text = story.get("raw_news_text", "")
     
-    full_text = f"{headline} {brief} {' '.join(bullets)}".lower()
+    full_text = f"{headline} {brief} {' '.join(bullets)} {raw_text}".lower()
 
     # 1. Determine Sentiment
     existing_sent = (story.get("sentiment") or "").upper()
@@ -72,99 +178,28 @@ def analyze_story_intelligence(story: Dict[str, Any]) -> Dict[str, Any]:
 
     # 2. Extract / Derive Catalyst
     catalyst = story.get("catalyst", "").strip()
-    if not catalyst or catalyst == brief:
-        # Extract direct event driver
-        if "gdp" in full_text and ("growth" in full_text or "finmin" in full_text):
-            catalyst = "Upward GDP nowcasting to 7.3% supported by resilient manufacturing gross value added."
-        elif "gst" in full_text and "collection" in full_text:
-            catalyst = "Robust indirect tax mop-up driven by elevated import volume collections and manufacturing demand."
-        elif "rupee" in full_text and ("drop" in full_text or "low" in full_text or "depreciation" in full_text):
-            catalyst = "Spike in US Treasury yields and FPI capital outflows breaching psychological currency support."
-        elif "pmi" in full_text or "manufacturing" in full_text:
-            catalyst = "Resilient manufacturing new orders, export expansion, and accelerated factory output."
-        elif "upi" in full_text or "digital payment" in full_text:
-            catalyst = "Record digital transaction velocity and retail payment infrastructure volume breakthrough."
-        elif "sales" in full_text and ("vehicle" in full_text or "auto" in full_text or "pv" in full_text):
-            catalyst = "Festive retail inventory build-up and tax rationalization boosting domestic automotive demand."
-        elif "iron ore" in full_text or "mining" in full_text:
-            catalyst = "Sustained domestic primary steelmaking capacity utilization lifting raw material extraction volume."
-        elif "it" in full_text and ("growth" in full_text or "hcl" in full_text or "tcs" in full_text or "infosys" in full_text):
-            catalyst = "Discretionary spend deferrals offset by deal ramp-ups and selective cost-takeout contract execution."
-        elif category == "IPO":
-            catalyst = "Primary market capital formation seeking public listing valuation and liquidity expansion."
-        elif category == "Policy":
-            catalyst = "Targeted regulatory revision and fiscal framework adjustment aimed at sectoral stabilization."
-        else:
-            # Construct from first bullet point or distinct headline clause
-            if bullets and len(bullets) > 0:
-                first_bullet = re.sub(r'[*_#]', '', bullets[0])
-                if len(first_bullet) < 140 and first_bullet != brief:
-                    catalyst = first_bullet
-                else:
-                    catalyst = f"Primary trigger: {headline.split(':')[0]} with direct operational implications."
-            else:
-                catalyst = f"Operational and market development triggered by {headline.split(':')[0]}."
+    if not catalyst or catalyst == brief or catalyst.startswith("Operational and market development triggered by"):
+        catalyst = compute_dynamic_catalyst(headline, brief, bullets, full_text)
 
     # 3. Formulate Meaningful Market Impact & Financial Transmission Analysis
     market_impact = story.get("market_impact", "").strip()
-    if not market_impact or market_impact == brief or market_impact == catalyst:
-        impact_sentences = []
-        
-        # Macro / Economy impact
-        if category == "Economy":
-            if "gst" in full_text or "tax" in full_text:
-                impact_sentences.append("Directly strengthens the Centre's fiscal deficit glide path, providing sovereign borrowing cushion and headroom for sustained capex.")
-                impact_sentences.append("Import tax buoyancy reflects sustained intermediate capital goods intake by domestic manufacturers.")
-            elif "rupee" in full_text or "dollar" in full_text:
-                impact_sentences.append("Increases landed import costs for crude oil and key electronics, exerting near-term pressure on imported inflation.")
-                impact_sentences.append("Provides a margin tailwind for export-heavy sectors (IT Services, Pharma, Textiles) on unhedged dollar revenues.")
-            elif "gdp" in full_text or "pmi" in full_text:
-                impact_sentences.append("Underpins corporate revenue run-rate projections and supports capacity expansion decisions across capital goods.")
-                impact_sentences.append("Affirms domestic macro resilience against global fragmentation headwinds, stabilizing institutional equity inflows.")
-            else:
-                impact_sentences.append("Influences macroeconomic liquidity conditions, sovereign yield spreads, and medium-term policy rate expectations.")
+    is_generic_impact = (
+        not market_impact 
+        or market_impact == brief 
+        or market_impact == catalyst 
+        or "Clarifies management execution roadmap" in market_impact
+        or "Ripples into relevant industry peer groups" in market_impact
+        or market_impact == "Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks."
+    )
 
-        # Sector / Equity impact
-        elif category == "Sector" or category == "Market":
-            if "auto" in full_text or "vehicle" in full_text:
-                impact_sentences.append("Improves operating leverage and fixed-cost absorption for OEMs and Tier-1 auto-ancillary suppliers.")
-                impact_sentences.append("Higher volume dispatch bolsters dealer channel liquidity ahead of the festive inventory cycle.")
-            elif "it" in full_text or "tech" in full_text:
-                impact_sentences.append("Sequential constant-currency revenue growth remains selective; pricing realization and EBIT margin resilience become key stock catalysts.")
-                impact_sentences.append("Divergence between tier-1 leaders widening based on mega-deal ramp velocity and AI productivity containment.")
-            elif "metal" in full_text or "steel" in full_text or "mining" in full_text:
-                impact_sentences.append("Strong domestic volume growth helps insulate miners from volatile global benchmark pricing swings.")
-                impact_sentences.append("Ensures uninterrupted raw material feed for downstream infrastructure and construction fabrication.")
-            elif "bank" in full_text or "credit" in full_text or "lending" in full_text:
-                impact_sentences.append("Sustained credit disbursement velocity supports Net Interest Income (NII) while keeping asset quality ratios in check.")
-                impact_sentences.append("Deposit cost repricing dynamics remain the primary driver for Net Interest Margin (NIM) trajectory.")
-            else:
-                impact_sentences.append("Directly impacts EBITDA margin expectations, working capital requirements, and relative valuation multiples against sector benchmarks.")
-
-        # Policy & Trade impact
-        elif category in ["Policy", "Trade"]:
-            impact_sentences.append("Alters compliance frameworks and tariff structures, realigning domestic supply-chain cost competitiveness.")
-            impact_sentences.append("Reduces regulatory friction for compliant industry participants while penalizing import dumping.")
-
-        # IPO impact
-        elif category == "IPO":
-            impact_sentences.append("Expands institutional free-float and offers price discovery benchmark for peer group enterprise valuations.")
-            impact_sentences.append("Secondary market listing premium will hinge on anchor institutional subscription quality and post-issue growth visibility.")
-
-        # Corporate Events / Appointments
-        elif category in ["Corporate Events", "Corporate Appointments"]:
-            impact_sentences.append("Clarifies management execution roadmap, corporate governance posture, and capital allocation priorities for institutional investors.")
-
-        else:
-            impact_sentences.append("Ripples into relevant industry peer groups, shaping operational positioning and investor sentiment across the sector.")
-
-        market_impact = " ".join(impact_sentences)
+    if is_generic_impact:
+        market_impact = compute_dynamic_market_impact(headline, brief, bullets, category, full_text)
 
     # 4. Formulate Actionable Sentiment Reasoning / Institutional Thesis
     sentiment_reasoning = story.get("sentiment_reasoning", "").strip()
     if not sentiment_reasoning or sentiment_reasoning == brief:
         if sentiment == "BULLISH":
-            sentiment_reasoning = f"Positive development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
+            sentiment_reasoning = f"Positive fundamental development reinforcing operational upside, strong volume/revenue execution, and supportive valuation metrics."
         elif sentiment == "BEARISH":
             sentiment_reasoning = f"Headwind creating margin compression, near-term liquidity pressure, or elevated regulatory/macro vulnerability."
         else:
