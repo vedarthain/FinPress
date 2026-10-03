@@ -27,184 +27,54 @@ class UnifiedNewsAggregator:
 
     def _deduplicate_category_stories(self, category: str, stories: List[Dict[str, Any]]) -> List[NewsStory]:
         """Deduplicates and merges overlapping stories within a section using intelligent text matching."""
-        import difflib
-        import re
-
         if not stories:
             return []
-
-        def clean_text(t: str) -> set:
-            words = re.findall(r'\b[a-zA-Z0-9]{4,}\b', t.lower())
-            stop_words = {
-                "india", "indian", "says", "said", "will", "year", "month", "report", "first", "last", "over",
-                "under", "after", "before", "financial", "standard", "express", "crore", "lakh", "worth", "plan",
-                "plans", "govt", "government",
-                # Generic IPO / corporate-notice boilerplate: near-identical across completely
-                # unrelated companies, so these must NOT count as a "shared topic" signal.
-                "launches", "launch", "launched", "announces", "announce", "announced", "announcement",
-                "initial", "public", "offering", "offerings", "offer", "offers", "equity", "shares", "share",
-                "limited", "files", "filed", "file", "filing", "draft", "herring", "prospectus", "drhp",
-                "corporate", "events", "event", "notice", "notices", "extra", "ordinary", "general", "meeting",
-                "meetings", "shareholders", "shareholder", "scheduled", "schedules", "issues", "issue",
-                "issuance", "subscription", "allotment", "payment", "reminder", "surrender", "certificate",
-                "authorisation", "authorization", "exchange", "listing", "listed", "platform", "emerge",
-                "window", "class",
-            }
-            return {w for w in words if w not in stop_words}
 
         raw_fe_items = [s for s in stories if "Financial Express" in s.get("source", "")]
         raw_bs_items = [s for s in stories if "Business Standard" in s.get("source", "")]
         other_items = [s for s in stories if s not in raw_fe_items and s not in raw_bs_items]
 
-        def dedup_internal(items_list: List[Dict[str, Any]], source_label: str) -> List[Dict[str, Any]]:
-            deduped = []
-            for item in items_list:
-                item_words = clean_text(item["headline"] + " " + item.get("brief_details", "")[:100])
-                is_dup = False
-                for existing in deduped:
-                    ratio = difflib.SequenceMatcher(None, item["headline"].lower(), existing["headline"].lower()).ratio()
-                    ex_words = clean_text(existing["headline"] + " " + existing.get("brief_details", "")[:100])
-                    overlap = len(item_words & ex_words)
-                    
-                    # Within the same newspaper edition, only deduplicate if headlines are virtually identical (>=90%)
-                    if ratio >= 0.90:
-                        is_dup = True
-                        p1 = existing.get("page_numbers", "")
-                        p2 = item.get("page_numbers", "")
-                        if p2 and p2 not in p1:
-                            existing["page_numbers"] = f"{p1}, {p2}" if p1 else p2
-                        if len(item.get("brief_details", "")) > len(existing.get("brief_details", "")):
-                            existing["brief_details"] = item["brief_details"]
-                        existing["bullet_points"] = list(dict.fromkeys(existing.get("bullet_points", []) + item.get("bullet_points", [])))[:6]
-                        break
-                if not is_dup:
-                    deduped.append(dict(item))
-            return deduped
-
-        fe_items = dedup_internal(raw_fe_items, "FE")
-        bs_items = dedup_internal(raw_bs_items, "BS")
-
-        matched_fe = set()
-        matched_bs = set()
         results: List[NewsStory] = []
 
-        # Find overlapping stories between FE and BS
-        for fe_i, fe_s in enumerate(fe_items):
-            fe_words = clean_text(fe_s["headline"] + " " + fe_s["brief_details"][:100])
-            best_match_idx = None
-            best_score = 0.0
+        # Add all FE stories with FE source tags
+        for fe_s in raw_fe_items:
+            p = fe_s.get("page_numbers", "Page 1")
+            formatted_p = p if "FE" in p else f"FE ({p})"
+            results.append(NewsStory(
+                headline=fe_s["headline"],
+                category=category,
+                page_numbers=formatted_p,
+                source_paper="Financial Express",
+                brief_details=fe_s["brief_details"],
+                bullet_points=fe_s.get("bullet_points", []),
+                sentiment=fe_s.get("sentiment", "NEUTRAL"),
+                catalyst=fe_s.get("catalyst", ""),
+                market_impact=fe_s.get("market_impact", ""),
+                sentiment_reasoning=fe_s.get("sentiment_reasoning", ""),
+                raw_news_text=fe_s.get("raw_news_text", ""),
+                importance=fe_s.get("importance", "MEDIUM")
+            ))
 
-            for bs_i, bs_s in enumerate(bs_items):
-                if bs_i in matched_bs:
-                    continue
-                
-                # SequenceMatcher ratio
-                ratio = difflib.SequenceMatcher(None, fe_s["headline"].lower(), bs_s["headline"].lower()).ratio()
-                
-                # Key words overlap
-                bs_words = clean_text(bs_s["headline"] + " " + bs_s["brief_details"][:100])
-                overlap = len(fe_words & bs_words)
-                
-                if ratio >= 0.82 or (overlap >= 5 and ratio >= 0.68):
-                    if ratio > best_score:
-                        best_score = ratio
-                        best_match_idx = bs_i
+        # Add all Business Standard stories (Zero dedup, publish 100% of articles)
+        for bs_s in raw_bs_items:
+            p = bs_s.get("page_numbers", "Page 1")
+            formatted_p = p if "BS" in p else f"BS ({p})"
+            results.append(NewsStory(
+                headline=bs_s["headline"],
+                category=category,
+                page_numbers=formatted_p,
+                source_paper="Business Standard",
+                brief_details=bs_s["brief_details"],
+                bullet_points=bs_s.get("bullet_points", []),
+                sentiment=bs_s.get("sentiment", "NEUTRAL"),
+                catalyst=bs_s.get("catalyst", ""),
+                market_impact=bs_s.get("market_impact", ""),
+                sentiment_reasoning=bs_s.get("sentiment_reasoning", ""),
+                raw_news_text=bs_s.get("raw_news_text", ""),
+                importance=bs_s.get("importance", "MEDIUM")
+            ))
 
-            if best_match_idx is not None:
-                matched_fe.add(fe_i)
-                matched_bs.add(best_match_idx)
-                bs_s = bs_items[best_match_idx]
-
-                # Merge
-                p_fe = fe_s.get("page_numbers", "Page 1")
-                p_bs = bs_s.get("page_numbers", "Page 1")
-                combined_pages = f"FE ({p_fe}) / BS ({p_bs})"
-                
-                # Pick the most comprehensive headline
-                chosen_hl = fe_s["headline"] if len(fe_s["headline"]) >= len(bs_s["headline"]) else bs_s["headline"]
-                
-                # Deduplicate brief_details to prevent repetitive text
-                b_fe = fe_s.get("brief_details", "").strip()
-                b_bs = bs_s.get("brief_details", "").strip()
-                brief_ratio = difflib.SequenceMatcher(None, b_fe.lower(), b_bs.lower()).ratio()
-                
-                if not b_bs or b_fe.lower() == b_bs.lower() or brief_ratio > 0.60:
-                    combined_brief = b_fe if len(b_fe) >= len(b_bs) else b_bs
-                elif not b_fe:
-                    combined_brief = b_bs
-                else:
-                    combined_brief = f"{b_fe} (BS: {b_bs})"
-
-                # Deduplicate bullet points using fuzzy matching
-                raw_bullets = fe_s.get("bullet_points", []) + bs_s.get("bullet_points", [])
-                seen_bullets = []
-                for bp in raw_bullets:
-                    bp_clean = bp.strip()
-                    if bp_clean and not any(difflib.SequenceMatcher(None, bp_clean.lower(), seen.lower()).ratio() > 0.70 for seen in seen_bullets):
-                        seen_bullets.append(bp_clean)
-                combined_bullets = seen_bullets[:6]
-                raw_txt = fe_s.get("raw_news_text") or bs_s.get("raw_news_text") or ""
-                chosen_sent = fe_s.get("sentiment") if fe_s.get("sentiment") and fe_s.get("sentiment") != "NEUTRAL" else (bs_s.get("sentiment") or "NEUTRAL")
-                chosen_cat = fe_s.get("catalyst") or bs_s.get("catalyst") or ""
-                chosen_impact = fe_s.get("market_impact") or bs_s.get("market_impact") or ""
-                chosen_reason = fe_s.get("sentiment_reasoning") or bs_s.get("sentiment_reasoning") or ""
-
-                results.append(NewsStory(
-                    headline=chosen_hl,
-                    category=category,
-                    page_numbers=combined_pages,
-                    source_paper="Financial Express / Business Standard",
-                    brief_details=combined_brief,
-                    bullet_points=combined_bullets,
-                    sentiment=chosen_sent,
-                    catalyst=chosen_cat,
-                    market_impact=chosen_impact,
-                    sentiment_reasoning=chosen_reason,
-                    raw_news_text=raw_txt,
-                    importance="HIGH" if ("HIGH" in (fe_s.get("importance"), bs_s.get("importance"))) else "MEDIUM"
-                ))
-
-        # Add all exclusive FE stories
-        for fe_i, fe_s in enumerate(fe_items):
-            if fe_i not in matched_fe:
-                p = fe_s.get("page_numbers", "Page 1")
-                formatted_p = p if "FE" in p else f"FE ({p})"
-                results.append(NewsStory(
-                    headline=fe_s["headline"],
-                    category=category,
-                    page_numbers=formatted_p,
-                    source_paper="Financial Express",
-                    brief_details=fe_s["brief_details"],
-                    bullet_points=fe_s.get("bullet_points", []),
-                    sentiment=fe_s.get("sentiment", "NEUTRAL"),
-                    catalyst=fe_s.get("catalyst", ""),
-                    market_impact=fe_s.get("market_impact", ""),
-                    sentiment_reasoning=fe_s.get("sentiment_reasoning", ""),
-                    raw_news_text=fe_s.get("raw_news_text", ""),
-                    importance=fe_s.get("importance", "MEDIUM")
-                ))
-
-        # Add all exclusive BS stories
-        for bs_i, bs_s in enumerate(bs_items):
-            if bs_i not in matched_bs:
-                p = bs_s.get("page_numbers", "Page 1")
-                formatted_p = p if "BS" in p else f"BS ({p})"
-                results.append(NewsStory(
-                    headline=bs_s["headline"],
-                    category=category,
-                    page_numbers=formatted_p,
-                    source_paper="Business Standard",
-                    brief_details=bs_s["brief_details"],
-                    bullet_points=bs_s.get("bullet_points", []),
-                    sentiment=bs_s.get("sentiment", "NEUTRAL"),
-                    catalyst=bs_s.get("catalyst", ""),
-                    market_impact=bs_s.get("market_impact", ""),
-                    sentiment_reasoning=bs_s.get("sentiment_reasoning", ""),
-                    raw_news_text=bs_s.get("raw_news_text", ""),
-                    importance=bs_s.get("importance", "MEDIUM")
-                ))
-
-        # Add other stories
+        # Add any other sources
         for s in other_items:
             results.append(NewsStory(
                 headline=s["headline"],
