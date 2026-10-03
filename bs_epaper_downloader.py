@@ -191,6 +191,9 @@ class BusinessStandardEpaperDownloader:
         # Upload PDF to Cloudflare R2
         upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
         upload_to_r2(target_pdf, target_pdf.name)
+        return target_pdf
+
+    compile_zip_to_master_pdf = download_from_zip
 
     def extract_articles_from_reader(self, page) -> List[dict]:
         """
