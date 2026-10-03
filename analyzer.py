@@ -129,24 +129,13 @@ Assign every story to EXACTLY ONE of:
 - Others
 """
 
-        content_parts = []
-        try:
-            reader = pypdf.PdfReader(str(chunk_pdf_path))
-            for page in reader.pages:
-                for img in page.images:
-                    content_parts.append(types.Part.from_bytes(data=img.data, mime_type="image/jpeg"))
-        except Exception as e:
-            logger.warning(f"Could not extract images directly from chunk {chunk_pdf_path.name}: {e}")
-
         uploaded_file = None
-        if not content_parts:
+        try:
             uploaded_file = self.client.files.upload(
                 file=str(chunk_pdf_path),
-                config=types.UploadFileConfig(display_name=chunk_pdf_path.name)
+                config=types.UploadFileConfig(display_name=chunk_pdf_path.name, mime_type="application/pdf")
             )
-            content_parts = [uploaded_file]
-
-        content_parts.append(prompt)
+            content_parts = [uploaded_file, prompt]
 
         try:
             m = "gemini-flash-lite-latest"
