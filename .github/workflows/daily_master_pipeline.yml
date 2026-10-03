@@ -2,10 +2,16 @@ name: Daily Master Newspaper Pipeline (FE + BS + Aggregation)
 
 on:
   schedule:
-    # 00:15 UTC (05:45 AM IST) - Primary daily run
-    - cron: '15 0 * * *'
-    # 00:45 UTC (06:15 AM IST) - Backup secondary run
-    - cron: '45 0 * * *'
+    # 00:20 UTC (05:50 AM IST) - Primary daily run (off-peak minute)
+    - cron: '20 0 * * *'
+    # 00:50 UTC (06:20 AM IST) - Backup secondary run
+    - cron: '50 0 * * *'
+    # 01:20 UTC (06:50 AM IST) - Backup tertiary run
+    - cron: '20 1 * * *'
+    # 01:50 UTC (07:20 AM IST) - Backup morning run
+    - cron: '50 1 * * *'
+    # 02:50 UTC (08:20 AM IST) - Final morning sweep
+    - cron: '50 2 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-master-pipeline, trigger-full-pipeline, trigger-bs-pipeline, sync-session]

@@ -2,8 +2,16 @@ name: 1. Fetch Financial Express
 
 on:
   schedule:
-    # Runs daily at 00:15 UTC (05:45 AM IST)
-    - cron: '15 0 * * *'
+    # 00:18 UTC (05:48 AM IST) - Primary morning run (off-peak minute)
+    - cron: '18 0 * * *'
+    # 00:48 UTC (06:18 AM IST) - Backup run 1
+    - cron: '48 0 * * *'
+    # 01:18 UTC (06:48 AM IST) - Backup run 2
+    - cron: '18 1 * * *'
+    # 01:48 UTC (07:18 AM IST) - Backup run 3
+    - cron: '48 1 * * *'
+    # 02:48 UTC (08:18 AM IST) - Final morning sweep
+    - cron: '48 2 * * *'
   workflow_dispatch:
 
 concurrency:
