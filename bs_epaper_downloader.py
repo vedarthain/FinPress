@@ -192,7 +192,58 @@ class BusinessStandardEpaperDownloader:
         upload_to_r2(target_pdf, f"pdfs/{target_pdf.name}")
         upload_to_r2(target_pdf, target_pdf.name)
 
-        return target_pdf
+    def extract_articles_from_reader(self, page) -> List[dict]:
+        """
+        Extracts structured articles from the dedicated Articles side-panel across all edition pages.
+        Directly queries the left-side 'Articles' list shown in the reader interface.
+        """
+        logger.info("Extracting structured articles from Business Standard dedicated Articles section...")
+        articles_data = []
+        try:
+            # Switch to Text or ensure Articles panel is active
+            page.evaluate('''() => {
+                const textBtn = Array.from(document.querySelectorAll('button, a, div, li')).find(el => (el.innerText || el.textContent || '').trim().toLowerCase() === 'text');
+                if (textBtn) { try { textBtn.click(); } catch(e) {} }
+            }''')
+            page.wait_for_timeout(2000)
+
+            # Discover total pages
+            total_pages = page.evaluate('''() => {
+                const pageEls = document.querySelectorAll('.page-thumb, .tmb-lst a, [data-pageno], option[value*="page"], .page-dropdown option');
+                return Math.max(pageEls.length, 1);
+            }''')
+
+            logger.info(f"Scanning {total_pages} pages for dedicated structured articles...")
+
+            for p_num in range(1, min(total_pages + 1, 37)):
+                page.evaluate(f'''(p) => {{
+                    if (window.goToPage) window.goToPage(p);
+                    else if (window.location.hash !== '#' + p) window.location.hash = '#' + p;
+                }}''', p_num)
+                page.wait_for_timeout(1000)
+
+                page_articles = page.evaluate(r'''(p) => {
+                    const items = [];
+                    const artElements = document.querySelectorAll('.article_list li, .articles-list a, .art-list a, .story-item, [data-story], [data-artid], .articles a, .article-title, .articles li, .article-list a, div[class*="article"] a');
+                    artElements.forEach(el => {
+                        const title = (el.innerText || el.textContent || '').trim();
+                        const id = el.getAttribute('data-story') || el.getAttribute('data-artid') || el.id || '';
+                        if (title && title.length > 5 && !/^article \d+$/i.test(title)) {
+                            items.push({ headline: title, page: 'BS (Page ' + p + ')', id });
+                        }
+                    });
+                    return items;
+                }''', p_num)
+
+                for art in page_articles:
+                    if not any(a['headline'].lower() == art['headline'].lower() for a in articles_data):
+                        articles_data.append(art)
+
+            logger.info(f"✅ Extracted {len(articles_data)} unique structured articles from Business Standard Articles section.")
+        except Exception as e:
+            logger.warning(f"Notice: Articles panel extraction: {e}")
+
+        return articles_data
 
     def download_full_epaper(
         self,
