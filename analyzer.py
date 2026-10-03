@@ -206,6 +206,9 @@ Assign every story to EXACTLY ONE of:
 
         logger.info(f"Starting exhaustive unabridged analysis of PDF: {pdf_path.name}")
 
+        is_bs = "business_standard" in pdf_path.name.lower() or "bs_" in pdf_path.name.lower()
+        source_name = "Business Standard" if is_bs else "Financial Express"
+
         all_stories: List[NewsStory] = []
         total_pages = 24
 
@@ -232,9 +235,11 @@ Assign every story to EXACTLY ONE of:
 
                     chunk_stories = self._analyze_single_chunk(chunk_file, page_range_str)
                     for story in chunk_stories:
-                        story.page_numbers = self._remap_chunk_local_pages(
+                        remapped_page = self._remap_chunk_local_pages(
                             story.page_numbers, start_idx + 1, end_idx
                         )
+                        story.page_numbers = remapped_page
+                        story.source_paper = source_name
                     all_stories.extend(chunk_stories)
 
                     # Clean up temporary chunk file

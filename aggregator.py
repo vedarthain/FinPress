@@ -66,7 +66,8 @@ class UnifiedNewsAggregator:
                     ex_words = clean_text(existing["headline"] + " " + existing.get("brief_details", "")[:100])
                     overlap = len(item_words & ex_words)
                     
-                    if ratio > 0.85 or (overlap >= 3 and ratio > 0.55):
+                    # Within the same newspaper edition, only deduplicate if headlines are virtually identical (>=90%)
+                    if ratio >= 0.90:
                         is_dup = True
                         p1 = existing.get("page_numbers", "")
                         p2 = item.get("page_numbers", "")
@@ -104,7 +105,7 @@ class UnifiedNewsAggregator:
                 bs_words = clean_text(bs_s["headline"] + " " + bs_s["brief_details"][:100])
                 overlap = len(fe_words & bs_words)
                 
-                if ratio > 0.85 or (overlap >= 3 and ratio > 0.55):
+                if ratio >= 0.82 or (overlap >= 5 and ratio >= 0.68):
                     if ratio > best_score:
                         best_score = ratio
                         best_match_idx = bs_i
