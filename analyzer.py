@@ -67,6 +67,7 @@ class NewsStory(BaseModel):
         description="Crisp 1-2 sentence rationale explaining why this is Bullish/Bearish/Neutral from a portfolio manager or trader perspective."
     )
     raw_news_text: Optional[str] = Field(default="", description="The complete, unabridged verbatim raw newspaper article text and body paragraphs extracted from the page.")
+    source_paper: Optional[str] = Field(default="Financial Express", description="Source newspaper name: 'Financial Express', 'Business Standard', or 'Financial Express / Business Standard'.")
     kpis: Optional[List[KPIMetric]] = Field(default_factory=list, description="Key numerical metrics, financial figures, outlays, or percentages mentioned in the story or charts/tables.")
     importance: str = Field(description="Importance level: High, Medium, or Low.")
 
@@ -137,7 +138,6 @@ Assign every story to EXACTLY ONE of:
             )
             content_parts = [uploaded_file, prompt]
 
-        try:
             m = "gemini-flash-lite-latest"
             max_retries = 3
 
