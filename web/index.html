@@ -2383,7 +2383,7 @@ const allowedSections = [
           <div class="flex items-center gap-2 min-w-0 flex-1">
             <span class="text-[11px] font-mono font-bold ${isSelected ? 'text-[#8B5CF6] dark:text-[#C4B5FD]' : 'text-slate-400 dark:text-slate-500'} tabular-nums shrink-0">${numStr}</span>
             <span class="w-1.5 h-1.5 rounded-full ${dot} shrink-0"></span>
-            <span class="text-[12.5px] leading-tight font-sans truncate ${isSelected ? 'font-semibold text-[#581C87] dark:text-[#F3E8FF]' : 'font-medium text-[#090D16] dark:text-[#F8FAFC]'}" title="${escapeQuotes(s.headline)}">
+            <span class="text-[13.5px] leading-tight font-sans truncate ${isSelected ? 'font-semibold text-[#581C87] dark:text-[#F3E8FF]' : 'font-medium text-[#090D16] dark:text-[#F8FAFC]'}" title="${escapeQuotes(s.headline)}">
               ${highlightSearchTokens(s.headline, queryTokens)}
             </span>
           </div>
@@ -2454,7 +2454,7 @@ const allowedSections = [
         </div>
 
         <!-- HEADLINE -->
-        <h1 class="text-[21px] sm:text-[23px] font-extrabold text-[#05080F] dark:text-white leading-tight tracking-tight mt-3 mb-4 shrink-0 flex items-center flex-wrap gap-2">
+        <h1 class="text-[22px] sm:text-[24px] font-extrabold text-[#020617] dark:text-white leading-tight tracking-tight mt-3 mb-4 shrink-0 flex items-center flex-wrap gap-2">
           <span>${highlightSearchTokens(highlightNumbers(story.headline), queryTokens)}</span>
           ${(story.tickers && story.tickers.length > 0) ? tickerBadges : ''}
         </h1>
@@ -2474,7 +2474,7 @@ const allowedSections = [
               </div>
               <div class="space-y-2.5">
                 ${briefSentences.map(sent => `
-                  <div class="flex items-start gap-3 bg-white dark:bg-[#0A0E1A] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[14px] sm:text-[15px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-normal shadow-2xs font-sans">
+                  <div class="flex items-start gap-3 bg-white dark:bg-[#0A0E1A] p-3 rounded-lg border border-indigo-100 dark:border-slate-800 text-[15px] sm:text-[16px] text-[#020617] dark:text-[#F8FAFC] leading-relaxed font-medium shadow-2xs font-sans">
                     <span class="text-indigo-600 dark:text-indigo-400 font-extrabold select-none text-sm">▸</span>
                     <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(sent), queryTokens)}</span>
                   </div>
@@ -2497,7 +2497,7 @@ const allowedSections = [
                   <div class="flex items-center gap-1.5 font-mono text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${isBullish ? 'text-emerald-800 dark:text-emerald-300' : isBearish ? 'text-rose-800 dark:text-rose-300' : 'text-slate-700 dark:text-slate-300'}">
                     <span>⚡</span> <span>Primary Catalyst / Trigger:</span>
                   </div>
-                  <div class="text-[13.5px] sm:text-[14.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-sans font-medium">
+                  <div class="text-[14.5px] sm:text-[15.5px] text-[#020617] dark:text-[#F8FAFC] leading-relaxed font-sans font-medium">
                     ${highlightSearchTokens(highlightNumbers(story.catalyst), queryTokens)}
                   </div>
                 </div>
@@ -2507,7 +2507,7 @@ const allowedSections = [
                   <div class="flex items-center gap-1.5 font-mono text-[11px] font-extrabold uppercase tracking-wider mb-1.5 ${isBullish ? 'text-emerald-800 dark:text-emerald-300' : isBearish ? 'text-rose-800 dark:text-rose-300' : 'text-slate-700 dark:text-slate-300'}">
                     <span>📊</span> <span>Market, Sector & Valuation Impact:</span>
                   </div>
-                  <div class="text-[13.5px] sm:text-[14.5px] text-[#090D16] dark:text-[#F8FAFC] leading-relaxed font-sans">
+                  <div class="text-[14.5px] sm:text-[15.5px] text-[#020617] dark:text-[#F8FAFC] leading-relaxed font-sans font-medium">
                     ${highlightSearchTokens(highlightNumbers(story.market_impact || story.sentimentReasoning), queryTokens)}
                   </div>
                 </div>
@@ -2535,7 +2535,7 @@ const allowedSections = [
               </div>
               <ul class="space-y-2.5 flex-1">
                 ${bullets.map(b => `
-                  <li class="flex items-start gap-3 bg-white dark:bg-[#0E0C0A] p-3 rounded-lg border border-amber-100 dark:border-[#2D2319] text-[14px] sm:text-[15px] text-[#23170E] dark:text-[#F1E8DF] leading-relaxed font-sans shadow-2xs">
+                  <li class="flex items-start gap-3 bg-white dark:bg-[#0E0C0A] p-3 rounded-lg border border-amber-100 dark:border-[#2D2319] text-[15px] sm:text-[16px] text-[#020617] dark:text-[#F8FAFC] leading-relaxed font-sans shadow-2xs font-medium">
                     <span class="text-amber-700 dark:text-amber-400 shrink-0 font-bold mt-0.5 text-sm">•</span>
                     <span class="leading-relaxed">${highlightSearchTokens(highlightNumbers(b), queryTokens)}</span>
                   </li>
