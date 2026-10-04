@@ -295,7 +295,7 @@
       border-right-color: #1e293b;
     }
     .list-head {
-      padding: 8px 12px 6px;
+      padding: 6px 10px 5px;
       background: #f8faff;
       position: sticky;
       top: 0;
@@ -308,7 +308,7 @@
       border-bottom-color: #1e293b;
     }
     .list-head h2 {
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       margin: 0 0 1px;
       color: #10273b;
@@ -316,18 +316,18 @@
     .dark .list-head h2 { color: #f8fafc; }
     .muted {
       color: #6b7a89;
-      font-size: 10.5px;
-      margin: 1px 0;
+      font-size: 10px;
+      margin: 0;
     }
     .dark .muted { color: #94a3b8; }
     .search-input {
       width: 100%;
-      padding: 5px 8px;
+      padding: 4px 7px;
       background: #ffffff;
       border: 1px solid #cbd6e3;
       border-radius: 4px;
-      margin-top: 5px;
-      font-size: 11.5px;
+      margin-top: 4px;
+      font-size: 11px;
       color: #1e293b;
     }
     .dark .search-input {
@@ -343,9 +343,10 @@
       border: 0;
       border-bottom: 1px solid #dce3ed;
       text-align: left;
-      padding: 8px 12px;
+      padding: 6px 10px;
       cursor: pointer;
       transition: background-color 0.15s ease;
+      box-sizing: border-box;
     }
     .headline-card:hover {
       background: #eef3ff;
@@ -353,7 +354,7 @@
     .headline-card.selected {
       background: #e8efff;
       border-left: 3.5px solid #2860ed;
-      padding-left: 8.5px;
+      padding-left: 7.5px;
     }
     .dark .headline-card {
       border-bottom-color: #1e293b;
@@ -366,9 +367,9 @@
       border-left: 3.5px solid #3b82f6;
     }
     .headline-card h3 {
-      font: 14px/1.25 Georgia, serif;
+      font: 14px/1.22 Georgia, serif;
       color: #192c3d;
-      margin: 2px 0 3px;
+      margin: 1.5px 0;
       font-weight: 700;
     }
     .dark .headline-card h3 {
@@ -1337,18 +1338,18 @@
         const isDual = s.hasFe && s.hasBs;
         const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
         const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
-        const priorityTag = s.isFrontPage ? "Must read" : "Worth knowing";
-
+        const hasStocks = s.stocks && s.stocks.length > 0;
         card.innerHTML = `
-          <div class="flex items-center justify-between gap-1 mb-1">
+          <div class="flex items-center justify-between gap-1 mb-0.5">
             <span class="eyebrow ${s.isFrontPage ? 'priority' : ''}">${numStr} · ${priorityTag} · ${s.category}</span>
             <span class="paper-badge ${badgeType}">${badgeLabel}</span>
           </div>
           <h3>${s.headline}</h3>
-          <div class="paper-tag flex items-center justify-between text-[9.5px] text-slate-500 mt-1">
-            <span>${s.page_numbers}</span>
-            ${s.stocks && s.stocks.length > 0 ? `<span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">${s.stocks.slice(0, 3).join(' · ')}</span>` : ''}
-          </div>
+          ${hasStocks ? `
+            <div class="paper-tag flex items-center justify-end text-[9px] text-slate-500 mt-0.5">
+              <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">${s.stocks.slice(0, 3).join(' · ')}</span>
+            </div>
+          ` : ''}
         `;
         container.appendChild(card);
       });
