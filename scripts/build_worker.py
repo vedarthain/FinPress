@@ -237,6 +237,97 @@ export default {{
       }}
     }}
 
+    // API: Cloud Reading Progress Sync (Syncs read stories and position across mobile & desktop)
+    if (url.pathname === '/api/progress') {{
+      const date = url.searchParams.get('date');
+      if (!date) {{
+        return new Response(JSON.stringify({{ error: 'Missing date parameter' }}), {{
+          status: 400,
+          headers: {{ 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }}
+        }});
+      }}
+
+      const r2Key = `progress/read_progress_${{date}}.json`;
+
+      if (request.method === 'GET') {{
+        try {{
+          if (env.BUCKET) {{
+            const obj = await env.BUCKET.get(r2Key);
+            if (obj) {{
+              const data = await obj.json();
+              return new Response(JSON.stringify({{ success: true, ...data }}), {{
+                headers: {{
+                  'Content-Type': 'application/json; charset=utf-8',
+                  'Access-Control-Allow-Origin': '*',
+                  'Cache-Control': 'no-cache, no-store, must-revalidate'
+                }}
+              }});
+            }}
+          }}
+          return new Response(JSON.stringify({{ success: true, readStories: [], lastStoryId: null, updatedAt: 0 }}), {{
+            headers: {{ 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }}
+          }});
+        }} catch (e) {{
+          return new Response(JSON.stringify({{ success: false, error: e.message }}), {{ status: 500 }});
+        }}
+      }}
+
+      if (request.method === 'POST') {{
+        try {{
+          const payload = await request.json();
+          let existing = {{ readStories: [], lastStoryId: null, updatedAt: 0 }};
+          if (env.BUCKET) {{
+            const currentObj = await env.BUCKET.get(r2Key);
+            if (currentObj) {{
+              try {{ existing = await currentObj.json(); }} catch(err) {{}}
+            }}
+          }}
+
+          if (payload.reset) {{
+            const resetData = {{ date, readStories: [], lastStoryId: null, updatedAt: Date.now() }};
+            if (env.BUCKET) {{
+              await env.BUCKET.put(r2Key, JSON.stringify(resetData), {{
+                httpMetadata: {{ contentType: 'application/json; charset=utf-8' }}
+              }});
+            }}
+            return new Response(JSON.stringify({{ success: true, ...resetData }}), {{
+              headers: {{ 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' }}
+            }});
+          }}
+
+          const mergedSet = new Set([...(existing.readStories || []), ...(payload.readStories || [])]);
+          const mergedList = Array.from(mergedSet);
+          const lastStoryId = (payload.updatedAt >= (existing.updatedAt || 0) && payload.lastStoryId)
+            ? payload.lastStoryId
+            : (existing.lastStoryId || payload.lastStoryId || null);
+          const updatedAt = Math.max(payload.updatedAt || 0, existing.updatedAt || 0, Date.now());
+
+          const progressData = {{
+            date: date,
+            readStories: mergedList,
+            lastStoryId: lastStoryId,
+            updatedAt: updatedAt
+          }};
+
+          if (env.BUCKET) {{
+            await env.BUCKET.put(r2Key, JSON.stringify(progressData), {{
+              httpMetadata: {{ contentType: 'application/json; charset=utf-8' }}
+            }});
+          }}
+
+          return new Response(JSON.stringify({{ success: true, ...progressData }}), {{
+            headers: {{
+              'Content-Type': 'application/json; charset=utf-8',
+              'Access-Control-Allow-Origin': '*',
+              'Cache-Control': 'no-cache, no-store, must-revalidate'
+            }}
+          }});
+        }} catch (err) {{
+          return new Response(JSON.stringify({{ success: false, error: err.message }}), {{ status: 500 }});
+        }}
+      }}
+    }}
+
     // API proxy to Cloudflare R2 / latest report
     if (url.pathname === '/api/latest' || url.pathname.startsWith('/api/report')) {{
       const dateParam = url.searchParams.get('date');

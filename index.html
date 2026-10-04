@@ -1490,6 +1490,7 @@
 
         renderCategoriesAndStocksSidebar();
         renderHeadlinesList();
+        syncCloudProgress();
       }
     }
 
@@ -1779,6 +1780,86 @@
       return new Set();
     }
 
+    let cloudSyncTimeout = null;
+    let isCloudSyncing = false;
+
+    function pushCloudProgressDebounced() {
+      if (cloudSyncTimeout) clearTimeout(cloudSyncTimeout);
+      cloudSyncTimeout = setTimeout(async () => {
+        const date = getCurrentEditionDate();
+        if (!date) return;
+        const readSet = getReadStoriesSet();
+        const lastStoryId = getLastActiveStoryId();
+        try {
+          await fetch(`/api/progress?date=${date}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              readStories: Array.from(readSet),
+              lastStoryId: lastStoryId,
+              updatedAt: Date.now()
+            })
+          });
+        } catch (e) {}
+      }, 1200);
+    }
+
+    async function syncCloudProgress() {
+      const date = getCurrentEditionDate();
+      if (!date || isCloudSyncing) return;
+      isCloudSyncing = true;
+      try {
+        const res = await fetch(`/api/progress?date=${date}&t=${Date.now()}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && data.success && Array.isArray(data.readStories)) {
+          const localSet = getReadStoriesSet();
+          let hasNew = false;
+          data.readStories.forEach(id => {
+            if (!localSet.has(id)) {
+              localSet.add(id);
+              hasNew = true;
+            }
+          });
+
+          if (hasNew) {
+            try {
+              localStorage.setItem(`finpress_read_${date}`, JSON.stringify(Array.from(localSet)));
+            } catch (e) {}
+
+            data.readStories.forEach(id => {
+              const card = document.querySelector(`#headlines-container .headline-card[data-id="${id}"]`);
+              if (card) {
+                card.classList.add("read");
+                const eyebrow = card.querySelector(".eyebrow");
+                if (eyebrow && !eyebrow.querySelector(".read-tick")) {
+                  const tick = document.createElement("span");
+                  tick.className = "read-tick";
+                  tick.title = "Read";
+                  tick.textContent = "✓";
+                  eyebrow.appendChild(tick);
+                }
+              }
+            });
+            updateListCountProgress();
+          }
+
+          // If remote position is available and local position was at default 0, restore remote story
+          if (data.lastStoryId && (!getLastActiveStoryId() || selectedStoryIndex === 0)) {
+            const displayed = getFilteredStories();
+            const foundIdx = displayed.findIndex(s => s.id === data.lastStoryId);
+            if (foundIdx !== -1 && foundIdx !== selectedStoryIndex) {
+              selectedStoryIndex = foundIdx;
+              renderHeadlinesList();
+            }
+          }
+        }
+      } catch (err) {
+      } finally {
+        isCloudSyncing = false;
+      }
+    }
+
     function markStoryAsRead(storyId) {
       if (!storyId) return;
       const date = getCurrentEditionDate();
@@ -1801,6 +1882,7 @@
             eyebrow.appendChild(tick);
           }
         }
+        pushCloudProgressDebounced();
       }
       updateListCountProgress();
     }
@@ -1811,6 +1893,7 @@
       try {
         localStorage.setItem(`finpress_last_story_${date}`, storyId);
       } catch (e) {}
+      pushCloudProgressDebounced();
     }
 
     function getLastActiveStoryId() {
@@ -1822,12 +1905,19 @@
       }
     }
 
-    function clearReadHistory() {
+    async function clearReadHistory() {
       const date = getCurrentEditionDate();
       if (confirm(`Reset reading progress for edition ${date}?`)) {
         try {
           localStorage.removeItem(`finpress_read_${date}`);
           localStorage.removeItem(`finpress_last_story_${date}`);
+        } catch (e) {}
+        try {
+          await fetch(`/api/progress?date=${date}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reset: true })
+          });
         } catch (e) {}
         selectedStoryIndex = 0;
         renderHeadlinesList();
@@ -1849,7 +1939,7 @@
         if (readSet.has(s.id)) readCount++;
       });
       if (readCount > 0) {
-        listCount.innerHTML = `<span>${total} stories · <b class="text-emerald-600 dark:text-emerald-400 font-bold">${readCount} read</b> (${total - readCount} remaining) <button onclick="clearReadHistory()" class="underline hover:text-slate-800 dark:hover:text-slate-200 ml-1.5 cursor-pointer text-[9.5px] opacity-80" title="Reset reading progress for this edition">Reset</button></span>`;
+        listCount.innerHTML = `<span>${total} stories · <b class="text-emerald-600 dark:text-emerald-400 font-bold">${readCount} read</b> (${total - readCount} remaining) <span title="Cross-device cloud synced" class="text-emerald-500 font-bold text-[10px] ml-1">☁️</span> <button onclick="clearReadHistory()" class="underline hover:text-slate-800 dark:hover:text-slate-200 ml-1.5 cursor-pointer text-[9.5px] opacity-80" title="Reset reading progress for this edition">Reset</button></span>`;
       } else {
         listCount.textContent = `${total} stories · Priority stories first`;
       }
@@ -2405,6 +2495,13 @@
         localStorage.setItem("finpress_col2_width", 380);
       });
     }
+
+    // Auto-sync reading progress from cloud when tab or phone screen wakes up
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        syncCloudProgress();
+      }
+    });
 
     initTheme();
     setMobileTab('headlines');
