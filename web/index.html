@@ -529,23 +529,81 @@
     }
     .dark .figure dd { color: #38bdf8; }
 
-    /* Impact / Catalyst Box */
+    /* Impact / Catalyst Box - Dynamic Sentiment Colors */
     .impact-box {
-      border-left: 3.5px solid #2860ed;
-      background: #f2f7fa;
       border-radius: 0 6px 6px 0;
-      padding: 6px 12px;
+      padding: 8px 12px;
       margin: 10px 0;
+      border-left: 4px solid #2860ed;
+      background: #f2f7fa;
+      border-top: 1px solid #e0e7ef;
+      border-right: 1px solid #e0e7ef;
+      border-bottom: 1px solid #e0e7ef;
     }
+    .impact-box.bullish {
+      border-left-color: #16a34a !important;
+      background: #f0fdf4 !important;
+      border-top-color: #bbf7d0 !important;
+      border-right-color: #bbf7d0 !important;
+      border-bottom-color: #bbf7d0 !important;
+    }
+    .impact-box.bullish h3 { color: #15803d !important; }
+
+    .impact-box.bearish {
+      border-left-color: #dc2626 !important;
+      background: #fef2f2 !important;
+      border-top-color: #fecaca !important;
+      border-right-color: #fecaca !important;
+      border-bottom-color: #fecaca !important;
+    }
+    .impact-box.bearish h3 { color: #b91c1c !important; }
+
+    .impact-box.neutral {
+      border-left-color: #64748b !important;
+      background: #f8fafc !important;
+      border-top-color: #e2e8f0 !important;
+      border-right-color: #e2e8f0 !important;
+      border-bottom-color: #e2e8f0 !important;
+    }
+    .impact-box.neutral h3 { color: #475569 !important; }
+
     .dark .impact-box {
-      border-left-color: #3b82f6;
       background: #0b1329;
+      border-color: #1e293b;
     }
+    .dark .impact-box.bullish {
+      border-left-color: #22c55e !important;
+      background: #052e16 !important;
+      border-top-color: #14532d !important;
+      border-right-color: #14532d !important;
+      border-bottom-color: #14532d !important;
+    }
+    .dark .impact-box.bullish h3 { color: #4ade80 !important; }
+
+    .dark .impact-box.bearish {
+      border-left-color: #ef4444 !important;
+      background: #450a0a !important;
+      border-top-color: #7f1d1d !important;
+      border-right-color: #7f1d1d !important;
+      border-bottom-color: #7f1d1d !important;
+    }
+    .dark .impact-box.bearish h3 { color: #f87171 !important; }
+
+    .dark .impact-box.neutral {
+      border-left-color: #94a3b8 !important;
+      background: #0f172a !important;
+      border-top-color: #1e293b !important;
+      border-right-color: #1e293b !important;
+      border-bottom-color: #1e293b !important;
+    }
+    .dark .impact-box.neutral h3 { color: #cbd5e1 !important; }
+
     .impact-box h3 {
       margin: 0 0 4px;
-      color: #2860ed;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
     }
-    .dark .impact-box h3 { color: #60a5fa; }
 
     /* Controls Bar */
     .controls-bar {
@@ -1200,7 +1258,7 @@
           { id: "International News", label: "International", count: pubPool.filter(s => s.category === "International News").length, icon: "🌐" },
           { id: "Others", label: "Features", count: pubPool.filter(s => s.category === "Others").length, icon: "📄" }
         ];
-        const coreTotal = pubPool.filter(s => s.isFrontPage || ["Sector", "Economy", "Policy", "Market", "Trade", "International News", "Others"].includes(s.category)).length;
+        const coreTotal = pubPool.filter(s => ["Sector", "Economy", "Policy", "Market", "Trade", "International News", "Others"].includes(s.category)).length;
         coreGroup.innerHTML = `<div class="group-label">Core Desks${pubLabel} - ${coreTotal}</div>`;
 
         coreItems.forEach(item => {
@@ -1228,7 +1286,7 @@
           { id: "APPOINTMENTS", label: "Appointments", count: pubPool.filter(s => s.category === "Corporate Appointments").length, icon: "👔" },
           { id: "OPINIONS", label: "Opinions Desk", count: pubPool.filter(s => s.isOpinion).length, icon: "✍️" }
         ];
-        const specTotal = pubPool.filter(s => ["IPO", "Corporate Events", "Corporate Appointments"].includes(s.category) || s.isOpinion).length;
+        const specTotal = pubPool.filter(s => ["IPO", "Corporate Events", "Corporate Appointments"].includes(s.category)).length;
         specGroup.innerHTML = `<div class="group-label orange">Specialized Desks${pubLabel} - ${specTotal}</div>`;
 
         specItems.forEach(item => {
@@ -1440,6 +1498,7 @@
       const isBullish = (story.sentiment || '').includes('BULLISH');
       const isBearish = (story.sentiment || '').includes('BEARISH');
       const sentBadge = isBullish ? "🟢 BULLISH" : isBearish ? "🔴 BEARISH" : "⚪ NEUTRAL";
+      const sentClass = isBullish ? "bullish" : isBearish ? "bearish" : "neutral";
 
       const figures = extractFigures(story);
       const bullets = story.bullet_points || [];
@@ -1487,7 +1546,7 @@
         </div>
 
         <!-- 3. Impact Assessment Box -->
-        <div class="impact-box">
+        <div class="impact-box ${sentClass}">
           <h3>Impact · Assessment (${story.sentiment} THESIS)</h3>
           <p style="margin:0; font-size:14.5px; line-height:1.6;">
             <b>Catalyst:</b> ${story.catalyst}<br>
