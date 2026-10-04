@@ -467,6 +467,33 @@
     .dark .headline-card h3 {
       color: #f8fafc;
     }
+    .headline-card.read h3 {
+      color: #64748b;
+      font-weight: 450;
+    }
+    .dark .headline-card.read h3 {
+      color: #94a3b8;
+      font-weight: 450;
+    }
+    .headline-card.read.selected h3 {
+      color: #0f172a;
+      font-weight: 600;
+    }
+    .dark .headline-card.read.selected h3 {
+      color: #f8fafc;
+      font-weight: 600;
+    }
+    .read-tick {
+      display: inline-block;
+      font-size: 10px;
+      line-height: 1;
+      margin-left: 3px;
+      color: #16a34a;
+      font-weight: 800;
+    }
+    .dark .read-tick {
+      color: #4ade80;
+    }
     .eyebrow {
       font-size: 8.5px;
       text-transform: uppercase;
@@ -1482,7 +1509,7 @@
       selectedFeedCategory = "ANCHOR";
       activeStockFilter = null;
       activeSectorFilter = null;
-      selectedStoryIndex = 0;
+      selectedStoryIndex = selectSmartStoryIndex(getFilteredStories());
       renderCategoriesAndStocksSidebar();
       renderHeadlinesList();
       if (window.innerWidth <= 768) {
@@ -1494,7 +1521,7 @@
       selectedFeedCategory = selectedFeedCategory === cat ? "ALL" : cat;
       activeStockFilter = null;
       activeSectorFilter = null;
-      selectedStoryIndex = 0;
+      selectedStoryIndex = selectSmartStoryIndex(getFilteredStories());
       renderCategoriesAndStocksSidebar();
       renderHeadlinesList();
       if (window.innerWidth <= 768) {
@@ -1684,7 +1711,7 @@
             activeSectorFilter = activeSectorFilter === sec ? null : sec;
             activeStockFilter = null;
             selectedFeedCategory = 'ALL';
-            selectedStoryIndex = 0;
+            selectedStoryIndex = selectSmartStoryIndex(getFilteredStories());
             renderCategoriesAndStocksSidebar();
             renderHeadlinesList();
             if (window.innerWidth <= 768) {
@@ -1722,7 +1749,7 @@
             activeStockFilter = activeStockFilter === stk ? null : stk;
             activeSectorFilter = null;
             selectedFeedCategory = 'ALL';
-            selectedStoryIndex = 0;
+            selectedStoryIndex = selectSmartStoryIndex(getFilteredStories());
             renderCategoriesAndStocksSidebar();
             renderHeadlinesList();
             if (window.innerWidth <= 768) {
@@ -1735,9 +1762,133 @@
       }
     }
 
+    function getCurrentEditionDate() {
+      if (rawReport && rawReport.edition_date) return rawReport.edition_date;
+      if (availableDates.length && availableDates[currentDateIndex]) return availableDates[currentDateIndex];
+      const dp = document.getElementById("calendar-picker");
+      if (dp && dp.value) return dp.value;
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function getReadStoriesSet() {
+      const date = getCurrentEditionDate();
+      try {
+        const raw = localStorage.getItem(`finpress_read_${date}`);
+        if (raw) return new Set(JSON.parse(raw));
+      } catch (e) {}
+      return new Set();
+    }
+
+    function markStoryAsRead(storyId) {
+      if (!storyId) return;
+      const date = getCurrentEditionDate();
+      const readSet = getReadStoriesSet();
+      if (!readSet.has(storyId)) {
+        readSet.add(storyId);
+        try {
+          localStorage.setItem(`finpress_read_${date}`, JSON.stringify(Array.from(readSet)));
+        } catch (e) {}
+
+        const card = document.querySelector(`#headlines-container .headline-card[data-id="${storyId}"]`);
+        if (card) {
+          card.classList.add("read");
+          const eyebrow = card.querySelector(".eyebrow");
+          if (eyebrow && !eyebrow.querySelector(".read-tick")) {
+            const tick = document.createElement("span");
+            tick.className = "read-tick";
+            tick.title = "Read";
+            tick.textContent = "✓";
+            eyebrow.appendChild(tick);
+          }
+        }
+      }
+      updateListCountProgress();
+    }
+
+    function saveLastActiveStory(storyId) {
+      if (!storyId) return;
+      const date = getCurrentEditionDate();
+      try {
+        localStorage.setItem(`finpress_last_story_${date}`, storyId);
+      } catch (e) {}
+    }
+
+    function getLastActiveStoryId() {
+      const date = getCurrentEditionDate();
+      try {
+        return localStorage.getItem(`finpress_last_story_${date}`);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function clearReadHistory() {
+      const date = getCurrentEditionDate();
+      if (confirm(`Reset reading progress for edition ${date}?`)) {
+        try {
+          localStorage.removeItem(`finpress_read_${date}`);
+          localStorage.removeItem(`finpress_last_story_${date}`);
+        } catch (e) {}
+        selectedStoryIndex = 0;
+        renderHeadlinesList();
+      }
+    }
+
+    function updateListCountProgress() {
+      const listCount = document.getElementById("list-count");
+      if (!listCount) return;
+      const displayed = getFilteredStories();
+      const total = displayed.length;
+      if (total === 0) {
+        listCount.textContent = "0 stories";
+        return;
+      }
+      const readSet = getReadStoriesSet();
+      let readCount = 0;
+      displayed.forEach(s => {
+        if (readSet.has(s.id)) readCount++;
+      });
+      if (readCount > 0) {
+        listCount.innerHTML = `<span>${total} stories · <b class="text-emerald-600 dark:text-emerald-400 font-bold">${readCount} read</b> (${total - readCount} remaining) <button onclick="clearReadHistory()" class="underline hover:text-slate-800 dark:hover:text-slate-200 ml-1.5 cursor-pointer text-[9.5px] opacity-80" title="Reset reading progress for this edition">Reset</button></span>`;
+      } else {
+        listCount.textContent = `${total} stories · Priority stories first`;
+      }
+    }
+
+    function selectSmartStoryIndex(displayed) {
+      if (!displayed || displayed.length === 0) return 0;
+      const currentStory = stories[selectedStoryIndex];
+      if (currentStory) {
+        const found = displayed.findIndex(s => s.id === currentStory.id);
+        if (found !== -1) return found;
+      }
+      const lastId = getLastActiveStoryId();
+      if (lastId) {
+        const found = displayed.findIndex(s => s.id === lastId);
+        if (found !== -1) return found;
+      }
+      const readSet = getReadStoriesSet();
+      const firstUnread = displayed.findIndex(s => !readSet.has(s.id));
+      return firstUnread !== -1 ? firstUnread : 0;
+    }
+
     function renderHeadlinesList() {
       const displayed = getFilteredStories();
       const total = displayed.length;
+      const readSet = getReadStoriesSet();
+
+      // Restore last active story position from localStorage
+      const savedStoryId = getLastActiveStoryId();
+      if (savedStoryId) {
+        const foundIdx = displayed.findIndex(s => s.id === savedStoryId);
+        if (foundIdx !== -1) {
+          selectedStoryIndex = foundIdx;
+        } else if (selectedStoryIndex < 0 || selectedStoryIndex >= total) {
+          selectedStoryIndex = 0;
+        }
+      } else if (selectedStoryIndex < 0 || selectedStoryIndex >= total) {
+        selectedStoryIndex = 0;
+      }
 
       // Title & Count updates
       const listTitle = document.getElementById("list-title");
@@ -1757,10 +1908,7 @@
         listTitle.textContent = pubPrefix ? `${pubPrefix} · ${deskText}` : deskText;
       }
 
-      const listCount = document.getElementById("list-count");
-      if (listCount) {
-        listCount.textContent = `${total} stories · Priority stories first`;
-      }
+      updateListCountProgress();
 
       const container = document.getElementById("headlines-container");
       container.innerHTML = "";
@@ -1771,20 +1919,18 @@
         return;
       }
 
-      if (selectedStoryIndex < 0 || selectedStoryIndex >= total) {
-        selectedStoryIndex = 0;
-      }
-
       displayed.forEach((s, idx) => {
         const isSelected = idx === selectedStoryIndex;
+        const isRead = readSet.has(s.id);
         const numStr = (idx + 1).toString().padStart(2, '0');
         const isDual = s.hasFe && s.hasBs;
         const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
         const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
 
         const card = document.createElement("button");
-        card.className = `headline-card ${badgeType} ${isSelected ? 'selected' : ''}`;
+        card.className = `headline-card ${badgeType} ${isSelected ? 'selected' : ''} ${isRead ? 'read' : ''}`;
         card.setAttribute("data-index", idx);
+        card.setAttribute("data-id", s.id);
         card.onclick = () => {
           selectedStoryIndex = idx;
           document.querySelectorAll("#headlines-container .headline-card").forEach((el, i) => {
@@ -1794,7 +1940,12 @@
               el.classList.remove("selected");
             }
           });
-          renderActiveStoryDetail(displayed[selectedStoryIndex]);
+          const curr = displayed[selectedStoryIndex];
+          if (curr) {
+            saveLastActiveStory(curr.id);
+            markStoryAsRead(curr.id);
+            renderActiveStoryDetail(curr);
+          }
           if (window.innerWidth <= 768) {
             setMobileTab('reader');
           }
@@ -1804,7 +1955,9 @@
         const hasStocks = s.stocks && s.stocks.length > 0;
         card.innerHTML = `
           <div class="flex items-center justify-between gap-1 mb-0.5">
-            <span class="eyebrow ${s.isFrontPage ? 'priority' : ''}">${numStr} · ${priorityTag} · ${s.category}</span>
+            <span class="eyebrow ${s.isFrontPage ? 'priority' : ''}">
+              ${numStr} · ${priorityTag} · ${s.category}${isRead ? '<span class="read-tick" title="Read">✓</span>' : ''}
+            </span>
             <span class="paper-badge ${badgeType}">${badgeLabel}</span>
           </div>
           <h3>${s.headline}</h3>
@@ -1817,7 +1970,18 @@
         container.appendChild(card);
       });
 
-      renderActiveStoryDetail(displayed[selectedStoryIndex]);
+      const currentStory = displayed[selectedStoryIndex];
+      if (currentStory) {
+        saveLastActiveStory(currentStory.id);
+        markStoryAsRead(currentStory.id);
+        renderActiveStoryDetail(currentStory);
+        setTimeout(() => {
+          const activeCard = container.querySelector(".headline-card.selected");
+          if (activeCard) {
+            activeCard.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+          }
+        }, 60);
+      }
     }
 
     function extractFigures(story) {
@@ -1856,6 +2020,9 @@
       const currentIdx = displayed.findIndex(x => x.id === story.id);
       const isFirst = currentIdx <= 0;
       const isLast = currentIdx >= displayed.length - 1;
+      const readSet = getReadStoriesSet();
+      let readCount = 0;
+      displayed.forEach(s => { if (readSet.has(s.id)) readCount++; });
 
       const isBullish = (story.sentiment || '').includes('BULLISH');
       const isBearish = (story.sentiment || '').includes('BEARISH');
@@ -1874,7 +2041,7 @@
           </button>
           <span class="font-mono text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1">
             <span>${currentIdx + 1} of ${displayed.length}</span>
-            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-normal">· Slide ↔</span>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">· ${readCount} read</span>
           </span>
           <div class="flex items-center gap-1 font-mono text-xs">
             <button onclick="navigateStory(-1)" ${isFirst ? 'disabled' : ''} class="px-2 py-1 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-bold disabled:opacity-30 cursor-pointer" title="Previous story">◀</button>
@@ -1952,7 +2119,7 @@
         <!-- 6. Bottom Controls Bar -->
         <div class="controls-bar">
           <button onclick="navigateStory(-1)" ${isFirst ? 'disabled' : ''}>← Previous story</button>
-          <span class="muted font-bold">${currentIdx + 1} of ${displayed.length}</span>
+          <span class="muted font-bold">${currentIdx + 1} of ${displayed.length} · <span class="text-emerald-600 dark:text-emerald-400 font-semibold">${readCount} read</span></span>
           <button onclick="navigateStory(1)" ${isLast ? 'disabled' : ''}>Next story →</button>
           <button onclick="copyStoryById(${story.id})" title="Copy to clipboard">📋 Copy Intel</button>
         </div>
@@ -1979,7 +2146,12 @@
           el.classList.remove("selected");
         }
       });
-      renderActiveStoryDetail(displayed[selectedStoryIndex]);
+      const curr = displayed[selectedStoryIndex];
+      if (curr) {
+        saveLastActiveStory(curr.id);
+        markStoryAsRead(curr.id);
+        renderActiveStoryDetail(curr);
+      }
 
       const container = document.getElementById("feed-detail-container");
       if (container) {
