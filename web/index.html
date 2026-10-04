@@ -1338,6 +1338,7 @@
         const isDual = s.hasFe && s.hasBs;
         const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
         const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
+        const priorityTag = s.isFrontPage ? "Must read" : "Worth knowing";
         const hasStocks = s.stocks && s.stocks.length > 0;
         card.innerHTML = `
           <div class="flex items-center justify-between gap-1 mb-0.5">
