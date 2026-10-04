@@ -262,13 +262,25 @@ class BusinessStandardEpaperDownloader:
         if not state_path.exists() or state_path.stat().st_size < 50:
             # 1. Attempt to fetch latest live session from Cloudflare R2 (synced via website/bookmarklet)
             try:
-                r2_session_url = f"{config.r2_public_url.rstrip('/')}/sessions/bs_storage_state.json"
-                r = requests.get(r2_session_url, timeout=10)
-                if r.ok and len(r.content) > 50:
-                    state_path.write_bytes(r.content)
-                    logger.info(f"✅ Successfully fetched live Business Standard session from Cloudflare R2 ({len(r.content)} bytes).")
+                from cloud_storage import CloudflareR2Storage
+                r2 = CloudflareR2Storage()
+                if r2.is_active():
+                    success = r2.download_file('sessions/bs_storage_state.json', state_path)
+                    if success and state_path.exists() and state_path.stat().st_size > 50:
+                        logger.info(f"✅ Successfully downloaded live Business Standard session from Cloudflare R2 ({state_path.stat().st_size} bytes).")
             except Exception as e:
-                logger.debug(f"Notice: Could not fetch session from Cloudflare R2: {e}")
+                logger.debug(f"Notice: Authenticated R2 session download: {e}")
+
+            if not state_path.exists() or state_path.stat().st_size < 50:
+                try:
+                    if config.r2_public_url:
+                        r2_session_url = f"{config.r2_public_url.rstrip('/')}/sessions/bs_storage_state.json"
+                        r = requests.get(r2_session_url, timeout=10)
+                        if r.ok and len(r.content) > 50:
+                            state_path.write_bytes(r.content)
+                            logger.info(f"✅ Successfully fetched live Business Standard session from Cloudflare R2 public URL ({len(r.content)} bytes).")
+                except Exception as e:
+                    logger.debug(f"Notice: Public URL R2 session fetch: {e}")
 
             # 2. Attempt to restore from BS_STORAGE_STATE_BASE64 environment variable
             if not state_path.exists():

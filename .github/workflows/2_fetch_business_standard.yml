@@ -59,13 +59,23 @@ jobs:
           BS_USERNAME: ${{ secrets.BS_USERNAME }}
           BS_PASSWORD: ${{ secrets.BS_PASSWORD }}
         run: |
+          echo "========================================================"
+          echo " STEP 1: DOWNLOADING & ANALYZING BUSINESS STANDARD"
+          echo "========================================================"
           python main.py --source business_standard
+
+          echo "========================================================"
+          echo " STEP 2: UNIFYING, DEDUPLICATING & PUBLISHING MASTER"
+          echo "========================================================"
+          python main.py --source aggregate
+          python sync_to_neon.py || echo "DB Notice: Sync to Neon skipped if not configured."
+          python scripts/r2_housekeeping.py --max-gb 3.0 --target-gb 2.2 || echo "Housekeeping Notice: Skipped if R2 not configured."
 
       - name: Upload Business Standard Report Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: bs-reports
-          path: reports/news_report_bs_*.json
+          path: reports/news_report_*.json
           if-no-files-found: warn
           retention-days: 1
