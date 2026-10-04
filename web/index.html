@@ -1146,7 +1146,6 @@
         const coreGroup = document.createElement("div");
         coreGroup.className = "flex flex-col gap-0.5 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800";
         const pubLabel = selectedPublication === 'FE' ? ' (FE)' : selectedPublication === 'BS' ? ' (BS)' : '';
-        coreGroup.innerHTML = `<div class="group-label">Core Desks${pubLabel}</div>`;
 
         const coreItems = [
           { id: "ANCHOR", label: "Top Headlines", count: pubPool.filter(s => s.isFrontPage).length, icon: "📰" },
@@ -1158,6 +1157,8 @@
           { id: "International News", label: "International", count: pubPool.filter(s => s.category === "International News").length, icon: "🌐" },
           { id: "Others", label: "Features", count: pubPool.filter(s => s.category === "Others").length, icon: "📄" }
         ];
+        const coreTotal = pubPool.filter(s => s.isFrontPage || ["Sector", "Economy", "Policy", "Market", "Trade", "International News", "Others"].includes(s.category)).length;
+        coreGroup.innerHTML = `<div class="group-label">Core Desks${pubLabel} - ${coreTotal}</div>`;
 
         coreItems.forEach(item => {
           const isSelected = selectedFeedCategory === item.id && !activeSectorFilter && !activeStockFilter;
@@ -1177,7 +1178,6 @@
         // 3. Specialized Desks (Dynamic counts updating with selected publication!)
         const specGroup = document.createElement("div");
         specGroup.className = "flex flex-col gap-0.5";
-        specGroup.innerHTML = `<div class="group-label orange">Specialized Desks${pubLabel}</div>`;
 
         const specItems = [
           { id: "IPO_ALL", label: "IPO Central", count: pubPool.filter(s => s.category === "IPO").length, icon: "🚀" },
@@ -1186,6 +1186,8 @@
           { id: "APPOINTMENTS", label: "Appointments", count: pubPool.filter(s => s.category === "Corporate Appointments").length, icon: "👔" },
           { id: "OPINIONS", label: "Opinions Desk", count: pubPool.filter(s => s.isOpinion).length, icon: "✍️" }
         ];
+        const specTotal = pubPool.filter(s => ["IPO", "Corporate Events", "Corporate Appointments"].includes(s.category) || s.isOpinion).length;
+        specGroup.innerHTML = `<div class="group-label orange">Specialized Desks${pubLabel} - ${specTotal}</div>`;
 
         specItems.forEach(item => {
           const isSelected = selectedFeedCategory === item.id && !activeSectorFilter && !activeStockFilter;
@@ -1213,7 +1215,7 @@
 
         const secGroup = document.createElement("div");
         secGroup.className = "flex flex-col gap-0.5 pt-2 mt-2 border-t border-slate-200 dark:border-slate-800";
-        secGroup.innerHTML = `<div class="group-label">Industry Sectors (${sortedSecs.length})</div>`;
+        secGroup.innerHTML = `<div class="group-label">Industry Sectors - ${sortedSecs.length}</div>`;
 
         sortedSecs.forEach(sec => {
           const isSelected = activeSectorFilter === sec;
@@ -1248,7 +1250,7 @@
 
         const stkGroup = document.createElement("div");
         stkGroup.className = "flex flex-col gap-0.5 pt-2 mt-2 border-t border-slate-200 dark:border-slate-800";
-        stkGroup.innerHTML = `<div class="group-label">Company Stocks (${activeStockKeys.length})</div>`;
+        stkGroup.innerHTML = `<div class="group-label">Company Stocks - ${activeStockKeys.length}</div>`;
 
         activeStockKeys.forEach(stk => {
           const isSelected = activeStockFilter === stk;
