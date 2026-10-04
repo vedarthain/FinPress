@@ -829,7 +829,7 @@
     let currentDateIndex = 0;
     
     let selectedPublication = "ALL";
-    let selectedFeedCategory = "ALL";
+    let selectedFeedCategory = "ANCHOR";
     let selectedFeedSentiment = "ALL";
     let activeStockFilter = null;
     let activeSectorFilter = null;
@@ -1132,7 +1132,7 @@
 
     function onPublicationSelect(pub) {
       selectedPublication = pub;
-      selectedFeedCategory = "ALL";
+      selectedFeedCategory = "ANCHOR";
       activeStockFilter = null;
       activeSectorFilter = null;
       selectedStoryIndex = 0;

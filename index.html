@@ -51,39 +51,39 @@
     .dark mark { background-color: #854D0E; color: #FEF08A; }
     .hidden { display: none !important; }
 
-    /* Top Navigation Header */
+    /* Top Navigation Header - Compact */
     .top-header {
-      height: 64px;
+      height: 52px;
       background: #10273b;
       color: #fff;
-      padding: 10px 20px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       border-bottom: 1px solid #1e3a53;
       z-index: 50;
     }
     .top-header h1 {
-      font: 24px/1.2 Georgia, serif;
+      font: 20px/1.2 Georgia, serif;
       margin: 0;
       color: #fff;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .top-header p {
       margin: 2px 0 0;
       color: #ccdae6;
-      font-size: 11.5px;
+      font-size: 11px;
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* 3-Column Workspace Grid Layout */
+    /* 3-Column Workspace Grid Layout with Draggable Resizer */
     .workspace {
       display: grid !important;
-      grid-template-columns: 240px 360px minmax(0, 1fr) !important;
-      height: calc(100vh - 64px) !important;
+      grid-template-columns: 220px var(--col2-width, 380px) 6px minmax(0, 1fr) !important;
+      height: calc(100vh - 52px) !important;
       width: 100% !important;
       overflow: hidden !important;
       background: #f4f6fa;
@@ -92,24 +92,113 @@
       background: #070B14;
     }
 
-    /* Column 1: Desks & Sources Navigation */
+    /* Draggable Column Resizer Gutter */
+    .resizer-gutter {
+      width: 6px;
+      cursor: col-resize;
+      background: #e2e8f0;
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      z-index: 20;
+      transition: background-color 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dark .resizer-gutter {
+      background: #1e293b;
+    }
+    .resizer-gutter:hover, .resizer-gutter.dragging {
+      background: #2860ed !important;
+    }
+    .dark .resizer-gutter:hover, .dark .resizer-gutter.dragging {
+      background: #3b82f6 !important;
+    }
+    .resizer-gutter::after {
+      content: "";
+      width: 2px;
+      height: 28px;
+      background: #94a3b8;
+      border-radius: 2px;
+      opacity: 0.7;
+      transition: all 0.15s ease;
+    }
+    .resizer-gutter:hover::after, .resizer-gutter.dragging::after {
+      background: #ffffff;
+      opacity: 1;
+      height: 38px;
+    }
+
+    /* Column 1: Desks & Sources Navigation - Compact */
     .desks-col {
       background: #ffffff;
       border-right: 1px solid #dce3ed;
-      padding: 12px 10px;
+      padding: 8px 6px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
       min-height: 0;
     }
     .dark .desks-col {
       background: #0E1322;
       border-right-color: #1e293b;
     }
-    .group-label {
-      margin: 12px 8px 4px;
+
+    /* Clean Segmented Nav Tabs Header */
+    .nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: #e2e8f0;
+      padding: 2.5px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 10.5px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+    }
+    .dark .nav-tabs {
+      background: #0f172a;
+      border-color: #1e293b;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 0;
+      padding: 3.5px 2px;
+      border-radius: 4px;
+      color: #475569;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 10.5px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .dark .tab-btn {
+      color: #94a3b8;
+    }
+    .tab-btn:hover {
+      color: #0f172a;
+      background: rgba(255,255,255,0.7);
+    }
+    .dark .tab-btn:hover {
+      color: #f8fafc;
+      background: #1e293b;
+    }
+    .tab-btn.active {
+      background: #2860ed !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .group-label {
+      margin: 8px 6px 3px;
+      font-size: 9.5px;
       text-transform: uppercase;
       letter-spacing: .08em;
       font-weight: 700;
@@ -125,19 +214,20 @@
     .desk-btn {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 5px;
       width: 100%;
       background: transparent;
       border: 0;
       text-align: left;
-      border-radius: 6px;
-      padding: 6.5px 9px;
-      line-height: 1.3;
+      border-radius: 4px;
+      padding: 4px 6px;
+      line-height: 1.25;
       color: #273344;
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
+      box-sizing: border-box;
     }
     .desk-btn:hover {
       background: #f1f5f9;
@@ -147,14 +237,38 @@
       color: #ffffff !important;
       font-weight: 700 !important;
     }
+    .desk-btn.active-fe {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+    .desk-btn.active-bs {
+      background: #c2410c !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
     .desk-btn .count {
       margin-left: auto;
-      font-size: 11px;
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
-      color: #7e8a99;
+      color: #334155;
+      background: #e2e8f0;
+      padding: 1px 5px;
+      border-radius: 4px;
+      line-height: 1.25;
+      min-width: 18px;
+      text-align: center;
+      display: inline-block;
     }
-    .desk-btn.active .count {
-      color: #e7efff !important;
+    .dark .desk-btn .count {
+      color: #cbd5e1;
+      background: #1e293b;
+    }
+    .desk-btn.active .count, .desk-btn.active-fe .count, .desk-btn.active-bs .count {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.25) !important;
     }
     .dark .desk-btn {
       color: #cbd5e1;
@@ -163,7 +277,50 @@
       background: #1e293b;
     }
 
-    /* Column 2: News Headlines Wire */
+    /* Publication Color Badges */
+    .paper-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 1.5px 5px;
+      border-radius: 3px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .paper-badge.bs {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .dark .paper-badge.bs {
+      background: #451a03;
+      color: #fde68a;
+      border-color: #78350f;
+    }
+    .paper-badge.fe {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .dark .paper-badge.fe {
+      background: #082f49;
+      color: #7dd3fc;
+      border-color: #0284c7;
+    }
+    .paper-badge.dual {
+      background: #ede9fe;
+      color: #5b21b6;
+      border: 1px solid #ddd6fe;
+    }
+    .dark .paper-badge.dual {
+      background: #2e1065;
+      color: #c4b5fd;
+      border-color: #6d28d9;
+    }
+
+    /* Column 2: News Headlines Wire - Compact continuous scroll */
     .news-col {
       border-right: 1px solid #dce3ed;
       background: #f8faff;
@@ -177,7 +334,7 @@
       border-right-color: #1e293b;
     }
     .list-head {
-      padding: 12px 16px 10px;
+      padding: 6px 10px 5px;
       background: #f8faff;
       position: sticky;
       top: 0;
@@ -190,26 +347,26 @@
       border-bottom-color: #1e293b;
     }
     .list-head h2 {
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 700;
-      margin: 0 0 2px;
+      margin: 0 0 1px;
       color: #10273b;
     }
     .dark .list-head h2 { color: #f8fafc; }
     .muted {
       color: #6b7a89;
-      font-size: 11.5px;
-      margin: 2px 0;
+      font-size: 10px;
+      margin: 0;
     }
     .dark .muted { color: #94a3b8; }
     .search-input {
       width: 100%;
-      padding: 7px 11px;
+      padding: 4px 7px;
       background: #ffffff;
       border: 1px solid #cbd6e3;
-      border-radius: 6px;
-      margin-top: 8px;
-      font-size: 12px;
+      border-radius: 4px;
+      margin-top: 4px;
+      font-size: 11px;
       color: #1e293b;
     }
     .dark .search-input {
@@ -225,17 +382,18 @@
       border: 0;
       border-bottom: 1px solid #dce3ed;
       text-align: left;
-      padding: 13px 16px;
+      padding: 6px 10px;
       cursor: pointer;
       transition: background-color 0.15s ease;
+      box-sizing: border-box;
     }
     .headline-card:hover {
       background: #eef3ff;
     }
     .headline-card.selected {
       background: #e8efff;
-      border-left: 4px solid #2860ed;
-      padding-left: 12px;
+      border-left: 3.5px solid #2860ed;
+      padding-left: 7.5px;
     }
     .dark .headline-card {
       border-bottom-color: #1e293b;
@@ -245,21 +403,21 @@
     }
     .dark .headline-card.selected {
       background: #162447;
-      border-left: 4px solid #3b82f6;
+      border-left: 3.5px solid #3b82f6;
     }
     .headline-card h3 {
-      font: 18px/1.3 Georgia, serif;
+      font: 14px/1.22 Georgia, serif;
       color: #192c3d;
-      margin: 5px 0 6px;
+      margin: 1.5px 0;
       font-weight: 700;
     }
     .dark .headline-card h3 {
       color: #f8fafc;
     }
     .eyebrow {
-      font-size: 10px;
+      font-size: 8.5px;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: .03em;
       font-weight: 700;
       color: #687e90;
       font-family: 'JetBrains Mono', monospace;
@@ -271,15 +429,15 @@
       color: #fb923c;
     }
     .paper-tag {
-      font-size: 11px;
+      font-size: 9.5px;
       color: #6c7e8e;
       font-family: 'JetBrains Mono', monospace;
     }
     .dark .paper-tag { color: #94a3b8; }
 
-    /* Column 3: Reading Pane (Reader) */
+    /* Column 3: Reading Pane (Reader) - Compact */
     .reader-pane {
-      padding: 24px 34px;
+      padding: 18px 24px;
       background: #ffffff;
       overflow-y: auto;
       min-height: 0;
@@ -291,35 +449,43 @@
       color: #f1f5f9;
     }
     .reader-pane h2 {
-      font: 28px/1.25 Georgia, serif;
-      margin: 8px 0 14px;
+      font: 23px/1.2 Georgia, serif;
+      margin: 4px 0 8px;
       color: #10273b;
       font-weight: 700;
       letter-spacing: -0.01em;
     }
-    .dark .reader-pane h2 { color: #ffffff; }
     .reader-pane p {
-      font-size: 15px;
-      line-height: 1.68;
-      margin: 8px 0 14px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      margin: 4px 0 10px;
       color: #1e293b;
     }
     .dark .reader-pane p { color: #e2e8f0; }
+    .brief-text {
+      font-size: 15px !important;
+      line-height: 1.65 !important;
+      color: #1e293b !important;
+      font-weight: 450;
+    }
+    .dark .brief-text {
+      color: #f1f5f9 !important;
+    }
     .reader-pane h3, .story-label {
       display: block;
-      font: bold 11.5px/1.5 'JetBrains Mono', monospace;
-      letter-spacing: .08em;
+      font: bold 10.5px/1.4 'JetBrains Mono', monospace;
+      letter-spacing: .05em;
       text-transform: uppercase;
       color: #426178;
-      margin: 20px 0 8px;
+      margin: 14px 0 4px;
     }
     .dark .reader-pane h3, .dark .story-label { color: #94a3b8; }
     .sources-strip {
-      font-size: 12px;
+      font-size: 10.5px;
       color: #64748b;
       border-bottom: 1px solid #e0e6ec;
-      padding-bottom: 12px;
-      margin-bottom: 14px;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
       font-family: 'JetBrains Mono', monospace;
     }
     .dark .sources-strip {
@@ -331,64 +497,122 @@
     .figures-box {
       background: #f2f6fb;
       border: 1px solid #dce5ef;
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin: 16px 0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin: 10px 0;
     }
     .dark .figures-box {
       background: #0f172a;
       border-color: #1e293b;
     }
     .figures-box h3 {
-      margin: 0 0 10px;
+      margin: 0 0 5px;
     }
     .figure-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px 20px;
+      gap: 6px 14px;
       margin: 0;
     }
     .figure dt {
-      font-size: 11.5px;
+      font-size: 10.5px;
       color: #6d7e8e;
-      line-height: 1.35;
+      line-height: 1.3;
     }
     .dark .figure dt { color: #94a3b8; }
     .figure dd {
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 700;
-      margin: 3px 0 0;
+      margin: 1px 0 0;
       color: #1b4b68;
       font-family: 'JetBrains Mono', monospace;
     }
     .dark .figure dd { color: #38bdf8; }
 
-    /* Impact / Catalyst Box */
+    /* Impact / Catalyst Box - Dynamic Sentiment Colors */
     .impact-box {
-      border-left: 3.5px solid #2860ed;
+      border-radius: 0 6px 6px 0;
+      padding: 8px 12px;
+      margin: 10px 0;
+      border-left: 4px solid #2860ed;
       background: #f2f7fa;
-      border-radius: 0 8px 8px 0;
-      padding: 12px 18px;
-      margin: 16px 0;
+      border-top: 1px solid #e0e7ef;
+      border-right: 1px solid #e0e7ef;
+      border-bottom: 1px solid #e0e7ef;
     }
+    .impact-box.bullish {
+      border-left-color: #16a34a !important;
+      background: #f0fdf4 !important;
+      border-top-color: #bbf7d0 !important;
+      border-right-color: #bbf7d0 !important;
+      border-bottom-color: #bbf7d0 !important;
+    }
+    .impact-box.bullish h3 { color: #15803d !important; }
+
+    .impact-box.bearish {
+      border-left-color: #dc2626 !important;
+      background: #fef2f2 !important;
+      border-top-color: #fecaca !important;
+      border-right-color: #fecaca !important;
+      border-bottom-color: #fecaca !important;
+    }
+    .impact-box.bearish h3 { color: #b91c1c !important; }
+
+    .impact-box.neutral {
+      border-left-color: #64748b !important;
+      background: #f8fafc !important;
+      border-top-color: #e2e8f0 !important;
+      border-right-color: #e2e8f0 !important;
+      border-bottom-color: #e2e8f0 !important;
+    }
+    .impact-box.neutral h3 { color: #475569 !important; }
+
     .dark .impact-box {
-      border-left-color: #3b82f6;
       background: #0b1329;
+      border-color: #1e293b;
     }
+    .dark .impact-box.bullish {
+      border-left-color: #22c55e !important;
+      background: #052e16 !important;
+      border-top-color: #14532d !important;
+      border-right-color: #14532d !important;
+      border-bottom-color: #14532d !important;
+    }
+    .dark .impact-box.bullish h3 { color: #4ade80 !important; }
+
+    .dark .impact-box.bearish {
+      border-left-color: #ef4444 !important;
+      background: #450a0a !important;
+      border-top-color: #7f1d1d !important;
+      border-right-color: #7f1d1d !important;
+      border-bottom-color: #7f1d1d !important;
+    }
+    .dark .impact-box.bearish h3 { color: #f87171 !important; }
+
+    .dark .impact-box.neutral {
+      border-left-color: #94a3b8 !important;
+      background: #0f172a !important;
+      border-top-color: #1e293b !important;
+      border-right-color: #1e293b !important;
+      border-bottom-color: #1e293b !important;
+    }
+    .dark .impact-box.neutral h3 { color: #cbd5e1 !important; }
+
     .impact-box h3 {
-      margin: 0 0 6px;
-      color: #2860ed;
+      margin: 0 0 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
     }
-    .dark .impact-box h3 { color: #60a5fa; }
 
     /* Controls Bar */
     .controls-bar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       justify-content: space-between;
-      margin-top: 24px;
-      padding-top: 14px;
+      margin-top: 14px;
+      padding-top: 8px;
       border-top: 1px solid #e0e6ec;
       font-family: 'JetBrains Mono', monospace;
     }
@@ -396,12 +620,12 @@
       border-top-color: #1e293b;
     }
     .controls-bar button {
-      padding: 7px 14px;
+      padding: 5px 10px;
       background: #ffffff;
       color: #274762;
       border: 1px solid #c2d1df;
-      border-radius: 5px;
-      font-size: 12.5px;
+      border-radius: 4px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -427,22 +651,23 @@
     }
 
     @media (min-width: 1600px) {
-      .workspace { grid-template-columns: 260px 400px minmax(0, 1fr) !important; }
-      .reader-pane { padding: 30px 48px; }
-      .reader-pane h2 { font-size: 32px; }
+      .workspace { grid-template-columns: 220px 420px minmax(0, 1fr) !important; }
+      .reader-pane { padding: 22px 36px; }
+      .reader-pane h2 { font-size: 26px; }
     }
-    @media (max-width: 1050px) {
-      .workspace { grid-template-columns: 200px 300px minmax(0, 1fr) !important; }
-      .reader-pane { padding: 18px 20px; }
-      .reader-pane h2 { font-size: 24px; }
-      .desk-btn { font-size: 12px; }
+    @media (max-width: 1100px) {
+      .workspace { grid-template-columns: 185px 330px minmax(0, 1fr) !important; }
+      .reader-pane { padding: 14px 16px; }
+      .reader-pane h2 { font-size: 20px; }
+      .desk-btn { font-size: 11px; }
+      .figure-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
-      .top-header { height: auto; padding: 10px 14px; flex-direction: column; align-items: flex-start; }
+      .top-header { height: auto; padding: 8px 12px; flex-direction: column; align-items: flex-start; }
       .workspace { height: auto !important; display: block !important; overflow-y: auto !important; }
-      .desks-col { max-height: 250px; border-bottom: 1px solid #dce3ed; }
-      .news-col { max-height: 45vh; border-bottom: 2px solid #dce3ed; }
-      .reader-pane { min-height: 50vh; padding: 18px 16px; }
+      .desks-col { max-height: 220px; border-bottom: 1px solid #dce3ed; }
+      .news-col { max-height: 40vh; border-bottom: 2px solid #dce3ed; }
+      .reader-pane { min-height: 50vh; padding: 14px 12px; }
     }
   </style>
 </head>
@@ -502,11 +727,11 @@
       <aside class="desks-col" id="col-desks-sources" aria-label="Desks and publication filters">
         
         <!-- Top Quick View Filter Tabs -->
-        <div class="flex items-center justify-between gap-1 p-0.5 bg-slate-100 dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 text-[11px] font-mono mb-1 shrink-0">
-          <button onclick="setRightPanelView('ALL')" id="tab-btn-all" class="flex-1 py-1 rounded text-center transition-all bg-[#2860ed] text-white font-bold shadow-xs">All</button>
-          <button onclick="setRightPanelView('CATEGORIES')" id="tab-btn-desks" class="flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium">📁 Desks</button>
-          <button onclick="setRightPanelView('SECTORS')" id="tab-btn-sectors" class="flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium">📈 Sectors</button>
-          <button onclick="setRightPanelView('STOCKS')" id="tab-btn-stocks" class="flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium">🏢 Stocks</button>
+        <div class="nav-tabs" role="tablist" aria-label="Sidebar view filter">
+          <button onclick="setRightPanelView('ALL')" id="tab-btn-all" class="tab-btn active">All</button>
+          <button onclick="setRightPanelView('CATEGORIES')" id="tab-btn-desks" class="tab-btn">Desks</button>
+          <button onclick="setRightPanelView('SECTORS')" id="tab-btn-sectors" class="tab-btn">Sectors</button>
+          <button onclick="setRightPanelView('STOCKS')" id="tab-btn-stocks" class="tab-btn">Stocks</button>
         </div>
 
         <div id="tree-sidebar-container" class="flex flex-col gap-1 w-full">
@@ -529,18 +754,12 @@
         </div>
 
         <div id="headlines-container" class="flex-1 min-h-0 flex flex-col">
-          <!-- Populated dynamically with headline cards -->
-        </div>
-
-        <!-- Pagination Bar -->
-        <div id="feed-pagination" class="px-3 py-2 border-t border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/80 flex items-center justify-between text-[11.5px] font-mono shrink-0 mt-auto">
-          <span id="feed-pagination-info" class="font-bold text-slate-700 dark:text-slate-300">Page 1 / 1</span>
-          <div class="flex items-center gap-1">
-            <button id="feed-prev-page" onclick="changeFeedPage(-1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-blue-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">◀ Prev</button>
-            <button id="feed-next-page" onclick="changeFeedPage(1)" class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 hover:bg-blue-50 text-[11px] font-bold text-slate-900 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-2xs">Next ▶</button>
-          </div>
+          <!-- Populated dynamically with all headline cards in a continuous scroll list -->
         </div>
       </section>
+
+      <!-- Draggable Gutter to resize Middle Column -->
+      <div id="resizer-col2" class="resizer-gutter" title="↔ Drag left/right to resize News Wire column (Double click to reset)"></div>
 
       <!-- ================= COLUMN 3: READER & IMPACT PANE ================= -->
       <main class="reader-pane" id="feed-detail-wrapper" aria-label="Story details">
@@ -609,15 +828,14 @@
     let availableDates = [];
     let currentDateIndex = 0;
     
-    let selectedFeedCategory = "ALL";
+    let selectedPublication = "ALL";
+    let selectedFeedCategory = "ANCHOR";
     let selectedFeedSentiment = "ALL";
     let activeStockFilter = null;
     let activeSectorFilter = null;
     let currentSearchQuery = "";
     
     let selectedStoryIndex = 0;
-    let currentFeedPage = 1;
-    const FEED_PAGE_SIZE = 12;
 
     let activeRightPanelView = 'ALL';
     let stockSearchFilterText = "";
@@ -907,19 +1125,26 @@
         const btn = document.getElementById(`tab-btn-${v}`);
         if (!btn) return;
         const isActive = (v === 'all' && view === 'ALL') || (v === 'desks' && view === 'CATEGORIES') || (v === 'sectors' && view === 'SECTORS') || (v === 'stocks' && view === 'STOCKS');
-        btn.className = isActive 
-          ? "flex-1 py-1 rounded text-center transition-all bg-[#2860ed] text-white font-bold shadow-xs" 
-          : "flex-1 py-1 rounded text-center transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 font-medium";
+        btn.className = `tab-btn ${isActive ? 'active' : ''}`;
       });
       renderCategoriesAndStocksSidebar();
     }
 
-    function onCategorySelect(cat) {
-      selectedFeedCategory = cat;
+    function onPublicationSelect(pub) {
+      selectedPublication = pub;
+      selectedFeedCategory = "ANCHOR";
       activeStockFilter = null;
       activeSectorFilter = null;
       selectedStoryIndex = 0;
-      currentFeedPage = 1;
+      renderCategoriesAndStocksSidebar();
+      renderHeadlinesList();
+    }
+
+    function onCategorySelect(cat) {
+      selectedFeedCategory = selectedFeedCategory === cat ? "ALL" : cat;
+      activeStockFilter = null;
+      activeSectorFilter = null;
+      selectedStoryIndex = 0;
       renderCategoriesAndStocksSidebar();
       renderHeadlinesList();
     }
@@ -928,7 +1153,6 @@
       const input = document.getElementById("global-search");
       currentSearchQuery = (input ? input.value : "").trim();
       selectedStoryIndex = 0;
-      currentFeedPage = 1;
       renderHeadlinesList();
     }
 
@@ -936,7 +1160,16 @@
       const q = currentSearchQuery.toLowerCase().trim();
       const terms = q.split(" ").filter(Boolean);
 
-      return stories.filter(s => {
+      // 1. Filter by Selected Publication
+      let pool = stories;
+      if (selectedPublication === "FE") {
+        pool = stories.filter(s => s.hasFe);
+      } else if (selectedPublication === "BS") {
+        pool = stories.filter(s => s.hasBs);
+      }
+
+      // 2. Filter by Category / Sector / Stock / Search Query
+      return pool.filter(s => {
         const fullContent = (s.headline + " " + (s.brief_details || "") + " " + (s.bullet_points || []).join(" ") + " " + (s.tickers || []).join(" ") + " " + (s.sectors || []).join(" ") + " " + s.category).toLowerCase();
         const matchQuery = terms.length === 0 || terms.every(t => fullContent.includes(t));
 
@@ -952,8 +1185,6 @@
 
         let matchSec = true;
         if (selectedFeedCategory === "ALL") matchSec = true;
-        else if (selectedFeedCategory === "SOURCE_FE") matchSec = s.hasFe;
-        else if (selectedFeedCategory === "SOURCE_BS") matchSec = s.hasBs;
         else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
         else if (selectedFeedCategory === "IPO_ALL") matchSec = s.category === "IPO";
         else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
@@ -973,61 +1204,71 @@
 
       container.innerHTML = "";
 
-      const feCount = stories.filter(s => s.hasFe).length;
-      const bsCount = stories.filter(s => s.hasBs).length;
+      // The base publication pool for calculating Core & Specialized Desk Counts
+      const pubPool = stories.filter(s => {
+        if (selectedPublication === "FE") return s.hasFe;
+        if (selectedPublication === "BS") return s.hasBs;
+        return true;
+      });
+
+      const feTotal = stories.filter(s => s.hasFe).length;
+      const bsTotal = stories.filter(s => s.hasBs).length;
 
       // SECTION 1: DESKS & SOURCES
       if (activeRightPanelView === 'ALL' || activeRightPanelView === 'CATEGORIES') {
+        
+        // 1. Filter by Publication
         const pubGroup = document.createElement("div");
         pubGroup.className = "flex flex-col gap-0.5 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800";
         pubGroup.innerHTML = `<div class="group-label blue">Filter by publication</div>`;
 
         const pubItems = [
-          { id: "SOURCE_FE", label: "Financial Express Only", count: feCount, icon: "📰" },
-          { id: "SOURCE_BS", label: "Business Standard Only", count: bsCount, icon: "📰" },
-          { id: "ALL", label: "All Unified Stories", count: stories.length, icon: "📑" }
+          { id: "ALL", label: "All Unified Stories", count: stories.length, icon: "📑", colorClass: "active" },
+          { id: "FE", label: "Financial Express Only", count: feTotal, icon: "📰", colorClass: "active-fe" },
+          { id: "BS", label: "Business Standard Only", count: bsTotal, icon: "📰", colorClass: "active-bs" }
         ];
 
         pubItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
+          const isSelected = selectedPublication === item.id;
           const btn = document.createElement("button");
-          btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
+          btn.className = `desk-btn ${isSelected ? item.colorClass : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
-            <span>${item.icon}</span>
-            <span class="truncate">${item.label}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">${item.icon}</span>
+            <span class="truncate flex-1 min-w-0">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
-          btn.onclick = () => onCategorySelect(item.id);
+          btn.onclick = () => onPublicationSelect(item.id);
           pubGroup.appendChild(btn);
         });
         container.appendChild(pubGroup);
 
-        // Core Desks
+        // 2. Core Desks (Dynamic counts updating with selected publication!)
         const coreGroup = document.createElement("div");
         coreGroup.className = "flex flex-col gap-0.5 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800";
-        coreGroup.innerHTML = `<div class="group-label">Core Desks</div>`;
+        const pubLabel = selectedPublication === 'FE' ? ' (FE)' : selectedPublication === 'BS' ? ' (BS)' : '';
 
         const coreItems = [
-          { id: "ALL", label: "All desks", count: stories.length, icon: "📑" },
-          { id: "ANCHOR", label: "News (Front Page)", count: stories.filter(s => s.isFrontPage).length, icon: "📰" },
-          { id: "Sector", label: "Sector News", count: stories.filter(s => s.category === "Sector").length, icon: "🏢" },
-          { id: "Economy", label: "Economy", count: stories.filter(s => s.category === "Economy").length, icon: "📈" },
-          { id: "Policy", label: "Policy & Rules", count: stories.filter(s => s.category === "Policy").length, icon: "🏛️" },
-          { id: "Market", label: "Market Pulse", count: stories.filter(s => s.category === "Market").length, icon: "📊" },
-          { id: "Trade", label: "Trade & FX", count: stories.filter(s => s.category === "Trade").length, icon: "🚢" },
-          { id: "International News", label: "International", count: stories.filter(s => s.category === "International News").length, icon: "🌐" },
-          { id: "Others", label: "Features", count: stories.filter(s => s.category === "Others").length, icon: "📄" }
+          { id: "ANCHOR", label: "Top Headlines", count: pubPool.filter(s => s.isFrontPage).length, icon: "📰" },
+          { id: "Sector", label: "Sector News", count: pubPool.filter(s => s.category === "Sector").length, icon: "🏢" },
+          { id: "Economy", label: "Economy", count: pubPool.filter(s => s.category === "Economy").length, icon: "📈" },
+          { id: "Policy", label: "Policy & Rules", count: pubPool.filter(s => s.category === "Policy").length, icon: "🏛️" },
+          { id: "Market", label: "Market Pulse", count: pubPool.filter(s => s.category === "Market").length, icon: "📊" },
+          { id: "Trade", label: "Trade & FX", count: pubPool.filter(s => s.category === "Trade").length, icon: "🚢" },
+          { id: "International News", label: "International", count: pubPool.filter(s => s.category === "International News").length, icon: "🌐" },
+          { id: "Others", label: "Features", count: pubPool.filter(s => s.category === "Others").length, icon: "📄" }
         ];
+        const coreTotal = pubPool.filter(s => ["Sector", "Economy", "Policy", "Market", "Trade", "International News", "Others"].includes(s.category)).length;
+        coreGroup.innerHTML = `<div class="group-label">Core Desks${pubLabel} - ${coreTotal}</div>`;
 
         coreItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
+          const isSelected = selectedFeedCategory === item.id && !activeSectorFilter && !activeStockFilter;
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
-            <span>${item.icon}</span>
-            <span class="truncate">${item.label}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">${item.icon}</span>
+            <span class="truncate flex-1 min-w-0">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
           btn.onclick = () => onCategorySelect(item.id);
@@ -1035,27 +1276,27 @@
         });
         container.appendChild(coreGroup);
 
-        // Specialized Desks
+        // 3. Specialized Desks (Dynamic counts updating with selected publication!)
         const specGroup = document.createElement("div");
         specGroup.className = "flex flex-col gap-0.5";
-        specGroup.innerHTML = `<div class="group-label orange">Specialized Desks</div>`;
 
         const specItems = [
-          { id: "IPO_ALL", label: "IPO Central", count: stories.filter(s => s.category === "IPO").length, icon: "🚀" },
-          { id: "CORPORATE_ALL", label: "Corporate Desk", count: stories.filter(s => s.category === "Corporate Events" || s.category === "Corporate Appointments").length, icon: "🏢" },
-          { id: "EVENTS", label: "Corp Events", count: stories.filter(s => s.category === "Corporate Events").length, icon: "📢" },
-          { id: "APPOINTMENTS", label: "Appointments", count: stories.filter(s => s.category === "Corporate Appointments").length, icon: "👔" },
-          { id: "OPINIONS", label: "Opinions Desk", count: stories.filter(s => s.isOpinion).length, icon: "✍️" }
+          { id: "IPO_ALL", label: "IPO Central", count: pubPool.filter(s => s.category === "IPO").length, icon: "🚀" },
+          { id: "EVENTS", label: "Corp Events", count: pubPool.filter(s => s.category === "Corporate Events").length, icon: "🏢" },
+          { id: "APPOINTMENTS", label: "Appointments", count: pubPool.filter(s => s.category === "Corporate Appointments").length, icon: "👔" },
+          { id: "OPINIONS", label: "Opinions Desk", count: pubPool.filter(s => s.isOpinion).length, icon: "✍️" }
         ];
+        const specTotal = pubPool.filter(s => ["IPO", "Corporate Events", "Corporate Appointments"].includes(s.category)).length;
+        specGroup.innerHTML = `<div class="group-label orange">Specialized Desks${pubLabel} - ${specTotal}</div>`;
 
         specItems.forEach(item => {
-          const isSelected = selectedFeedCategory === item.id;
+          const isSelected = selectedFeedCategory === item.id && !activeSectorFilter && !activeStockFilter;
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
-            <span>${item.icon}</span>
-            <span class="truncate">${item.label}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">${item.icon}</span>
+            <span class="truncate flex-1 min-w-0">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
           btn.onclick = () => onCategorySelect(item.id);
@@ -1064,26 +1305,26 @@
         container.appendChild(specGroup);
       }
 
-      // SECTION 2: INDUSTRY SECTORS
+      // SECTION 2: INDUSTRY SECTORS (Dynamic counts updating with selected publication!)
       if (activeRightPanelView === 'ALL' || activeRightPanelView === 'SECTORS') {
         const secCounts = {};
-        stories.forEach(s => {
+        pubPool.forEach(s => {
           (s.sectors || []).forEach(sec => secCounts[sec] = (secCounts[sec] || 0) + 1);
         });
-        const sortedSecs = Object.keys(secCounts).sort((a,b) => secCounts[b] - secCounts[a]);
+        const sortedSecs = Object.keys(secCounts).filter(sec => secCounts[sec] > 0).sort((a,b) => secCounts[b] - secCounts[a]);
 
         const secGroup = document.createElement("div");
         secGroup.className = "flex flex-col gap-0.5 pt-2 mt-2 border-t border-slate-200 dark:border-slate-800";
-        secGroup.innerHTML = `<div class="group-label">Industry Sectors (${sortedSecs.length})</div>`;
+        secGroup.innerHTML = `<div class="group-label">Industry Sectors - ${sortedSecs.length}</div>`;
 
         sortedSecs.forEach(sec => {
           const isSelected = activeSectorFilter === sec;
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
-            <span>📈</span>
-            <span class="truncate">${sec}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">📈</span>
+            <span class="truncate flex-1 min-w-0">${sec}</span>
             <span class="count">${secCounts[sec]}</span>
           `;
           btn.onclick = () => {
@@ -1099,26 +1340,26 @@
         container.appendChild(secGroup);
       }
 
-      // SECTION 3: COMPANY STOCKS
+      // SECTION 3: COMPANY STOCKS (Dynamic counts updating with selected publication!)
       if (activeRightPanelView === 'ALL' || activeRightPanelView === 'STOCKS') {
         const stockCounts = {};
-        stories.forEach(s => {
+        pubPool.forEach(s => {
           (s.stocks || []).forEach(stk => stockCounts[stk] = (stockCounts[stk] || 0) + 1);
         });
-        const activeStockKeys = Object.keys(stockCounts).sort((a,b) => stockCounts[b] - stockCounts[a]);
+        const activeStockKeys = Object.keys(stockCounts).filter(stk => stockCounts[stk] > 0).sort((a,b) => stockCounts[b] - stockCounts[a]);
 
         const stkGroup = document.createElement("div");
         stkGroup.className = "flex flex-col gap-0.5 pt-2 mt-2 border-t border-slate-200 dark:border-slate-800";
-        stkGroup.innerHTML = `<div class="group-label">Company Stocks (${activeStockKeys.length})</div>`;
+        stkGroup.innerHTML = `<div class="group-label">Company Stocks - ${activeStockKeys.length}</div>`;
 
         activeStockKeys.forEach(stk => {
           const isSelected = activeStockFilter === stk;
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[11px]">├</span>
-            <span>🏢</span>
-            <span class="truncate font-mono font-bold">${stk}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">🏢</span>
+            <span class="truncate flex-1 min-w-0 font-mono font-bold">${stk}</span>
             <span class="count">${stockCounts[stk]}</span>
           `;
           btn.onclick = () => {
@@ -1138,41 +1379,29 @@
     function renderHeadlinesList() {
       const displayed = getFilteredStories();
       const total = displayed.length;
-      const totalPages = Math.ceil(total / FEED_PAGE_SIZE) || 1;
-
-      if (currentFeedPage > totalPages) currentFeedPage = totalPages;
-      if (currentFeedPage < 1) currentFeedPage = 1;
-
-      const startIndex = (currentFeedPage - 1) * FEED_PAGE_SIZE;
-      const endIndex = Math.min(startIndex + FEED_PAGE_SIZE, total);
-      const pageStories = displayed.slice(startIndex, endIndex);
 
       // Title & Count updates
       const listTitle = document.getElementById("list-title");
       if (listTitle) {
-        let titleText = "All Desks";
-        if (selectedFeedCategory === "SOURCE_FE") titleText = "Financial Express Only";
-        else if (selectedFeedCategory === "SOURCE_BS") titleText = "Business Standard Only";
-        else if (activeSectorFilter) titleText = `Sector: ${activeSectorFilter}`;
-        else if (activeStockFilter) titleText = `Stock: ${activeStockFilter}`;
-        else if (selectedFeedCategory !== "ALL") titleText = selectedFeedCategory;
-        listTitle.textContent = titleText;
+        let pubPrefix = selectedPublication === "FE" ? "Financial Express" : selectedPublication === "BS" ? "Business Standard" : "";
+        let deskText = "All Desks";
+        if (activeSectorFilter) deskText = `Sector: ${activeSectorFilter}`;
+        else if (activeStockFilter) deskText = `Stock: ${activeStockFilter}`;
+        else if (selectedFeedCategory === "ANCHOR") deskText = "Top Headlines";
+        else if (selectedFeedCategory === "IPO_ALL") deskText = "IPO Central";
+        else if (selectedFeedCategory === "CORPORATE_ALL") deskText = "Corporate Desk";
+        else if (selectedFeedCategory === "EVENTS") deskText = "Corp Events";
+        else if (selectedFeedCategory === "APPOINTMENTS") deskText = "Appointments";
+        else if (selectedFeedCategory === "OPINIONS") deskText = "Opinions Desk";
+        else if (selectedFeedCategory !== "ALL") deskText = selectedFeedCategory;
+
+        listTitle.textContent = pubPrefix ? `${pubPrefix} · ${deskText}` : deskText;
       }
 
       const listCount = document.getElementById("list-count");
       if (listCount) {
         listCount.textContent = `${total} stories · Priority stories first`;
       }
-
-      const pagInfo = document.getElementById("feed-pagination-info");
-      if (pagInfo) {
-        pagInfo.textContent = `Page ${currentFeedPage} / ${totalPages} (${total})`;
-      }
-
-      const prevBtn = document.getElementById("feed-prev-page");
-      const nextBtn = document.getElementById("feed-next-page");
-      if (prevBtn) prevBtn.disabled = currentFeedPage <= 1;
-      if (nextBtn) nextBtn.disabled = currentFeedPage >= totalPages;
 
       const container = document.getElementById("headlines-container");
       container.innerHTML = "";
@@ -1183,33 +1412,45 @@
         return;
       }
 
-      if (selectedStoryIndex < startIndex || selectedStoryIndex >= endIndex) {
-        selectedStoryIndex = startIndex;
+      if (selectedStoryIndex < 0 || selectedStoryIndex >= total) {
+        selectedStoryIndex = 0;
       }
 
-      pageStories.forEach((s, localIdx) => {
-        const globalIdx = startIndex + localIdx;
-        const isSelected = globalIdx === selectedStoryIndex;
-        const numStr = (globalIdx + 1).toString().padStart(2, '0');
-        const isBullish = s.sentiment === "BULLISH";
-        const isBearish = s.sentiment === "BEARISH";
+      displayed.forEach((s, idx) => {
+        const isSelected = idx === selectedStoryIndex;
+        const numStr = (idx + 1).toString().padStart(2, '0');
 
         const card = document.createElement("button");
         card.className = `headline-card ${isSelected ? 'selected' : ''}`;
+        card.setAttribute("data-index", idx);
         card.onclick = () => {
-          selectedStoryIndex = globalIdx;
-          renderHeadlinesList();
+          selectedStoryIndex = idx;
+          document.querySelectorAll("#headlines-container .headline-card").forEach((el, i) => {
+            if (i === idx) {
+              el.classList.add("selected");
+            } else {
+              el.classList.remove("selected");
+            }
+          });
+          renderActiveStoryDetail(displayed[selectedStoryIndex]);
         };
 
-        const paperTag = s.hasFe && s.hasBs ? "BS + FE" : s.hasBs ? "Business Standard" : "Financial Express";
+        const isDual = s.hasFe && s.hasBs;
+        const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
+        const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
         const priorityTag = s.isFrontPage ? "Must read" : "Worth knowing";
-
+        const hasStocks = s.stocks && s.stocks.length > 0;
         card.innerHTML = `
-          <div class="eyebrow ${s.isFrontPage ? 'priority' : ''}">
-            ${numStr} · ${priorityTag} · ${s.category}
+          <div class="flex items-center justify-between gap-1 mb-0.5">
+            <span class="eyebrow ${s.isFrontPage ? 'priority' : ''}">${numStr} · ${priorityTag} · ${s.category}</span>
+            <span class="paper-badge ${badgeType}">${badgeLabel}</span>
           </div>
           <h3>${s.headline}</h3>
-          <div class="paper-tag">${paperTag} · ${s.page_numbers}</div>
+          ${hasStocks ? `
+            <div class="paper-tag flex items-center justify-end text-[9px] text-slate-500 mt-0.5">
+              <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">${s.stocks.slice(0, 3).join(' · ')}</span>
+            </div>
+          ` : ''}
         `;
         container.appendChild(card);
       });
@@ -1257,6 +1498,7 @@
       const isBullish = (story.sentiment || '').includes('BULLISH');
       const isBearish = (story.sentiment || '').includes('BEARISH');
       const sentBadge = isBullish ? "🟢 BULLISH" : isBearish ? "🔴 BEARISH" : "⚪ NEUTRAL";
+      const sentClass = isBullish ? "bullish" : isBearish ? "bearish" : "neutral";
 
       const figures = extractFigures(story);
       const bullets = story.bullet_points || [];
@@ -1272,15 +1514,18 @@
         <h2>${story.headline}</h2>
 
         <!-- Sources Attribution Strip -->
-        <div class="sources-strip">
-          ${story.source_paper || (story.hasBs ? 'Business Standard' : 'Financial Express')} · ${story.page_numbers}
-          ${story.hasFe && story.hasBs ? '<br><span class="text-blue-600 dark:text-blue-400 font-bold">Shared story: both newspapers covered this intelligence item.</span>' : ''}
+        <div class="sources-strip flex items-center gap-2 flex-wrap mb-3">
+          <span class="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Publication:</span>
+          ${story.hasBs ? '<span class="paper-badge bs">Business Standard</span>' : ''}
+          ${story.hasFe ? '<span class="paper-badge fe">Financial Express</span>' : ''}
+          <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400">· ${story.page_numbers}</span>
+          ${story.hasFe && story.hasBs ? '<span class="paper-badge dual">Shared Coverage</span>' : ''}
         </div>
 
         <!-- 1. Executive Brief -->
         <div class="mb-4">
           <span class="story-label">Brief</span>
-          <p>${story.brief_details}</p>
+          <p class="brief-text">${story.brief_details}</p>
         </div>
 
         <!-- 2. Key Numbers & Metrics Grid (Reference Box) -->
@@ -1301,7 +1546,7 @@
         </div>
 
         <!-- 3. Impact Assessment Box -->
-        <div class="impact-box">
+        <div class="impact-box ${sentClass}">
           <h3>Impact · Assessment (${story.sentiment} THESIS)</h3>
           <p style="margin:0; font-size:14.5px; line-height:1.6;">
             <b>Catalyst:</b> ${story.catalyst}<br>
@@ -1334,10 +1579,6 @@
           <button onclick="navigateStory(1)" ${isLast ? 'disabled' : ''}>Next story →</button>
           <button onclick="copyStoryById(${story.id})" title="Copy to clipboard">📋 Copy Intel</button>
         </div>
-
-        <p class="text-[11px] text-slate-400 dark:text-slate-500 font-mono mt-3">
-          Intelligence items extracted from daily newspaper editions. Impact is an assessment of market and corporate implications.
-        </p>
       `;
 
       // Scroll reader to top smoothly
@@ -1352,18 +1593,16 @@
       selectedStoryIndex += dir;
       if (selectedStoryIndex < 0) selectedStoryIndex = 0;
       if (selectedStoryIndex >= total) selectedStoryIndex = total - 1;
-      currentFeedPage = Math.floor(selectedStoryIndex / FEED_PAGE_SIZE) + 1;
-      renderHeadlinesList();
-    }
-
-    function changeFeedPage(dir) {
-      const displayed = getFilteredStories();
-      const totalPages = Math.ceil(displayed.length / FEED_PAGE_SIZE) || 1;
-      currentFeedPage += dir;
-      if (currentFeedPage < 1) currentFeedPage = 1;
-      if (currentFeedPage > totalPages) currentFeedPage = totalPages;
-      selectedStoryIndex = (currentFeedPage - 1) * FEED_PAGE_SIZE;
-      renderHeadlinesList();
+      
+      document.querySelectorAll("#headlines-container .headline-card").forEach((el, i) => {
+        if (i === selectedStoryIndex) {
+          el.classList.add("selected");
+          el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        } else {
+          el.classList.remove("selected");
+        }
+      });
+      renderActiveStoryDetail(displayed[selectedStoryIndex]);
     }
 
     function copyStoryById(id) {
@@ -1443,7 +1682,80 @@
       }
     }
 
+    function initColumnResizer() {
+      const resizer = document.getElementById("resizer-col2");
+      const workspace = document.getElementById("workspace-grid");
+      if (!resizer || !workspace) return;
+
+      const savedWidth = localStorage.getItem("finpress_col2_width");
+      if (savedWidth) {
+        workspace.style.setProperty("--col2-width", `${savedWidth}px`);
+      }
+
+      let isDragging = false;
+      let startX = 0;
+      let startWidth = 380;
+
+      const onStart = (clientX) => {
+        isDragging = true;
+        resizer.classList.add("dragging");
+        document.body.style.cursor = "col-resize";
+        document.body.style.userSelect = "none";
+        startX = clientX;
+        const col2Val = workspace.style.getPropertyValue("--col2-width") || "380px";
+        startWidth = parseInt(col2Val, 10) || 380;
+      };
+
+      const onMove = (clientX) => {
+        if (!isDragging) return;
+        const delta = clientX - startX;
+        const newWidth = Math.max(260, Math.min(750, startWidth + delta));
+        workspace.style.setProperty("--col2-width", `${newWidth}px`);
+      };
+
+      const onEnd = () => {
+        if (isDragging) {
+          isDragging = false;
+          resizer.classList.remove("dragging");
+          document.body.style.cursor = "";
+          document.body.style.userSelect = "";
+          const col2Val = workspace.style.getPropertyValue("--col2-width");
+          if (col2Val) {
+            localStorage.setItem("finpress_col2_width", parseInt(col2Val, 10));
+          }
+        }
+      };
+
+      // Mouse events
+      resizer.addEventListener("mousedown", (e) => {
+        onStart(e.clientX);
+        e.preventDefault();
+      });
+      window.addEventListener("mousemove", (e) => onMove(e.clientX));
+      window.addEventListener("mouseup", onEnd);
+
+      // Touch events
+      resizer.addEventListener("touchstart", (e) => {
+        if (e.touches && e.touches.length === 1) {
+          onStart(e.touches[0].clientX);
+        }
+      }, { passive: true });
+      window.addEventListener("touchmove", (e) => {
+        if (e.touches && e.touches.length === 1) {
+          onMove(e.touches[0].clientX);
+        }
+      }, { passive: true });
+      window.addEventListener("touchend", onEnd);
+
+      // Double click to reset to default 380px
+      resizer.addEventListener("dblclick", () => {
+        workspace.style.setProperty("--col2-width", "380px");
+        localStorage.setItem("finpress_col2_width", 380);
+      });
+    }
+
     initTheme();
+    initColumnResizer();
     initBsBookmarklet();
     fetchDates();
     loadData();
