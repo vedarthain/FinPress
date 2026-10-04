@@ -324,10 +324,11 @@
     .news-col {
       border-right: 1px solid #e2e8f0;
       background: #ffffff;
-      overflow-y: auto;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      height: 100%;
     }
     .dark .news-col {
       background: #090e1c;
@@ -336,15 +337,18 @@
     .list-head {
       padding: 6px 10px 5px;
       background: #ffffff;
-      position: sticky;
-      top: 0;
-      z-index: 10;
       border-bottom: 1px solid #e2e8f0;
       flex-shrink: 0;
     }
     .dark .list-head {
       background: #090e1c;
       border-bottom-color: #1e293b;
+    }
+    #headlines-container {
+      flex: 1 1 0%;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
     .list-head h2 {
       font-size: 14px;
