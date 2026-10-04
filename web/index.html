@@ -1136,7 +1136,7 @@
         coreGroup.innerHTML = `<div class="group-label">Core Desks${pubLabel}</div>`;
 
         const coreItems = [
-          { id: "ANCHOR", label: "News (Front Page)", count: pubPool.filter(s => s.isFrontPage).length, icon: "📰" },
+          { id: "ANCHOR", label: "Top Headlines", count: pubPool.filter(s => s.isFrontPage).length, icon: "📰" },
           { id: "Sector", label: "Sector News", count: pubPool.filter(s => s.category === "Sector").length, icon: "🏢" },
           { id: "Economy", label: "Economy", count: pubPool.filter(s => s.category === "Economy").length, icon: "📈" },
           { id: "Policy", label: "Policy & Rules", count: pubPool.filter(s => s.category === "Policy").length, icon: "🏛️" },
@@ -1272,7 +1272,7 @@
         let deskText = "All Desks";
         if (activeSectorFilter) deskText = `Sector: ${activeSectorFilter}`;
         else if (activeStockFilter) deskText = `Stock: ${activeStockFilter}`;
-        else if (selectedFeedCategory === "ANCHOR") deskText = "News (Front Page)";
+        else if (selectedFeedCategory === "ANCHOR") deskText = "Top Headlines";
         else if (selectedFeedCategory === "IPO_ALL") deskText = "IPO Central";
         else if (selectedFeedCategory === "CORPORATE_ALL") deskText = "Corporate Desk";
         else if (selectedFeedCategory === "EVENTS") deskText = "Corp Events";
