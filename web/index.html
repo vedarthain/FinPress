@@ -2044,6 +2044,7 @@
           alert("🚀 GitHub Actions pipeline triggered successfully!\n\nYour dashboard will automatically refresh in 2-3 minutes.");
         } else {
           alert("Failed to trigger pipeline: " + (data.error || "Unknown error"));
+        }
       } catch (err) {
         alert("Error: " + err.message);
       }
