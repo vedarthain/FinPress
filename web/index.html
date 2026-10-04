@@ -461,7 +461,7 @@
       font: 14px/1.22 Georgia, serif;
       color: #192c3d;
       margin: 1.5px 0;
-      font-weight: 700;
+      font-weight: 500;
     }
     .dark .headline-card h3 {
       color: #f8fafc;
@@ -813,19 +813,66 @@
       }
 
       .reader-pane h2 {
-        font-size: 19px !important;
+        font-size: 20px !important;
         line-height: 1.3 !important;
       }
       .brief-text {
-        font-size: 14.5px !important;
+        font-size: 15.5px !important;
         line-height: 1.55 !important;
       }
       .impact-box p {
-        font-size: 13.5px !important;
+        font-size: 14.5px !important;
+      }
+      .figure dt {
+        font-size: 11.5px !important;
+      }
+      .figure dd {
+        font-size: 14px !important;
       }
       .figure-grid {
         grid-template-columns: 1fr 1fr !important;
         gap: 8px 12px !important;
+      }
+      .headline-card h3 {
+        font-size: 15px !important;
+        line-height: 1.25 !important;
+      }
+      .eyebrow {
+        font-size: 9.5px !important;
+      }
+      .desk-btn {
+        font-size: 12.5px !important;
+      }
+      .search-input {
+        font-size: 12px !important;
+      }
+      .list-head h2 {
+        font-size: 15px !important;
+      }
+
+      /* Pull-to-refresh Indicator */
+      .pull-refresh-box {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 12px;
+        background: #f1f5f9;
+        color: #475569;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11.5px;
+        font-weight: 700;
+        border-bottom: 1px solid #cbd5e1;
+        text-align: center;
+        transition: all 0.15s ease;
+      }
+      .dark .pull-refresh-box {
+        background: #0f172a;
+        color: #94a3b8;
+        border-bottom-color: #334155;
+      }
+      .pull-refresh-box.visible {
+        display: flex !important;
       }
 
       /* Mobile Bottom Tab Bar */
@@ -1007,6 +1054,11 @@
           <input id="global-search" oninput="onSearchInput()" type="search" placeholder="Search headlines…" aria-label="Search headlines" class="search-input">
         </div>
 
+        <div id="pull-refresh-news" class="pull-refresh-box">
+          <span id="pull-icon-news">↓</span>
+          <span id="pull-text-news">Pull down to refresh</span>
+        </div>
+
         <div id="headlines-container" class="flex-1 min-h-0 flex flex-col">
           <!-- Populated dynamically with all headline cards in a continuous scroll list -->
         </div>
@@ -1017,6 +1069,10 @@
 
       <!-- ================= COLUMN 3: READER & IMPACT PANE ================= -->
       <main class="reader-pane" id="feed-detail-wrapper" aria-label="Story details">
+        <div id="pull-refresh-reader" class="pull-refresh-box">
+          <span id="pull-icon-reader">↓</span>
+          <span id="pull-text-reader">Pull down to refresh</span>
+        </div>
         <div id="feed-detail-container" class="w-full flex-1 flex flex-col">
           <!-- Dynamically populated active story intelligence -->
         </div>
@@ -2100,44 +2156,116 @@
     }
 
     function initMobileSwipeGestures() {
-      const targets = [
-        document.getElementById("feed-detail-wrapper"),
-        document.getElementById("workspace-grid")
+      const readerWrapper = document.getElementById("feed-detail-wrapper");
+      if (!readerWrapper) return;
+
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
+      let isSwiping = false;
+
+      readerWrapper.addEventListener("touchstart", (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+      }, { passive: true });
+
+      readerWrapper.addEventListener("touchend", (e) => {
+        if (window.innerWidth <= 768 && currentMobileTab !== 'reader') return;
+        if (!e.changedTouches || e.changedTouches.length !== 1) return;
+
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+        const elapsedTime = Date.now() - touchStartTime;
+
+        // Swipe threshold: at least 35px horizontally and predominantly horizontal within 500ms
+        if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY) * 1.2 && elapsedTime < 500) {
+          if (isSwiping) return;
+          isSwiping = true;
+          setTimeout(() => { isSwiping = false; }, 350);
+
+          if (diffX < 0) {
+            // Right to Left swipe -> Next news
+            navigateStory(1);
+          } else {
+            // Left to Right swipe -> Previous news
+            navigateStory(-1);
+          }
+        }
+      }, { passive: true });
+    }
+
+    function initPullToRefresh() {
+      const scrollContainers = [
+        { el: document.getElementById("headlines-container"), indicator: document.getElementById("pull-refresh-news"), icon: document.getElementById("pull-icon-news"), text: document.getElementById("pull-text-news") },
+        { el: document.getElementById("feed-detail-wrapper"), indicator: document.getElementById("pull-refresh-reader"), icon: document.getElementById("pull-icon-reader"), text: document.getElementById("pull-text-reader") }
       ];
 
-      targets.forEach(target => {
-        if (!target) return;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchStartTime = 0;
+      scrollContainers.forEach(({ el, indicator, icon, text }) => {
+        if (!el || !indicator) return;
 
-        target.addEventListener("touchstart", (e) => {
-          if (!e.touches || e.touches.length !== 1) return;
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-          touchStartTime = Date.now();
+        let pullStartY = 0;
+        let isPulling = false;
+        let isRefreshing = false;
+
+        el.addEventListener("touchstart", (e) => {
+          if (isRefreshing) return;
+          if (el.scrollTop <= 2 && e.touches.length === 1) {
+            pullStartY = e.touches[0].clientY;
+            isPulling = true;
+          } else {
+            isPulling = false;
+          }
         }, { passive: true });
 
-        target.addEventListener("touchend", (e) => {
-          // In mobile, activate swipe navigation when viewing story reader
-          if (window.innerWidth <= 768 && currentMobileTab !== 'reader') return;
-          if (!e.changedTouches || e.changedTouches.length !== 1) return;
+        el.addEventListener("touchmove", (e) => {
+          if (!isPulling || isRefreshing) return;
+          const currentY = e.touches[0].clientY;
+          const diffY = currentY - pullStartY;
 
-          const touchEndX = e.changedTouches[0].clientX;
-          const touchEndY = e.changedTouches[0].clientY;
-          const diffX = touchEndX - touchStartX;
-          const diffY = touchEndY - touchStartY;
-          const elapsedTime = Date.now() - touchStartTime;
-
-          // Swipe threshold: at least 35px horizontally and more horizontal than vertical within 600ms
-          if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY) * 1.2 && elapsedTime < 600) {
-            if (diffX > 0) {
-              // Right sliding -> Next message
-              navigateStory(1);
+          if (diffY > 15 && el.scrollTop <= 2) {
+            indicator.classList.add("visible");
+            if (diffY > 60) {
+              if (icon) icon.textContent = "↑";
+              if (text) text.textContent = "Release to refresh news";
             } else {
-              // Left sliding -> Previous message
-              navigateStory(-1);
+              if (icon) icon.textContent = "↓";
+              if (text) text.textContent = "Pull down to refresh";
             }
+          } else {
+            indicator.classList.remove("visible");
+          }
+        }, { passive: true });
+
+        el.addEventListener("touchend", async (e) => {
+          if (!isPulling || isRefreshing) return;
+          isPulling = false;
+          const endY = e.changedTouches[0].clientY;
+          const diffY = endY - pullStartY;
+
+          if (diffY > 60 && el.scrollTop <= 2) {
+            isRefreshing = true;
+            indicator.classList.add("visible");
+            if (icon) icon.textContent = "🔄";
+            if (text) text.textContent = "Refreshing news...";
+
+            try {
+              await loadData();
+              if (icon) icon.textContent = "✅";
+              if (text) text.textContent = "News updated!";
+            } catch (err) {
+              if (text) text.textContent = "Update failed";
+            }
+
+            setTimeout(() => {
+              indicator.classList.remove("visible");
+              isRefreshing = false;
+            }, 800);
+          } else {
+            indicator.classList.remove("visible");
           }
         }, { passive: true });
       });
@@ -2218,6 +2346,7 @@
     initTheme();
     setMobileTab('headlines');
     initMobileSwipeGestures();
+    initPullToRefresh();
     initColumnResizer();
     initBsBookmarklet();
     fetchDates();
