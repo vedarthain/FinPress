@@ -390,20 +390,68 @@
     .headline-card:hover {
       background: #eef3ff;
     }
+    .headline-card.fe:hover {
+      background: #f0f9ff;
+    }
+    .headline-card.bs:hover {
+      background: #fffbeb;
+    }
+    .headline-card.dual:hover {
+      background: #faf5ff;
+    }
+
     .headline-card.selected {
       background: #e8efff;
       border-left: 3.5px solid #2860ed;
       padding-left: 7.5px;
     }
+    .headline-card.fe.selected {
+      background: #e0f2fe;
+      border-left: 3.5px solid #0284c7;
+      padding-left: 7.5px;
+    }
+    .headline-card.bs.selected {
+      background: #fef3c7;
+      border-left: 3.5px solid #c2410c;
+      padding-left: 7.5px;
+    }
+    .headline-card.dual.selected {
+      background: #ede9fe;
+      border-left: 3.5px solid #7c3aed;
+      padding-left: 7.5px;
+    }
+
     .dark .headline-card {
       border-bottom-color: #1e293b;
     }
     .dark .headline-card:hover {
       background: #131d31;
     }
+    .dark .headline-card.fe:hover {
+      background: #082f4940;
+    }
+    .dark .headline-card.bs:hover {
+      background: #451a0340;
+    }
+    .dark .headline-card.dual:hover {
+      background: #2e106540;
+    }
+
     .dark .headline-card.selected {
       background: #162447;
       border-left: 3.5px solid #3b82f6;
+    }
+    .dark .headline-card.fe.selected {
+      background: #082f49;
+      border-left: 3.5px solid #38bdf8;
+    }
+    .dark .headline-card.bs.selected {
+      background: #451a03;
+      border-left: 3.5px solid #fb923c;
+    }
+    .dark .headline-card.dual.selected {
+      background: #2e1065;
+      border-left: 3.5px solid #a855f7;
     }
     .headline-card h3 {
       font: 14px/1.22 Georgia, serif;
@@ -1419,9 +1467,12 @@
       displayed.forEach((s, idx) => {
         const isSelected = idx === selectedStoryIndex;
         const numStr = (idx + 1).toString().padStart(2, '0');
+        const isDual = s.hasFe && s.hasBs;
+        const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
+        const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
 
         const card = document.createElement("button");
-        card.className = `headline-card ${isSelected ? 'selected' : ''}`;
+        card.className = `headline-card ${badgeType} ${isSelected ? 'selected' : ''}`;
         card.setAttribute("data-index", idx);
         card.onclick = () => {
           selectedStoryIndex = idx;
@@ -1435,9 +1486,6 @@
           renderActiveStoryDetail(displayed[selectedStoryIndex]);
         };
 
-        const isDual = s.hasFe && s.hasBs;
-        const badgeType = isDual ? "dual" : s.hasBs ? "bs" : "fe";
-        const badgeLabel = isDual ? "BS + FE" : s.hasBs ? "BS" : "FE";
         const priorityTag = s.isFrontPage ? "Must read" : "Worth knowing";
         const hasStocks = s.stocks && s.stocks.length > 0;
         card.innerHTML = `
