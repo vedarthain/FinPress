@@ -82,7 +82,7 @@
     /* 3-Column Workspace Grid Layout - Compact with wider news wire */
     .workspace {
       display: grid !important;
-      grid-template-columns: 210px 380px minmax(0, 1fr) !important;
+      grid-template-columns: 220px 380px minmax(0, 1fr) !important;
       height: calc(100vh - 52px) !important;
       width: 100% !important;
       overflow: hidden !important;
@@ -158,7 +158,7 @@
     }
 
     .group-label {
-      margin: 8px 6px 2px;
+      margin: 8px 6px 3px;
       font-size: 9.5px;
       text-transform: uppercase;
       letter-spacing: .08em;
@@ -181,13 +181,14 @@
       border: 0;
       text-align: left;
       border-radius: 4px;
-      padding: 4.5px 6px;
+      padding: 4px 6px;
       line-height: 1.25;
       color: #273344;
       font-size: 11.5px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
+      box-sizing: border-box;
     }
     .desk-btn:hover {
       background: #f1f5f9;
@@ -209,14 +210,18 @@
     }
     .desk-btn .count {
       margin-left: auto;
-      font-size: 10.5px;
+      flex-shrink: 0;
+      font-size: 10px;
       font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
-      color: #475569;
+      color: #334155;
       background: #e2e8f0;
-      padding: 1px 5.5px;
+      padding: 1px 5px;
       border-radius: 4px;
       line-height: 1.25;
+      min-width: 18px;
+      text-align: center;
+      display: inline-block;
     }
     .dark .desk-btn .count {
       color: #cbd5e1;
@@ -1119,9 +1124,9 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? item.colorClass : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[10px]">├</span>
-            <span>${item.icon}</span>
-            <span class="truncate">${item.label}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">${item.icon}</span>
+            <span class="truncate flex-1 min-w-0">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
           btn.onclick = () => onPublicationSelect(item.id);
@@ -1151,9 +1156,9 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[10px]">├</span>
-            <span>${item.icon}</span>
-            <span class="truncate">${item.label}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">${item.icon}</span>
+            <span class="truncate flex-1 min-w-0">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
           btn.onclick = () => onCategorySelect(item.id);
@@ -1179,9 +1184,9 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[10px]">├</span>
-            <span>${item.icon}</span>
-            <span class="truncate">${item.label}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">${item.icon}</span>
+            <span class="truncate flex-1 min-w-0">${item.label}</span>
             <span class="count">${item.count}</span>
           `;
           btn.onclick = () => onCategorySelect(item.id);
@@ -1207,9 +1212,9 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[10px]">├</span>
-            <span>📈</span>
-            <span class="truncate">${sec}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">📈</span>
+            <span class="truncate flex-1 min-w-0">${sec}</span>
             <span class="count">${secCounts[sec]}</span>
           `;
           btn.onclick = () => {
@@ -1242,9 +1247,9 @@
           const btn = document.createElement("button");
           btn.className = `desk-btn ${isSelected ? 'active' : ''}`;
           btn.innerHTML = `
-            <span class="opacity-50 select-none text-[10px]">├</span>
-            <span>🏢</span>
-            <span class="truncate font-mono font-bold">${stk}</span>
+            <span class="opacity-40 select-none text-[10px] shrink-0">├</span>
+            <span class="shrink-0 text-xs">🏢</span>
+            <span class="truncate flex-1 min-w-0 font-mono font-bold">${stk}</span>
             <span class="count">${stockCounts[stk]}</span>
           `;
           btn.onclick = () => {
