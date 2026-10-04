@@ -459,9 +459,9 @@
     }
     .headline-card h3 {
       font: 14px/1.22 Georgia, serif;
-      color: #192c3d;
+      color: #0f172a;
       margin: 1.5px 0;
-      font-weight: 500;
+      font-weight: 600;
     }
     .dark .headline-card h3 {
       color: #f8fafc;
@@ -836,6 +836,7 @@
       .headline-card h3 {
         font-size: 15px !important;
         line-height: 1.25 !important;
+        font-weight: 600 !important;
       }
       .eyebrow {
         font-size: 9.5px !important;
@@ -848,31 +849,6 @@
       }
       .list-head h2 {
         font-size: 15px !important;
-      }
-
-      /* Pull-to-refresh Indicator */
-      .pull-refresh-box {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        padding: 7px 12px;
-        background: #f1f5f9;
-        color: #475569;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 11.5px;
-        font-weight: 700;
-        border-bottom: 1px solid #cbd5e1;
-        text-align: center;
-        transition: all 0.15s ease;
-      }
-      .dark .pull-refresh-box {
-        background: #0f172a;
-        color: #94a3b8;
-        border-bottom-color: #334155;
-      }
-      .pull-refresh-box.visible {
-        display: flex !important;
       }
 
       /* Mobile Bottom Tab Bar */
@@ -1054,11 +1030,6 @@
           <input id="global-search" oninput="onSearchInput()" type="search" placeholder="Search headlines…" aria-label="Search headlines" class="search-input">
         </div>
 
-        <div id="pull-refresh-news" class="pull-refresh-box">
-          <span id="pull-icon-news">↓</span>
-          <span id="pull-text-news">Pull down to refresh</span>
-        </div>
-
         <div id="headlines-container" class="flex-1 min-h-0 flex flex-col">
           <!-- Populated dynamically with all headline cards in a continuous scroll list -->
         </div>
@@ -1069,10 +1040,6 @@
 
       <!-- ================= COLUMN 3: READER & IMPACT PANE ================= -->
       <main class="reader-pane" id="feed-detail-wrapper" aria-label="Story details">
-        <div id="pull-refresh-reader" class="pull-refresh-box">
-          <span id="pull-icon-reader">↓</span>
-          <span id="pull-text-reader">Pull down to refresh</span>
-        </div>
         <div id="feed-detail-container" class="w-full flex-1 flex flex-col">
           <!-- Dynamically populated active story intelligence -->
         </div>
@@ -2198,79 +2165,6 @@
       }, { passive: true });
     }
 
-    function initPullToRefresh() {
-      const scrollContainers = [
-        { el: document.getElementById("headlines-container"), indicator: document.getElementById("pull-refresh-news"), icon: document.getElementById("pull-icon-news"), text: document.getElementById("pull-text-news") },
-        { el: document.getElementById("feed-detail-wrapper"), indicator: document.getElementById("pull-refresh-reader"), icon: document.getElementById("pull-icon-reader"), text: document.getElementById("pull-text-reader") }
-      ];
-
-      scrollContainers.forEach(({ el, indicator, icon, text }) => {
-        if (!el || !indicator) return;
-
-        let pullStartY = 0;
-        let isPulling = false;
-        let isRefreshing = false;
-
-        el.addEventListener("touchstart", (e) => {
-          if (isRefreshing) return;
-          if (el.scrollTop <= 2 && e.touches.length === 1) {
-            pullStartY = e.touches[0].clientY;
-            isPulling = true;
-          } else {
-            isPulling = false;
-          }
-        }, { passive: true });
-
-        el.addEventListener("touchmove", (e) => {
-          if (!isPulling || isRefreshing) return;
-          const currentY = e.touches[0].clientY;
-          const diffY = currentY - pullStartY;
-
-          if (diffY > 15 && el.scrollTop <= 2) {
-            indicator.classList.add("visible");
-            if (diffY > 60) {
-              if (icon) icon.textContent = "↑";
-              if (text) text.textContent = "Release to refresh news";
-            } else {
-              if (icon) icon.textContent = "↓";
-              if (text) text.textContent = "Pull down to refresh";
-            }
-          } else {
-            indicator.classList.remove("visible");
-          }
-        }, { passive: true });
-
-        el.addEventListener("touchend", async (e) => {
-          if (!isPulling || isRefreshing) return;
-          isPulling = false;
-          const endY = e.changedTouches[0].clientY;
-          const diffY = endY - pullStartY;
-
-          if (diffY > 60 && el.scrollTop <= 2) {
-            isRefreshing = true;
-            indicator.classList.add("visible");
-            if (icon) icon.textContent = "🔄";
-            if (text) text.textContent = "Refreshing news...";
-
-            try {
-              await loadData();
-              if (icon) icon.textContent = "✅";
-              if (text) text.textContent = "News updated!";
-            } catch (err) {
-              if (text) text.textContent = "Update failed";
-            }
-
-            setTimeout(() => {
-              indicator.classList.remove("visible");
-              isRefreshing = false;
-            }, 800);
-          } else {
-            indicator.classList.remove("visible");
-          }
-        }, { passive: true });
-      });
-    }
-
     function initColumnResizer() {
       const resizer = document.getElementById("resizer-col2");
       const workspace = document.getElementById("workspace-grid");
@@ -2346,7 +2240,6 @@
     initTheme();
     setMobileTab('headlines');
     initMobileSwipeGestures();
-    initPullToRefresh();
     initColumnResizer();
     initBsBookmarklet();
     fetchDates();
