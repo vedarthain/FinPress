@@ -994,6 +994,16 @@
           <button onclick="navigateDate(1)" class="px-1.5 py-0.5 rounded text-slate-300 hover:text-white font-bold" title="Next Date">▶</button>
         </div>
 
+        <!-- Sync & Run Action (Top Ribbon) -->
+        <div class="flex items-center bg-slate-900/90 border border-slate-700 rounded p-0.5 font-mono text-[11px] shadow-xs">
+          <button onclick="openBsSyncModal()" class="px-2 py-0.5 rounded bg-amber-600 hover:bg-amber-500 text-white font-bold flex items-center gap-1 cursor-pointer transition-colors" title="Sync Business Standard Session">
+            <span>⚡</span> <span>Sync</span>
+          </button>
+          <button onclick="triggerGitHubPipeline()" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center gap-1 cursor-pointer transition-colors ml-0.5" title="Trigger GitHub Actions Master Pipeline">
+            <span>▶</span> <span>Run</span>
+          </button>
+        </div>
+
         <div id="source-health-container" class="hidden sm:flex items-center gap-1.5 font-mono text-[10.5px]"></div>
 
         <span class="hidden sm:inline-flex px-2.5 py-1 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold font-mono text-[11.5px]">
@@ -1011,21 +1021,6 @@
 
       <!-- ================= COLUMN 1: DESKS & SOURCES ================= -->
       <aside class="desks-col" id="col-desks-sources" aria-label="Desks and publication filters">
-        
-        <!-- Mobile & Desktop Cloud Pipeline Strip -->
-        <div class="p-2 mb-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-between gap-2 text-xs">
-          <span class="font-bold text-amber-900 dark:text-amber-200 text-[11px] flex items-center gap-1">
-            <span>⚡</span> <span>Sync &amp; Run</span>
-          </span>
-          <div class="flex items-center gap-1.5">
-            <button onclick="openBsSyncModal()" class="px-2 py-0.5 rounded bg-amber-600 hover:bg-amber-700 text-white font-mono text-[10px] font-bold cursor-pointer shadow-2xs">
-              BS Sync
-            </button>
-            <button onclick="triggerGitHubPipeline()" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-[10px] font-bold cursor-pointer shadow-2xs">
-              Run
-            </button>
-          </div>
-        </div>
 
         <!-- Top Quick View Filter Tabs -->
         <div class="nav-tabs" role="tablist" aria-label="Sidebar view filter">
