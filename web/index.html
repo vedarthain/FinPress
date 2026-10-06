@@ -1180,7 +1180,7 @@
     let currentDateIndex = 0;
     
     let selectedPublication = "ALL";
-    let selectedFeedCategory = "ANCHOR";
+    let selectedFeedCategory = "Economy";
     let selectedFeedSentiment = "ALL";
     let activeStockFilter = null;
     let activeSectorFilter = null;
@@ -1507,7 +1507,7 @@
 
     function onPublicationSelect(pub) {
       selectedPublication = pub;
-      selectedFeedCategory = "ANCHOR";
+      selectedFeedCategory = "Economy";
       activeStockFilter = null;
       activeSectorFilter = null;
       selectedStoryIndex = selectSmartStoryIndex(getFilteredStories());
@@ -1566,7 +1566,6 @@
 
         let matchSec = true;
         if (selectedFeedCategory === "ALL") matchSec = true;
-        else if (selectedFeedCategory === "ANCHOR") matchSec = s.isFrontPage;
         else if (selectedFeedCategory === "IPO_ALL") matchSec = s.category === "IPO";
         else if (selectedFeedCategory === "CORPORATE_ALL") matchSec = s.category === "Corporate Events" || s.category === "Corporate Appointments";
         else if (selectedFeedCategory === "EVENTS") matchSec = s.category === "Corporate Events";
@@ -1630,9 +1629,8 @@
         const pubLabel = selectedPublication === 'FE' ? ' (FE)' : selectedPublication === 'BS' ? ' (BS)' : '';
 
         const coreItems = [
-          { id: "ANCHOR", label: "Top Headlines", count: pubPool.filter(s => s.isFrontPage).length, icon: "📰" },
-          { id: "Sector", label: "Sector News", count: pubPool.filter(s => s.category === "Sector").length, icon: "🏢" },
           { id: "Economy", label: "Economy", count: pubPool.filter(s => s.category === "Economy").length, icon: "📈" },
+          { id: "Sector", label: "Sector News", count: pubPool.filter(s => s.category === "Sector").length, icon: "🏢" },
           { id: "Policy", label: "Policy & Rules", count: pubPool.filter(s => s.category === "Policy").length, icon: "🏛️" },
           { id: "Market", label: "Market Pulse", count: pubPool.filter(s => s.category === "Market").length, icon: "📊" },
           { id: "Trade", label: "Trade & FX", count: pubPool.filter(s => s.category === "Trade").length, icon: "🚢" },
@@ -1987,7 +1985,13 @@
         let deskText = "All Desks";
         if (activeSectorFilter) deskText = `Sector: ${activeSectorFilter}`;
         else if (activeStockFilter) deskText = `Stock: ${activeStockFilter}`;
-        else if (selectedFeedCategory === "ANCHOR") deskText = "Top Headlines";
+        else if (selectedFeedCategory === "Economy") deskText = "Economy";
+        else if (selectedFeedCategory === "Sector") deskText = "Sector News";
+        else if (selectedFeedCategory === "Policy") deskText = "Policy & Rules";
+        else if (selectedFeedCategory === "Market") deskText = "Market Pulse";
+        else if (selectedFeedCategory === "Trade") deskText = "Trade & FX";
+        else if (selectedFeedCategory === "International News") deskText = "International";
+        else if (selectedFeedCategory === "Others") deskText = "Features";
         else if (selectedFeedCategory === "IPO_ALL") deskText = "IPO Central";
         else if (selectedFeedCategory === "CORPORATE_ALL") deskText = "Corporate Desk";
         else if (selectedFeedCategory === "EVENTS") deskText = "Corp Events";
